@@ -1,12 +1,14 @@
 <template>
   <div id="app">
+      <router-link to="/">Home</router-link> |
+      <router-link to="/about">About</router-link> |
+      <router-link to="/registration">Sign Up</router-link>
     <Registration />
   </div>
 </template>
 
 <script>
 import Registration from './components/Registration.vue'
-
 export default {
   name: 'app',
   components: {
