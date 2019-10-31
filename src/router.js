@@ -28,7 +28,7 @@ const router = new Router({
       component: () => import("./views/Login.vue")
     },
     {
-      path: "/register",
+      path: "/registration",
       name: "registration",
       component: () => import("./views/Registration.vue")
     },
@@ -55,7 +55,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   //hard code for now
   let auth = true;
-  let admin = true;
+  let admin = false;
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (auth) {
       if (to.matched.some(record => record.meta.is_admin)) {

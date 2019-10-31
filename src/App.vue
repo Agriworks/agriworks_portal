@@ -13,13 +13,13 @@
 </template>
 
 <script>
-import Registration from './components/Registration.vue'
+//import Registration from './components/Registration.vue'
 export default {
-  name: 'app',
+  name: 'app'/*,
   components: {
     Registration, 
   }
-
+*/
 }
 </script>
 
