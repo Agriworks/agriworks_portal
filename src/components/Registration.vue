@@ -42,7 +42,10 @@
 </template>
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 17efec839f1615e317777734c5b7818b726d9f41
 <style scoped>
   .form-label-group {
     margin: 35px 10px; 
