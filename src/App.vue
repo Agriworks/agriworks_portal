@@ -1,12 +1,22 @@
 <template>
   <div id="app">
-    <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+      <router-link to="/about">About</router-link> |
+      <router-link to="/registration">Sign Up</router-link>
+    <Registration />
   </div>
 </template>
+
+<script>
+import Registration from './components/Registration.vue'
+export default {
+  name: 'app',
+  components: {
+    Registration, 
+  }
+
+}
+</script>
 
 <style lang="scss">
 #app {
