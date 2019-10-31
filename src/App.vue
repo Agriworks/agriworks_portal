@@ -4,9 +4,19 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <Registration /> 
   </div>
 </template>
+
+<script>
+import Registration from './components/Registration.vue'
+export default {
+  name: 'app',
+  components: {
+    Registration, 
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
