@@ -48,6 +48,15 @@ const router = new Router({
         requiresAuth: true,
         is_admin: true
       }
+    },
+
+    {
+      path: "/dataset",
+      name: "dataset",
+      component: () => import("./views/Dataset.vue"),
+      meta: {
+        requiresAuth: true,
+      }
     }
   ]
 });
