@@ -1,19 +1,20 @@
 <template>
   <div class="about">
-    <h1>File View</h1>
-    
-    <p> {{fileName}}                                           {{filePublished}} </p>
-    
+    <h1>Dataset </h1>
+    <p> File Name: {{fileName}}  </p>
+    <p> File Published: {{filePublished}} </p>
+    <p> File Type: {{fileType}} </p>
   </div>
 </template>
 
 <script>
-      import json from './json/data.json'
-      
-      export default{
-          data(){
-              return{
-                  myJson: json
+      export default {
+          name: "Dataset View", 
+          data() {
+              return {
+                fileName: "Sample file",
+                filePublished: "November 4th, 2019",
+                fileType: "CSV"
               }
           }
       }
