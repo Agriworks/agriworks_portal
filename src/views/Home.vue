@@ -4,7 +4,9 @@
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <div class="container">
-          <h1 class="display-3">Agriworks</h1>
+          <div class="header">
+            <h1 class="display-3">Agriworks</h1>
+          </div>
           <p>This is the mission statement.</p>
           <p><a class="btn btn-primary btn-lg" href="./login" role="button">Login &raquo;</a></p>
         </div>
@@ -44,12 +46,12 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    
   }
 }
 </script>
