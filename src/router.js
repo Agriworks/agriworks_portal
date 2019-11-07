@@ -56,6 +56,11 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/browse",
+      name: "browse",
+      component: () => import("./views/DatasetBrowserView.vue")
     }
   ]
 });
