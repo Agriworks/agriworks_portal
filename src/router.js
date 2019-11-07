@@ -19,16 +19,12 @@ const router = new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-<<<<<<< HEAD
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     },
     {
       path: '/upload',
       name: 'uploadscreen',
       component: () => import('./views/UploadScreen.vue')
-=======
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
     },
     {
       path: "/login",
@@ -56,7 +52,6 @@ const router = new Router({
         requiresAuth: true,
         is_admin: true
       }
->>>>>>> master
     }
   ]
 });
