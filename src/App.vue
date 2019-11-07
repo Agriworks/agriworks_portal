@@ -8,7 +8,10 @@
       <router-link to="/admin">Admin |</router-link>
       <router-link to="/registration">Sign Up |</router-link>
       <router-link to="/upload">Upload |</router-link>
-      <router-link to="/account">Account</router-link>
+      <router-link to="/account">Account |</router-link>
+      <router-link to="/admin">Admin |</router-link>
+      <router-link to="/registration">Sign Up |</router-link>
+      <router-link to="/browse">Browse |</router-link>
     </div>
     <router-view />
   </div>
@@ -17,12 +20,12 @@
 <script>
 //import Registration from './components/Registration.vue'
 export default {
-  name: 'app'/*,
+  name: "app" /*,
   components: {
     Registration, 
   }
 */
-}
+};
 </script>
 
 <style lang="scss">
