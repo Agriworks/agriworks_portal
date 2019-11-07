@@ -1,31 +1,27 @@
 <template>
 
-  <div id="about">
-    <b-container class="bv-example-row">
-    
-    <b-row align-h="between" >
+<div class="datasetstuff">
 
-      <b-col cols="5" md="5.5" :style="myStyle">
-        <p> </p>
-        <h5 class="text-primary font-weight-bold text-left"> Table </h5>
-      </b-col>
-    
-    <b-col cols="5" md="5.5" :style="myStyle">
-      <p> </p>
-      <h5 class="text-primary font-weight-bold text-left"> Dataset </h5>
-      <b-col align-h="between">
-        <b-row> File Name: {{fileName}}  </b-row>
-        <b-row> </b-row>
-        <b-row> File Published: {{filePublished}} </b-row>
-        <b-row> </b-row>
-        <b-row> File Type: {{fileType}} </b-row>
-        <b-row> </b-row>
-      </b-col>  
-    </b-col>
-        
-    </b-row>
-    
-    </b-container>
+  <div class="containers">
+    <div class="top-slim-bar"></div>
+    <div class="bottom-body">
+      <h5 class="header"> Table </h5>
+      <div class="table"> </div>
+    </div>
+  </div>
+
+  <div class="containers">
+    <div class="top-slim-bar"></div>
+    <div class="bottom-body">
+      <h5 class="header"> Dataset </h5>
+      <div class="data"> 
+        <div> File Name: {{fileName}} </div>
+        <div> File Published: {{filePublished}} </div>
+        <div> File Type: {{fileType}} </div>
+      </div>
+    </div>
+  </div>
+
   </div>
 </template>
 
@@ -43,8 +39,46 @@
               }
           }
       }
-
-      function myFunction() {
-        document.getElementById("about").style.borderTop = "thick solid #0000DF";
-      }
 </script>
+
+<style scoped>
+.datasetstuff{
+  width:100vw;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+  .containers {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0.75rem;
+    background-color: #e4f8ff;
+    width: 45%;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    height: 20rem;
+    width: 36.5rem;
+    /* display: flex; */
+  }
+  
+  .top-slim-bar {
+    margin: 0;
+    width: 100%;
+    height: 0.25rem;
+    background-color: #11c7f5;
+  }
+
+  .header {
+    font-weight: bold;
+    padding-left: 0.75rem;
+    color: blue;
+    text-align: left;
+  }
+
+  .data {
+    color: blue;
+    padding-left: 0.75rem;
+    text-align: left;
+  }
+
+</style>
