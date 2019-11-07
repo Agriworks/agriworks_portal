@@ -51,8 +51,9 @@
       <b-card-group deck style="padding-top: 15px;">
         <b-card title="Selection" style="max-width: 50%;">
           <div>
-            <b-form-file v-model="file" class="mt-3" plain></b-form-file>
+            <b-form-file v-model="file" ref="file-input" class="mt-3" plain></b-form-file>
             <div class="mt-3">Selected file: {{ file ? file.name : '' }}</div>
+            <b-button @click="processForm" class="mr-2">Submit</b-button>
           </div>
         </b-card>
         <b-card title="Preparation" style="max-width: 50%;">
@@ -66,8 +67,36 @@
 
 <script>
   import FieldLink from './FieldLink'
+  import axios from 'axios'
   export default {
-    components: { FieldLink }
+    name: 'Upload',
+    components: { FieldLink },
+    methods: {
+      processForm() {
+        let formData = new FormData();
+        formData.append('file', this.file);
+        formData.append('filename', this.file.name);
+        axios 
+          .post('/upload/create', 
+            formData, {
+            headers: {
+              'Content-type': 'multipart/form-data'
+            }
+          },
+          console.log(this.file),
+          console.log(this.file.name),
+          )
+          .then(function() {
+            console.log('Sucess!');
+          })
+          .catch(function() {
+            console.log('Failure');
+          });
+      },
+      handleFileUpload() {
+        this.file = this.$refs['file-input']
+      }
+    }
   }
 </script>
 
