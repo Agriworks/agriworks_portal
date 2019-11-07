@@ -13,8 +13,6 @@
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#passwordModal" id="changePassword">Change</button>
             </div>
         </div>
-      <!--  <div class="form-popup" id="emailForm">
-            <h1>Update your email</h1> -->
             <!--Email Modal -->
             <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -33,7 +31,7 @@
                                 type="password"
                                 id="inputCurrentPassword"
                                 class="form-control"
-                                placeholder="CURRENT PASSWORD"
+                                placeholder="Current Password"
                                 required
                                 autofocus
                                 />
@@ -41,7 +39,7 @@
                                 type="email"
                                 id="inputEmail"
                                 class="form-control"
-                                placeholder = "NEW EMAIL"
+                                placeholder = "New Email"
                                 required
                                 autofocus
                                 />
@@ -74,7 +72,7 @@
                                 type="password"
                                 id="inputCurrentPassword"
                                 class="form-control"
-                                placeholder="CURRENT PASSWORD"
+                                placeholder="Current Password"
                                 required
                                 autofocus
                                 />
@@ -82,7 +80,7 @@
                                 type="password"
                                 id="inputPassword"
                                 class="form-control"
-                                placeholder = "NEW PASSWORD"
+                                placeholder = "New Password"
                                 required
                                 autofocus
                                 />
@@ -90,7 +88,7 @@
                                 type="password"
                                 id="inputConfirmPassword"
                                 class="form-control"
-                                placeholder = "CONFIRM NEW PASSWORD"
+                                placeholder = "Confirm New Password"
                                 required
                                 autofocus
                                 />
@@ -118,5 +116,14 @@ export default {
 
 
 <style scoped>
+
+.form-control {
+    padding: 1rem 1rem;
+    border: 1px solid #007bff;
+    margin: 1rem 1rem 1rem 1rem;
+    width: 90%;
+
+}
+
 
 </style>
