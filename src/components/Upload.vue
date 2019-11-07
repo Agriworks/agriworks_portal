@@ -40,25 +40,11 @@
         <b-card title="Link Fields" style="max-width: 50%;">
           <div style="margin-bottom: 20px;">
             <b-card-text>Field 1</b-card-text>
-              <div class=fields_row>
-                <b-input
-                  id="inline-form-input-name"
-                  placeholder="Search Dataset"
-                  style="margin-right: 10px; height: 42px; max-width: 50%;"
-                ></b-input>
-                <FieldLink style="width: 50%;"/>
-              </div>
+            <FieldLink />
           </div>
           <div>
             <b-card-text>Field 2</b-card-text>
-            <div class=fields_row>
-              <b-input
-                id="inline-form-input-name"
-                placeholder="Search Dataset"
-                style="margin-right: 10px; height: 42px; max-width: 50%;"
-              ></b-input>
-              <FieldLink style="width: 50%;"/>
-            </div>
+            <FieldLink />
           </div>
         </b-card>
       </b-card-group>
@@ -91,9 +77,5 @@
 }
 .form-inline {
   justify-content: center;
-}
-.fields_row {
-  display: flex;
-  flex-direction: row;
 }
 </style>
