@@ -7,7 +7,8 @@
       <router-link to="/dashboard">Dashboard |</router-link>
       <router-link to="/admin">Admin |</router-link>
       <router-link to="/registration">Sign Up |</router-link>
-      <router-link to="/upload">Upload</router-link>
+      <router-link to="/upload">Upload |</router-link>
+      <router-link to="/account">Account</router-link>
     </div>
     <router-view />
   </div>
