@@ -48,6 +48,11 @@ const router = new Router({
         requiresAuth: true,
         is_admin: true
       }
+    },
+    {
+      path: "/browse",
+      name: "browse",
+      component: () => import("./views/DatasetBrowserView.vue")
     }
   ]
 });
