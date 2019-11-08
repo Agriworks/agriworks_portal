@@ -48,6 +48,19 @@ const router = new Router({
         requiresAuth: true,
         is_admin: true
       }
+    },
+    {
+      path: "/account",
+      name: "account",
+      component: () =>import("./views/Account.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/browse",
+      name: "browse",
+      component: () => import("./views/DatasetBrowserView.vue")
     }
   ]
 });
