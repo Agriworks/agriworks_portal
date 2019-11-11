@@ -1,25 +1,35 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import getCookie from './static/script';
+import axios from 'axios'
+import addCookie from './static/script';
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+var cookie = document.cookie.match('(^|;) ?SID=([^;]*)(;|$)');
+const store = new Vuex.Store({
   state: {
-    posts: [
-      { title: "Post 1"},
-      { title: "Post 2"},
-      { title: "Post 3"},
-      { title: "Post 4"},
-      { title: "Post 5"}
-    ],
-    count: 0
+    cookie: cookie ? cookie[2] : null
   },
   mutations: {
-    increment(state) {
-      state.count++;
-    }
+
   },
   actions: {
+    retrieveSessionID() {
+      return new Promise((resolve, reject) => {
+        axios.post('http://localhost:4000/auth/login')
+          .then(response => {
+            addCookie(response.data.key, response.data.value, response.data.expires)
+            resolve(response)
+          })
+          .catch(error => {
+            console.log(error)
+            reject(error)
+          })
+      })
+    },
 
   }
 })
+
+export default store;

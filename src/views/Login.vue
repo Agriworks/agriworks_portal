@@ -5,7 +5,7 @@
         <div class="card card-signin my-5">
           <div class="card-body">
             <h3 class="card-title text-center">Login</h3>
-            <form class="form-signin">
+            <form class="form-signin" action="localhost:5000/auth/login" @submit.prevent="login">
               <div class="form-label-group">
                 <label for="inputEmail">Username</label>
                 <input
@@ -39,3 +39,15 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    login() {
+      this.$store.dispatch("retrieveSessionID").then(response => {
+        this.$router.push("/dashboard");
+      });
+    }
+  }
+};
+</script>
