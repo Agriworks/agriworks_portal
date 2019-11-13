@@ -1,11 +1,15 @@
 <template>
   <div>
-    <b-table striped hover v-bind:items="items"></b-table>
+    <b-table striped hover :items="items"></b-table>
   </div>
 </template>
-
 <script>
+import Vue from "vue";
+import BootstrapVue from "bootstrap-vue";
+
+Vue.use(BootstrapVue);
   export default {
+    name: "Table",
     data() {
       return {
         items: [
