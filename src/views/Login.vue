@@ -14,7 +14,6 @@
                   id="inputEmail"
                   class="form-control"
                   placeholder
-                  required
                   autofocus
                 />
               </div>
@@ -27,7 +26,6 @@
                   id="inputPassword"
                   class="form-control"
                   placeholder
-                  required
                 />
               </div>
 
