@@ -15,9 +15,13 @@ const store = new Vuex.Store({
 
   },
   actions: {
-    retrieveSessionID() {
+    retrieveSessionID(credentials) {
       return new Promise((resolve, reject) => {
-        axios.post('http://localhost:4000/auth/login')
+        axios.post('http://localhost:4000/auth/login',
+          {
+            username: credentials.username,
+            password: credentials.password,
+          })
           .then(response => {
             addCookie(response.data.key, response.data.value, response.data.expires)
             resolve(response)

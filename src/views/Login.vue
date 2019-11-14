@@ -9,6 +9,7 @@
               <div class="form-label-group">
                 <label for="inputEmail">Username</label>
                 <input
+                  name="email"
                   type="email"
                   id="inputEmail"
                   class="form-control"
@@ -20,7 +21,14 @@
               <p></p>
               <div class="form-label-group">
                 <label for="inputPassword">Password</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder required />
+                <input
+                  name="password"
+                  type="password"
+                  id="inputPassword"
+                  class="form-control"
+                  placeholder
+                  required
+                />
               </div>
 
               <div class="custom-control custom-checkbox mb-3">
@@ -44,9 +52,14 @@
 export default {
   methods: {
     login() {
-      this.$store.dispatch("retrieveSessionID").then(response => {
-        this.$router.push("/dashboard");
-      });
+      this.$store
+        .dispatch("retrieveSessionID", {
+          username: this.username,
+          password: this.password
+        })
+        .then(response => {
+          this.$router.push("/dashboard");
+        });
     }
   }
 };
