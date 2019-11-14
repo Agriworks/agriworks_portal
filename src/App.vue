@@ -1,14 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home |</router-link>
-      <router-link to="/about">About |</router-link>
-      <router-link to="/login">Login |</router-link>
-      <router-link to="/dashboard">Dashboard |</router-link>
-      <router-link to="/account">Account</router-link>
-      <router-link to="/admin">Admin</router-link>
-      <router-link to="/registration">Sign Up</router-link>
-      <router-link to="/browse">Browse</router-link>
+      <router-link v-for="route in routes" :key="route.path" :to="route.path">
+        {{route.name}}  
+      </router-link>
     </div>
     <router-view />
   </div>
@@ -17,11 +12,16 @@
 <script>
 //import Registration from './components/Registration.vue'
 export default {
-  name: "app" /*,
+  name: "app", /*,
   components: {
     Registration, 
   }
 */
+  data() {
+    return {
+      routes: this.$router.options.routes
+    };
+  }
 };
 </script>
 
