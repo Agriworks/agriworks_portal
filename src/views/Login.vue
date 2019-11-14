@@ -5,7 +5,8 @@
         <div class="card card-signin my-5">
           <div class="card-body">
             <h3 class="card-title text-center">Login</h3>
-            <form class="form-signin" @submit.prevent="login">
+            <!-- <form class="form-signin" @submit.prevent="login"> -->
+            <form action="http://localhost:4000/auth/login" method="post" class="form-signin">
               <div class="form-label-group">
                 <label for="inputEmail">Username</label>
                 <input
@@ -55,7 +56,7 @@ export default {
       this.$store
         .dispatch("retrieveSessionID", {
           email: this.email,
-          password: this.password
+          password: this.passsword
         })
         .then(response => {
           this.$router.push("/dashboard");
