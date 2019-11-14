@@ -12,10 +12,10 @@
         </div>
       </div>
 
-      <div class="container">
+      <div class="container-fluid">
         <!-- Example row of columns -->
         <div class="row">
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
             <h2>Researcher</h2>
             <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
             <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
@@ -34,7 +34,122 @@
             <h2>Citizen</h2>
             <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
             <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+          </div> -->
+          <!-- Card deck -->
+          <div class="col-md-2">
           </div>
+          <div class="col-md-8">
+            <div class="card-deck">
+
+              <!-- Card -->
+              <div class="card mb-4">
+
+                <!--Card image-->
+                <div class="view overlay">
+                  <img class="card-img-top" src="../assets/placeholder.png" alt="Card image cap">
+                  <a href="#!">
+                    <div class="mask rgba-white-slight"></div>
+                  </a>
+                </div>
+
+                <!--Card content-->
+                <div class="card-body">
+
+                  <!--Title-->
+                  <h4 class="card-title">Researcher</h4>
+                  <!--Text-->
+                  <p class="card-text">Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                  <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                  <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+
+                </div>
+
+              </div>
+              <!-- Card -->
+
+              <!-- Card -->
+              <div class="card mb-4">
+
+                <!--Card image-->
+                <div class="view overlay">
+                  <img class="card-img-top" src="../assets/placeholder.png" alt="Card image cap">
+                  <a href="#!">
+                    <div class="mask rgba-white-slight"></div>
+                  </a>
+                </div>
+
+                <!--Card content-->
+                <div class="card-body">
+
+                  <!--Title-->
+                  <h4 class="card-title">Policy Maker</h4>
+                  <!--Text-->
+                  <p class="card-text">Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                  <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                  <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+
+                </div>
+
+              </div>
+              <!-- Card -->
+
+              <!-- Card -->
+              <div class="card mb-4">
+
+                <!--Card image-->
+                <div class="view overlay">
+                  <img class="card-img-top" src="../assets/placeholder.png" alt="Card image cap">
+                  <a href="#!">
+                    <div class="mask rgba-white-slight"></div>
+                  </a>
+                </div>
+
+                <!--Card content-->
+                <div class="card-body">
+
+                  <!--Title-->
+                  <h4 class="card-title">Non-Profit</h4>
+                  <!--Text-->
+                  <p class="card-text">Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                  <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                  <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+
+                </div>
+
+              </div>
+              <!-- Card -->
+
+              <!-- Card -->
+              <div class="card mb-4">
+
+                <!--Card image-->
+                <div class="view overlay">
+                  <img class="card-img-top" src="../assets/placeholder.png" alt="Card image cap">
+                  <a href="#!">
+                    <div class="mask rgba-white-slight"></div>
+                  </a>
+                </div>
+
+                <!--Card content-->
+                <div class="card-body">
+
+                  <!--Title-->
+                  <h4 class="card-title">Citizen</h4>
+                  <!--Text-->
+                  <p class="card-text">Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                  <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                  <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+
+                </div>
+
+              </div>
+              <!-- Card -->
+
+            </div>
+            <!-- Card deck -->
+          </div>
+        </div>
+        <div class="col-md-2">
         </div>
 
         <hr>

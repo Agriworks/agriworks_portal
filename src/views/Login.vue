@@ -30,7 +30,7 @@
 
               <div class="custom-control custom-checkbox mb-3">
                 <button class="btn btn-lg btn-primary" type="submit">Login</button>
-                <router-link to="/register" class="btn btn-link">Register</router-link>
+                <router-link to="/registration" class="btn btn-link">Register</router-link>
               </div>
             </form>
           </div>
