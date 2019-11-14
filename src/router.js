@@ -49,7 +49,6 @@ const router = new Router({
         is_admin: true
       }
     },
-
     {
       path: "/dataset",
       name: "dataset",
@@ -57,6 +56,24 @@ const router = new Router({
       meta: {
         requiresAuth: true,
       }
+    },
+    {
+      path: "/account",
+      name: "account",
+      component: () =>import("./views/Account.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/browse",
+      name: "browse",
+      component: () => import("./views/DatasetBrowserView.vue")
+    },
+    {
+      path: "/table",
+      name: "table",
+      component: () => import("./views/Table.vue")
     }
   ]
 });
