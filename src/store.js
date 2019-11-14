@@ -19,7 +19,7 @@ const store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios.post('http://localhost:4000/auth/login',
           {
-            username: credentials.username,
+            email: credentials.email,
             password: credentials.password,
           })
           .then(response => {

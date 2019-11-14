@@ -54,7 +54,7 @@ export default {
     login() {
       this.$store
         .dispatch("retrieveSessionID", {
-          username: this.email,
+          email: this.email,
           password: this.password
         })
         .then(response => {
