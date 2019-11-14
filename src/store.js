@@ -5,14 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    posts: [
-      { title: "Post 1"},
-      { title: "Post 2"},
-      { title: "Post 3"},
-      { title: "Post 4"},
-      { title: "Post 5"}
-    ],
-    count: 0
+    items: [
+      { DomainCode: "RP", Domain: 'Pesticides Use', Area_Code: '100', Area: 'India', Element_Code: 5157, Element:'Agricultural Use', Item_Code: 1357, Item: "Pesticides (total)", Year_code: 1990, Year: 1990, Unit: "tonnes", Value: 75000, Flag: "A", Flag_Description: "Aggregate, may incl"},
+      { DomainCode: "RP", Domain: 'Pesticides Use', Area_Code: '100', Area: 'India', Element_Code: 5157, Element:'Agricultural Use', Item_Code: 1357, Item: "Pesticides (total)", Year_code: 1991, Year: 1991, Unit: "tonnes", Value: 75000, Flag: "A", Flag_Description: "Aggregate, may incl"},
+      { DomainCode: "RP", Domain: 'Pesticides Use', Area_Code: '100', Area: 'India', Element_Code: 5157, Element:'Agricultural Use', Item_Code: 1357, Item: "Pesticides (total)", Year_code: 1992, Year: 1992, Unit: "tonnes", Value: 75000, Flag: "A", Flag_Description: "Aggregate, may incl"},
+      { DomainCode: "RP", Domain: 'Pesticides Use', Area_Code: '100', Area: 'India', Element_Code: 5157, Element:'Agricultural Use', Item_Code: 1357, Item: "Pesticides (total)", Year_code: 1993, Year: 1993, Unit: "tonnes", Value: 75000, Flag: "A", Flag_Description: "Aggregate, may incl"}
+    ]
   },
   mutations: {
     increment(state) {

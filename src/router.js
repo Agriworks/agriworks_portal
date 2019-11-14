@@ -61,6 +61,11 @@ const router = new Router({
       path: "/browse",
       name: "browse",
       component: () => import("./views/DatasetBrowserView.vue")
+    },
+    {
+      path: "/table",
+      name: "table",
+      component: () => import("./views/Table.vue")
     }
   ]
 });
