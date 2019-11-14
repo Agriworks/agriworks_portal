@@ -16,8 +16,19 @@ const store = new Vuex.Store({
   },
   actions: {
     retrieveSessionID() {
+      console.log("Attempting to send login data");
       return new Promise((resolve, reject) => {
-        axios.post('http://localhost:4000/auth/login')
+        axios({
+          method: "post",
+          url: 'http://localhost:4000/auth/login',
+          data: {
+            email: "mdesilva@bu.edu",
+            password: "password"
+          },
+          headers: {
+            'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+          }
+        })
           .then(response => {
             addCookie(response.data.key, response.data.value, response.data.expires)
             resolve(response)
