@@ -5,7 +5,7 @@
         <div class="card card-signin my-5">
           <div class="card-body">
             <h3 class="card-title text-center">Login</h3>
-            <form class="form-signin" @submit.prevent="login">
+            <form class="form-signin" @submit.prevent="login"> 
               <div class="form-label-group">
                 <label for="inputEmail">Username</label>
                 <input
@@ -13,6 +13,7 @@
                   type="email"
                   id="inputEmail"
                   class="form-control"
+                  value="mdesilva@bu.edu"
                   placeholder
                   autofocus
                 />
@@ -25,6 +26,7 @@
                   type="password"
                   id="inputPassword"
                   class="form-control"
+                  value="password"
                   placeholder
                 />
               </div>
@@ -52,11 +54,12 @@ export default {
     login() {
       this.$store
         .dispatch("retrieveSessionID", {
-          username: this.username,
+          email: this.email, 
           password: this.password
         })
         .then(response => {
-          this.$router.push("/dashboard");
+          console.log(response);
+          //this.$router.push("/dashboard");
         });
     }
   }
