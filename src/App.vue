@@ -1,26 +1,36 @@
 <template>
   <div id="app">
     <div class="container-fluid">
+      <div id="header">
+        <div id="header-left">
+          <Logo/>
+        </div>
+        <div id="header-right">
+          <fa-icon icon="sign-in-alt" size="lg"/>
+        </div>
+      </div>
       <Push>
         <a id="logo">
-          <img src="./assets/logo_transparent_2.png" class="img-fluid" alt="Responsive image" height="100">
+            <Logo/>
         </a>
         <router-link v-for="route in routes" :key="route.path" :to="route.path">
-          {{route.name}}  
+            {{route.name}}  
         </router-link>
       </Push>
-      <main id="page-wrap">
-        <router-view />
-      </main>
+        <main id="page-wrap">
+          <router-view />
+        </main>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
+import Logo from './components/Logo'
 import {Push} from 'vue-burger-menu'
+
 export default {
   name: "app",
-  components: {Push},
+  components: {Push, Logo},
   data() {
     return {
       routes: this.$router.options.routes
@@ -37,16 +47,18 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+
+.container-fluid {
+  margin-top: 1rem;
 }
+
+#header {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
 .sidebar-text {
   font-weight: bold;
   color: white;
@@ -62,6 +74,11 @@ export default {
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px; /* Place content 60px from the top */
   transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
+}
+
+.bm-burger-button {
+  height: 22px;
+  top: 30px;
 }
 
 .bm-overlay {
