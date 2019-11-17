@@ -19,7 +19,7 @@
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
               <div class="custom-control custom-checkbox mb-3">
-                <button class="btn btn-lg btn-primary" type="submit">Login</button>
+                <button class="btn btn-lg btn-primary" type="submit" id="loginSubmit">Login</button>
                 <router-link to="/register" class="btn btn-link">Register</router-link>
               </div>
             </form>
@@ -34,8 +34,8 @@
 export default {
   data() {
     return {
-      email: "",
-      password: ""
+      email: "mdesilva@bu.edu",
+      password: "password"
     }
   },
   methods: {
@@ -44,6 +44,15 @@ export default {
           email: this.email,
           password: this.password
         })
+      this.isAuthenticated();
+    },
+    isAuthenticated() {
+      if (this.$store.getters.isLoggedIn) {
+        this.$router.push("/dashboard");
+      }
+      else {
+        alert("Incorrect username or password")
+      }
     }
   }
 };

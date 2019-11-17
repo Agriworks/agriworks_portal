@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {post} from './requests';
-// import getCookie from './static/script';
 import {addCookie, getCookie, deleteCookie} from './static/script';
+import { resolve } from 'any-promise';
+import { isContext } from 'vm';
 
 Vue.use(Vuex)
 
@@ -19,26 +20,34 @@ var cookie = document.cookie.match('(^|;) ?SID=([^;]*)(;|$)');
 
 const store = new Vuex.Store({
   state: {
-    cookie: cookie ? cookie[2] : null
+    loggedIn: false
   },
   mutations: {
-
+    setLoggedInTrue (state) {
+      state.loggedIn = true;
+    }
   },
-
+  getters: {
+    isLoggedIn:  (state) => {
+      return state.loggedIn
+    }
+  },
   actions: {
     retrieveSessionID(state, payload) {
       //return post("/auth/login", payload);
-      post("/auth/login", payload)
-      .then(response => {
-        console.log(response);
-        addCookie(response.data.key, response.data.value, response.data.expires);
-        this.dispatch("forwardToDashboard");
-    })
+      return new Promise((resolve,reject) => {
+        post("/auth/login", payload)
+        .then(response => {
+          addCookie(response.data.key, response.data.value, response.data.expires);
+          store.commit("setLoggedInTrue");
+          resolve();
+        })
+        .error(error => {
+          console.log(error);
+          reject();
+        })
+      })
   },
-    forwardToDashboard(state) {
-      //Fix push
-      this.$router.push('/dashboard');
-    }
   }
 })
 
