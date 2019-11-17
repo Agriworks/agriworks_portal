@@ -8,34 +8,16 @@
             <form class="form-signin" @submit.prevent="login"> 
               <div class="form-label-group">
                 <label for="inputEmail">Username</label>
-                <input
-                  name="email"
-                  type="email"
-                  id="inputEmail"
-                  class="form-control"
-                  value="mdesilva@bu.edu"
-                  placeholder
-                  autofocus
-                />
+                <input type="email" id="inputEmail" class="form-control" v-model="email" autofocus />
               </div>
-              <p></p>
               <div class="form-label-group">
                 <label for="inputPassword">Password</label>
-                <input
-                  name="password"
-                  type="password"
-                  id="inputPassword"
-                  class="form-control"
-                  value="password"
-                  placeholder
-                />
+                <input type="password" id="inputPassword" class="form-control" v-model="password" autofocus />
               </div>
-
               <div class="custom-control custom-checkbox mb-3">
                 <input type="checkbox" class="custom-control-input" id="customCheck1" />
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
-
               <div class="custom-control custom-checkbox mb-3">
                 <button class="btn btn-lg btn-primary" type="submit">Login</button>
                 <router-link to="/register" class="btn btn-link">Register</router-link>
@@ -50,17 +32,18 @@
 
 <script>
 export default {
+  data() {
+    return {
+      email: "",
+      password: ""
+    }
+  },
   methods: {
     login() {
-      this.$store
-        .dispatch("retrieveSessionID", {
-          email: this.email, 
+      this.$store.dispatch("retrieveSessionID", {
+          email: this.email,
           password: this.password
         })
-        .then(response => {
-          console.log(response);
-          //this.$router.push("/dashboard");
-        });
     }
   }
 };
