@@ -5,29 +5,19 @@
         <div class="shadow rounded">
           <div class="card-body">
             <h3 class="card-title text-center">Login</h3>
-            <form class="form-signin">
+            <form class="form-signin" @submit.prevent="login"> 
               <div class="form-label-group">
                 <label for="inputEmail">Username</label>
-                <input
-                  type="email"
-                  id="inputEmail"
-                  class="form-control"
-                  placeholder
-                  required
-                  autofocus
-                />
+                <input type="email" id="inputEmail" class="form-control" v-model="email" autofocus />
               </div>
-              <p></p>
               <div class="form-label-group">
                 <label for="inputPassword">Password</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder required />
+                <input type="password" id="inputPassword" class="form-control" v-model="password" autofocus />
               </div>
-
               <div class="custom-control custom-checkbox mb-3">
                 <input type="checkbox" class="custom-control-input" id="customCheck1" />
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
-
               <div class="custom-control custom-checkbox mb-3">
                 <button class="btn btn-lg btn-primary" type="submit">Login</button>
                 <router-link to="/registration" class="btn btn-link">Register</router-link>
@@ -39,3 +29,28 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      email: "mdesilva@bu.edu",
+      password: "password"
+    }
+  },
+  methods: {
+    login() {
+      this.$store.dispatch("retrieveSessionID", {
+          email: this.email,
+          password: this.password
+        })
+      .then(response => {
+        this.$router.push("/dashboard")
+      })
+      .catch(error => {
+        alert("Incorrect username or password");
+      })
+      }
+    }
+}
+</script>

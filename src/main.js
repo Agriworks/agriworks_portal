@@ -10,9 +10,13 @@ import { faSignInAlt, fa } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faSignInAlt);
 
+<<<<<<< HEAD
 Vue.component('fa-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
+=======
+Vue.config.productionTip = false
+>>>>>>> feature-cookieStorage
 
 new Vue({
   router,
