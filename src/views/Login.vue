@@ -44,16 +44,13 @@ export default {
           email: this.email,
           password: this.password
         })
-      this.isAuthenticated();
-    },
-    isAuthenticated() {
-      if (this.$store.getters.isLoggedIn) {
-        this.$router.push("/dashboard");
-      }
-      else {
-        alert("Incorrect username or password")
+      .then(response => {
+        this.$router.push("/dashboard")
+      })
+      .catch(error => {
+        alert("Incorrect username or password");
+      })
       }
     }
-  }
-};
+}
 </script>

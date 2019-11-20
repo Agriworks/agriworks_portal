@@ -15,7 +15,7 @@ function urlEncode(data){
     Object.keys(data).forEach(function(key){
         urlEncodedString += (key + "=" + data[key] + "&"); 
     })
-    return urlEncodedString.slice(0,-1);
+    return urlEncodedString.slice(0,-1); //remove the trailing '&'
 }
 
 
