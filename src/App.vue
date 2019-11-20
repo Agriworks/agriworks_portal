@@ -16,6 +16,7 @@
 
 <script>
 //import Registration from './components/Registration.vue'
+
 export default {
   name: "app" /*,
   components: {

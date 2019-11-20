@@ -1,8 +1,11 @@
 <template>
+<div>
+  <SearchBar/>
   <div class="row">
     <div v-for="dataset in datasets" v-bind:key="dataset.id">
       <IndividualDataset v-bind:dataset="dataset" />
     </div>
+  </div>
   </div>
 </template>
 
@@ -10,10 +13,15 @@
 // @ is an alias to /src
 import IndividualDataset from "@/views/IndividualDataset.vue";
 // import axios from "axios";
+
+//importing search bar component
+import SearchBar from "@/components/SearchBar.vue";
+
 export default {
   name: "DatasetBrowserView",
   components: {
-    IndividualDataset
+    IndividualDataset,
+    SearchBar
   },
   data() {
     return {

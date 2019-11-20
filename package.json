@@ -11,7 +11,7 @@
   "dependencies": {
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
-    "bootstrap-vue": "^2.0.4",
+    "bootstrap-vue": "^2.1.0",
     "core-js": "^2.6.5",
     "jquery": "^3.4.1",
     "vue": "^2.6.10",
@@ -31,5 +31,20 @@
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10"
-  }
+  },
+  "description": "## Project setup ``` yarn install ```",
+  "main": ".eslintrc.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hack4Impact-Boston-University/agriworks_portal.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hack4Impact-Boston-University/agriworks_portal/issues"
+  },
+  "homepage": "https://github.com/Hack4Impact-Boston-University/agriworks_portal#readme"
 }
