@@ -59,4 +59,7 @@
   .col-md-6 {
     padding: 1.5em 1.5em 1.5em 1.5em;
   }
+  .card-body {
+    padding: 1.5em 1.5em 1.5em 1.5em;
+  }
 </style>

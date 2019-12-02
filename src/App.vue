@@ -21,7 +21,12 @@
           <router-view />
         </main>
       </div>
-    </div>
+      <div id="footer">
+        <footer v-bind="currentYear = getYear()">
+          <small>Copyright &copy; {{currentYear}} Agriworks</small>
+        </footer>
+      </div>
+    </div>  
 </template>
 
 <script>
@@ -35,6 +40,13 @@ export default {
     return {
       routes: this.$router.options.routes
     };
+  },
+  methods:{
+    getYear(){
+      var d = new Date();
+      const currentYear = d.getFullYear();
+      return currentYear;
+    }
   }
 };
 </script>
@@ -98,6 +110,11 @@ export default {
   margin-left: 10px;
   font-weight: 700;
   color: white;
+}
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 </style>
