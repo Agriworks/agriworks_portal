@@ -2,7 +2,7 @@
   <div id="main-container" class="container">
     <div class="row">
     <div class="col-md-6" style="margin-top:2rem">
-      <h1 style="color:green"> Transform the Agricultural Landscape with Data</h1>
+      <h1 style="color:green"> Transform your Agricultural Landscape using Data</h1>
       <p> Agriworks enables researchers, policymakers, and common citizens to explore and act on agricultural data in an effort to better their local communities.</p>
       <div class="inline-row">
       <button class="btn btn-lg btn-success"> Sign Up </button>
@@ -33,7 +33,7 @@ export default {
 
 <style scoped>
 #main-container {
-  margin-top: 5%;  
+  margin-top: 7%;  
 }
 
 #header {

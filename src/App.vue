@@ -21,9 +21,6 @@
           <router-view />
         </main>
       </div>
-        <footer v-bind="currentYear = getYear()">
-          <small>Copyright &copy; {{currentYear}} Agriworks</small>
-        </footer>
     </div>  
 </template>
 
