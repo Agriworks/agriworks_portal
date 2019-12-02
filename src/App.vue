@@ -112,7 +112,6 @@ export default {
   color: white;
 }
 #footer {
-  position: fixed;
   bottom: 0;
   width: 100%;
 }
