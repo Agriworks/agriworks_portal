@@ -3,38 +3,47 @@
     <div class="container-fluid">
       <div id="header">
         <div id="header-left">
-          <Logo/>
+          <Logo />
         </div>
         <div id="header-right">
-          <fa-icon icon="sign-in-alt" size="lg"/>
+          <fa-icon icon="sign-in-alt" size="lg" />
         </div>
       </div>
       <Push>
         <a id="logo">
-            <Logo/>
+          <Logo />
         </a>
-        <router-link v-for="route in routes" :key="route.path" :to="route.path">
-            {{route.name}}  
-        </router-link>
+        <router-link v-for="route in routes" :key="route.path" :to="route.path">{{route.name}}</router-link>
+        <div v-if="this.$store.getters['isLoggedIn']">
+          <button class="btn btn-lg btn-primary" v-on:click="logout">Log Out</button>
+        </div>
       </Push>
-        <main id="page-wrap">
-          <router-view />
-        </main>
-      </div>
+      <main id="page-wrap">
+        <router-view />
+      </main>
     </div>
+  </div>
 </template>
 
 <script>
-import Logo from './components/Logo'
-import {Push} from 'vue-burger-menu'
+import Logo from "./components/Logo";
+import { Push } from "vue-burger-menu";
+import { deleteCookie } from "./js/authentication";
 
 export default {
   name: "app",
-  components: {Push, Logo},
+  components: { Push, Logo },
   data() {
     return {
       routes: this.$router.options.routes
     };
+  },
+  methods: {
+    logout() {
+      deleteCookie("SID");
+      this.$router.push("/");
+      window.location.reload();
+    }
   }
 };
 </script>
@@ -70,7 +79,7 @@ export default {
   z-index: 1000; /* Stay on top */
   top: 0;
   left: 0;
-  background-color:#42b983;
+  background-color: #42b983;
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px; /* Place content 60px from the top */
   transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
@@ -99,5 +108,4 @@ export default {
   font-weight: 700;
   color: white;
 }
-
 </style>
