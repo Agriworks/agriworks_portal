@@ -6,12 +6,14 @@ import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { library } from '@fortawesome/fontawesome-svg-core' //https://github.com/FortAwesome/vue-fontawesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faSignInAlt, fa } from '@fortawesome/free-solid-svg-icons'
+import { faSignInAlt, faBalanceScale, faSearch, faGem } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faSignInAlt);
+library.add(faSignInAlt)
+library.add(faBalanceScale)
+library.add(faSearch)
+library.add(faGem)
 
 Vue.component('fa-icon', FontAwesomeIcon);
-
 Vue.config.productionTip = false;
 
 new Vue({
