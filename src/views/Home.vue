@@ -1,55 +1,64 @@
 <template>
-  <main role="main">
-
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <div class="container">
-          <div class="header">
-            <h1 class="display-3">Agriworks</h1>
-          </div>
-          <p>This is the mission statement.</p>
-          <p><a class="btn btn-primary btn-lg" href="./login" role="button">Login &raquo;</a></p>
-        </div>
+  <div id="main-container" class="container">
+    <div class="row">
+    <div class="col-md-6" style="margin-top:2rem">
+      <h1 style="color:green"> Transform your Agricultural Landscape using Data</h1>
+      <p> Agriworks enables researchers, policymakers, and common citizens to explore and act on agricultural data in an effort to better their local communities.</p>
+      <div class="inline-row">
+      <button class="btn btn-lg btn-success"> Sign Up </button>
       </div>
-
-      <div class="container">
-        <!-- Example row of columns -->
-        <div class="row">
-          <div class="col-md-3">
-            <h2>Researcher</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-3">
-            <h2>Policy Maker</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-3">
-            <h2>Non-Profit</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
-          <div class="col-md-3">
-            <h2>Citizen</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-          </div>
-        </div>
-
-        <hr>
-
-      </div> <!-- /container -->
-
-    </main>
+    </div>
+    <div class="col-md-6">
+      <div class="custom-card">
+            <div class="custom-card-top">
+            <p> Make An Impact Together </p> </div>
+            <p> <fa-icon icon="search" size ="lg"/> <strong> Researchers: </strong> <br> Browse and manipulate datasets </p>
+            <p> <fa-icon icon="balance-scale" size="lg"/>  <strong> Policy Makers: </strong>  <br> Make informed decisions </p>
+            <p> <fa-icon icon="gem" size="lg"/> <strong> Citizens: </strong> <br> Be the change in your community </p>
+      </div>
+  </div>
+  </div>
+  </div>
 </template>
 
 <script>
 // @ is an alias to /src
 export default {
-  name: "home",
+  name: "Home",
   components: {
     
   }
 };
 </script>
+
+<style scoped>
+#main-container {
+  margin-top: 7%;  
+}
+
+#header {
+  display: none;
+}
+
+.custom-card {
+  border: 2px solid #192e7af5;
+  border-radius: 10px;
+  width: 90%;
+  margin-left: 15%;
+  min-height: fit-content;
+  padding-bottom: 2rem;
+}
+
+.custom-card-top {
+  background-color: #080755;
+  height: 50px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-bottom: 2rem;
+  color: white;
+  padding: 0.5rem;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+</style>
