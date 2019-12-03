@@ -1,25 +1,41 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {post} from './requests';
+import {addCookie, wasAlreadyLoggedIn} from './js/authentication';
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
-    posts: [
-      { title: "Post 1"},
-      { title: "Post 2"},
-      { title: "Post 3"},
-      { title: "Post 4"},
-      { title: "Post 5"}
-    ],
-    count: 0
+    //Initial state
+    loggedIn: wasAlreadyLoggedIn()
   },
   mutations: {
-    increment(state) {
-      state.count++;
+    setLoggedInTrue (state) {
+      state.loggedIn = true;
+    }
+  },
+  getters: {
+    isLoggedIn:  (state) => {
+      return state.loggedIn
     }
   },
   actions: {
-
+    retrieveSessionID(state, payload) {
+      return new Promise((resolve,reject) => {
+        post("/auth/login", payload)
+        .then(response => {
+          addCookie(response.data.key, response.data.value, response.data.expires);
+          store.commit("setLoggedInTrue");
+          resolve(response);
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        })
+      })
+  },
   }
 })
+
+export default store;

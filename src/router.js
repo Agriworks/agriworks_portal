@@ -1,8 +1,18 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import store from "./store"; // TODO: How do we import the store globally ? 
 
 Vue.use(Router);
+
+const redirectIfLoggedIn = function(next) {
+  if (store.getters.isLoggedIn) {
+    next("dashboard");
+  }
+  else{
+    next();
+  }
+}
 
 const router = new Router({
   mode: "history",
@@ -10,31 +20,24 @@ const router = new Router({
   routes: [
     {
       path: "/",
-      name: "home",
+      name: "Home",
       component: Home
-    },
-    {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
     },
     {
       path: "/login",
       name: "login",
-      component: () => import("./views/Login.vue")
+      component: () => import("./views/Login.vue"),
+      beforeEnter: (to, from, next) => redirectIfLoggedIn(next)
     },
     {
       path: "/registration",
       name: "registration",
-      component: () => import("./views/Registration.vue")
+      component: () => import("./views/Registration.vue"),
+      beforeEnter: (to, from, next) => redirectIfLoggedIn(next)
     },
     {
       path: "/dashboard",
-      name: "dashboard",
+      name: "Dashboard",
       component: () => import("./views/Dashboard.vue"),
       meta: {
         requiresAuth: true
@@ -42,7 +45,7 @@ const router = new Router({
     },
     {
       path: "/admin",
-      name: "admin",
+      name: "Admin",
       component: () => import("./views/Admin.vue"),
       meta: {
         requiresAuth: true,
@@ -51,7 +54,7 @@ const router = new Router({
     },
     {
       path: "/account",
-      name: "account",
+      name: "Account",
       component: () =>import("./views/Account.vue"),
       meta: {
         requiresAuth: true
@@ -59,16 +62,27 @@ const router = new Router({
     },
     {
       path: "/browse",
-      name: "browse",
+      name: "Browse",
       component: () => import("./views/DatasetBrowserView.vue")
+    },
+    {
+      path: "/table",
+      name: "table",
+      component: () => import("./views/Table.vue")
+    },
+    {
+      path: "/charts",
+      name: "Charts",
+      component: () => import("./views/Charts.vue")
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
-  //hard code for now
-  let auth = true;
-  let admin = false;
+  let auth = store.getters.isLoggedIn;
+  let admin = false; //TODO: Set admin permission
+
+
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (auth) {
       if (to.matched.some(record => record.meta.is_admin)) {
