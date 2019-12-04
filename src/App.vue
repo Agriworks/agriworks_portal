@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-      <div class = "alert alert-danger" role="alert">
-        {{$store.getters.getErrorMessage}}
-      </div>
+
     <div class="container-fluid">
       <div id="header">
         <div id="header-left">
@@ -11,6 +9,9 @@
         <div id="header-right">
           <fa-icon icon="sign-in-alt" size="lg"/>
         </div>
+      </div>
+      <div v-show = "showError" class = "alert alert-danger" role="alert">
+            {{this.$store.getters.getErrorMessage}}
       </div>
       <Push>
         <a id="logo">
@@ -37,7 +38,7 @@ export default {
   components: {Push, Logo},
   data() {
     return {
-      routes: this.$router.options.routes
+      routes: this.$router.options.routes, 
     };
   },
   methods:{
@@ -45,8 +46,23 @@ export default {
       var d = new Date();
       const currentYear = d.getFullYear();
       return currentYear;
-    }
+    }, 
+  
   }, 
+  computed: {
+    showError() {
+      return this.$store.getters.getShowError
+    }
+  },
+  watch: {
+   showError: function(showVal, oldVal){
+    this.$forceUpdate
+     if (showVal) {
+           setTimeout(() =>   this.$store.commit("setShowError", false), 3000);
+    }
+    this.$forceUpdate
+   } 
+  }
 };
 </script>
 
@@ -114,6 +130,11 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
+}
+
+.alert{
+  width: 50%; 
+  margin-left: 23rem; 
 }
 
 </style>

@@ -93,16 +93,19 @@ router.beforeEach((to, from, next) => {
           next();
         }
         else{
-          alert("The User Does Not Have Admin Privileges")
+          store.commit("setErrorMessage", "User Does Not Have Admin Privileges")
+          store.commit("setShowError", true)
         }
       } else {
-        alert("The User Does Not Have Admin Privileges")
+        store.commit("setErrorMessage", "User Does Not Have Admin Privileges")
+        store.commit("setShowError", true)
         //authorize to dashboard if user is logged in but is not admin
         next();
       }
     } else {
       //redirect to login page if user is not authorized to view dashboard
-      alert(message)
+      store.commit("setErrorMessage", "User Is Not Logged In")
+      store.commit("setShowError", true)
       next({
         path: "/login",
         query: { redirect: to.fullPath }

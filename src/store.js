@@ -9,7 +9,8 @@ const store = new Vuex.Store({
   state: {
     //Initial state
     loggedIn: wasAlreadyLoggedIn(), 
-    errorMessage: "Error"
+    errorMessage: "", 
+    showError: false
   },
   mutations: {
     setLoggedInTrue (state) {
@@ -17,6 +18,9 @@ const store = new Vuex.Store({
     }, 
     setErrorMessage (state, error) {
       state.errorMessage = error; 
+    }, 
+    setShowError (state, val) {
+      state.showError = val; 
     }
   },
   getters: {
@@ -25,6 +29,9 @@ const store = new Vuex.Store({
     }, 
     getErrorMessage: (state) => {
       return state.errorMessage
+    }, 
+    getShowError: (state) => {
+      return state.showError
     }
   },
   actions: {

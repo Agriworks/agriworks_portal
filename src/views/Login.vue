@@ -1,10 +1,5 @@
 <template>
   <div class="container">
-    <div v-if="showIncorrectPasswordFlash">
-      <div class = "alert alert-danger" role="alert">
-        Incorrect Username or Password
-      </div>
-    </div>
     <div class="row">
       <!-- <div class="col-md-1"></div> -->
       <div class="col-md-6">
@@ -71,12 +66,11 @@ export default {
         this.$router.push("/dashboard")
       })
       .catch(error => {
-        this.showIncorrectPasswordFlash = true; 
-      })
+        this.$store.commit("setErrorMessage", "Incorrect Username or Password")
+        this.$store.commit("setShowError", true)
+        })
       }, 
-      setIncorrectUserPass(){
-        this.showIncorrectPasswordFlash = false; 
-      }
+
     }
 }
 </script>
