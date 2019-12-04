@@ -15,6 +15,14 @@ library.add(fas);
 Vue.component('fa-icon', FontAwesomeIcon);
 Vue.use(VueSidebarMenu)
 
+import { faSignInAlt, faBalanceScale, faSearch, faGem } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faSignInAlt)
+library.add(faBalanceScale)
+library.add(faSearch)
+library.add(faGem)
+
+Vue.component('fa-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 
 new Vue({

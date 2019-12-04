@@ -22,7 +22,7 @@
           <router-view />
         </main>
       </div>
-    </div>
+    </div>  
 </template>
 
 <script>
@@ -43,9 +43,14 @@ export default {
   methods: {
     onCollapsed(collapsed) {
       this.collapsed = collapsed
+    },
+    getYear(){
+      var d = new Date();
+      const currentYear = d.getFullYear();
+      return currentYear;
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
@@ -73,45 +78,10 @@ export default {
   padding-right: 5rem;
 }
 
-// .sidebar-text {
-//   font-weight: bold;
-//   color: white;
-// }
-// .bm-menu {
-//   height: 100%; /* 100% Full-height */
-//   width: 0; /* 0 width - change this with JavaScript */
-//   position: fixed; /* Stay in place */
-//   z-index: 1000; /* Stay on top */
-//   top: 0;
-//   left: 0;
-//   background-color:#42b983;
-//   overflow-x: hidden; /* Disable horizontal scroll */
-//   padding-top: 20px; /* Place content 60px from the top */
-//   transition: 0.5s; /*0.5 second transition effect to slide in the sidenav*/
-// }
-
-// .bm-burger-button {
-//   height: 22px;
-//   top: 30px;
-// }
-
-// .bm-overlay {
-//   background: white;
-// }
-// .bm-item-list {
-//   color: #b8b7ad;
-//   margin-left: 10%;
-//   font-size: 20px;
-// }
-// .bm-item-list > * {
-//   display: flex;
-//   text-decoration: none;
-//   padding: 0.7em;
-// }
-// .bm-item-list > * > span {
-//   margin-left: 10px;
-//   font-weight: 700;
-//   color: white;
-// }
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
 
 </style>

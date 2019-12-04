@@ -69,6 +69,11 @@ const router = new Router({
       path: "/table",
       name: "table",
       component: () => import("./views/Table.vue")
+    },
+    {
+      path: "/charts",
+      name: "Charts",
+      component: () => import("./views/Charts.vue")
     }
   ]
 });
