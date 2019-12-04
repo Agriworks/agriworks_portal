@@ -55,7 +55,7 @@ export default {
     }
   },
   watch: {
-   showError: function(showVal, oldVal){
+   showError: function(showVal){
     this.$forceUpdate
      if (showVal) {
            setTimeout(() =>   this.$store.commit("setShowError", false), 3000);
