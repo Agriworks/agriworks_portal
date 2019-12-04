@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueSweetalert2 from 'vue-sweetalert2';
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -7,7 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { library } from '@fortawesome/fontawesome-svg-core' //https://github.com/FortAwesome/vue-fontawesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSignInAlt, faBalanceScale, faSearch, faGem } from '@fortawesome/free-solid-svg-icons'
-import VueFlashMessage from 'vue-flash-message';
 
 
 
@@ -31,7 +31,7 @@ Vue.config.productionTip = false
 
 Vue.component('fa-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
-Vue.use(VueFlashMessage);
+Vue.use(VueSweetalert2);
 
 
 new Vue({

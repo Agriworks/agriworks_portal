@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+      <div class = "alert alert-danger" role="alert">
+        {{$store.getters.getErrorMessage}}
+      </div>
     <div class="container-fluid">
       <div id="header">
         <div id="header-left">
@@ -27,6 +30,7 @@
 <script>
 import Logo from './components/Logo'
 import {Push} from 'vue-burger-menu'
+import store from './store'
 
 export default {
   name: "app",
@@ -42,7 +46,7 @@ export default {
       const currentYear = d.getFullYear();
       return currentYear;
     }
-  }
+  }, 
 };
 </script>
 

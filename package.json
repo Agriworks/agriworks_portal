@@ -22,11 +22,14 @@
     "core-js": "^2.6.5",
     "d3": "^5.14.2",
     "jquery": "^3.4.1",
+    "mini-toastr": "^0.8.1",
     "popper.js": "^1.16.0",
     "vue": "^2.6.10",
     "vue-burger-menu": "^2.0.3",
     "vue-flash-message": "^0.7.2",
+    "vue-notifications": "^1.0.2",
     "vue-router": "^3.0.3",
+    "vue-sweetalert2": "^2.1.5",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

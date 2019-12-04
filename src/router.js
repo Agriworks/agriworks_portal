@@ -3,7 +3,10 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import store from "./store"; // TODO: How do we import the store globally ? 
 
+
+
 Vue.use(Router);
+
 
 const redirectIfLoggedIn = function(next) {
   if (store.getters.isLoggedIn) {
@@ -82,7 +85,6 @@ router.beforeEach((to, from, next) => {
   let auth = store.getters.isLoggedIn;
   let admin = false; //TODO: Set admin permission
 
-
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (auth) {
       if (to.matched.some(record => record.meta.is_admin)) {
@@ -100,12 +102,12 @@ router.beforeEach((to, from, next) => {
       }
     } else {
       //redirect to login page if user is not authorized to view dashboard
-
-      this.flash('Validation failed', 'error');
+      alert(message)
       next({
         path: "/login",
         query: { redirect: to.fullPath }
       });
+
     }
   } else {
     next();

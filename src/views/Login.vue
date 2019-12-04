@@ -59,7 +59,9 @@ export default {
       showIncorrectPasswordFlash: false, 
     }
   },
+
   methods: {
+
     login() {
       this.$store.dispatch("retrieveSessionID", {
           email: this.email,
