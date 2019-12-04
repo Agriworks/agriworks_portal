@@ -763,6 +763,11 @@
     consola "^2.10.1"
     node-fetch "^2.6.0"
 
+"@smartweb/vue-flash-message@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@smartweb/vue-flash-message/-/vue-flash-message-0.5.0.tgz#e672e7eb2f41f166cba9a4391f123b47f147d8a3"
+  integrity sha512-LO9HT614ON2ejenBjE2DNyOBYUOfdcrg+7Gw5gIHv89o3tZu+PHipjO5J5k4VK9YV6xhyFxKRW/Mc5CUsu8GuA==
+
 "@soda/friendly-errors-webpack-plugin@^1.7.1":
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/@soda/friendly-errors-webpack-plugin/-/friendly-errors-webpack-plugin-1.7.1.tgz#706f64bcb4a8b9642b48ae3ace444c70334d615d"
@@ -9045,6 +9050,11 @@ vue-eslint-parser@^5.0.0:
     espree "^4.1.0"
     esquery "^1.0.1"
     lodash "^4.17.11"
+
+vue-flash-message@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/vue-flash-message/-/vue-flash-message-0.7.2.tgz#0668d6fa9fc70c65fd5c6ec246a415786960c34d"
+  integrity sha512-swOK9PxlWKzt1zzAMJX4YMU2O3kS0JznbwLy8burtKK2vibYc7ODRiEdAVnxRDQ09TG4tElVeO3hwwGDxQktaw==
 
 vue-functional-data-merge@^3.1.0:
   version "3.1.0"

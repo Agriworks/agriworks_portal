@@ -1,5 +1,10 @@
 <template>
   <div class="container">
+    <div v-if="showIncorrectPasswordFlash">
+      <div class = "alert alert-danger" role="alert">
+        Incorrect Username or Password
+      </div>
+    </div>
     <div class="row">
       <!-- <div class="col-md-1"></div> -->
       <div class="col-md-6">
@@ -20,7 +25,7 @@
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
               <div class="custom-control custom-checkbox mb-3">
-                <button class="btn btn-lg btn-primary" type="submit">Login</button>
+                <button v-on:click="setIncorrectUserPass" class="btn btn-lg btn-primary" type="submit">Login</button>
               </div>
               <div class="custom-control custom-checkbox mb-3">
                 <router-link to="/registration" class="btn btn-link">Register</router-link> | <router-link to="/registration" class="btn btn-link">Forgot Password?</router-link>
@@ -50,7 +55,8 @@ export default {
   data() {
     return {
       email: "mdesilva@bu.edu",
-      password: "password"
+      password: "password", 
+      showIncorrectPasswordFlash: false, 
     }
   },
   methods: {
@@ -63,8 +69,11 @@ export default {
         this.$router.push("/dashboard")
       })
       .catch(error => {
-        alert("Incorrect username or password");
+        this.showIncorrectPasswordFlash = true; 
       })
+      }, 
+      setIncorrectUserPass(){
+        this.showIncorrectPasswordFlash = false; 
       }
     }
 }

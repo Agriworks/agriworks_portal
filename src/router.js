@@ -90,15 +90,18 @@ router.beforeEach((to, from, next) => {
         if (admin) {
           next();
         }
-        // else{
-        //   alert user does not have admin privileges
-        // }
+        else{
+          alert("The User Does Not Have Admin Privileges")
+        }
       } else {
+        alert("The User Does Not Have Admin Privileges")
         //authorize to dashboard if user is logged in but is not admin
         next();
       }
     } else {
       //redirect to login page if user is not authorized to view dashboard
+
+      this.flash('Validation failed', 'error');
       next({
         path: "/login",
         query: { redirect: to.fullPath }
