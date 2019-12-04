@@ -78,8 +78,8 @@ export default {
                 }
             },
             {
-                href: { path: '/table' },
-                title: 'Table',
+                href: { path: '/charts' },
+                title: 'Charts',
                 icon: {
                   element: 'fa-icon',
                   attributes: {
