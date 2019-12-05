@@ -115,4 +115,8 @@ export default {
     text-align: left;
 }
 
+.v-sidebar-menu >>> .vsm--link.vsm--link_active {
+    box-shadow: 3px 0px 0px 0px green inset;
+}
+
 </style>
