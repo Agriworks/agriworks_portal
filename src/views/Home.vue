@@ -5,7 +5,9 @@
       <h1 style="color:green"> Transform your Agricultural Landscape using Data</h1>
       <p> Agriworks enables researchers, policymakers, and common citizens to explore and act on agricultural data in an effort to better their local communities.</p>
       <div class="inline-row">
-      <button class="btn btn-lg btn-success"> Sign Up </button>
+      <!-- <button class="btn btn-lg btn-success" routerLink="/registration"> Sign Up </button> -->
+      <router-link to="/Registration" tag="button" class="btn btn-lg btn-success">Sign Up</router-link>
+      <!-- <router-link to="/Login" tag="button" class="btn btn-lg btn-success">Log In</router-link> -->
       </div>
     </div>
     <div class="col-md-6">
