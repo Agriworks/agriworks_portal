@@ -13,7 +13,7 @@ const axiosConfig = {
 function urlEncode(data){
     var urlEncodedString = "";
     Object.keys(data).forEach(function(key){
-        urlEncodedString += (key + "=" + data[key] + "&"); 
+        urlEncodedString += (key + "=" + encodeURIComponent(data[key]) + "&"); 
     })
     return urlEncodedString.slice(0,-1); //remove the trailing '&'
 }
