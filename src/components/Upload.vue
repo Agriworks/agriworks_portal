@@ -75,9 +75,9 @@
       processForm() {
         let formData = new FormData();
         formData.append('file', this.file);
-        formData.append('filename', this.file.name);
+        formData.append('name', this.file.name);
         axios 
-          .post('/upload/create', 
+          .post('http://localhost:4000/upload/', 
             formData, {
             headers: {
               'Content-type': 'multipart/form-data'
@@ -87,9 +87,11 @@
           console.log(this.file.name),
           )
           .then(function() {
-            console.log('Sucess!');
+            //#TODO: display success message to user
+            console.log('Success!');
           })
           .catch(function() {
+            //#TODO: display error message to user
             console.log('Failure');
           });
       },
