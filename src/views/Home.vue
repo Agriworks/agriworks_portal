@@ -5,8 +5,7 @@
       <h1 style="color:green"> Transform your Agricultural Landscape using Data</h1>
       <p> Agriworks enables researchers, policymakers, and common citizens to explore and act on agricultural data in an effort to better their local communities.</p>
       <div class="inline-row">
-        <router-link to="/Registration" tag="button" class="btn btn-lg btn-primary">Sign Up</router-link> 
-        &nbsp;
+        <router-link to="/Registration" tag="button" class="btn btn-lg btn-primary" style="margin-right:20px">Sign Up</router-link> 
         <router-link to="/Login" tag="button" class="btn btn-lg btn-success">Log In</router-link>
       </div>
     </div>
@@ -20,7 +19,11 @@
       </div>
   </div>
   </div>
+  <br>
+  <br>
+  <div>
   <img src="../assets/home.jpg" class="img-fluid" alt="Farm Land">
+  </div>
   </div>
 </template>
 
@@ -36,7 +39,7 @@ export default {
 
 <style scoped>
 #main-container {
-  margin-top: 7%;  
+  margin-top: 1%;  
 }
 
 #header {
