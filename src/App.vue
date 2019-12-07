@@ -28,8 +28,8 @@
 <script>
 import Logo from "./components/Logo";
 import { Push } from "vue-burger-menu";
-import { deleteCookie } from "./js/authentication";
-
+import { deleteCookie, getCookie } from "./js/authentication";
+import { post } from "../src/requests"
 export default {
   name: "app",
   components: { Push, Logo },
@@ -40,9 +40,14 @@ export default {
   },
   methods: {
     logout() {
+      const sessionId = getCookie("SID")
+      post("/auth/logout", {
+        sessionId: sessionId
+      })
       deleteCookie("SID");
       this.$router.push("/");
       window.location.reload();
+      
     }
   }
 };
