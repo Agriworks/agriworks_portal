@@ -13,6 +13,7 @@
       <div v-show = "showError" class = "alert alert-danger" role="alert">
             {{this.$store.getters.getErrorMessage}}
       </div>
+      
       <Push>
         <a id="logo">
             <Logo/>
@@ -56,7 +57,7 @@ export default {
   },
   watch: {
    showError: function(showVal){
-    this.$forceUpdate
+   this.$forceUpdate
      if (showVal) {
            setTimeout(() =>   this.$store.commit("setShowError", false), 3000);
     }
