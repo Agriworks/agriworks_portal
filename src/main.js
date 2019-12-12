@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import VueSweetalert2 from 'vue-sweetalert2';
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -31,7 +30,6 @@ Vue.config.productionTip = false
 
 Vue.component('fa-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
-Vue.use(VueSweetalert2);
 
 
 new Vue({
