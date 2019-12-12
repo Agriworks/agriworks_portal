@@ -1,13 +1,15 @@
 <template>
   <div id="main-container" class="container">
-    <div>
+    <div id="test">
     <img src="../assets/home.jpg" class="img-fluid" alt="Farm Land">
     </div>
     <br>
 
     <div class="row">
     <div class="col-md-6" style="margin-top:2rem">
-      <h1 style="color:green"> Transform your Agricultural Landscape using Data</h1>
+        <div id="test">
+          <h1 style="color:green"> Transform your Agricultural Landscape using Data</h1>
+        </div>
       <p> Agriworks enables researchers, policymakers, and common citizens to explore and act on agricultural data in an effort to better their local communities.</p>
       <div class="inline-row">
         <router-link to="/Registration" tag="button" class="btn btn-lg btn-primary" style="margin-right:20px">Sign Up</router-link> 
@@ -15,7 +17,7 @@
       </div>
     </div>
     <div class="col-md-6">
-      <div class="custom-card">
+      <div class="custom-card" id="test">
             <div class="custom-card-top">
             <p> Make An Impact Together </p> </div>
             <p> <fa-icon icon="search" size ="lg"/> <strong> Researchers: </strong> <br> Browse and manipulate datasets </p>
@@ -41,7 +43,7 @@ export default {
 
 <style scoped>
 #main-container {
-  margin-top: 0%;  
+  margin-top: 0%;
 }
 
 #header {
@@ -53,7 +55,45 @@ template {
   margin: 0;
 }
 
-
+#test {
+    text-align: center;
+    animation: fadein 2s;
+    -moz-animation: fadein 2s; /* Firefox */
+    -webkit-animation: fadein 2s; /* Safari and Chrome */
+    -o-animation: fadein 2s; /* Opera */
+}
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
 .custom-card {
   border: 2px solid #192e7af5;
