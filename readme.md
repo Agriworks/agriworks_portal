@@ -30,5 +30,15 @@ yarn run lint
 yarn run test:unit
 ```
 
+
+### Switching branches/pull
+```
+YARNHOOK_DEBUG=true git checkout feature-branch
+```
+
+### Run script
+1. Run `chmod u+x start.sh` command to add permissions.
+2. Run ./start.sh
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
