@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="[{'collapsed' : collapsed}]">
+  <div id="app">
     <div class="container-fluid">
       <Sidebar v-on:collapsed="onCollapsed"/>
       <div id="header">
@@ -27,17 +27,15 @@
 
 <script>
 import Logo from './components/Logo'
-import Sidebar from './components/Sidebar'
-
-// import {Push} from 'vue-burger-menu'
+import {Push} from 'vue-burger-menu'
+import store from './store'
 
 export default {
   name: "app",
   components: {Logo, Sidebar},
   data() {
     return {
-      routes: this.$router.options.routes,
-      collapsed: true
+      routes: this.$router.options.routes, 
     };
   },
   methods: {
@@ -48,7 +46,22 @@ export default {
       var d = new Date();
       const currentYear = d.getFullYear();
       return currentYear;
+    }, 
+  
+  }, 
+  computed: {
+    showError() {
+      return this.$store.getters.getShowError
     }
+  },
+  watch: {
+   showError: function(showVal){
+   this.$forceUpdate
+     if (showVal) {
+           setTimeout(() =>   this.$store.commit("setShowError", false), 3000);
+    }
+    this.$forceUpdate
+   } 
   }
 }
 </script>
@@ -81,6 +94,11 @@ export default {
 #footer {
   bottom: 0;
   width: 100%;
+}
+
+.alert{
+  width: 50%; 
+  margin-left: 23rem; 
 }
 
 </style>

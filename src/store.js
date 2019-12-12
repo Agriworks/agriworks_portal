@@ -8,16 +8,30 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     //Initial state
-    loggedIn: wasAlreadyLoggedIn()
+    loggedIn: wasAlreadyLoggedIn(), 
+    errorMessage: "", 
+    showError: false
   },
   mutations: {
     setLoggedInTrue(state) {
       state.loggedIn = true;
+    }, 
+    setErrorMessage (state, error) {
+      state.errorMessage = error; 
+    }, 
+    setShowError (state, val) {
+      state.showError = val; 
     }
   },
   getters: {
     isLoggedIn: (state) => {
       return state.loggedIn
+    }, 
+    getErrorMessage: (state) => {
+      return state.errorMessage
+    }, 
+    getShowError: (state) => {
+      return state.showError
     }
   },
   actions: {

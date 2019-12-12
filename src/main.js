@@ -17,13 +17,29 @@ Vue.use(VueSidebarMenu)
 
 import { faSignInAlt, faBalanceScale, faSearch, faGem } from '@fortawesome/free-solid-svg-icons'
 
+
+
 library.add(faSignInAlt)
 library.add(faBalanceScale)
 library.add(faSearch)
 library.add(faGem)
 
+
+
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+
+
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+
+Vue.config.productionTip = false
+
 Vue.component('fa-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
+
 
 new Vue({
   router,
