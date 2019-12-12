@@ -1,5 +1,10 @@
 <template>
   <div id="main-container" class="container">
+    <div>
+    <img src="../assets/home.jpg" class="img-fluid" alt="Farm Land">
+    </div>
+    <br>
+
     <div class="row">
     <div class="col-md-6" style="margin-top:2rem">
       <h1 style="color:green"> Transform your Agricultural Landscape using Data</h1>
@@ -17,13 +22,10 @@
             <p> <fa-icon icon="balance-scale" size="lg"/>  <strong> Policy Makers: </strong>  <br> Make informed decisions </p>
             <p> <fa-icon icon="gem" size="lg"/> <strong> Citizens: </strong> <br> Be the change in your community </p>
       </div>
+      </div>
   </div>
-  </div>
-  <br>
-  <br>
-  <div>
-  <img src="../assets/home.jpg" class="img-fluid" alt="Farm Land">
-  </div>
+  
+  
   </div>
 </template>
 
@@ -39,12 +41,19 @@ export default {
 
 <style scoped>
 #main-container {
-  margin-top: 1%;  
+  margin-top: 0%;  
 }
 
 #header {
   display: none;
 }
+
+template {
+  height: 100%;
+  margin: 0;
+}
+
+
 
 .custom-card {
   border: 2px solid #192e7af5;
@@ -66,5 +75,10 @@ export default {
   font-weight: bold;
   font-size: 20px;
 }
+
+.container {
+  height: 100%;
+}
+
 
 </style>
