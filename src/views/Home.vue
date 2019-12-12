@@ -1,6 +1,6 @@
 <template>
   <div id="main-container" class="container">
-    <div id="test">
+    <div>
     <img src="../assets/home.jpg" class="img-fluid" alt="Farm Land">
     </div>
     <br>
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="col-md-6">
-      <div class="custom-card" id="test">
+      <div class="custom-card">
             <div class="custom-card-top">
             <p> Make An Impact Together </p> </div>
             <p> <fa-icon icon="search" size ="lg"/> <strong> Researchers: </strong> <br> Browse and manipulate datasets </p>
@@ -52,10 +52,10 @@ export default {
 
 #test {
     text-align: center;
-    animation: fadein 2s;
-    -moz-animation: fadein 2s; /* Firefox */
-    -webkit-animation: fadein 2s; /* Safari and Chrome */
-    -o-animation: fadein 2s; /* Opera */
+    animation: fadein 3s;
+    -moz-animation: fadein 3s; /* Firefox */
+    -webkit-animation: fadein 3s; /* Safari and Chrome */
+    -o-animation: fadein 3s; /* Opera */
 }
 @keyframes fadein {
     from {
