@@ -43,7 +43,7 @@ export default {
                 icon: {
                   element: 'fa-icon',
                   attributes: {
-                    icon: 'user'
+                    icon: 'registered'
                   }
                 }
             },
