@@ -1,11 +1,19 @@
 <template>
   <div id="main-container" class="container">
+    <div>
+    <img src="../assets/home.jpg" class="img-fluid" alt="Farm Land">
+    </div>
+    <br>
+
     <div class="row">
     <div class="col-md-6" style="margin-top:2rem">
-      <h1 style="color:green"> Transform your Agricultural Landscape using Data</h1>
+        <div id="test">
+          <h1 style="color:green"> Transform your Agricultural Landscape using Data</h1>
+        </div>
       <p> Agriworks enables researchers, policymakers, and common citizens to explore and act on agricultural data in an effort to better their local communities.</p>
       <div class="inline-row">
-      <button class="btn btn-lg btn-success"> Sign Up </button>
+        <router-link to="/Registration" tag="button" class="btn btn-lg btn-primary" style="margin-right:20px">Sign Up</router-link> 
+        <router-link to="/Login" tag="button" class="btn btn-lg btn-success">Log In</router-link>
       </div>
     </div>
     <div class="col-md-6">
@@ -16,8 +24,10 @@
             <p> <fa-icon icon="balance-scale" size="lg"/>  <strong> Policy Makers: </strong>  <br> Make informed decisions </p>
             <p> <fa-icon icon="gem" size="lg"/> <strong> Citizens: </strong> <br> Be the change in your community </p>
       </div>
+      </div>
   </div>
-  </div>
+  
+  
   </div>
 </template>
 
@@ -33,11 +43,51 @@ export default {
 
 <style scoped>
 #main-container {
-  margin-top: 7%;  
+  margin-top: 0%;
 }
 
 #header {
   display: none;
+}
+
+#test {
+    text-align: center;
+    animation: fadein 3s;
+    -moz-animation: fadein 3s; /* Firefox */
+    -webkit-animation: fadein 3s; /* Safari and Chrome */
+    -o-animation: fadein 3s; /* Opera */
+}
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .custom-card {
