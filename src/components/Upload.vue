@@ -1,0 +1,112 @@
+<template>
+  <div class="table">
+      <b-card-group deck>
+        <b-card title="Meta Data" style="max-width: 50%;">
+          <div class="container">
+            <b-form inline>
+              <label class="sr-only" for="inline-form-input-meta1">Meta Data #1</label>
+              <b-input-group prepend="Field 1" class="mr-sm-5 mb-sm-4">
+                <b-input
+                  id="inline-form-input-meta1"
+                  placeholder="Meta Data #1"
+                ></b-input>
+              </b-input-group>
+              <label class="sr-only" for="inline-form-input-meta2">Meta Data #2</label>
+              <b-input-group prepend="Field 2" class="mb-sm-4">
+                <b-input
+                  id="inline-form-input-meta2"
+                  placeholder="Meta Data #2"
+                ></b-input>
+              </b-input-group>
+            </b-form>
+            <b-form inline>
+              <label class="sr-only" for="inline-form-input-meta3">Meta Data #3</label>
+              <b-input-group prepend="Field 3" class="mr-sm-5">
+                <b-input
+                  id="inline-form-input-meta3"
+                  placeholder="Meta Data #3"
+                ></b-input>
+              </b-input-group>
+              <label class="sr-only" for="inline-form-input-meta4">Meta Data #4</label>
+              <b-input-group prepend="Field 4">
+                <b-input
+                  id="inline-form-input-meta4"
+                  placeholder="Meta Data #4"
+                ></b-input>
+              </b-input-group>
+            </b-form>
+          </div>
+        </b-card>
+        <b-card title="Link Fields" style="max-width: 50%;">
+          <div style="margin-bottom: 20px;">
+            <b-card-text>Field 1</b-card-text>
+            <FieldLink />
+          </div>
+          <div>
+            <b-card-text>Field 2</b-card-text>
+            <FieldLink />
+          </div>
+        </b-card>
+      </b-card-group>
+      <b-card-group deck style="padding-top: 15px;">
+        <b-card title="Selection" style="max-width: 50%;">
+          <div>
+            <b-form-file v-model="file" ref="file-input" class="mt-3" plain></b-form-file>
+            <div class="mt-3">Selected file: {{ file ? file.name : '' }}</div>
+            <b-button @click="processForm" class="mr-2">Submit</b-button>
+          </div>
+        </b-card>
+        <b-card title="Preparation" style="max-width: 50%;">
+          <b-card-text>
+            The following video will give you an explanation of how to prepare your data. Please note that all uploaded files will have either the .csv or .txt extension.
+          </b-card-text>
+        </b-card>
+      </b-card-group>
+  </div>
+</template>
+
+<script>
+  import FieldLink from './FieldLink'
+  import axios from 'axios'
+  export default {
+    name: 'Upload',
+    components: { FieldLink },
+    methods: {
+      processForm() {
+        let formData = new FormData();
+        formData.append('file', this.file);
+        formData.append('name', this.file.name);
+        axios 
+          .post('http://localhost:4000/upload/', 
+            formData, {
+            headers: {
+              'Content-type': 'multipart/form-data'
+            }
+          },
+          console.log(this.file),
+          console.log(this.file.name),
+          )
+          .then(function() {
+            //#TODO: display success message to user
+            console.log('Success!');
+          })
+          .catch(function() {
+            //#TODO: display error message to user
+            console.log('Failure');
+          });
+      },
+      handleFileUpload() {
+        this.file = this.$refs['file-input']
+      }
+    }
+  }
+</script>
+
+<style lang="css">
+.table {
+  padding: 20px;
+}
+.form-inline {
+  justify-content: center;
+}
+</style>

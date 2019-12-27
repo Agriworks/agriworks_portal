@@ -1558,11 +1558,14 @@ axios@^0.19.0:
     follow-redirects "1.5.10"
     is-buffer "^2.0.2"
 
+<<<<<<< HEAD
 b-table@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/b-table/-/b-table-1.0.0.tgz#60d88fd24de2b8de8a3ddabc57873fccf2c9749e"
   integrity sha1-YNiP0k3iuN6KPdq8V4c/zPLJdJ4=
 
+=======
+>>>>>>> feature-uploadFrontend
 babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"
@@ -9235,6 +9238,11 @@ vue-loader@^15.7.0:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-multiselect@^2.1.6:
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/vue-multiselect/-/vue-multiselect-2.1.6.tgz#5be5d811a224804a15c43a4edbb7485028a89c7f"
+  integrity sha512-s7jmZPlm9FeueJg1RwJtnE9KNPtME/7C8uRWSfp9/yEN4M8XcS/d+bddoyVwVnvFyRh9msFo0HWeW0vTL8Qv+w==
 
 vue-router@^3.0.3:
   version "3.1.3"

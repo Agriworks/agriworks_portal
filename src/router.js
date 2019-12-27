@@ -24,6 +24,11 @@ const router = new Router({
       component: Home
     },
     {
+      path: '/upload',
+      name: 'uploadscreen',
+      component: () => import('./views/UploadScreen.vue')
+    },
+    {
       path: "/login",
       name: "login",
       component: () => import("./views/Login.vue"),

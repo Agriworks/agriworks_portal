@@ -37,6 +37,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import vuetify from './plugins/vuetify';
 
 
+Vue.use(BootstrapVue) 
+
 Vue.config.productionTip = false
 Vue.use(BootstrapVue);
 
