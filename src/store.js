@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { post } from './requests';
 import { addCookie, wasAlreadyLoggedIn } from './js/authentication';
+import client from "api-client"
 
 Vue.use(Vuex)
 
@@ -10,7 +11,8 @@ const store = new Vuex.Store({
     //Initial state
     loggedIn: wasAlreadyLoggedIn(), 
     errorMessage: "", 
-    showError: false
+    showError: false,
+    datasets: []
   },
   mutations: {
     setLoggedInTrue(state) {
@@ -21,6 +23,9 @@ const store = new Vuex.Store({
     }, 
     setShowError (state, val) {
       state.showError = val; 
+    },
+    setDatasets (state, datasets) {
+      state.datasets = datasets
     }
   },
   getters: {
@@ -49,6 +54,9 @@ const store = new Vuex.Store({
           })
       })
     },
+    fetchDatasets ({commit}) {
+      return client.fetchDatasets().then(datasets => commit('setDatasets', datasets))
+    }
   }
 })
 

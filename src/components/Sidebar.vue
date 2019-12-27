@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// import {Push} from 'vue-burger-menu'
 
 export default {
   name: "Sidebar",

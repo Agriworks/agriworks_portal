@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="[{'collapsed' : collapsed}]">
     <div class="container-fluid">
       <Sidebar v-on:collapsed="onCollapsed"/>
       <div id="header">
@@ -7,7 +7,7 @@
           <Logo/>
         </div>
         <div id="header-right">
-          <fa-icon icon="sign-in-alt" size="lg"/>
+          <!-- Log in and sign in buttons. Display only if not logged in !--> 
         </div>
       </div>
       <!-- <Push>
@@ -27,15 +27,17 @@
 
 <script>
 import Logo from './components/Logo'
-import {Push} from 'vue-burger-menu'
-import store from './store'
+import Sidebar from './components/Sidebar'
+
+// import {Push} from 'vue-burger-menu'
 
 export default {
   name: "app",
   components: {Logo, Sidebar},
   data() {
     return {
-      routes: this.$router.options.routes, 
+      routes: this.$router.options.routes,
+      collapsed: true
     };
   },
   methods: {
@@ -46,22 +48,7 @@ export default {
       var d = new Date();
       const currentYear = d.getFullYear();
       return currentYear;
-    }, 
-  
-  }, 
-  computed: {
-    showError() {
-      return this.$store.getters.getShowError
     }
-  },
-  watch: {
-   showError: function(showVal){
-   this.$forceUpdate
-     if (showVal) {
-           setTimeout(() =>   this.$store.commit("setShowError", false), 3000);
-    }
-    this.$forceUpdate
-   } 
   }
 }
 </script>
@@ -71,7 +58,6 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   padding-left: 250px;
 }
@@ -94,11 +80,6 @@ export default {
 #footer {
   bottom: 0;
   width: 100%;
-}
-
-.alert{
-  width: 50%; 
-  margin-left: 23rem; 
 }
 
 </style>

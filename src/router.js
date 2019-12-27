@@ -3,10 +3,7 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import store from "./store"; // TODO: How do we import the store globally ? 
 
-
-
 Vue.use(Router);
-
 
 const redirectIfLoggedIn = function(next) {
   if (store.getters.isLoggedIn) {
@@ -44,15 +41,6 @@ const router = new Router({
       component: () => import("./views/Dashboard.vue"),
       meta: {
         requiresAuth: true
-      }
-    },
-    {
-      path: "/admin",
-      name: "Admin",
-      component: () => import("./views/Admin.vue"),
-      meta: {
-        requiresAuth: true,
-        is_admin: true
       }
     },
     {

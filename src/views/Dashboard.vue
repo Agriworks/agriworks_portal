@@ -16,7 +16,7 @@
             <div class="carousel-inner">
 
               <div class="carousel-item" v-for="(dataset, index) in popularDatasets" v-bind:key="dataset.id" v-bind:class="{ active: index == 0}"> 
-                  <IndividualDataset v-bind:dataset="dataset" />
+                  <DatasetCard v-bind:dataset="dataset" />
               </div>
              
             </div>
@@ -51,7 +51,7 @@
             <div class="carousel-inner">
 
               <div class="carousel-item" v-for="(dataset, index) in recentDatasets" v-bind:key="dataset.id" v-bind:class="{ active: index == 0}"> 
-                  <IndividualDataset v-bind:dataset="dataset" />
+                  <DatasetCard v-bind:dataset="dataset" />
               </div>
              
             </div>
@@ -86,7 +86,7 @@
             <div class="carousel-inner">
 
               <div class="carousel-item" v-for="(dataset, index) in newDatasets" v-bind:key="dataset.id" v-bind:class="{ active: index == 0}"> 
-                  <IndividualDataset v-bind:dataset="dataset" />
+                  <DatasetCard v-bind:dataset="dataset" />
               </div>
              
 
@@ -114,13 +114,13 @@
 
 <script>
 
-import IndividualDataset from "@/views/IndividualDataset.vue";
+import DatasetCard from "@/views/DatasetCard.vue";
 
 export default {
 
   name: "DashboardView",
   components: {
-    IndividualDataset
+    DatasetCard
   },
 
   methods: {

@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <div>
-      <ul class="nav nav-tabs row">
-        <li class="col-md-1">
-          <button v-on:click="component='browse' " class="btn btn-primary">Browse</button>
-        </li>
-        <li class="col-md-1">
-          <button v-on:click="component='manage' " class="btn btn-primary">Manage</button>
-        </li>
-        <li class="col-md-1">
-          <button v-on:click="component='create' " class="btn btn-primary">Create</button>
-        </li>
-      </ul>
+    <div class="row">
+      <div class="col-md-6">
+        <v-btn dark color="success" small class="dashboardButton"> <v-icon>mdi-android</v-icon> Browse </v-btn>
+        <v-btn dark color="success" small class="dashboardButton"> <v-icon>mdi-plus</v-icon> Create </v-btn> 
+        <v-btn dark color="success" small class="dashboardButton"> <v-icon>mdi-format-list-bulleted-square</v-icon> Manage </v-btn> 
+      </div>
+      <div class="col-md-6">
+        <b-nav-form>
+        <b-form-input size="sm" class="mr-lg-2 searchBar" placeholder="Search across datasets"></b-form-input>
+        <b-button size="sm" class="my-2 my-sm-0" type="submit"><v-icon>mdi-magnify</v-icon></b-button>
+        </b-nav-form>
+      </div>
     </div>
     <div class="row">
       <component v-bind:is="component"></component>
@@ -33,4 +33,8 @@ export default {
 };
 </script>
 <style scoped>
+
+.dashboardButton {
+  margin-right: 0.5rem;
+}
 </style>
