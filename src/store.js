@@ -12,7 +12,8 @@ const store = new Vuex.Store({
     loggedIn: wasAlreadyLoggedIn(), 
     errorMessage: "", 
     showError: false,
-    datasets: []
+    datasets: [],
+    dataset: {},
   },
   mutations: {
     setLoggedInTrue(state) {
@@ -26,6 +27,9 @@ const store = new Vuex.Store({
     },
     setDatasets (state, datasets) {
       state.datasets = datasets
+    },
+    setDataset(state, dataset) {
+      state.dataset = dataset
     }
   },
   getters: {
@@ -56,6 +60,9 @@ const store = new Vuex.Store({
     },
     fetchDatasets ({commit}) {
       return client.fetchDatasets().then(datasets => commit('setDatasets', datasets))
+    },
+    fetchDataset ({commit}) {
+      return client.fetchDataset().then(dataset => commit('setDataset', dataset)) 
     }
   }
 })

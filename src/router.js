@@ -44,6 +44,14 @@ const router = new Router({
       }
     },
     {
+      path: "/dataset",
+      name: "dataset",
+      component: () => import("./views/Dataset.vue"),
+      meta: {
+        requiresAuth: false,
+      }
+    },
+    {
       path: "/account",
       name: "Account",
       component: () =>import("./views/Account.vue"),
@@ -58,8 +66,8 @@ const router = new Router({
     },
     {
       path: "/table",
-      name: "table",
-      component: () => import("./views/Table.vue")
+      name: "Datatable",
+      component: () => import("./components/DataTable.vue")
     },
     {
       path: "/charts",

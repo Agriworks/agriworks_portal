@@ -11,7 +11,7 @@
             </v-list-item-avatar>
         </v-list-item>
         <v-card-actions>
-            <v-btn text> Open </v-btn>
+            <v-btn text> <router-link to="/dataset"> Open </router-link> </v-btn>
         </v-card-actions>
     </v-card>
 </template>

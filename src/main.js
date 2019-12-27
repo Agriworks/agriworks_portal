@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import BootstrapVue from 'bootstrap-vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -28,7 +29,7 @@ library.add(faGem)
 
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 
 import 'bootstrap'
@@ -37,6 +38,7 @@ import vuetify from './plugins/vuetify';
 
 
 Vue.config.productionTip = false
+Vue.use(BootstrapVue);
 
 Vue.component('fa-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;

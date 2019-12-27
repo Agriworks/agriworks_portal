@@ -19,7 +19,9 @@
         </router-link>
       </Push> -->
         <main id="page-wrap">
+          <div class="container">
           <router-view />
+          </div>
         </main>
       </div>
     </div>  
