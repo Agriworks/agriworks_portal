@@ -1558,14 +1558,11 @@ axios@^0.19.0:
     follow-redirects "1.5.10"
     is-buffer "^2.0.2"
 
-<<<<<<< HEAD
 b-table@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/b-table/-/b-table-1.0.0.tgz#60d88fd24de2b8de8a3ddabc57873fccf2c9749e"
   integrity sha1-YNiP0k3iuN6KPdq8V4c/zPLJdJ4=
 
-=======
->>>>>>> feature-uploadFrontend
 babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-code-frame/-/babel-code-frame-6.26.0.tgz#63fd43f7dc1e3bb7ce35947db8fe369a3f58c74b"

@@ -1,6 +1,7 @@
 <template>
+<v-app>
   <div id="app" :class="[{'collapsed' : collapsed}]">
-    <div class="container-fluid">
+    <div class="container">
       <Sidebar v-on:collapsed="onCollapsed"/>
       <div id="header">
         <div id="header-left">
@@ -19,12 +20,11 @@
         </router-link>
       </Push> -->
         <main id="page-wrap">
-          <div class="container">
           <router-view />
-          </div>
         </main>
       </div>
     </div>  
+    </v-app>
 </template>
 
 <script>
@@ -61,7 +61,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  padding-left: 250px;
+  background-color: white;
 }
 
 #app.collapsed {

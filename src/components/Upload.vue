@@ -1,66 +1,27 @@
 <template>
   <div class="table">
-      <b-card-group deck>
-        <b-card title="Meta Data" style="max-width: 50%;">
-          <div class="container">
-            <b-form inline>
-              <label class="sr-only" for="inline-form-input-meta1">Meta Data #1</label>
-              <b-input-group prepend="Field 1" class="mr-sm-5 mb-sm-4">
-                <b-input
-                  id="inline-form-input-meta1"
-                  placeholder="Meta Data #1"
-                ></b-input>
-              </b-input-group>
-              <label class="sr-only" for="inline-form-input-meta2">Meta Data #2</label>
-              <b-input-group prepend="Field 2" class="mb-sm-4">
-                <b-input
-                  id="inline-form-input-meta2"
-                  placeholder="Meta Data #2"
-                ></b-input>
-              </b-input-group>
-            </b-form>
-            <b-form inline>
-              <label class="sr-only" for="inline-form-input-meta3">Meta Data #3</label>
-              <b-input-group prepend="Field 3" class="mr-sm-5">
-                <b-input
-                  id="inline-form-input-meta3"
-                  placeholder="Meta Data #3"
-                ></b-input>
-              </b-input-group>
-              <label class="sr-only" for="inline-form-input-meta4">Meta Data #4</label>
-              <b-input-group prepend="Field 4">
-                <b-input
-                  id="inline-form-input-meta4"
-                  placeholder="Meta Data #4"
-                ></b-input>
-              </b-input-group>
-            </b-form>
-          </div>
-        </b-card>
-        <b-card title="Link Fields" style="max-width: 50%;">
-          <div style="margin-bottom: 20px;">
-            <b-card-text>Field 1</b-card-text>
-            <FieldLink />
-          </div>
+    <v-form ref="form">
+      <v-text-field v-model="datasetName" required label="Dataset name"></v-text-field>
+      <v-text-field v-model="datasetTags" label="Dataset tags"></v-text-field>
+      <v-select v-model="datasetPermissions" :items="permissions" label="Permissions"></v-select>
+      <v-select v-model="datasetType" :items="types" label="Dataset type"></v-select>
+    </v-form>
+      
+      <b-card-group deck class="lastRow">
+        <b-card title="Data Selection" style="max-width: 50%;">
           <div>
-            <b-card-text>Field 2</b-card-text>
-            <FieldLink />
+            <p> Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV & TXT </p>
+            <v-file-input label="Select a file" show-size accept=".csv, .txt"></v-file-input>
           </div>
         </b-card>
-      </b-card-group>
-      <b-card-group deck style="padding-top: 15px;">
-        <b-card title="Selection" style="max-width: 50%;">
-          <div>
-            <b-form-file v-model="file" ref="file-input" class="mt-3" plain></b-form-file>
-            <div class="mt-3">Selected file: {{ file ? file.name : '' }}</div>
-            <b-button @click="processForm" class="mr-2">Submit</b-button>
-          </div>
-        </b-card>
+        <v-btn @click="processForm" class="submitButton" x-large color="success" dark> <v-icon>mdi-folder-plus-outline </v-icon> Create </v-btn> 
+        <!--
         <b-card title="Preparation" style="max-width: 50%;">
           <b-card-text>
             The following video will give you an explanation of how to prepare your data. Please note that all uploaded files will have either the .csv or .txt extension.
           </b-card-text>
         </b-card>
+        !-->
       </b-card-group>
   </div>
 </template>
@@ -71,6 +32,17 @@
   export default {
     name: 'Upload',
     components: { FieldLink },
+    data() {
+      return {
+        datasetName: "",
+        datasetTags: "",
+        datasetPermissions: null,
+        datasetType: null,
+        permissions: ["Public", "Private"],
+        types: ["Land Use", "Pesticide Report"],
+        file: null
+      }
+    },
     methods: {
       processForm() {
         let formData = new FormData();
@@ -108,5 +80,15 @@
 }
 .form-inline {
   justify-content: center;
+}
+
+.lastRow {
+  padding-top: 15px;
+  flex: auto;
+  align-items: center;
+}
+
+.submitButton {
+  flex: auto;
 }
 </style>
