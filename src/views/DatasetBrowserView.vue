@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-md-6">
         <v-btn dark color="success" small class="dashboardButton"> <v-icon>mdi-android</v-icon> Browse </v-btn>
-        <v-btn dark color="success" small class="dashboardButton"> <v-icon>mdi-plus</v-icon> Create </v-btn> 
+        <router-link to="/upload"> <v-btn dark color="success" small class="dashboardButton"> <v-icon>mdi-plus</v-icon> Create </v-btn> </router-link>
         <v-btn dark color="success" small class="dashboardButton"> <v-icon>mdi-format-list-bulleted-square</v-icon> Manage </v-btn> 
       </div>
       <div class="col-md-6">
