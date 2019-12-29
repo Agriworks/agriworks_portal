@@ -87,6 +87,16 @@ export default {
                   }
                 }
             },
+            {
+                href: { path: '/table' },
+                title: 'Table',
+                icon: {
+                  element: 'fa-icon',
+                  attributes: {
+                    icon: 'chart-bar'
+                  }
+                }
+            },
         ],
       collapsed: true,
       width : "250px",
