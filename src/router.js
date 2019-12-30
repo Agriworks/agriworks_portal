@@ -24,6 +24,11 @@ const router = new Router({
       component: Home
     },
     {
+      path: '/upload',
+      name: 'uploadscreen',
+      component: () => import('./views/UploadScreen.vue')
+    },
+    {
       path: "/login",
       name: "login",
       component: () => import("./views/Login.vue"),
@@ -44,12 +49,11 @@ const router = new Router({
       }
     },
     {
-      path: "/admin",
-      name: "Admin",
-      component: () => import("./views/Admin.vue"),
+      path: "/dataset",
+      name: "dataset",
+      component: () => import("./views/Dataset.vue"),
       meta: {
-        requiresAuth: true,
-        is_admin: true
+        requiresAuth: false,
       }
     },
     {
@@ -67,8 +71,8 @@ const router = new Router({
     },
     {
       path: "/table",
-      name: "table",
-      component: () => import("./views/Table.vue")
+      name: "Datatable",
+      component: () => import("./components/DataTable.vue")
     },
     {
       path: "/charts",
@@ -82,7 +86,6 @@ router.beforeEach((to, from, next) => {
   let auth = store.getters.isLoggedIn;
   let admin = false; //TODO: Set admin permission
 
-
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (auth) {
       if (to.matched.some(record => record.meta.is_admin)) {
@@ -90,19 +93,25 @@ router.beforeEach((to, from, next) => {
         if (admin) {
           next();
         }
-        // else{
-        //   alert user does not have admin privileges
-        // }
+        else{
+          store.commit("setErrorMessage", "User Does Not Have Admin Privileges")
+          store.commit("setShowError", true)
+        }
       } else {
+        store.commit("setErrorMessage", "User Does Not Have Admin Privileges")
+        store.commit("setShowError", true)
         //authorize to dashboard if user is logged in but is not admin
         next();
       }
     } else {
       //redirect to login page if user is not authorized to view dashboard
+      store.commit("setErrorMessage", "User Is Not Logged In")
+      store.commit("setShowError", true)
       next({
         path: "/login",
         query: { redirect: to.fullPath }
       });
+
     }
   } else {
     next();

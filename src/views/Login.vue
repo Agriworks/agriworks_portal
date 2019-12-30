@@ -49,10 +49,13 @@
 export default {
   data() {
     return {
-      email: "mdesilva@bu.edu",
-      password: "password"
+      // email: "mdesilva@bu.edu",
+      // password: "password", 
+      email: "",
+      password: ""
     }
   },
+
   methods: {
     login() {
       this.$store.dispatch("retrieveSessionID", {
@@ -63,9 +66,13 @@ export default {
         this.$router.push("/dashboard")
       })
       .catch(error => {
-        alert("Incorrect username or password");
-      })
-      }
+        console.log(error);
+        this.$store.commit("setErrorMessage", "Incorrect Username or Password")
+        this.$store.commit("setShowError", true)
+        this.$forceUpdate
+        })
+      }, 
+
     }
 }
 </script>

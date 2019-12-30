@@ -1,13 +1,14 @@
 <template>
+<v-app>
   <div id="app" :class="[{'collapsed' : collapsed}]">
-    <div class="container-fluid">
+    <div class="container">
       <Sidebar v-on:collapsed="onCollapsed"/>
       <div id="header">
         <div id="header-left">
           <Logo/>
         </div>
         <div id="header-right">
-          <fa-icon icon="sign-in-alt" size="lg"/>
+          <!-- Log in and sign in buttons. Display only if not logged in !--> 
         </div>
       </div>
       <!-- <Push>
@@ -23,6 +24,7 @@
         </main>
       </div>
     </div>  
+    </v-app>
 </template>
 
 <script>
@@ -58,9 +60,8 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  padding-left: 250px;
+  background-color: white;
 }
 
 #app.collapsed {

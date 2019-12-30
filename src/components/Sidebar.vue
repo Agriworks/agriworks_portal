@@ -5,7 +5,6 @@
 </template>
 
 <script>
-// import {Push} from 'vue-burger-menu'
 
 export default {
   name: "Sidebar",
@@ -43,7 +42,7 @@ export default {
                 icon: {
                   element: 'fa-icon',
                   attributes: {
-                    icon: 'user'
+                    icon: 'registered'
                   }
                 }
             },

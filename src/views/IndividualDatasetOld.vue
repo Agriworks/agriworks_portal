@@ -5,9 +5,9 @@
       <div class="picture"></div>
       <div class="right-body">
         <div class="features">
-          <div v-bind:key="feature.id" v-for="feature in dataset.features">
-            <li class="individual-feature">{{feature.content}}</li>
-          </div>
+          <h1> {{ dataset.name }} </h1> 
+          <h2> {{ dataset.type }} </h2>
+          <p> {{ dataset.author }} </p>
         </div>
         <button class="btn btn-primary">Open</button>
       </div>
