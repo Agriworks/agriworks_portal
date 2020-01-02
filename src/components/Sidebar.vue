@@ -8,7 +8,8 @@
       permanent
     >
       <v-list-item>
-          <v-img src="../assets/logo_transparent_2.png" contain="true"></v-img>
+          <v-img v-if="!mini" src="../assets/logo_transparent_2.png"/>
+          <v-img v-else src="../assets/mini_logo.png"/>
       </v-list-item>
 
       <v-divider></v-divider>

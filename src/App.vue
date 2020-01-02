@@ -5,7 +5,6 @@
       <v-content>
           <div id="header">
             <div id="header-left">
-              <Logo/>
             </div>
             <div id="header-right">
             <!-- Log in and sign in buttons. Display only if not logged in !--> 
@@ -18,14 +17,14 @@
 </template>
 
 <script>
-import Logo from './components/Logo'
+// import Logo from './components/Logo'
 import Sidebar from './components/Sidebar'
 
 // import {Push} from 'vue-burger-menu'
 
 export default {
   name: "app",
-  components: {Logo, Sidebar},
+  components: {Sidebar},
   data() {
     return {
       routes: this.$router.options.routes,
@@ -47,6 +46,7 @@ export default {
 #header {
   display: flex;
   justify-content: space-between;
+  margin-top: 90px;
   padding-left: 5rem;
   padding-right: 5rem;
 }
