@@ -1,34 +1,37 @@
 <template>
   <v-app>
-    <Sidebar />
-    <div  on:click="closeSidebar">
+    <!-- TODO: FIND A CLEANER WAY TO DO CONDITIONAL REDERING-->
+     <!-- <Sidebar /> -->
+      <Sidebar v-if="signedIn" v-on:signedOut="changeSignInState"/>
       <v-content>
+        <div v-if="signedIn">
           <div id="header">
             <div id="header-left">
             </div>
             <div id="header-right">
-            <!-- Log in and sign in buttons. Display only if not logged in !--> 
             </div>
           </div>
           <router-view />
+        </div>
+         <!-- Landing Page-->
+        <Landing v-on:signedIn="changeSignInState" v-else/>
       </v-content>
-    </div>
   </v-app>
 </template>
 
 <script>
-// import Logo from './components/Logo'
 import Sidebar from './components/Sidebar'
+import Landing from './views/Landing'
 
-// import {Push} from 'vue-burger-menu'
 
 export default {
   name: "app",
-  components: {Sidebar},
+  components: {Sidebar, Landing},
   data() {
     return {
       routes: this.$router.options.routes,
-      mini: true
+      mini: true,
+      signedIn: false,
     };
   },
   methods: {
@@ -37,6 +40,9 @@ export default {
       const currentYear = d.getFullYear();
       return currentYear;
     },
+    changeSignInState(){
+      this.signedIn = !this.signedIn //mocked signed in state
+    }
   }
 }
 </script>
