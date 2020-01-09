@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { post } from './requests';
 import { addCookie, wasAlreadyLoggedIn } from './js/authentication';
 import client from "api-client"
+import client2 from "./api/server/index"
 
 Vue.use(Vuex)
 
@@ -59,10 +60,10 @@ const store = new Vuex.Store({
       })
     },
     fetchDatasets ({commit}) {
-      return client.fetchDatasets().then(datasets => commit('setDatasets', datasets))
+      return client2.fetchDatasets().then(datasets => commit('setDatasets', datasets))
     },
     fetchDataset ({commit}) {
-      return client.fetchDataset().then(dataset => commit('setDataset', dataset)) 
+      return client2.fetchDataset().then(dataset => commit('setDataset', dataset)) 
     }
   }
 })
