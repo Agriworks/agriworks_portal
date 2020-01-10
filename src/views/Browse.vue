@@ -9,23 +9,20 @@
 <script>
 // @ is an alias to /src
 import DatasetCard from "@/views/DatasetCard.vue";
-import SearchBar from '@/components/SearchBar.vue'
 
 export default {
   name: "DatasetBrowserView",
   components: {
-    DatasetCard,
-    SearchBar
+    DatasetCard
   },
   computed: {
     datasets() {
-      return this.$store.state.datasets
+      return this.$store.state.datasets.data;
     }
   },
-  created () {
-    this.$store.dispatch('fetchDatasets')
+  mounted() {
+    this.$store.dispatch("fetchDatasets", { search: "" });
   }
-
 };
 </script>
 <style scoped>
