@@ -32,18 +32,3 @@ export function post(endpoint, payload) {
       });
   });
 }
-
-export function get(endpoint, payload) {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(apiUrl + endpoint, urlEncode(payload), axiosConfig)
-      .then(response => {
-        console.log("INFO: Response received for endpoint " + endpoint + ".");
-        resolve(response);
-      })
-      .catch(error => {
-        console.error(error);
-        reject(error);
-      });
-  });
-}

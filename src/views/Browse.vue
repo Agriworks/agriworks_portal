@@ -17,13 +17,12 @@ export default {
   },
   computed: {
     datasets() {
-      return this.$store.state.datasets.data;
+      return this.$store.state.datasets;
     }
   },
-  mounted() {
+  created() {
     this.$store.dispatch("fetchDatasets", { search: "" });
   }
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>

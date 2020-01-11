@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from "vuex";
 import { post } from "./requests";
 import { addCookie, wasAlreadyLoggedIn } from "./js/authentication";
-import client from "api-client";
 
 Vue.use(Vuex);
 
@@ -13,7 +12,7 @@ const store = new Vuex.Store({
     errorMessage: "",
     showError: false,
     datasets: [],
-    dataset: {}
+    dataset: []
   },
   mutations: {
     setLoggedInTrue(state) {
@@ -65,15 +64,20 @@ const store = new Vuex.Store({
     fetchDatasets(state, payload) {
       post("/dataset/filter", payload)
         .then(response => {
-          console.log(response);
-          this.commit("setDatasets", response);
+          this.commit("setDatasets", response.data);
+          this.commit("setErrorMessage", "");
         })
         .catch(store.commit("setErrorMessage", "Unable to get datasets."));
     },
-    fetchDataset({ commit }) {
-      return client
-        .fetchDataset()
-        .then(dataset => commit("setDataset", dataset));
+    fetchDataset(state, payload) {
+      post("/dataset/data", payload)
+        .then(response => {
+          this.commit("setDataset", response.data);
+          this.commit("setErrorMessage", "");
+        })
+        .catch(
+          store.commit("setErrorMessage", "Unable to get data for dataset.")
+        );
     }
   }
 });

@@ -12,7 +12,7 @@
     </v-list-item>
     <v-card-actions>
       <v-btn text>
-        <router-link to="/dataset">Open</router-link>
+        <b-button @click="redirect" class="btn" size="sm" variant="outline-success">Open</b-button>
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -21,7 +21,15 @@
 <script>
 export default {
   name: "DatasetCard",
-  props: ["dataset"]
+  props: ["dataset"],
+  methods: {
+    redirect() {
+      this.$router.push({
+        name: "dataset",
+        params: { id: this.dataset.id }
+      });
+    }
+  }
 };
 </script>
 

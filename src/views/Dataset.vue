@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <h5>{{dataset.type}}</h5>
+      <h5>{{ dataset.type }}</h5>
       <h1>Dataset: {{ dataset.name }}</h1>
       <h3 v-if="dataset.tags">Tags: {{ dataset.tags }}</h3>
       <p>By {{ dataset.author }}</p>
@@ -24,10 +24,10 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("fetchDataset");
+    console.log(this.$route.params.id);
+    this.$store.dispatch("fetchDataset", { id: this.$route.params.id });
   }
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
