@@ -60,10 +60,10 @@ const store = new Vuex.Store({
       })
     },
     fetchDatasets ({commit}) {
-      return client2.fetchDatasets().then(datasets => commit('setDatasets', datasets))
+      return client.fetchDatasets().then(datasets => commit('setDatasets', datasets))
     },
     fetchDataset ({commit}) {
-      return client2.fetchDataset().then(dataset => commit('setDataset', dataset)) 
+      return client.fetchDataset().then(dataset => commit('setDataset', dataset)) 
     }
   }
 })
