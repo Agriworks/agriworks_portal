@@ -1,121 +1,74 @@
 <template>
-    <sidebar-menu :menu="menu" :collapsed="collapsed" :width="width" @toggle-collapse="onToggleCollapse">
-        <fa-icon slot="toggle-icon" icon="arrows-alt-h"></fa-icon>
-    </sidebar-menu>
+  <nav>
+    <v-navigation-drawer
+      app dark
+      :color=color
+      :mini-variant.sync="mini"
+      expand-on-hover
+      permanent
+    >
+      <v-list-item>
+          <v-img v-if="!mini" src="../assets/logo_transparent_2.png"/>
+          <v-img v-else src="../assets/mini_logo.png"/>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list dense>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          :to="item.link"
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  </nav>
 </template>
 
 <script>
-
-export default {
-  name: "Sidebar",
-  data() {
-    return {
-      menu: [
-            {
-                header: true,
-                title: 'Main Navigation',
-                hiddenOnCollapse: true
-            },
-            {
-                href: { path: '/' },
-                title: 'Dashboard',
-                icon: {
-                  element: 'fa-icon',
-                  attributes: {
-                    icon: 'align-left',
-                  }
-                }
-            },
-            {
-                href: { path: '/login' },
-                title: 'Login',
-                icon: {
-                  element: 'fa-icon',
-                  attributes: {
-                    icon: 'sign-in-alt'
-                  }
-                }
-            },
-            {
-                href: { path: '/registration' },
-                title: 'Registration',
-                icon: {
-                  element: 'fa-icon',
-                  attributes: {
-                    icon: 'registered'
-                  }
-                }
-            },
-            {
-                href: { path: '/admin' },
-                title: 'Admin',
-                icon: {
-                  element: 'fa-icon',
-                  attributes: {
-                    icon: 'user'
-                  }
-                }
-            },
-            {
-                href: { path: '/account' },
-                title: 'Account',
-                icon: {
-                  element: 'fa-icon',
-                  attributes: {
-                    icon: 'user',
-                  }
-                }
-            },
-            {
-                href: { path: '/browse' },
-                title: 'Browse',
-                icon: {
-                  element: 'fa-icon',
-                  attributes: {
-                    icon: 'search'
-                  }
-                }
-            },
-            {
-                href: { path: '/charts' },
-                title: 'Charts',
-                icon: {
-                  element: 'fa-icon',
-                  attributes: {
-                    icon: 'chart-bar'
-                  }
-                }
-            },
+  export default {
+    data () {
+      return {
+        drawer: true,
+        items: [
+          { title: 'Home', icon: 'mdi-home' , link : "/"},
+          { title: 'Login', icon: 'mdi-login-variant' , link: "/login"},
+          { title: 'Registration', icon: 'mdi-account-plus' , link: "/registration"},
+          { title: 'Dashboard', icon: 'mdi-view-dashboard' , link: "/dashboard"},
+          { title: 'Account', icon: 'mdi-account' , link: "/account"},
+          { title: 'Browse', icon: 'mdi-feature-search' , link: "/browse"},
         ],
-      collapsed: true,
-      width : "250px",
-      selectedTheme: "white-theme"
-
-    };
-  },
-  methods: {
-      onToggleCollapse (collapsed) {
-        this.$emit('collapsed', collapsed);
+        mini: true,
+        color : "#212121"
+      }
     }
+     
   }
-};
 </script>
+
 <style scoped>
-.v-sidebar-menu >>> .vsm--link{
-    font-size: 15px;
-    text-align: left;
+h4 {
+  font-size: 0.8vw;
 }
-.v-sidebar-menu >>> .vsm--icon {
-    margin-right: 10px;
-}
-
-.v-sidebar-menu >>> .vsm--header {
-    font-size: 11px;
-    text-align: left;
+.v-navigation-drawer--fixed.v-navigation-drawer--open {
+  padding-top: 15px;
 }
 
-.v-sidebar-menu >>> .vsm--link.vsm--link_active {
-    box-shadow: 3px 0px 0px 0px green inset;
+.pa-2 {
+  max-width: 50%;
 }
-
+.addMargin {
+  margin-left: 20%;
+}
+.v-list-item__avatar {
+  margin-left: 5%;
+}
 </style>
