@@ -8,12 +8,12 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    //Initial state
     loggedIn: wasAlreadyLoggedIn(), 
     errorMessage: "", 
     showError: false,
     datasets: [],
     dataset: {},
+    user: ""
   },
   mutations: {
     setLoggedInTrue(state) {
@@ -26,10 +26,13 @@ const store = new Vuex.Store({
       state.showError = val; 
     },
     setDatasets (state, datasets) {
-      state.datasets = datasets
+      state.datasets = datasets;
     },
     setDataset(state, dataset) {
-      state.dataset = dataset
+      state.dataset = dataset;
+    },
+    setUser(state, user) {
+      state.user = user;
     }
   },
   getters: {
@@ -41,6 +44,9 @@ const store = new Vuex.Store({
     }, 
     getShowError: (state) => {
       return state.showError
+    },
+    getUser: (state) => {
+      return state.user 
     }
   },
   actions: {
