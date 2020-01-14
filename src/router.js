@@ -49,7 +49,7 @@ const router = new Router({
       }
     },
     {
-      path: "/dataset",
+      path: "/dataset/:id",
       name: "dataset",
       component: () => import("./views/Dataset.vue"),
       meta: {
