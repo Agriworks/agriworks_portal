@@ -26,7 +26,7 @@
         >
           <v-flex xs12 sm4 class="my-4">
             <div class="text-center">
-              <h2 class="headline">Transform the Agricultural Landscape with Data</h2>
+              <h2 class="headline" style="color:#96D34A">Transform the Agricultural Landscape with Data</h2>
               <span class="subheading">
                 Agriworks enables researchers, policymakers, and common citizens to explore and act on agricultural data in an effort to better their local communities.
               </span>
