@@ -11,7 +11,7 @@
             </v-list-item-avatar>
         </v-list-item>
         <v-card-actions>
-            <v-btn text> <router-link to="/dataset"> Open </router-link> </v-btn>
+            <v-btn text> <router-link :to="datasetLink"> Open </router-link> </v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -19,7 +19,12 @@
 <script>
 export default {
   name: "DatasetCard",
-  props: ["dataset"]
+  props: ["dataset"],
+  computed: {
+      datasetLink: function() {
+          return "/dataset/" + this.dataset.id;
+      }
+  }
 };
 </script>
 

@@ -14,5 +14,4 @@ export default {
     fetchDataset () {
         return fetch(dataset)
     }
-
 }

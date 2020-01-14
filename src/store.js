@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { post } from './requests';
 import { addCookie, wasAlreadyLoggedIn } from './js/authentication';
-import client from "api-client"
+import client from "api-client" //TODO: check config value 
+import server from "./api/server/index"
 
 Vue.use(Vuex)
 
@@ -65,10 +66,13 @@ const store = new Vuex.Store({
       })
     },
     fetchDatasets ({commit}) {
-      return client.fetchDatasets().then(datasets => commit('setDatasets', datasets))
+      return server.fetchDatasets().then(datasets => commit('setDatasets', datasets))
     },
-    fetchDataset ({commit}) {
-      return client.fetchDataset().then(dataset => commit('setDataset', dataset)) 
+    fetchDataset ({commit}, data) {
+      return server.fetchDataset(data.id).then(dataset => commit('setDataset', dataset)) 
+    },
+    uploadDataset ({commit}, newDataset) {
+      return server.uploadDataset(newDataset.file, newDataset.name, newDataset.tags, newDataset.permissions, newDataset.type)//TODO: correctly return success/error message
     }
   }
 })
