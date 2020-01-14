@@ -21,6 +21,7 @@
 
 <script>
 import Browse from "./Browse.vue";
+
 export default {
   components: {
     browse: Browse

@@ -10,7 +10,7 @@
 import Vue from "vue";
 export default {
     name: "DataTable",
-    props: ["headers", "data"]
+    props: ["headers", "data"],
 }
 </script>
 <style scoped>

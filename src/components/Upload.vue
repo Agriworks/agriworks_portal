@@ -27,11 +27,10 @@
 </template>
 
 <script>
-  import FieldLink from './FieldLink'
-  import axios from 'axios'
+  //import FieldLink from './FieldLink'
+
   export default {
     name: 'Upload',
-    components: { FieldLink },
     data() {
       return {
         datasetName: "Sample",
@@ -45,32 +44,7 @@
     },
     methods: {
       processForm() {
-        console.log("The user is " + this.$store.getters.getUser);
-        let newDataset = new FormData();
-        newDataset.append('file', this.file);
-        newDataset.append('name', this.datasetName);
-        newDataset.append('author', this.$store.getters.getUser);
-        newDataset.append('visibility', this.datasetPermissions);
-        newDataset.append('tags', this.datasetTags);
-        newDataset.append('type', this.datasetType);
-        axios.post('http://localhost:4000/upload/', 
-            newDataset, {
-            headers: {
-              'Content-type': 'multipart/form-data'
-            }
-          },
-          )
-          .then(function(response) {
-            //#TODO: display success message to user
-            console.log(response);
-            console.log("The id of the newly created dataset is " + response.data.id)
-          })
-          .catch(function(error) {
-            //#TODO: display error message to user
-            console.log(error);
-            console.log(error.body);
-            console.log('Failure');
-          });
+        this.$store.dispatch('uploadDataset', {file: this.file, name: this.datasetName, tags: this.datasetTags, permissions: this.datasetPermissions, type: this.datasetTags })
       },
       handleFileUpload() {
         this.file = this.$refs['file-input']
