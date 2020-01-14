@@ -3,15 +3,15 @@
     <v-form ref="form">
       <v-text-field v-model="datasetName" required label="Dataset name"></v-text-field>
       <v-text-field v-model="datasetTags" label="Dataset tags"></v-text-field>
-      <v-select v-model="datasetPermissions" :items="permissionOptions" label="Permissions"></v-select>
-      <v-select v-model="datasetType" :items="typeOptions" label="Dataset type"></v-select>
+      <v-select v-model="datasetPermissions" required :items="permissionOptions" label="Permissions"></v-select>
+      <v-select v-model="datasetType" required :items="typeOptions" label="Dataset type"></v-select>
     </v-form>
       
       <b-card-group deck class="lastRow">
         <b-card title="Data Selection" style="max-width: 50%;">
           <div>
-            <p> Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV & TXT </p>
-            <v-file-input v-model="file" label="Select a file" show-size accept=".csv, .txt"></v-file-input>
+            <p> Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV </p>
+            <v-file-input v-model="file" label="Select a file" show-size accept=".csv"></v-file-input>
           </div>
         </b-card>
         <v-btn @click="processForm" class="submitButton" x-large color="success" dark> <v-icon>mdi-folder-plus-outline </v-icon> Create </v-btn> 
@@ -45,11 +45,13 @@
     },
     methods: {
       processForm() {
+        console.log("The user is " + this.$store.getters.getUser);
         let newDataset = new FormData();
         newDataset.append('file', this.file);
         newDataset.append('name', this.datasetName);
+        newDataset.append('author', this.$store.getters.getUser);
+        newDataset.append('visibility', this.datasetPermissions);
         newDataset.append('tags', this.datasetTags);
-        newDataset.append('permissions', this.datasetPermissions);
         newDataset.append('type', this.datasetType);
         axios.post('http://localhost:4000/upload/', 
             newDataset, {
@@ -61,7 +63,7 @@
           .then(function(response) {
             //#TODO: display success message to user
             console.log(response);
-            console.log('Success!');
+            console.log("The id of the newly created dataset is " + response.data.id)
           })
           .catch(function(error) {
             //#TODO: display error message to user

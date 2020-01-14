@@ -63,12 +63,13 @@ export default {
           password: this.password
         })
       .then(response => {
-        this.$router.push("/dashboard")
+        this.$store.commit("setUser", this.email);
+        this.$router.push("/dashboard");
       })
       .catch(error => {
         console.log(error);
-        this.$store.commit("setErrorMessage", "Incorrect Username or Password")
-        this.$store.commit("setShowError", true)
+        this.$store.commit("setErrorMessage", "Incorrect Username or Password");
+        this.$store.commit("setShowError", true);
         this.$forceUpdate
         })
       }, 

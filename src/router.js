@@ -26,7 +26,10 @@ const router = new Router({
     {
       path: '/upload',
       name: 'uploadscreen',
-      component: () => import('./views/UploadScreen.vue')
+      component: () => import('./views/UploadScreen.vue'),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/login",
@@ -67,7 +70,10 @@ const router = new Router({
     {
       path: "/browse",
       name: "Browse",
-      component: () => import("./views/DatasetBrowserView.vue")
+      component: () => import("./views/DatasetBrowserView.vue"),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: "/table",
