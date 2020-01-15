@@ -1,13 +1,13 @@
 <template>
   <div>
-    <v-toolbar flat>
+    <!-- <v-toolbar flat>
       <img class="mr-3" :src="require('../assets/mini_logo.png')" height="40"/>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn flat tile text>Sign Up</v-btn>
         <v-btn flat tile color="#96D34A" @click="mockSignIn()">Sign In</v-btn>
       </v-toolbar-items>
-    </v-toolbar>
+    </v-toolbar> -->
 
     <section>
         <v-parallax src="../assets/landing_banner.jpeg" height="600">

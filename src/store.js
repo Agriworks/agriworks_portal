@@ -9,7 +9,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    loggedIn: wasAlreadyLoggedIn(), 
+    loggedIn: true, 
     errorMessage: "", 
     showError: false,
     datasets: [],
