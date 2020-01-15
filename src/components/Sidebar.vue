@@ -28,6 +28,15 @@
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item @click="mockSignOut()">
+          <v-list-item-icon>
+            <v-icon>mdi-logout</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -48,6 +57,11 @@
         ],
         mini: true,
         color : "#212121"
+      }
+    },
+    methods : {
+      mockSignOut(){
+        this.$emit("signedOut", true)
       }
     }
      
