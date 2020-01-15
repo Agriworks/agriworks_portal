@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+<div>
     <div class="row">
       <div class="col-md-6">
         <v-btn dark color="success" small class="dashboardButton"> <v-icon>mdi-android</v-icon> Browse </v-btn>
@@ -16,7 +16,7 @@
     <div class="row">
       <component v-bind:is="component"></component>
     </div>
-  </div>
+</div>
 </template>
 
 <script>

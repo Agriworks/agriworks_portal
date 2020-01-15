@@ -44,7 +44,7 @@
     },
     methods: {
       processForm() {
-        this.$store.dispatch('uploadDataset', {file: this.file, name: this.datasetName, tags: this.datasetTags, permissions: this.datasetPermissions, type: this.datasetTags })
+        this.$store.dispatch('uploadDataset', {file: this.file, name: this.datasetName, tags: this.datasetTags, permissions: this.datasetPermissions, type: this.datasetType })
       },
       handleFileUpload() {
         this.file = this.$refs['file-input']

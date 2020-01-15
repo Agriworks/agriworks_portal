@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
 import store from "./store"; // TODO: How do we import the store globally ? 
 
 Vue.use(Router);
@@ -21,7 +20,10 @@ const router = new Router({
     {
       path: "/",
       name: "Home",
-      component: Home
+      component: () => import("./views/DatasetBrowserView.vue"),
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/upload',
@@ -63,14 +65,6 @@ const router = new Router({
       path: "/account",
       name: "Account",
       component: () =>import("./views/Account.vue"),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: "/browse",
-      name: "Browse",
-      component: () => import("./views/DatasetBrowserView.vue"),
       meta: {
         requiresAuth: true
       }

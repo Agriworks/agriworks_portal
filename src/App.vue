@@ -11,7 +11,9 @@
             <div id="header-right">
             </div>
           </div>
+          <div class="container">
           <router-view />
+          </div>
         </div>
          <!-- Landing Page-->
         <Landing v-on:signedIn="changeSignInState" v-else/>

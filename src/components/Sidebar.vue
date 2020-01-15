@@ -53,7 +53,6 @@
           { title: 'Registration', icon: 'mdi-account-plus' , link: "/registration"},
           { title: 'Dashboard', icon: 'mdi-view-dashboard' , link: "/dashboard"},
           { title: 'Account', icon: 'mdi-account' , link: "/account"},
-          { title: 'Browse', icon: 'mdi-feature-search' , link: "/browse"},
         ],
         mini: true,
         color : "#212121"
