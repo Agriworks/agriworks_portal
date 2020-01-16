@@ -7,11 +7,11 @@
   <p> By {{ dataset.author }} </p>
   <DataTable :headers="dataset.headers" :data="dataset.data"/>
   </div>
-</div>
+  </div>
 </template>
 
 <script>
-import DataTable from "../components/DataTable"
+import DataTable from "../components/DataTable";
 
 export default {
     name: "Dataset", 
@@ -24,10 +24,9 @@ export default {
       }
     },
     created() {
-      this.$store.dispatch('fetchDataset', {id: this.$route.params.id})
+      this.$store.dispatch('fetchOneDataset', this.$route.params.id)
     }
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

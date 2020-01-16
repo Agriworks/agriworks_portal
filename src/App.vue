@@ -45,6 +45,9 @@ export default {
     changeSignInState(){
       this.signedIn = !this.signedIn //mocked signed in state
     }
+  },
+  created() {
+    this.$store.dispatch("fetchDatasets");
   }
 }
 </script>

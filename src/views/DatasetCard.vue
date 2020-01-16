@@ -30,14 +30,14 @@ export default {
 
 <style scoped>
 .datasetCard {
-    width: 300px;
-    margin: 1rem;
-    border: 2px solid darkblue;
-    border-radius: 10px;
+  width: 300px;
+  margin: 1rem;
+  border: 2px solid darkblue;
+  border-radius: 10px;
 }
 
 .datasetType {
-    font-weight: bold;
-    color:#017afd;
+  font-weight: bold;
+  color: #017afd;
 }
 </style>

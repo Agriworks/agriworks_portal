@@ -17,14 +17,9 @@ export default {
   },
   computed: {
     datasets() {
-      return this.$store.state.datasets
+      return this.$store.state.datasets;
     }
   },
-  created () {
-    this.$store.dispatch('fetchDatasets')
-  }
-
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>
