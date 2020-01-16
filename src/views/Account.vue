@@ -2,7 +2,7 @@
   <div>
     <div class="main">
       <div class="container">
-        <div class="row justify-content-center">
+        <div class="row">
           <h1 align="center">Account settings</h1>
         </div>
         <div class="row justify-content-between">
@@ -25,7 +25,7 @@
         </div>
         <div class="row justify-content-between">
           <div class="col-auto"> 
-            <strong>Password:</strong>
+            <strong>Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
           </div>
           <div class="col">
           </div>
