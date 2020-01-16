@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { post } from "./requests";
+import { post, get } from "./requests";
 import { addCookie, wasAlreadyLoggedIn } from "./js/authentication";
 
 Vue.use(Vuex);
@@ -61,23 +61,43 @@ const store = new Vuex.Store({
           });
       });
     },
-    fetchDatasets(state, payload) {
-      post("/dataset/filter", payload)
+    fetchOneDataset(state, datasetId) {
+      get(`/dataset/${datasetId}`)
+        .then(response => {
+          this.commit("setDataset", response.data);
+          this.commit("setErrorMessage", "");
+        })
+        .catch(err => {
+          store.commit(
+            "setErrorMessage",
+            "Unable to retrieve data for dataset"
+          );
+        });
+    },
+    fetchDatasets(state) {
+      get("/dataset/")
         .then(response => {
           this.commit("setDatasets", response.data);
           this.commit("setErrorMessage", "");
         })
         .catch(store.commit("setErrorMessage", "Unable to get datasets."));
     },
-    fetchDataset(state, payload) {
-      post("/dataset/data", payload)
-        .then(response => {
-          this.commit("setDataset", response.data);
-          this.commit("setErrorMessage", "");
-        })
-        .catch(
-          store.commit("setErrorMessage", "Unable to get data for dataset.")
-        );
+    filterDatasets(state, searchQuery) {
+      if (searchQuery == undefined || searchQuery == "" || searchQuery == " ") {
+        this.dispatch("fetchDatasets");
+      } else {
+        get(`/dataset/search/${searchQuery}`)
+          .then(response => {
+            this.commit("setDatasets", response.data);
+            this.commit("setErrorMessage", "");
+          })
+          .catch(
+            store.commit(
+              "setErrorMessage",
+              "Unable to find datasets with given parameter(s)."
+            )
+          );
+      }
     }
   }
 });

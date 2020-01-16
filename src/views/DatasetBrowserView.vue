@@ -48,13 +48,12 @@ export default {
   methods: {
     searchSubmit() {
       if (document.getElementById("search") == undefined) {
-        this.$store.dispatch("fetchDatasets", {
-          search: ""
-        });
+        this.$store.dispatch("filterDatasets", "");
       } else {
-        this.$store.dispatch("fetchDatasets", {
-          search: document.getElementById("search").value
-        });
+        this.$store.dispatch(
+          "filterDatasets",
+          document.getElementById("search").value
+        );
       }
     }
   }

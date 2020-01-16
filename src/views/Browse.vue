@@ -21,7 +21,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("fetchDatasets", { search: "" });
+    this.$store.dispatch("fetchDatasets");
   }
 };
 </script>
