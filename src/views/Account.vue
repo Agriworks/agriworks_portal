@@ -5,7 +5,7 @@
         <div class="row">
           <h1 align="center">Account settings</h1>
         </div>
-        <div class="row justify-content-between">
+        <div class="row">
           <div class="col-auto">
             <strong>Email Address: </strong>
           </div>
@@ -23,7 +23,7 @@
             </button>
           </div>
         </div>
-        <div class="row justify-content-between">
+        <div class="row">
           <div class="col-auto"> 
             <strong>Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
           </div>
