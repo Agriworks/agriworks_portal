@@ -5,7 +5,7 @@
       <h1>Dataset: {{ dataset.name }}</h1>
       <h3 v-if="dataset.tags">Tags: {{ dataset.tags }}</h3>
       <p>By {{ dataset.author }}</p>
-      <DataTable :headers="datasetHeaders" :data="datasetData" />
+      <DataTable :headers="dataset.headers" :data="dataset.data" />
     </div>
   </div>
 </template>
@@ -18,30 +18,10 @@ export default {
   components: {
     DataTable
   },
-  computed: {
-    datasetData() {
-      return this.$store.state.dataset.data;
-    },
-    datasetHeaders() {
-      try {
-        var oneData = Object.keys(this.$store.state.dataset.data[0]);
-      } catch (err) {
-        this.$store.commit(
-          "setErrorMessage",
-          "Unable to retrieve data for this dataset"
-        );
-      }
-      var headers = [];
-      //format the headers for DataTable
-      for (var header in oneData) {
-        headers.push({ text: oneData[header], value: oneData[header] });
-      }
-
-      return headers;
-    },
-    dataset() {
-      return this.$store.state.dataset;
-    }
+  data() {
+    return {
+      dataset: this.$store.dataset
+    };
   },
   created() {
     this.$store.dispatch("fetchOneDataset", this.$route.params.id);
