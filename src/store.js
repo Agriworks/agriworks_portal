@@ -1,7 +1,12 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { post, get } from "./requests";
-import { addCookie, wasAlreadyLoggedIn } from "./js/authentication";
+import {
+  getCookie,
+  addCookie,
+  wasAlreadyLoggedIn,
+  deleteCookie
+} from "./js/authentication";
 
 Vue.use(Vuex);
 
@@ -15,6 +20,9 @@ const store = new Vuex.Store({
     dataset: []
   },
   mutations: {
+    setLoggedInFalse(state) {
+      state.loggedIn = false;
+    },
     setLoggedInTrue(state) {
       state.loggedIn = true;
     },
@@ -43,6 +51,18 @@ const store = new Vuex.Store({
     }
   },
   actions: {
+    logout(state) {
+      const SID = getCookie("SID");
+      post("/auth/logout", { sessionId: SID })
+        .then(res => {
+          deleteCookie("SID");
+          store.commit("setLoggedInFalse");
+          window.location.reload();
+        })
+        .catch(err => {
+          store.commit("setErrorMessage", "Unable to logout");
+        });
+    },
     retrieveSessionID(state, payload) {
       return new Promise((resolve, reject) => {
         post("/auth/login", payload)
