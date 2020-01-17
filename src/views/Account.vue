@@ -10,7 +10,7 @@
             <strong>Email Address: </strong>
           </div>
           <div class="col">
-            <span>What ever the email address is</span>
+            <span> {{ email }} </span>
           </div>
           <div class="col">
             <button
@@ -150,7 +150,13 @@
 
 
 <script>
-export default {};
+export default {
+  computed: {
+      email() {
+        return this.$store.state.user
+      }
+  }
+}
 </script>
 
 
