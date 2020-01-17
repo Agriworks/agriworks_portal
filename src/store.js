@@ -13,7 +13,7 @@ const store = new Vuex.Store({
     showError: false,
     datasets: [],
     dataset: [],
-    user: ""
+    user: "" //the email address of the user
   },
   mutations: {
     setLoggedInTrue(state) {
