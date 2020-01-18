@@ -3,6 +3,7 @@
     <!-- TODO: FIND A CLEANER WAY TO DO CONDITIONAL REDERING-->
      <!-- <Sidebar /> -->
       <Sidebar v-if="signedIn" v-on:signedOut="changeSignInState"/>
+      <TopBar v-if="!signedIn" v-on:signedIn="changeSignInState"/>
       <v-content>
         <div v-if="signedIn">
           <div id="header">
@@ -24,11 +25,11 @@
 <script>
 import Sidebar from './components/Sidebar'
 import Landing from './views/Landing'
-
+import TopBar from './components/TopBar'
 
 export default {
   name: "app",
-  components: {Sidebar, Landing},
+  components: {Sidebar, Landing, TopBar},
   data() {
     return {
       routes: this.$router.options.routes,
