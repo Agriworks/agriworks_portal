@@ -5,39 +5,43 @@
         <div class="row">
           <h1 align="center">Account settings</h1>
         </div>
-        <div class="row">
-          <div class="col-auto">
-            <strong>Email Address: </strong>
-          </div>
-          <div class="col">
-            <span> {{ email }} </span>
-          </div>
-          <div class="col">
-            <button
-              class="btn btn-primary"
-              type="button"
-              id="changeEmail"
-              data-toggle="modal"
-              data-target="#emailModal"
-            >Change
-            </button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-auto"> 
-            <strong>Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
-          </div>
-          <div class="col">
-          </div>
-          <div class="col">
-            <button
-              class="btn btn-primary"
-              type="button"
-              data-toggle="modal"
-              data-target="#passwordModal"
-              id="changePassword"
+        <div class="shadow rounded">
+          <div class="card-body">
+          <div class="row">
+            <div class="col-auto">
+              <strong>Email Address: </strong>
+            </div>
+            <div class="col">
+              <span> {{ email }} </span>
+            </div>
+            <div class="col text-right">
+              <button
+                class="btn btn-primary"
+                type="button"
+                id="changeEmail"
+                data-toggle="modal"
+                data-target="#emailModal"
               >Change
-            </button>
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-auto"> 
+              <strong>Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col text-right">
+              <button
+                class="btn btn-primary"
+                type="button"
+                data-toggle="modal"
+                data-target="#passwordModal"
+                id="changePassword"
+                >Change
+              </button>
+            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -170,5 +174,6 @@ export default {
 .emailDiv button {
     float: right; 
 } 
+
 
 </style>
