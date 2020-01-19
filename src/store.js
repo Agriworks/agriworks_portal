@@ -12,7 +12,8 @@ const store = new Vuex.Store({
     errorMessage: "",
     showError: false,
     datasets: [],
-    dataset: []
+    dataset: [],
+    user: "" //the email address of the user
   },
   mutations: {
     setLoggedInTrue(state) {
@@ -29,6 +30,9 @@ const store = new Vuex.Store({
     },
     setDataset(state, dataset) {
       state.dataset = dataset;
+    },
+    setUser(state, email){
+      state.user = email
     }
   },
   getters: {
