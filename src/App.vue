@@ -45,6 +45,7 @@ export default {
   },
   created() {
     this.$store.dispatch("fetchDatasets");
+    this.signedIn = this.$store.getters.isLoggedIn;
   }
 };
 </script>
