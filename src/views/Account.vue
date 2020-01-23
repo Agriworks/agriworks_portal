@@ -1,28 +1,49 @@
 <template>
   <div>
     <div class="main">
-      <h1>Account settings</h1>
-      <div>
-        <h2>Email Address</h2>
-        <p>What ever the email address is</p>
-        <button
-          class="btn btn-primary"
-          type="button"
-          id="changeEmail"
-          data-toggle="modal"
-          data-target="#emailModal"
-        >Change</button>
-      </div>
-      <div>
-        <h2>Password</h2>
-        <p>Choose a good password</p>
-        <button
-          class="btn btn-primary"
-          type="button"
-          data-toggle="modal"
-          data-target="#passwordModal"
-          id="changePassword"
-        >Change</button>
+      <div class="container">
+        <div class="row">
+          <h1 align="center">Account settings</h1>
+        </div>
+        <div class="shadow rounded">
+          <div class="card-body">
+          <div class="row">
+            <div class="col-auto">
+              <strong>Email Address: </strong>
+            </div>
+            <div class="col">
+              <span> {{ email }} </span>
+            </div>
+            <div class="col text-right">
+              <button
+                class="btn btn-primary"
+                type="button"
+                id="changeEmail"
+                data-toggle="modal"
+                data-target="#emailModal"
+              >Change
+              </button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-auto"> 
+              <strong>Password:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col text-right">
+              <button
+                class="btn btn-primary"
+                type="button"
+                data-toggle="modal"
+                data-target="#passwordModal"
+                id="changePassword"
+                >Change
+              </button>
+            </div>
+          </div>
+          </div>
+        </div>
       </div>
     </div>
     <!--Email Modal -->
@@ -133,7 +154,13 @@
 
 
 <script>
-export default {};
+export default {
+  computed: {
+      email() {
+        return this.$store.state.user
+      }
+  }
+}
 </script>
 
 
@@ -144,4 +171,9 @@ export default {};
   margin: 1rem 1rem 1rem 1rem;
   width: 90%;
 }
+.emailDiv button {
+    float: right; 
+} 
+
+
 </style>

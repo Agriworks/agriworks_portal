@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <!-- TODO: FIND A CLEANER WAY TO DO CONDITIONAL REDERING-->
     <!-- <Sidebar /> -->
     <Sidebar v-if="signedIn" v-on:signedOut="changeSignInState" />
     <v-content>
