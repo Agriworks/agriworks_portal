@@ -5,7 +5,7 @@
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <!-- changed flat flag to text because vuetify says so -->
-        <v-btn text tile>Sign Up</v-btn>
+        <v-btn text tile @click="signUp">Sign Up</v-btn>
         <v-btn text tile color="#96D34A" @click="mockSignIn()">Sign In</v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -95,6 +95,10 @@ export default {
   methods: {
     mockSignIn(signedIn) {
       this.$emit("signedIn", signedIn);
+    },
+    signUp() {
+      this.mockSignIn(this.signedIn);
+      this.$router.push("registration");
     }
   }
 };

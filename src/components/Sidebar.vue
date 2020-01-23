@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     mockSignOut() {
-      this.$emit("signedOut", true);
+      // this.$emit("signedOut", true);
       this.$store.dispatch("logout");
     }
   }
