@@ -122,8 +122,22 @@ const store = new Vuex.Store({
             )
           );
       }
+    },
+
+    uploadData(state, payload) {
+      post("/upload/", payload)
+        .then(response => {
+          this.commit("setErrorMessage", "");          
+        })
+      .catch(
+        store.commit(
+          "setErrorMessage",
+          "Unable to upload file."
+        )
+      );
+      }
     }
-  }
+  
 });
 
 export default store;
