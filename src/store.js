@@ -124,7 +124,7 @@ const store = new Vuex.Store({
       }
     },
 
-    uploadDataset(state, payload) {
+    uploadDataset(state, payload) {  
       post("/upload/", payload)
         .then(response => {
           this.commit("setErrorMessage", "");          
