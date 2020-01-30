@@ -1,4 +1,5 @@
 <template>
+  <div id="page-container">
   <div id="app">
     <div class="container-fluid">
       <div id="header">
@@ -20,11 +21,12 @@
         <main id="page-wrap">
           <router-view />
         </main>
-      </div>
-        <footer v-bind="currentYear = getYear()">
-          <small>Copyright &copy; {{currentYear}} Agriworks</small>
-        </footer>
-    </div>  
+      </div> 
+    </div>
+    <footer id="footer" v-bind="currentYear = getYear()">
+        <font color="black">Copyright &copy; {{currentYear}} Agriworks</font>
+    </footer>
+  </div>
 </template>
 
 <script>
@@ -109,9 +111,19 @@ export default {
   font-weight: 700;
   color: white;
 }
+
 #footer {
+  display: block;
+  position: absolute;
+  background-color: white;
+  text-align: center;
   bottom: 0;
   width: 100%;
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
 }
 
 </style>
