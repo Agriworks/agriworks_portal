@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <!-- <Sidebar /> -->
-    <Sidebar v-if="signedIn" v-on:signedOut="changeSignInState" />
-    <v-content>
+    <Sidebar v-if="mockIsSignedIn" />
+    <!-- <v-content>
       <div v-if="signedIn">
         <div id="header">
           <div id="header-left"></div>
@@ -12,24 +12,24 @@
           <router-view />
         </div>
       </div>
-      <!-- Landing Page-->
-      <Landing v-on:signedIn="changeSignInState" v-else />
-    </v-content>
+    < Landing Page />
+    </v-content>-->
+    <router-view />
   </v-app>
 </template>
 
 <script>
 import Sidebar from "./components/Sidebar";
-import Landing from "./views/Landing";
+// import Landing from "./views/Landing";
 
 export default {
   name: "app",
-  components: { Sidebar, Landing },
+  components: { Sidebar },
   data() {
     return {
       routes: this.$router.options.routes,
       mini: true,
-      signedIn: false
+      mockIsSignedIn: false
     };
   },
   methods: {
@@ -44,7 +44,10 @@ export default {
   },
   created() {
     this.$store.dispatch("fetchDatasets");
-    this.signedIn = this.$store.getters.isLoggedIn;
+    this.mockIsSignedIn = this.$router.currentRoute.name != "Home";
+  },
+  updated() {
+    this.mockIsSignedIn = this.$router.currentRoute.name != "Home";
   }
 };
 </script>

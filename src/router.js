@@ -6,7 +6,7 @@ Vue.use(Router);
 
 const redirectIfLoggedIn = function(next) {
   if (store.getters.isLoggedIn) {
-    next("dashboard");
+    next("browse");
   } else {
     next();
   }
@@ -19,6 +19,12 @@ const router = new Router({
     {
       path: "/",
       name: "Home",
+      component: () => import("./views/Landing.vue")
+      // beforeEnter: (to, from, next) => redirectIfLoggedIn(next)
+    },
+    {
+      path: "/browse",
+      name: "brose",
       component: () => import("./views/DatasetBrowserView.vue"),
       meta: {
         requiresAuth: true
