@@ -14,8 +14,8 @@
       </v-list-item>
 
       <v-divider></v-divider>
-
-      <v-list dense>
+      <v-list dense style="display:flex;flex-direction:column;justify-content:space-between">
+        <div >
         <v-list-item
           v-for="item in items.filter(n => {if(this.$store.getters.isLoggedIn){return n.displayOnLoggedIn}else{return !n.displayOnLoggedIn}})"
           :key="item.title"
@@ -37,6 +37,13 @@
             <v-list-item-title>Logout</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        </div>
+          <v-card-actions class="card-actions">
+        <v-list-item>
+        <v-switch v-model="$vuetify.theme.dark"  color="green"></v-switch>
+        <v-list-item-title> Dark Mode </v-list-item-title>
+        </v-list-item>
+        </v-card-actions>
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -103,5 +110,9 @@ h4 {
 }
 .v-list-item__avatar {
   margin-left: 5%;
+}
+.card-actions {
+  position: absolute;
+  bottom: 0;
 }
 </style>

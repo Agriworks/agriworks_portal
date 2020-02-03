@@ -4,12 +4,14 @@
     <Sidebar v-if="signedIn" v-on:signedOut="changeSignInState" />
     <v-content>
       <div v-if="signedIn">
+        <div>
         <div id="header">
           <div id="header-left"></div>
           <div id="header-right"></div>
         </div>
         <div class="container">
           <router-view />
+        </div>
         </div>
       </div>
       <!-- Landing Page-->
