@@ -1,6 +1,6 @@
 <template> 
   <div class="accordian" id="types">
-    <div class="card">
+    <v-card class="card">
       <div class="card-header" id="popularHeader">
         <h2 class="mb-0">
           <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#popularContent" aria-expanded="true" aria-controls="popularContent">
@@ -32,10 +32,10 @@
 
         </div>
         </div>
-      </div>
+    </v-card>
 
 
-    <div class="card">
+    <v-card class="card">
       <div class="card-header" id="headerRecent">
         <h2 class="mb-0">
           <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#recentContent" aria-expanded="false" aria-controls="recentContent">
@@ -68,9 +68,9 @@
 
         </div>
       </div>
-    </div>
+    </v-card>
 
-    <div class="card">
+    <v-card class="card">
       <div class="card-header" id="headerNew">
         <h2 class="mb-0">
           <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#newContent" aria-expanded="false" aria-controls="newContent">
@@ -103,7 +103,7 @@
 
         </div>
       </div>
-    </div>
+    </v-card>
 
   </div>
 

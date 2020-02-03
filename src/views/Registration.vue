@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <div class="card card-signin my-5">
+        <v-card class="shadow rounded">
           <div class="card-body">
             <h3 class="card-title text-center">Sign Up</h3>
             <form method="POST" action="/signup" class="form-signin">
@@ -66,7 +66,7 @@
               </div>
             </form>
           </div>
-        </div>
+        </v-card>
       </div>
     </div>
   </div>
@@ -82,5 +82,8 @@ h3 {
 }
 button {
   margin: 15px 15px;
+}
+.rounded-card{
+    border-radius:2% !important;
 }
 </style>

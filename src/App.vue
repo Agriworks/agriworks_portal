@@ -1,60 +1,43 @@
 <template>
-  <v-app>
-    <!-- TODO: FIND A CLEANER WAY TO DO CONDITIONAL REDERING-->
-     <!-- <Sidebar /> -->
-      <Sidebar v-if="signedIn" v-on:signedOut="changeSignInState"/>
-      <TopBar v-if="!signedIn" v-on:signedIn="changeSignInState"/>
-      <v-content>
-        <div v-if="signedIn">
-          <div id="header">
-            <div id="header-left">
-            </div>
-            <div id="header-right">
-            </div>
-          </div>
-          <div class="container">
-          <router-view />
-          </div>
+  <div>
+    <v-app>
+      <Sidebar v-if="mockIsSignedIn" />
+      <v-content v-if="mockIsSignedIn">
+        <div id="header">
+          <div id="header-left"></div>
+          <div id="header-right"></div>
         </div>
-         <!-- Landing Page-->
-        <Landing v-on:signedIn="changeSignInState" v-else/>
+        <div class="container">
+          <router-view />
+        </div>
       </v-content>
-  </v-app>
+      <router-view v-else />
+    </v-app>
+  </div>
 </template>
 
 <script>
-import Sidebar from './components/Sidebar'
-import Landing from './views/Landing'
-import TopBar from './components/TopBar'
+import Sidebar from "./components/Sidebar";
 
 export default {
   name: "app",
-  components: {Sidebar, Landing, TopBar},
+  components: { Sidebar },
   data() {
     return {
-      routes: this.$router.options.routes,
-      mini: true,
-      signedIn: false,
+      mockIsSignedIn: false
     };
-  },
-  methods: {
-    getYear(){
-      var d = new Date();
-      const currentYear = d.getFullYear();
-      return currentYear;
-    },
-    changeSignInState(){
-      this.signedIn = !this.signedIn //mocked signed in state
-    }
   },
   created() {
     this.$store.dispatch("fetchDatasets");
+    this.mockIsSignedIn = this.$router.currentRoute.name != "Home";
+  },
+  updated() {
+    this.mockIsSignedIn = this.$router.currentRoute.name != "Home";
   }
-}
+};
 </script>
 
 <style lang="scss">
-
 #header {
   display: flex;
   justify-content: space-between;
@@ -67,5 +50,4 @@ export default {
   bottom: 0;
   width: 100%;
 }
-
 </style>
