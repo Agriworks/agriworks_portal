@@ -1,9 +1,8 @@
 <template>
-  <v-app>
-    <!-- <Sidebar /> -->
-    <Sidebar v-if="mockIsSignedIn" />
-    <v-content>
-      <div v-if="mockIsSignedIn">
+  <div>
+    <v-app>
+      <Sidebar v-if="mockIsSignedIn" />
+      <v-content v-if="mockIsSignedIn">
         <div id="header">
           <div id="header-left"></div>
           <div id="header-right"></div>
@@ -11,11 +10,10 @@
         <div class="container">
           <router-view />
         </div>
-      </div>
-    </v-content>
-
-    <!-- <router-view /> -->
-  </v-app>
+      </v-content>
+      <router-view v-else />
+    </v-app>
+  </div>
 </template>
 
 <script>
@@ -26,23 +24,12 @@ export default {
   components: { Sidebar },
   data() {
     return {
-      routes: this.$router.options.routes,
-      mini: true,
-      mockIsSignedIn: false,
-      signedIn: false
+      mockIsSignedIn: false
     };
-  },
-  methods: {
-    getYear() {
-      var d = new Date();
-      const currentYear = d.getFullYear();
-      return currentYear;
-    }
   },
   created() {
     this.$store.dispatch("fetchDatasets");
     this.mockIsSignedIn = this.$router.currentRoute.name != "Home";
-    this.signedIn = this.$store.getters.isLoggedIn;
   },
   updated() {
     this.mockIsSignedIn = this.$router.currentRoute.name != "Home";

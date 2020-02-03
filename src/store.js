@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import router from "./router";
 import { post, get } from "./requests";
 import {
   getCookie,
@@ -61,7 +62,8 @@ const store = new Vuex.Store({
         .then(res => {
           deleteCookie("SID");
           store.commit("setLoggedInFalse");
-          window.location.reload();
+          router.push("/");
+          // window.location.reload();
         })
         .catch(err => {
           store.commit("setErrorMessage", "Unable to logout");
