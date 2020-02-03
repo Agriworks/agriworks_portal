@@ -3,7 +3,7 @@
     <div class="row">
       <!-- <div class="col-md-1"></div> -->
       <div class="col-md-6">
-        <div class="shadow rounded">
+        <v-card class="rounded-card">
           <div class="card-body">
             <h3 class="card-title text-center">Login</h3>
             <form class="form-signin" @submit.prevent="login">
@@ -34,7 +34,7 @@
               </div>
             </form>
           </div>
-        </div>
+        </v-card>
       </div>
       <div class="col-md-1"></div>
       <div class="col-md-5">
@@ -76,7 +76,7 @@ export default {
         })
         .then(response => {
           //no setUser in store
-          // this.$store.commit("setUser", this.email);
+          this.$store.commit("setUser", this.email);
           this.$router.push("/dashboard");
         })
         .catch(error => {
@@ -92,3 +92,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.rounded-card{
+    border-radius:2% !important;
+}
+</style>
