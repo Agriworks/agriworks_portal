@@ -5,7 +5,7 @@
         <div class="row">
           <h1 align="center">Account settings</h1>
         </div>
-        <div class="shadow rounded">
+        <v-card class="shadow rounded">
           <div class="card-body">
           <div class="row">
             <div class="col-auto">
@@ -43,7 +43,7 @@
             </div>
           </div>
           </div>
-        </div>
+        </v-card>
       </div>
     </div>
     <!--Email Modal -->
