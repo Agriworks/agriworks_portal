@@ -27,30 +27,35 @@
 </template>
 
 <script>
-  //import FieldLink from './FieldLink'
+import api from "../api";
 
-  export default {
-    name: 'Upload',
-    data() {
-      return {
-        datasetName: "Sample",
-        datasetTags: "Untitled",
-        datasetPermissions: "Public",
-        datasetType: "Land Use",
-        permissionOptions: ["Public", "Private"],
-        typeOptions: ["Land Use", "Pesticide Report"],
-        file: null
-      }
-    },
-    methods: {
-      processForm() {
-        this.$store.dispatch('uploadDataset', {file: this.file, name: this.datasetName, tags: this.datasetTags, permissions: this.datasetPermissions, type: this.datasetType })
-      },
-      handleFileUpload() {
-        this.file = this.$refs['file-input']
-      }
+export default {
+  name: 'Upload',
+  data() {
+    return {
+      datasetName: "Sample",
+      datasetTags: "Untitled",
+      datasetPermissions: "Public",
+      datasetType: "Land Use",
+      permissionOptions: ["Public", "Private"],
+      typeOptions: ["Land Use", "Pesticide Report"],
+      file: null
     }
+  },
+  methods: {
+    processForm() {
+      api.uploadDataset(this.file, this.datasetName, this.datasetTags, this.datasetPermissions, this.datasetType)
+      .then(response => {
+        console.log("success");
+        console.log(response);
+      })
+      .catch(error => {
+        console.log("error");
+        console.log(error);
+      })
+    },
   }
+}
 </script>
 
 <style lang="css">
