@@ -48,7 +48,12 @@ export default {
     return {
       drawer: true,
       items: [
-        { title: "Home", icon: "mdi-home", link: "/", displayOnLoggedIn: true },
+        {
+          title: "Home",
+          icon: "mdi-home",
+          link: "/browse",
+          displayOnLoggedIn: true
+        },
         {
           title: "Login",
           icon: "mdi-login-variant",
