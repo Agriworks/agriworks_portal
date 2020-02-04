@@ -3,16 +3,14 @@ import axios from "axios"
 const apiUrl = "http://localhost:4000";
 const useCredentials = {withCredentials: true}; // Automatically embeds cookie with request. Use for all authenticated requests.
 
-export default {
+const api = {
     fetchDatasets () {
         return axios
         .get(apiUrl+"/download")
-        .then(response => response.data)
     },
     fetchDataset (id) {
         return axios
         .get(apiUrl+"/download/"+id)
-        .then(response => response.data)
     },
     uploadDataset (file, name, tags, permissions, type) {
         let newDataset = new FormData();
@@ -26,15 +24,7 @@ export default {
             newDataset,
             useCredentials,
         )
-        .then(() => {
-            //#TODO: display success message to user
-            console.log('Successfully uploaded new dataset!');
-        })
-        .catch(error => {
-            //#TODO: display error message to user
-            console.log(error);
-            console.log(error.body);
-            console.log('Failure uploading dataset');
-        });
     }
 }
+
+export default api;
