@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { post, get } from "./requests";
+
 import {
   getCookie,
   addCookie,
@@ -14,8 +15,11 @@ const store = new Vuex.Store({
   state: {
     //Initial state
     loggedIn: wasAlreadyLoggedIn(),
-    errorMessage: "",
-    showError: false,
+    snackbar: {
+      message: "",
+      show: false,
+      color: ""
+    },
     datasets: [],
     dataset: [],
     user: "" //the email address of the user
@@ -27,11 +31,10 @@ const store = new Vuex.Store({
     setLoggedInTrue(state) {
       state.loggedIn = true;
     },
-    setErrorMessage(state, error) {
-      state.errorMessage = error;
-    },
-    setShowError(state, val) {
-      state.showError = val;
+    setSnackbar(state, snackbar) {
+      state.snackbar.message = snackbar.message;
+      state.snackbar.show = snackbar.show;
+      state.snackbar.color = snackbar.color;
     },
     setDatasets(state, datasets) {
       state.datasets = datasets;
@@ -48,10 +51,16 @@ const store = new Vuex.Store({
       return state.loggedIn;
     },
     getErrorMessage: state => {
-      return state.errorMessage;
+      return state.snackbar.errorMessage;
     },
     getShowError: state => {
-      return state.showError;
+      return state.snackbar.showError;
+    },
+    getSuccessMessage: state => {
+      return state.snackbar.successMessage;
+    },
+    getShowSuccess: state => {
+      return state.snackbar.showSuccess;
     }
   },
   actions: {
@@ -61,10 +70,18 @@ const store = new Vuex.Store({
         .then(res => {
           deleteCookie("SID");
           store.commit("setLoggedInFalse");
-          window.location.reload();
+          state.commit("setSnackbar", {
+            message: res.data.message,
+            show: true,
+            color: "#4CAF50"
+          });
         })
         .catch(err => {
-          store.commit("setErrorMessage", "Unable to logout");
+          state.commit("setSnackbar", {
+            message: err.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
         });
     },
     retrieveSessionID(state, payload) {
@@ -89,22 +106,37 @@ const store = new Vuex.Store({
       get(`/dataset/${datasetId}`)
         .then(response => {
           this.commit("setDataset", response.data);
-          this.commit("setErrorMessage", "");
+          state.commit("setSnackbar", {
+            message: "",
+            show: false,
+            color: "#00ACC1"
+          });
         })
         .catch(err => {
-          store.commit(
-            "setErrorMessage",
-            "Unable to retrieve data for dataset"
-          );
+          state.commit("setSnackbar", {
+            message: err.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
         });
     },
     fetchDatasets(state) {
       get("/dataset/")
         .then(response => {
           this.commit("setDatasets", response.data);
-          this.commit("setErrorMessage", "");
+          state.commit("setSnackbar", {
+            message: "",
+            show: false,
+            color: "#00ACC1"
+          });
         })
-        .catch(store.commit("setErrorMessage", "Unable to get datasets."));
+        .catch(err => {
+          state.commit("setSnackbar", {
+            message: err.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
+        });
     },
     filterDatasets(state, searchQuery) {
       if (searchQuery == undefined || searchQuery == "" || searchQuery == " ") {
@@ -113,14 +145,19 @@ const store = new Vuex.Store({
         get(`/dataset/search/${searchQuery}`)
           .then(response => {
             this.commit("setDatasets", response.data);
-            this.commit("setErrorMessage", "");
+            state.commit("setSnackbar", {
+              message: "",
+              show: false,
+              color: "#00ACC1"
+            });
           })
-          .catch(
-            store.commit(
-              "setErrorMessage",
-              "Unable to find datasets with given parameter(s)."
-            )
-          );
+          .catch(err => {
+            state.commit("setSnackbar", {
+              message: err.response.data.message,
+              show: true,
+              color: "#F44336"
+            });
+          });
       }
     }
   }

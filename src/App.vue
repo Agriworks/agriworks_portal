@@ -1,6 +1,10 @@
 <template>
   <v-app>
     <!-- <Sidebar /> -->
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :top="true">
+      {{ snackbar.message }}
+      <v-btn dark text @click="snackbar.show = false">Close</v-btn>
+    </v-snackbar>
     <Sidebar v-if="signedIn" v-on:signedOut="changeSignInState" />
     <v-content>
       <div v-if="signedIn">
@@ -21,16 +25,22 @@
 <script>
 import Sidebar from "./components/Sidebar";
 import Landing from "./views/Landing";
+import { mapState } from "vuex";
 
 export default {
   name: "app",
   components: { Sidebar, Landing },
   data() {
     return {
+      colors: { success: "#4CAF50", error: "#F44336", info: "#00ACC1" },
       routes: this.$router.options.routes,
       mini: true,
       signedIn: false
     };
+  },
+
+  computed: {
+    ...mapState(["snackbar"])
   },
   methods: {
     getYear() {

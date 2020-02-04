@@ -78,14 +78,18 @@ export default {
           //no setUser in store
           // this.$store.commit("setUser", this.email);
           this.$router.push("/dashboard");
+          this.$store.commit("setSnackbar", {
+            message: "Successfully logged in.",
+            show: true,
+            color: "#4CAF50"
+          });
         })
         .catch(error => {
-          console.log(error);
-          this.$store.commit(
-            "setErrorMessage",
-            "Incorrect Username or Password"
-          );
-          this.$store.commit("setShowError", true);
+          this.$store.commit("setSnackbar", {
+            message: error.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
           this.$forceUpdate;
         });
     }
