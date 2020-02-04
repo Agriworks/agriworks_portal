@@ -148,7 +148,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                       <v-btn color="blue darken-1" text @click="passwordDialog = false">Close</v-btn>
-                      <v-btn color="blue darken-1" text @click="passwordDialog = false">Save</v-btn>
+                      <v-btn color="blue darken-1" text v-on:click="submitPassword">Save</v-btn>
                   </v-card-actions>
 
                 </v-card>
@@ -165,12 +165,30 @@
 
 
 <script>
+
 export default {
+
   computed: {
       email() {
         return this.$store.state.user
       }
-  }
+  }, 
+
+  data () {
+    return {
+      emailDialog: false,
+      passwordDialog: false,
+    }
+  },
+  
+  methods: {
+    submitEmail() {
+      
+    },
+    submitPassword(){
+    }
+  },
+  
 }
 </script>
 
