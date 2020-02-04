@@ -19,8 +19,7 @@
         <p> By {{ dataset.author }} </p>
       </div>
       <div class="col-sm-6">
-        <v-app id="app">
-          <v-container fluid>
+          <v-container>
             <v-layout>
               <v-flex>
                 <v-card hover>
@@ -38,7 +37,6 @@
                 </v-flex>
               </v-layout>
             </v-container>
-          </v-app>
       </div>
     </div>
     <div class="row">
