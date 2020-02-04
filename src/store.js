@@ -39,8 +39,8 @@ const store = new Vuex.Store({
     setDataset(state, dataset) {
       state.dataset = dataset;
     },
-    setUser(state, email){
-      state.user = email
+    setUser(state, email) {
+      state.user = email;
     }
   },
   getters: {

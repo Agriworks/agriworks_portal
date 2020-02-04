@@ -30,7 +30,7 @@
               </div>
               <div class="custom-control custom-checkbox mb-3">
                 <router-link to="/registration" class="btn btn-link">Register</router-link>|
-                <router-link to="/forgot_password" class="btn btn-link">Forgot Password?</router-link>
+                <router-link to="/forgot-password" class="btn btn-link">Forgot Password?</router-link>
               </div>
             </form>
           </div>

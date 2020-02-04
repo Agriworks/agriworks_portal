@@ -25,9 +25,14 @@ const router = new Router({
       }
     },
     {
-      path: "/forgot_password",
-      name: "forgot_password",
+      path: "/forgot-password",
+      name: "forgot-password",
       component: () => import("./views/ForgotPassword.vue")
+    },
+    {
+      path: "/reset-password/:id",
+      name: "reset-password",
+      component: () => import("./views/ResetPassword.vue")
     },
     {
       path: "/upload",
