@@ -6,12 +6,12 @@ const useCredentials = {withCredentials: true}; // Automatically embeds cookie w
 export default {
     fetchDatasets () {
         return axios
-        .get(apiUrl+"/download")
+        .get(apiUrl+"/dataset")
         .then(response => response.data)
     },
     fetchDataset (id) {
         return axios
-        .get(apiUrl+"/download/"+id)
+        .get(apiUrl+"/dataset/"+id)
         .then(response => response.data)
     },
     uploadDataset (file, name, tags, permissions, type) {
