@@ -11,15 +11,16 @@
         <v-app id="app">
           <v-container>
             <v-layout>
-              <v-flex xs12 sm6 offset-xs8>
+              <v-flex>
                 <v-card hover>
                   <v-card-title>
                     <h2>Metadata</h2>
                   </v-card-title>
           
                   <v-card-text>
-                    <p> Type: {{dataset.type}} </p>
-                    <p> Name: {{ dataset.name }} </p>
+                    <div v-for="(value, name) in dataset.legend" :key="value">
+                      {{ name }}: {{ value }}
+                    </div>
                   </v-card-text>
           
                   </v-card>
