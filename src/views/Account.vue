@@ -15,14 +15,65 @@
               <span> {{ email }} </span>
             </div>
             <div class="col text-right">
-              <button
-                class="btn btn-primary"
-                type="button"
-                id="changeEmail"
-                data-toggle="modal"
-                data-target="#emailModal"
-              >Change
-              </button>
+              <v-dialog
+                v-model="emailDialog"
+                width="500"
+              >
+
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    color="blue"
+                    dark
+                    v-on="on"
+                  >
+                    Change
+                  </v-btn>
+                </template>
+
+                <v-card>
+                  <v-card-title
+                    class="headline"
+                    primary-title
+                  >
+                    Change Email
+                  </v-card-title>
+
+                  <v-card-text>
+                    <form class="form-signin">
+                      <div class="form-label-group">
+                        <input
+                          type="password"
+                          id="inputCurrentPassword"
+                          class="form-control"
+                          placeholder="Current Password"
+                          required
+                          autofocus
+                        />
+                        <input
+                          type="email"
+                          id="inputEmail"
+                          class="form-control"
+                          placeholder="New Email"
+                          required
+                          autofocus
+                        />
+                      </div>
+                    </form>
+                  
+                  </v-card-text>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="emailDialog = false">Close</v-btn>
+                      <v-btn color="blue darken-1" text @click="emailDialog = false">Save</v-btn>
+                  </v-card-actions>
+
+                </v-card>
+              </v-dialog>
+
+ 
+
+
             </div>
           </div>
           <div class="row">
@@ -32,14 +83,77 @@
             <div class="col">
             </div>
             <div class="col text-right">
-              <button
-                class="btn btn-primary"
-                type="button"
-                data-toggle="modal"
-                data-target="#passwordModal"
-                id="changePassword"
-                >Change
-              </button>
+              
+               <v-dialog
+                v-model="passwordDialog"
+                width="500"
+              >
+
+                <template v-slot:activator="{ on }">
+                  <v-btn
+                    color="blue"
+                    dark
+                    v-on="on"
+                  >
+                    Change
+                  </v-btn>
+                </template>
+
+                <v-card>
+                  <v-card-title
+                    class="headline"
+                    primary-title
+                  >
+                    Change Password
+                  </v-card-title>
+
+            <!--     <v-divider></v-divider> -->
+
+                  <v-card-text>
+                    
+                    <form class="form-signin">
+                      <div class="form-label-group">
+                        
+                        <input
+                          type="password"
+                          id="inputCurrentPassword"
+                          class="form-control"
+                          placeholder="Current Password"
+                          required
+                          autofocus
+                        />
+                        <input
+                          type="password"
+                          id="inputPassword"
+                          class="form-control"
+                          placeholder="New Password"
+                          required
+                          autofocus
+                        />
+                        <input
+                          type="password"
+                          id="inputConfirmPassword"
+                          class="form-control"
+                          placeholder="Confirm New Password"
+                          required
+                          autofocus
+                        />
+                      </div>
+                    </form>      
+
+                  </v-card-text>
+
+                  <!-- <v-divider></v-divider> -->
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="passwordDialog = false">Close</v-btn>
+                      <v-btn color="blue darken-1" text @click="passwordDialog = false">Save</v-btn>
+                  </v-card-actions>
+
+                </v-card>
+              </v-dialog>
+
             </div>
           </div>
           </div>
@@ -93,6 +207,9 @@
         </div>
       </div>
     </div>
+
+
+
 
     <!-- Password Modal -->
     <div
