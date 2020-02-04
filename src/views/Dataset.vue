@@ -1,5 +1,16 @@
 <template>
-  <div>
+  <div v-if="dataset.legend==='{}'">
+    <div class="row">
+      <div class="col-md-12">
+        <h5> {{dataset.type}} </h5>
+        <h1> {{ dataset.name }} </h1>
+        <h3 v-if="dataset.tags"> Tags: {{ dataset.tags }} </h3>
+        <p> By {{ dataset.author }} </p>
+        <DataTable :headers="dataset.headers" :data="dataset.data"/>
+      </div>
+    </div>
+  </div>
+  <div v-else>
     <div class="row">
       <div class="col-sm-6">
         <h5> {{dataset.type}} </h5>
@@ -9,7 +20,7 @@
       </div>
       <div class="col-sm-6">
         <v-app id="app">
-          <v-container>
+          <v-container fluid>
             <v-layout>
               <v-flex>
                 <v-card hover>
@@ -34,7 +45,10 @@
       <DataTable :headers="dataset.headers" :data="dataset.data"/>
     </div>
   </div>
+  
 </template>
+
+
 
 <script>
 import DataTable from "../components/DataTable";
