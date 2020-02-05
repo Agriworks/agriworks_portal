@@ -5,13 +5,13 @@
         <v-card class="shadow rounded">
           <div class="card-body">
             <h3 class="card-title text-center">Sign Up</h3>
-            <form method="POST" action="/signup" class="form-signin">
+            <form @submit.prevent="signup" class="form-signin">
               <div class="form-label-group">
-                <label for="inputText">First Name</label>
+                <label for="firstName">First Name</label>
                 <input
                   name="firstName"
                   type="text"
-                  id="inputText"
+                  id="firstName"
                   class="form-control"
                   placeholder
                   required
@@ -19,11 +19,11 @@
                 />
               </div>
               <div class="form-label-group">
-                <label for="inputText">Last Name</label>
+                <label for="lastName">Last Name</label>
                 <input
                   name="lastName"
                   type="text"
-                  id="inputText"
+                  id="lastName"
                   class="form-control"
                   placeholder
                   required
@@ -72,6 +72,28 @@
   </div>
 </template>
 
+<script>
+import { post } from "../requests";
+export default {
+  methods: {
+    // should probably move this to store
+    signup() {
+      post("/auth/signup", {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        email: document.getElementById("inputEmail").value,
+        password: document.getElementById("inputPassword").value
+      })
+        .then(res => {
+          this.$router.push("login");
+        })
+        .catch(err => {
+          this.$store.commit("setErrorMessage", "Unable to process request");
+        });
+    }
+  }
+};
+</script>
 
 <style scoped>
 .form-label-group {
