@@ -8,6 +8,8 @@ import {
   wasAlreadyLoggedIn,
   deleteCookie
 } from "./js/authentication";
+import api from "./api"
+
 
 Vue.use(Vuex);
 

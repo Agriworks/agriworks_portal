@@ -1,5 +1,9 @@
 import axios from "axios"
+import {
+    addCookie,
+  } from "./js/authentication";
 
+import { post, get } from "./requests";
 const apiUrl = "http://localhost:4000";
 const useCredentials = {withCredentials: true}; // Automatically embeds cookie with request. Use for all authenticated requests.
 
@@ -24,6 +28,18 @@ const api = {
             newDataset,
             useCredentials,
         )
+    }, 
+    logout(SID){
+        post("/auth/logout", { sessionId: SID })
+        .then(res => {
+          deleteCookie("SID");
+          store.commit("setLoggedInFalse");
+          router.push("/");
+          // window.location.reload();
+        })
+        .catch(err => {
+          store.commit("setErrorMessage", "Unable to logout");
+        });
     }
 }
 
