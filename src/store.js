@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import router from "./router";
 import { post, get } from "./requests";
 import {
   getCookie,
@@ -8,8 +7,7 @@ import {
   wasAlreadyLoggedIn,
   deleteCookie
 } from "./js/authentication";
-import api from "./api"
-
+import api from './api'
 
 Vue.use(Vuex);
 
@@ -60,34 +58,10 @@ const store = new Vuex.Store({
   actions: {
     logout(state) {
       const SID = getCookie("SID");
-      post("/auth/logout", { sessionId: SID })
-        .then(res => {
-          deleteCookie("SID");
-          store.commit("setLoggedInFalse");
-          router.push("/");
-          // window.location.reload();
-        })
-        .catch(err => {
-          store.commit("setErrorMessage", "Unable to logout");
-        });
+      api.logout(SID); 
     },
     retrieveSessionID(state, payload) {
-      return new Promise((resolve, reject) => {
-        post("/auth/login", payload)
-          .then(response => {
-            addCookie(
-              response.data.key,
-              response.data.value,
-              response.data.expires
-            );
-            store.commit("setLoggedInTrue");
-            resolve(response);
-          })
-          .catch(error => {
-            console.log(error);
-            reject(error);
-          });
-      });
+      api.getSessionID(payload); 
     },
     fetchOneDataset(state, datasetId) {
       get(`/dataset/${datasetId}`)
@@ -111,21 +85,7 @@ const store = new Vuex.Store({
         .catch(store.commit("setErrorMessage", "Unable to get datasets."));
     },
     filterDatasets(state, searchQuery) {
-      if (searchQuery == undefined || searchQuery == "" || searchQuery == " ") {
-        this.dispatch("fetchDatasets");
-      } else {
-        get(`/dataset/search/${searchQuery}`)
-          .then(response => {
-            this.commit("setDatasets", response.data);
-            this.commit("setErrorMessage", "");
-          })
-          .catch(
-            store.commit(
-              "setErrorMessage",
-              "Unable to find datasets with given parameter(s)."
-            )
-          );
-      }
+      api.filterDataset(searchQuery)
     }
   }
 });
