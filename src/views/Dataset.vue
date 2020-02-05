@@ -1,5 +1,5 @@
 <template>
-  <div v-if="dataset.legend==='{}'">
+  <div v-if="Object.keys(dataset.legend).length===0">
     <div class="row">
       <div class="col-md-12">
         <h5> {{dataset.type}} </h5>
@@ -33,10 +33,10 @@
                     </div>
                   </v-card-text>
           
-                  </v-card>
-                </v-flex>
-              </v-layout>
-            </v-container>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
       </div>
     </div>
     <div class="row">
