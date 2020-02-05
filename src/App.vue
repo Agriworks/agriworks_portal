@@ -1,79 +1,47 @@
 <template>
-  <div id="app" :class="[{'collapsed' : collapsed}]">
-    <div class="container-fluid">
-      <Sidebar v-on:collapsed="onCollapsed"/>
-      <div id="header">
-        <div id="header-left">
-          <Logo/>
+  <div>
+    <v-app>
+      <Sidebar v-if="mockIsSignedIn" />
+      <v-content v-if="mockIsSignedIn">
+        <div id="header">
+          <div id="header-left"></div>
+          <div id="header-right"></div>
         </div>
-        <div id="header-right">
-          <fa-icon icon="sign-in-alt" size="lg"/>
-        </div>
-      </div>
-      <!-- <Push>
-        <a id="logo">
-            <Logo/>
-        </a>
-        <router-link v-for="route in routes" :key="route.path" :to="route.path">
-            {{route.name}}  
-        </router-link>
-      </Push> -->
-        <main id="page-wrap">
+        <div class="container">
           <router-view />
-        </main>
-      </div>
-    </div>  
+        </div>
+      </v-content>
+      <router-view v-else />
+    </v-app>
+  </div>
 </template>
 
 <script>
-import Logo from './components/Logo'
-import Sidebar from './components/Sidebar'
-
-// import {Push} from 'vue-burger-menu'
+import Sidebar from "./components/Sidebar";
 
 export default {
   name: "app",
-  components: {Logo, Sidebar},
+  components: { Sidebar },
   data() {
     return {
-      routes: this.$router.options.routes,
-      collapsed: true
+      mockIsSignedIn: false
     };
   },
-  methods: {
-    onCollapsed(collapsed) {
-      this.collapsed = collapsed
-    },
-    getYear(){
-      var d = new Date();
-      const currentYear = d.getFullYear();
-      return currentYear;
-    }
+  created() {
+    this.$store.dispatch("fetchDatasets");
+    this.mockIsSignedIn = this.$router.currentRoute.name != "Home";
+  },
+  updated() {
+    this.mockIsSignedIn = this.$router.currentRoute.name != "Home";
   }
-}
+};
 </script>
 
 <style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  padding-left: 250px;
-}
-
-#app.collapsed {
-  padding-left: 50px;
-}
-
-.container-fluid {
-  margin-top: 1rem;
-}
-
 #header {
   display: flex;
   justify-content: space-between;
+  margin-top: 90px;
   padding-left: 5rem;
   padding-right: 5rem;
 }
@@ -82,5 +50,4 @@ export default {
   bottom: 0;
   width: 100%;
 }
-
 </style>

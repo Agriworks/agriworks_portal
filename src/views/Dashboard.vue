@@ -1,6 +1,6 @@
 <template> 
   <div class="accordian" id="types">
-    <div class="card">
+    <v-card class="card">
       <div class="card-header" id="popularHeader">
         <h2 class="mb-0">
           <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#popularContent" aria-expanded="true" aria-controls="popularContent">
@@ -16,7 +16,7 @@
             <div class="carousel-inner">
 
               <div class="carousel-item" v-for="(dataset, index) in popularDatasets" v-bind:key="dataset.id" v-bind:class="{ active: index == 0}"> 
-                  <IndividualDataset v-bind:dataset="dataset" />
+                  <DatasetCard v-bind:dataset="dataset" />
               </div>
              
             </div>
@@ -32,10 +32,10 @@
 
         </div>
         </div>
-      </div>
+    </v-card>
 
 
-    <div class="card">
+    <v-card class="card">
       <div class="card-header" id="headerRecent">
         <h2 class="mb-0">
           <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#recentContent" aria-expanded="false" aria-controls="recentContent">
@@ -51,7 +51,7 @@
             <div class="carousel-inner">
 
               <div class="carousel-item" v-for="(dataset, index) in recentDatasets" v-bind:key="dataset.id" v-bind:class="{ active: index == 0}"> 
-                  <IndividualDataset v-bind:dataset="dataset" />
+                  <DatasetCard v-bind:dataset="dataset" />
               </div>
              
             </div>
@@ -68,9 +68,9 @@
 
         </div>
       </div>
-    </div>
+    </v-card>
 
-    <div class="card">
+    <v-card class="card">
       <div class="card-header" id="headerNew">
         <h2 class="mb-0">
           <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#newContent" aria-expanded="false" aria-controls="newContent">
@@ -86,7 +86,7 @@
             <div class="carousel-inner">
 
               <div class="carousel-item" v-for="(dataset, index) in newDatasets" v-bind:key="dataset.id" v-bind:class="{ active: index == 0}"> 
-                  <IndividualDataset v-bind:dataset="dataset" />
+                  <DatasetCard v-bind:dataset="dataset" />
               </div>
              
 
@@ -103,7 +103,7 @@
 
         </div>
       </div>
-    </div>
+    </v-card>
 
   </div>
 
@@ -114,13 +114,13 @@
 
 <script>
 
-import IndividualDataset from "@/views/IndividualDataset.vue";
+import DatasetCard from "@/views/DatasetCard.vue";
 
 export default {
 
   name: "DashboardView",
   components: {
-    IndividualDataset
+    DatasetCard
   },
 
   methods: {
