@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="row">
-      <DataTable :headers="dataset.headers" :data="dataset.data"/>
+      <DataTable :headers="dataset.headers" :data="dataset.data" id="datatable"/>
     </div>
   </div>
   
@@ -67,4 +67,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+#datatable {
+  width: 100%;
+}
+</style>
