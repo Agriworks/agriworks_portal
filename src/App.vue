@@ -6,12 +6,12 @@
       <v-btn dark text @click="snackbar.show = false">Close</v-btn>
     </v-snackbar>
     <v-content>
-        <div class="container" v-if="this.signedIn">
+        <div class="container-fluid" v-if="onLanding">
+          <router-view /> <!-- Landing page !-->
+        </div>
+        <div class="container" v-else>
           <Sidebar/>
           <router-view/> 
-        </div>
-        <div class="container-fluid" v-else>
-          <router-view /> <!-- Landing page !-->
         </div>
     </v-content>
     </v-app>
@@ -30,7 +30,7 @@ export default {
       colors: { success: "#4CAF50", error: "#F44336", info: "#00ACC1" },
       routes: this.$router.options.routes,
       mini: true,
-      signedIn: this.$store.state.loggedIn
+      onLanding: true //by default we are on the homepage
     };
   },
   computed: {
@@ -38,6 +38,9 @@ export default {
   },
   created() {
     this.$store.dispatch("fetchDatasets");
+  },
+  updated() {
+    this.onLanding = this.$router.currentRoute.name == "Home" //we are performing a check on every update
   }
 };
 </script>
