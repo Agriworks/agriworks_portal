@@ -1,38 +1,43 @@
 <template>
-  <div>
-    <v-app>
-      <Sidebar v-if="mockIsSignedIn" />
-      <v-content v-if="mockIsSignedIn">
-        <div id="header">
-          <div id="header-left"></div>
-          <div id="header-right"></div>
+  <v-app>
+    <!-- <Notification Drawer /> -->
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :top="true">
+      {{ snackbar.message }}
+      <v-btn dark text @click="snackbar.show = false">Close</v-btn>
+    </v-snackbar>
+    <v-content>
+        <div class="container" v-if="this.signedIn">
+          <Sidebar/>
+          <router-view/> 
         </div>
-        <div class="container">
-          <router-view />
+        <div class="container-fluid" v-else>
+          <router-view /> <!-- Landing page !-->
         </div>
-      </v-content>
-      <router-view v-else />
+    </v-content>
     </v-app>
-  </div>
 </template>
 
 <script>
 import Sidebar from "./components/Sidebar";
+import Landing from "./views/Landing";
+import { mapState } from "vuex";
 
 export default {
   name: "app",
   components: { Sidebar },
   data() {
     return {
-      mockIsSignedIn: false
+      colors: { success: "#4CAF50", error: "#F44336", info: "#00ACC1" },
+      routes: this.$router.options.routes,
+      mini: true,
+      signedIn: this.$store.state.loggedIn
     };
+  },
+  computed: {
+    ...mapState(["snackbar"])
   },
   created() {
     this.$store.dispatch("fetchDatasets");
-    this.mockIsSignedIn = this.$router.currentRoute.name != "Home";
-  },
-  updated() {
-    this.mockIsSignedIn = this.$router.currentRoute.name != "Home";
   }
 };
 </script>

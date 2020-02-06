@@ -88,10 +88,18 @@ export default {
         password: document.getElementById("password").value
       })
         .then(res => {
-          this.$router.push("/login");
+          this.$store.commit("setSnackbar", {
+            message: res.data.message,
+            show: true,
+            color: "#4CAF50"
+          });
         })
         .catch(err => {
-          this.$store.commit("setErrorMessage", "unable to reset password");
+          this.$store.commit("setSnackbar", {
+            message: err.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
         });
     }
   },
@@ -101,11 +109,19 @@ export default {
     })
       .then(res => {
         this.validSessionId = true;
-        this.$store.commit("setErrorMessage", "valid sessionId");
+        this.$store.commit("setSnackbar", {
+          message: res.data.message,
+          show: false,
+          color: "#4CAF50"
+        });
       })
       .catch(err => {
         this.validSessionId = false;
-        this.$store.commit("setErrorMessage", "invalid sessionId");
+        this.$store.commit("setSnackbar", {
+          message: err.response.data.message,
+          show: true,
+          color: "#F44336"
+        });
       });
   }
 };

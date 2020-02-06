@@ -74,6 +74,7 @@
 
 <script>
 import { post } from "../requests";
+
 export default {
   methods: {
     // should probably move this to store
@@ -86,9 +87,18 @@ export default {
       })
         .then(res => {
           this.$router.push("login");
+          this.$store.commit("setSnackbar", {
+            message: res.data.message,
+            show: true,
+            color: "#4CAF50"
+          });
         })
         .catch(err => {
-          this.$store.commit("setErrorMessage", "Unable to process request");
+          this.$store.commit("setSnackbar", {
+            message: err.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
         });
     }
   }

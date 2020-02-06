@@ -44,10 +44,18 @@ export default {
         email: document.getElementById("inputText").value
       })
         .then(res => {
-          this.$store.commit("setErrorMessage", "Email sent");
+          this.$store.commit("setSnackbar", {
+            message: res.data.message,
+            show: true,
+            color: "#4CAF50"
+          });
         })
         .catch(err => {
-          this.$store.commit("setErrorMessage", "Unable to process request");
+          this.$store.commit("setSnackbar", {
+            message: err.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
         });
     }
   }
