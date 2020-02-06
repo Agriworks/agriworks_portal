@@ -91,7 +91,7 @@ export default {
           this.$router.push("/login");
         })
         .catch(err => {
-          this.$store.commit("setErrorMessage", "unable to reset password");
+          console.log(err);
         });
     }
   },
@@ -101,11 +101,9 @@ export default {
     })
       .then(res => {
         this.validSessionId = true;
-        this.$store.commit("setErrorMessage", "valid sessionId");
       })
       .catch(err => {
         this.validSessionId = false;
-        this.$store.commit("setErrorMessage", "invalid sessionId");
       });
   }
 };

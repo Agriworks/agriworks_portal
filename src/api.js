@@ -1,26 +1,18 @@
 import axios from "axios"
-import {
-    addCookie,
-    deleteCookie
-  } from "./js/authentication";
+import { addCookie, deleteCookie } from "./js/authentication";
 import router from "./router";
-
-import store from "./store"
 import { post, get } from "./requests";
-
-
+import store from "./store"; //might be a circular import
 
 const apiUrl = "http://localhost:4000";
 const useCredentials = {withCredentials: true}; // Automatically embeds cookie with request. Use for all authenticated requests.
 
 const api = {
     fetchDatasets () {
-        return axios
-        .get(apiUrl+"/download")
+        return get("/dataset/").then(response => store.commit("setDatasets", response.data));
     },
     fetchDataset (id) {
-        return axios
-        .get(apiUrl+"/download/"+id)
+        return get(`/dataset/${id}`).then(response => store.commit("setDataset", response.data));
     },
     uploadDataset (file, name, tags, permissions, type) {
         let newDataset = new FormData();
@@ -35,33 +27,24 @@ const api = {
             useCredentials,
         )
     }, 
-    filterDataset(searchQuery) {
+    filterDatasets(searchQuery) {
         if (searchQuery == undefined || searchQuery == "" || searchQuery == " ") {
             store.dispatch("fetchDatasets");
-          } else {
+        } else {
             get(`/dataset/search/${searchQuery}`)
-              .then(response => {
-                store.commit("setDatasets", response.data);
-                store.commit("setErrorMessage", "");
-              })
-              .catch(
-                store.commit(
-                  "setErrorMessage",
-                  "Unable to find datasets with given parameter(s)."
-                )
-              );
+            .then(response => store.commit("setDatasets", response.data))
+            .catch(error => console.log(error))
           }
     },
-    logout(SID){
-        post("/auth/logout", { sessionId: SID })
+    logout(sessionId){
+        post("/auth/logout", { sessionId: sessionId })
         .then(res => {
           deleteCookie("SID");
           store.commit("setLoggedInFalse");
           router.push("/");
-          // window.location.reload();
         })
         .catch(err => {
-          store.commit("setErrorMessage", "Unable to logout");
+          console.log(err);
         });
     }, 
     getSessionID(payload){

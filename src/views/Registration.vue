@@ -88,7 +88,7 @@ export default {
           this.$router.push("login");
         })
         .catch(err => {
-          this.$store.commit("setErrorMessage", "Unable to process request");
+          this.$store.commit("", "Unable to process request");
         });
     }
   }

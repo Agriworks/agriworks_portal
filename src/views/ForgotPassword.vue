@@ -44,10 +44,8 @@ export default {
         email: document.getElementById("inputText").value
       })
         .then(res => {
-          this.$store.commit("setErrorMessage", "Email sent");
         })
         .catch(err => {
-          this.$store.commit("setErrorMessage", "Unable to process request");
         });
     }
   }
