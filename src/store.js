@@ -1,14 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import router from "./router";
-import { post, get } from "./requests";
-
-import {
-  getCookie,
-  addCookie,
-  wasAlreadyLoggedIn,
-  deleteCookie
-} from "./js/authentication";
+import { getCookie, wasAlreadyLoggedIn} from "./js/authentication";
+import api from './api'
 
 Vue.use(Vuex);
 
@@ -66,102 +59,17 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    logout(state) {
-      const SID = getCookie("SID");
-      post("/auth/logout", { sessionId: SID })
-        .then(res => {
-          deleteCookie("SID");
-          store.commit("setLoggedInFalse");
-          router.push("/");
-          state.commit("setSnackbar", {
-            message: res.data.message,
-            show: true,
-            color: "#4CAF50"
-          });
-        })
-        .catch(err => {
-          state.commit("setSnackbar", {
-            message: err.response.data.message,
-            show: true,
-            color: "#F44336"
-          });
-        });
+    fetchDatasets() {
+      api.fetchDatasets();
     },
-    retrieveSessionID(state, payload) {
-      return new Promise((resolve, reject) => {
-        post("/auth/login", payload)
-          .then(response => {
-            addCookie(
-              response.data.key,
-              response.data.value,
-              response.data.expires
-            );
-            store.commit("setLoggedInTrue");
-            resolve(response);
-          })
-          .catch(error => {
-            console.log(error);
-            reject(error);
-          });
-      });
+    fetchDataset(id) {
+      api.fetchDataset(id);
     },
-    fetchOneDataset(state, datasetId) {
-      get(`/dataset/${datasetId}`)
-        .then(response => {
-          this.commit("setDataset", response.data);
-          state.commit("setSnackbar", {
-            message: "",
-            show: false,
-            color: "#00ACC1"
-          });
-        })
-        .catch(err => {
-          state.commit("setSnackbar", {
-            message: err.response.data.message,
-            show: true,
-            color: "#F44336"
-          });
-        });
+    filterDatasets(searchQuery) {
+      api.filterDatasets(searchQuery);
     },
-    fetchDatasets(state) {
-      get("/dataset/")
-        .then(response => {
-          this.commit("setDatasets", response.data);
-          state.commit("setSnackbar", {
-            message: "",
-            show: false,
-            color: "#00ACC1"
-          });
-        })
-        .catch(err => {
-          state.commit("setSnackbar", {
-            message: err.response.data.message,
-            show: true,
-            color: "#F44336"
-          });
-        });
-    },
-    filterDatasets(state, searchQuery) {
-      if (searchQuery == undefined || searchQuery == "" || searchQuery == " ") {
-        this.dispatch("fetchDatasets");
-      } else {
-        get(`/dataset/search/${searchQuery}`)
-          .then(response => {
-            this.commit("setDatasets", response.data);
-            state.commit("setSnackbar", {
-              message: "",
-              show: false,
-              color: "#00ACC1"
-            });
-          })
-          .catch(err => {
-            state.commit("setSnackbar", {
-              message: err.response.data.message,
-              show: true,
-              color: "#F44336"
-            });
-          });
-      }
+    logout(){
+      api.logout(getCookie("SID"));
     }
   }
 });

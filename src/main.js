@@ -18,7 +18,6 @@ import vuetify from './plugins/vuetify';
 // import { faSignInAlt, faBalanceScale, faSearch, faGem } from '@fortawesome/free-solid-svg-icons'
 
 
-
 // library.add(faSignInAlt)
 // library.add(faBalanceScale)
 // library.add(faSearch)
@@ -27,6 +26,7 @@ import vuetify from './plugins/vuetify';
 // Vue.component('fa-icon', FontAwesomeIcon);
 
 Vue.use(BootstrapVue);
+
 Vue.config.productionTip = false;
 
 new Vue({

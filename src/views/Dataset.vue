@@ -62,7 +62,7 @@ export default {
       }
     },
     created() {
-      this.$store.dispatch('fetchOneDataset', this.$route.params.id)
+      this.$store.dispatch('fetchDataset', this.$route.params.id)
     }
 }
 </script>
