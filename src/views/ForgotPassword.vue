@@ -21,11 +21,16 @@
                 />
               </div>
               <div class="custom-control custom-checkbox mb-3 text-center" style="padding:0">
-                <button class="btn btn-md btn-primary" type="submit" style="margin:0">Reset Password</button>
+                <v-btn
+                  color="success"
+                  :outlined="true"
+                  type="submit"
+                  style="margin:0"
+                >Reset Password</v-btn>
               </div>
-              <div class="custom-control custom-checkbox mb-3 text-center">
-                <router-link to="/login" class="btn btn-link">Return to login</router-link>|
-                <router-link to="/register" class="btn btn-link">Create new account</router-link>
+              <div class="text-center">
+                <v-btn to="/login" color="success" :text="true">Return to login</v-btn>|
+                <v-btn to="/registration" color="success" :text="true">Create new account</v-btn>
               </div>
             </form>
           </div>

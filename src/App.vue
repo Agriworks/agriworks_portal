@@ -6,15 +6,16 @@
       <v-btn dark text @click="snackbar.show = false">Close</v-btn>
     </v-snackbar>
     <v-content>
-        <div class="container" v-if="this.signedIn">
-          <Sidebar/>
-          <router-view/> 
-        </div>
-        <div class="container-fluid" v-else>
-          <router-view /> <!-- Landing page !-->
-        </div>
+      <div class="container" v-if="this.signedIn">
+        <Sidebar />
+        <router-view />
+      </div>
+      <div class="container-fluid" v-else>
+        <router-view />
+        <!-- Landing page !-->
+      </div>
     </v-content>
-    </v-app>
+  </v-app>
 </template>
 
 <script>
@@ -42,7 +43,11 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" >
+.form-control:focus {
+  border-color: #4caf50;
+  box-shadow: 0px 0px 8px #4caf50;
+}
 #header {
   display: flex;
   justify-content: space-between;
@@ -50,7 +55,6 @@ export default {
   padding-left: 5rem;
   padding-right: 5rem;
 }
-
 #footer {
   bottom: 0;
   width: 100%;

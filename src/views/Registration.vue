@@ -55,28 +55,19 @@
                 />
               </div>
 
-              <div class="custom-control custom-checkbox mb-3">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  id="customCheck1"
-                />
-                <label class="custom-control-label" for="customCheck1"
-                  >Remember password</label
-                >
+              <div class="form-label-group custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" id="customCheck1" />
+                <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
 
               <div class="custom-control custom-checkbox mb-3">
-                <v-btn color="success" :outlined="true" type="submit"
-                  >Sign Up</v-btn
-                >
+                <v-btn color="success" :outlined="true" type="submit">Sign Up</v-btn>
                 <v-btn
                   to="/login"
                   color="success"
-                  style="text-decoration:none"
                   :outlined="true"
-                  >Login</v-btn
-                >
+                  style="text-decoration:none"
+                >Login</v-btn>
               </div>
             </form>
           </div>

@@ -15,6 +15,7 @@
                   class="form-control"
                   v-model="email"
                   autofocus
+                  required
                 />
               </div>
               <div class="form-label-group">
@@ -24,31 +25,20 @@
                   id="inputPassword"
                   class="form-control"
                   v-model="password"
+                  required
                   autofocus
                 />
               </div>
               <div class="custom-control custom-checkbox mb-3">
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  id="customCheck1"
-                />
-                <label class="custom-control-label" for="customCheck1"
-                  >Remember password</label
-                >
+                <input type="checkbox" class="custom-control-input" id="customCheck1" />
+                <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
               <div class="custom-control custom-checkbox mb-3">
-                <v-btn color="success" :outlined="true" type="submit"
-                  >Login</v-btn
-                >
+                <v-btn color="success" :outlined="true" type="submit">Login</v-btn>
               </div>
               <div class="custom-control custom-checkbox mb-3">
-                <router-link to="/registration" class="btn btn-link"
-                  >Register</router-link
-                >|
-                <router-link to="/forgot-password" class="btn btn-link"
-                  >Forgot Password?</router-link
-                >
+                <v-btn to="/registration" color="success" :text="true">Register</v-btn>|
+                <v-btn to="/forgot-password" color="success" :text="true">Forgot Password?</v-btn>
               </div>
             </form>
           </div>
