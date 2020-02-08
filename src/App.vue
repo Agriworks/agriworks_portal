@@ -31,7 +31,7 @@ export default {
       colors: { success: "#4CAF50", error: "#F44336", info: "#00ACC1" },
       routes: this.$router.options.routes,
       mini: true,
-      signedIn: this.$store.state.loggedIn
+      onLanding: true //by default we are on the homepage
     };
   },
   computed: {
@@ -39,6 +39,9 @@ export default {
   },
   created() {
     this.$store.dispatch("fetchDatasets");
+  },
+  updated() {
+    this.onLanding = this.$router.currentRoute.name == "Home" //we are performing a check on every update
   }
 };
 </script>
