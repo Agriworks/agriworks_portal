@@ -9,7 +9,13 @@
             <form class="form-signin" @submit.prevent="login">
               <div class="form-label-group">
                 <label for="inputEmail">Username</label>
-                <input type="email" id="inputEmail" class="form-control" v-model="email" autofocus />
+                <input
+                  type="email"
+                  id="inputEmail"
+                  class="form-control"
+                  v-model="email"
+                  autofocus
+                />
               </div>
               <div class="form-label-group">
                 <label for="inputPassword">Password</label>
@@ -22,15 +28,27 @@
                 />
               </div>
               <div class="custom-control custom-checkbox mb-3">
-                <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                <label class="custom-control-label" for="customCheck1">Remember password</label>
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="customCheck1"
+                />
+                <label class="custom-control-label" for="customCheck1"
+                  >Remember password</label
+                >
               </div>
               <div class="custom-control custom-checkbox mb-3">
-                <button class="btn btn-lg btn-primary" type="submit">Login</button>
+                <v-btn color="success" :outlined="true" type="submit"
+                  >Login</v-btn
+                >
               </div>
               <div class="custom-control custom-checkbox mb-3">
-                <router-link to="/registration" class="btn btn-link">Register</router-link>|
-                <router-link to="/forgot-password" class="btn btn-link">Forgot Password?</router-link>
+                <router-link to="/registration" class="btn btn-link"
+                  >Register</router-link
+                >|
+                <router-link to="/forgot-password" class="btn btn-link"
+                  >Forgot Password?</router-link
+                >
               </div>
             </form>
           </div>
@@ -45,7 +63,12 @@
             alt="Card image cap"
             align="middle"
           />
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p>
+            Donec sed odio dui. Cras justo odio, dapibus ac facilisis in,
+            egestas eget quam. Vestibulum id ligula porta felis euismod semper.
+            Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
+            nibh, ut fermentum massa justo sit amet risus.
+          </p>
           <a href="#!">
             <div class="mask rgba-white-slight"></div>
           </a>
@@ -98,7 +121,7 @@ export default {
 </script>
 
 <style scoped>
-.rounded-card{
-    border-radius:2% !important;
+.rounded-card {
+  border-radius: 2% !important;
 }
 </style>

@@ -56,13 +56,27 @@
               </div>
 
               <div class="custom-control custom-checkbox mb-3">
-                <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                <label class="custom-control-label" for="customCheck1">Remember password</label>
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  id="customCheck1"
+                />
+                <label class="custom-control-label" for="customCheck1"
+                  >Remember password</label
+                >
               </div>
 
               <div class="custom-control custom-checkbox mb-3">
-                <button class="btn btn-lg btn-primary" type="submit">Sign Up</button>
-                <router-link to="/login" class="btn btn-link">Login</router-link>
+                <v-btn color="success" :outlined="true" type="submit"
+                  >Sign Up</v-btn
+                >
+                <v-btn
+                  to="/login"
+                  color="success"
+                  style="text-decoration:none"
+                  :outlined="true"
+                  >Login</v-btn
+                >
               </div>
             </form>
           </div>
@@ -115,7 +129,7 @@ h3 {
 button {
   margin: 15px 15px;
 }
-.rounded-card{
-    border-radius:2% !important;
+.rounded-card {
+  border-radius: 2% !important;
 }
 </style>
