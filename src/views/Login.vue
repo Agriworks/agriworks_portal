@@ -9,7 +9,14 @@
             <form class="form-signin" @submit.prevent="login">
               <div class="form-label-group">
                 <label for="inputEmail">Username</label>
-                <input type="email" id="inputEmail" class="form-control" v-model="email" autofocus />
+                <input
+                  type="email"
+                  id="inputEmail"
+                  class="form-control"
+                  v-model="email"
+                  autofocus
+                  required
+                />
               </div>
               <div class="form-label-group">
                 <label for="inputPassword">Password</label>
@@ -18,6 +25,7 @@
                   id="inputPassword"
                   class="form-control"
                   v-model="password"
+                  required
                   autofocus
                 />
               </div>
@@ -26,11 +34,11 @@
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
               <div class="custom-control custom-checkbox mb-3">
-                <button class="btn btn-lg btn-primary" type="submit">Login</button>
+                <v-btn color="success" :outlined="true" type="submit">Login</v-btn>
               </div>
               <div class="custom-control custom-checkbox mb-3">
-                <router-link to="/registration" class="btn btn-link">Register</router-link>|
-                <router-link to="/forgot-password" class="btn btn-link">Forgot Password?</router-link>
+                <v-btn to="/registration" color="success" :text="true">Register</v-btn>|
+                <v-btn to="/forgot-password" color="success" :text="true">Forgot Password?</v-btn>
               </div>
             </form>
           </div>
@@ -45,7 +53,12 @@
             alt="Card image cap"
             align="middle"
           />
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <p>
+            Donec sed odio dui. Cras justo odio, dapibus ac facilisis in,
+            egestas eget quam. Vestibulum id ligula porta felis euismod semper.
+            Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
+            nibh, ut fermentum massa justo sit amet risus.
+          </p>
           <a href="#!">
             <div class="mask rgba-white-slight"></div>
           </a>
@@ -77,15 +90,19 @@ export default {
         .then(response => {
           //no setUser in store
           this.$store.commit("setUser", this.email);
-          this.$router.push("/dashboard");
+          this.$router.push("/browse");
+          this.$store.commit("setSnackbar", {
+            message: "Successfully logged in.",
+            show: true,
+            color: "#4CAF50"
+          });
         })
         .catch(error => {
-          console.log(error);
-          this.$store.commit(
-            "setErrorMessage",
-            "Incorrect Username or Password"
-          );
-          this.$store.commit("setShowError", true);
+          this.$store.commit("setSnackbar", {
+            message: error.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
           this.$forceUpdate;
         });
     }
@@ -94,7 +111,7 @@ export default {
 </script>
 
 <style scoped>
-.rounded-card{
-    border-radius:2% !important;
+.rounded-card {
+  border-radius: 2% !important;
 }
 </style>

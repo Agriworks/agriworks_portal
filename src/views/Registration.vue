@@ -55,14 +55,19 @@
                 />
               </div>
 
-              <div class="custom-control custom-checkbox mb-3">
+              <div class="form-label-group custom-control custom-checkbox mb-3">
                 <input type="checkbox" class="custom-control-input" id="customCheck1" />
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
 
               <div class="custom-control custom-checkbox mb-3">
-                <button class="btn btn-lg btn-primary" type="submit">Sign Up</button>
-                <router-link to="/login" class="btn btn-link">Login</router-link>
+                <v-btn color="success" :outlined="true" type="submit">Sign Up</v-btn>
+                <v-btn
+                  to="/login"
+                  color="success"
+                  :outlined="true"
+                  style="text-decoration:none"
+                >Login</v-btn>
               </div>
             </form>
           </div>
@@ -74,6 +79,7 @@
 
 <script>
 import { post } from "../requests";
+
 export default {
   methods: {
     // should probably move this to store
@@ -86,9 +92,18 @@ export default {
       })
         .then(res => {
           this.$router.push("login");
+          this.$store.commit("setSnackbar", {
+            message: res.data.message,
+            show: true,
+            color: "#4CAF50"
+          });
         })
         .catch(err => {
-          this.$store.commit("setErrorMessage", "Unable to process request");
+          this.$store.commit("setSnackbar", {
+            message: err.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
         });
     }
   }
@@ -105,7 +120,7 @@ h3 {
 button {
   margin: 15px 15px;
 }
-.rounded-card{
-    border-radius:2% !important;
+.rounded-card {
+  border-radius: 2% !important;
 }
 </style>

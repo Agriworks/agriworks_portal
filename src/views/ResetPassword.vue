@@ -16,7 +16,7 @@
                   <input
                     name="password"
                     id="password"
-                    type="text"
+                    type="password"
                     class="form-control"
                     placeholder="Enter your new password"
                     required
@@ -27,7 +27,7 @@
                   <input
                     name="password2"
                     id="password2"
-                    type="text"
+                    type="password"
                     class="form-control"
                     placeholder="Confirm your new password"
                     required
@@ -35,11 +35,12 @@
                   />
                 </div>
                 <div class="custom-control custom-checkbox mb-3 text-center" style="padding:0">
-                  <button
-                    class="btn btn-md btn-primary"
+                  <v-btn
+                    color="success"
+                    :outlined="true"
                     type="submit"
-                    style="margin:0"
-                  >Reset Password</button>
+                    style="margin:0; text-decoration:none"
+                  >Reset Password</v-btn>
                 </div>
               </form>
             </div>
@@ -57,11 +58,13 @@
                 class="card-title text-center"
               >Your password reset link is invalid or is expired. Please head to the password reset page to request another link.</h6>
               <div class="custom-control custom-checkbox mb-3 text-center" style="padding:0">
-                <button
-                  class="btn btn-md btn-primary text-center"
+                <v-btn
+                  to="/forgot-password"
+                  color="success"
+                  :outlined="true"
                   v-on:click="redirect"
-                  style="margin:0"
-                >Reset Password</button>
+                  style="text-decoration:none"
+                >Request new link</v-btn>
               </div>
             </div>
           </div>
@@ -80,18 +83,23 @@ export default {
     };
   },
   methods: {
-    redirect() {
-      this.$router.push("/forgot-password");
-    },
     submit() {
       post(`/auth/reset-password/${this.$route.params.id}`, {
         password: document.getElementById("password").value
       })
         .then(res => {
-          this.$router.push("/login");
+          this.$store.commit("setSnackbar", {
+            message: res.data.message,
+            show: true,
+            color: "#4CAF50"
+          });
         })
         .catch(err => {
-          this.$store.commit("setErrorMessage", "unable to reset password");
+          this.$store.commit("setSnackbar", {
+            message: err.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
         });
     }
   },
@@ -101,11 +109,19 @@ export default {
     })
       .then(res => {
         this.validSessionId = true;
-        this.$store.commit("setErrorMessage", "valid sessionId");
+        this.$store.commit("setSnackbar", {
+          message: res.data.message,
+          show: false,
+          color: "#4CAF50"
+        });
       })
       .catch(err => {
         this.validSessionId = false;
-        this.$store.commit("setErrorMessage", "invalid sessionId");
+        this.$store.commit("setSnackbar", {
+          message: err.response.data.message,
+          show: true,
+          color: "#F44336"
+        });
       });
   }
 };

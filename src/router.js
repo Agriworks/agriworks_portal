@@ -19,8 +19,8 @@ const router = new Router({
     {
       path: "/",
       name: "Home",
-      component: () => import("./views/Landing.vue")
-      // beforeEnter: (to, from, next) => redirectIfLoggedIn(next)
+      component: () => import("./views/Landing.vue"),
+      beforeEnter: (to, from, next) => redirectIfLoggedIn(next)
     },
     {
       path: "/browse",
@@ -108,22 +108,13 @@ router.beforeEach((to, from, next) => {
         if (admin) {
           next();
         } else {
-          store.commit(
-            "setErrorMessage",
-            "User Does Not Have Admin Privileges"
-          );
-          store.commit("setShowError", true);
         }
       } else {
-        store.commit("setErrorMessage", "User Does Not Have Admin Privileges");
-        store.commit("setShowError", true);
         //authorize to dashboard if user is logged in but is not admin
         next();
       }
     } else {
       //redirect to login page if user is not authorized to view dashboard
-      store.commit("setErrorMessage", "User Is Not Logged In");
-      store.commit("setShowError", true);
       next({
         path: "/login",
         query: { redirect: to.fullPath }
