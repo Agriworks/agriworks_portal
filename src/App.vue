@@ -6,7 +6,7 @@
       <v-btn dark text @click="snackbar.show = false">Close</v-btn>
     </v-snackbar>
     <v-content>
-      <div class="container" v-if="this.signedIn">
+      <div class="container" v-if="this.showSidebar">
         <Sidebar />
         <router-view />
       </div>
@@ -30,8 +30,7 @@ export default {
     return {
       colors: { success: "#4CAF50", error: "#F44336", info: "#00ACC1" },
       routes: this.$router.options.routes,
-      mini: true,
-      onLanding: true //by default we are on the homepage
+      showSidebar: false //by default we are on the homepage
     };
   },
   computed: {
@@ -41,7 +40,7 @@ export default {
     this.$store.dispatch("fetchDatasets");
   },
   updated() {
-    this.onLanding = this.$router.currentRoute.name == "Home" //we are performing a check on every update
+    this.showSidebar = this.$router.currentRoute.name != "Home" //we are performing a check on every update
   }
 };
 </script>
