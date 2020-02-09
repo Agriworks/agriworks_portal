@@ -14,7 +14,7 @@
             <v-file-input v-model="file" label="Select a file" show-size accept=".csv"></v-file-input>
           </div>
         </b-card>
-        <v-btn @click="processForm" class="submitButton" x-large color="success" dark> <v-icon>mdi-folder-plus-outline </v-icon> Create </v-btn> 
+        <v-btn @click="processForm" class="submitButton" x-large color="success" dark :loading="this.loading"> <v-icon>mdi-folder-plus-outline </v-icon> Create </v-btn> 
         <!--
         <b-card title="Preparation" style="max-width: 50%;">
           <b-card-text>
@@ -39,17 +39,20 @@ export default {
       datasetType: "Land Use",
       permissionOptions: ["Public", "Private"],
       typeOptions: ["Land Use", "Pesticide Report"],
-      file: null
+      file: null,
+      loading: false
     }
   },
   methods: {
     processForm() {
+      this.loading = true;
       api.uploadDataset(this.file, this.datasetName, this.datasetTags, this.datasetPermissions, this.datasetType)
       .then(response => {
-        console.log("success");
-        console.log(response);
+        this.loading = false;
+        this.$router.push(`/dataset/${response.data.message}`);
       })
       .catch(error => {
+        this.loading = false;
         console.log("error");
         console.log(error);
       })

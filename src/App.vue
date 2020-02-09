@@ -36,9 +36,6 @@ export default {
   computed: {
     ...mapState(["snackbar"])
   },
-  created() {
-    this.$store.dispatch("fetchDatasets");
-  },
   updated() {
     this.showSidebar = this.$router.currentRoute.name != "Home" //we are performing a check on every update
   }
