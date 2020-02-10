@@ -1,16 +1,5 @@
 <template>
-  <div v-if="Object.keys(dataset.legend).length===0">
-    <div class="row">
-      <div class="col-md-12">
-        <h5> {{dataset.type}} </h5>
-        <h1> {{ dataset.name }} </h1>
-        <h3 v-if="dataset.tags"> Tags: {{ dataset.tags }} </h3>
-        <p> By {{ dataset.author }} </p>
-        <DataTable :headers="dataset.headers" :data="dataset.data"/>
-      </div>
-    </div>
-  </div>
-  <div v-else>
+<div id="datasetContainer">
     <div class="row">
       <div class="col-sm-6">
         <h5> {{dataset.type}} </h5>
@@ -29,7 +18,7 @@
           
                   <v-card-text>
                     <div v-for="(value, name) in dataset.legend" :key="value">
-                      {{ name }}: {{ value }}
+                      <strong> {{ name }} </strong> : {{ value }}
                     </div>
                   </v-card-text>
           
