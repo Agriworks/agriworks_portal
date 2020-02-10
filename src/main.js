@@ -33,6 +33,29 @@ new Vue({
   router,
   store,
   vuetify,
-  render: h => h(App)
+  render: h => h(App),
+  data:{
+    active: false
+  },
+  methods: {
+    toggleNavClass(){
+        if(this.active == false){
+          return 'nav'
+        } else {
+          return 'sticky-nav'
+        }
+
+    }
+  },
+  mounted(){
+    window.document.onscroll = () => {
+        let navBar = document.getElementById('nav');
+        if(window.scrollY > navBar.offsetTop){
+          this.active = true;
+          } else {
+          this.active = false;
+        }
+      }
+    }
 }).$mount('#app')
 
