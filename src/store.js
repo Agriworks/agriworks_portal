@@ -59,16 +59,17 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    fetchDatasets() {
+    fetchDatasets(state) {
       api.fetchDatasets();
     },
-    fetchDataset(id) {
+    fetchDataset(state, id) {
+      console.log(id);
       api.fetchDataset(id);
     },
-    filterDatasets(searchQuery) {
+    filterDatasets(state,searchQuery) {
       api.filterDatasets(searchQuery);
     },
-    logout(){
+    logout(state){
       api.logout(getCookie("SID"));
     }
   }
