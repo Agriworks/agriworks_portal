@@ -24,6 +24,9 @@ const api = {
             newDataset,
             useCredentials,
         )
+    },
+    fetchUserDatasets(){
+        return axios.get(apiUrl+"/dataset/user", useCredentials);
     }
 }
 

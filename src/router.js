@@ -93,6 +93,14 @@ const router = new Router({
       path: "/charts",
       name: "Charts",
       component: () => import("./views/Charts.vue")
+    },
+    {
+      path: "/manage",
+      name: "ManageDatasets",
+      component: () => import("./views/ManageDatasets.vue"),
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 });
