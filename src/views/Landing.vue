@@ -8,7 +8,7 @@
             <v-toolbar-items>
               <!-- changed flat flag to text because vuetify says so -->
               <v-btn text tile color="#ffffff" @click="signUp">Sign Up</v-btn>
-              <v-btn text tile color="#ffffff" @click="mockSignIn()">Sign In</v-btn>
+              <v-btn text tile color="#ffffff" @click="login">Sign In</v-btn>
             </v-toolbar-items>
           </v-toolbar>
         </div>

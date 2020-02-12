@@ -10,7 +10,7 @@
         <Sidebar />
         <router-view />
       </div>
-      <div class="container-fluid" v-else>
+      <div v-else>
         <router-view />
         <!-- Landing page !-->
       </div>
