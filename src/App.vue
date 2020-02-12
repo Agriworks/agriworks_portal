@@ -13,7 +13,7 @@
         </div>
       </div>
       <!-- Landing Page-->
-      <Landing v-on:signedIn="changeSignInState"/>
+      <Landing v-on:signedIn="changeSignInState" v-else/>
     </v-content>
   </v-app>
 </template>

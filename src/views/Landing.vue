@@ -2,9 +2,8 @@
   <div>
     <section>
       <v-parallax src="../assets/landing_banner.jpeg" height="780">
-        <div id="nav" :class="{sticky:active}">
+        <div id="nav">
           <v-toolbar flat color="transparent" fixed="top">
-            <img class="mr-3" :src="require('../assets/mini_logo.png')" height="40" />
             <v-spacer></v-spacer>
             <v-toolbar-items>
               <!-- changed flat flag to text because vuetify says so -->
@@ -90,8 +89,6 @@ export default {
   name: "Landing",
   data() {
     return {
-      // navbar = document.getElementById("toolbar"),
-      // sticky = navbar.offsetTop,
       signedIn: true
     };
   },
@@ -110,16 +107,6 @@ export default {
 
 <style>
 
-.nav {
-  transition: 100ms;
-  padding: 25px;
-}
-
-.sticky-nav{
-  transition: 100ms;
-  padding: 20px;
-}
-
 #nav {
   display: flex;
   justify-content: space-between;
@@ -127,12 +114,6 @@ export default {
   background-color: transparent;
   position: fixed;
   top: 0;
-}
-
-#nav.sticky{
-  transition: 150ms;
-  box-shadow: 0px 15px 10px -15px #111;
-  background-color: white;
 }
 
 </style>
