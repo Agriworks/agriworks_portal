@@ -163,6 +163,13 @@ const store = new Vuex.Store({
             });
           });
       }
+    },
+    notifyError(state, message) {
+      this.commit("setSnackbar", {
+        message: message,
+        show: true,
+        color: "#F44336"
+      });
     }
   }
 });

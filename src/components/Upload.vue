@@ -53,8 +53,7 @@ export default {
       })
       .catch(error => {
         this.loading = false;
-        console.log("error");
-        console.log(error);
+        this.$store.dispatch("notifyError", error.response.data.message);
       })
     },
   }
