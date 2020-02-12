@@ -25,6 +25,7 @@
                     color="blue"
                     dark
                     v-on="on"
+                    v-on:click="openEmailDialog"
                   >
                     Change
                   </v-btn>
@@ -39,7 +40,9 @@
                   </v-card-title>
 
                   <v-card-text>
-                    <v-form class="form-signin">
+                    <v-form 
+                    class="form-signin"
+                    ref="changeEmailForm">
                       <div class="form-label-group">
                         <v-text-field
                           type="password"
@@ -48,6 +51,7 @@
                           required
                           autofocus
                           v-model="passwordEmail"
+                          :rules="enterPasswordRules"
                           >
                         </v-text-field>
                         <v-text-field
@@ -57,6 +61,7 @@
                           required
                           autofocus
                           v-model="newEmail"
+                          :rules="emailRules"
                         >
                         </v-text-field>
                       </div>
@@ -96,6 +101,7 @@
                     color="blue"
                     dark
                     v-on="on"
+                    v-on:click="openPasswordDialog"
                   >
                     Change
                   </v-btn>
@@ -113,7 +119,9 @@
 
                   <v-card-text>
                     
-                    <v-form class="form-signin">
+                    <v-form class="form-signin"
+                      ref="changePasswordForm"
+                    >
                       <div class="form-label-group">
                         
                         <v-text-field
@@ -123,6 +131,7 @@
                           required
                           autofocus
                           v-model="passwordPassword"
+                          :rules="enterPasswordRules"
                         ></v-text-field>
                         <v-text-field
                           type="password"
@@ -131,6 +140,7 @@
                           required
                           autofocus
                           v-model="newPassword"
+                          :rules="enterNewPasswordRules"
                         ></v-text-field>
                         <v-text-field
                           type="password"
@@ -139,6 +149,7 @@
                           required
                           autofocus
                           v-model="confirmNewPassword"
+                          :rules="enterPasswordRules"
                         ></v-text-field>
                       </div>
                     </v-form>      
@@ -185,6 +196,20 @@ export default {
       passwordPassword: "",//the current password when changing password
       newPassword: "", //The new password when changing password
       confirmNewPassword: "", //Confirming new pasword
+
+      //Rules that the inputs must conform to
+      emailRules: [
+      v => !!v || 'E-mail is required',
+      v => /.+@.+/.test(v) || 'E-mail must be valid', //must have @ sign
+    ],
+    //Rules for entering current password, used in both dialogs
+    enterPasswordRules: [
+      v => !!v || 'Password is required'
+    ],
+    //Rules for entering new password. Currently nothing but could make it a min length or a max length or have an uppercase letter ect.
+    enterNewPasswordRules: [
+      v => !!v || 'Password is required'
+    ]
     }
   },
   
@@ -197,6 +222,16 @@ export default {
 
       
       this.passwordDialog = false //closes dialog
+    },
+    openEmailDialog() {
+      this.emailDialog = true
+      //only works when you have opened the form before, should be the opposite
+      this.$refs.changeEmailForm.resetValidation() //without this line the there is a bug where it says that you need to input the email and turns red even though you have not clicked on the enter email box yet
+    },
+    openPasswordDialog() {  
+      this.passwordDialog = true
+      //only works if you have opened the form before, should be the opposite
+      this.$refs.changePasswordForm.resetValidation() //same function as the openEmailDialog method and resetValidaiton line
     }
   },
   
