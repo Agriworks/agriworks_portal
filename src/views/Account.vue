@@ -18,7 +18,6 @@
               <v-dialog
                 v-model="emailDialog"
                 width="500"
-                eager
               >
 
                 <template v-slot:activator="{ on }">
@@ -26,7 +25,6 @@
                     color="blue"
                     dark
                     v-on="on"
-                    v-on:click="openEmailDialog"
                   >
                     Change
                   </v-btn>
@@ -62,7 +60,6 @@
                           id="inputEmail"
                           label="New Email"
                           required
-                          autofocus
                           v-model="newEmail"
                           :rules="emailRules"
                         >
@@ -97,7 +94,6 @@
                <v-dialog
                 v-model="passwordDialog"
                 width="500"
-                eager
               >
 
                 <template v-slot:activator="{ on }">
@@ -105,7 +101,6 @@
                     color="blue"
                     dark
                     v-on="on"
-                    v-on:click="openPasswordDialog"
                   >
                     Change
                   </v-btn>
@@ -143,7 +138,6 @@
                           id="inputPassword"
                           placeholder="New Password"
                           required
-                          autofocus
                           v-model="newPassword"
                           :rules="enterNewPasswordRules"
                           :append-icon="passwordNewPasswordVisibility ? 'visibility' : 'visibility_off'"
@@ -154,7 +148,6 @@
                           id="inputConfirmPassword"
                           placeholder="Confirm New Password"
                           required
-                          autofocus
                           v-model="confirmNewPassword"
                           :rules="enterPasswordRules"
                           :append-icon="passwordConfirmPasswordVisibility ? 'visibility' : 'visibility_off'"
@@ -241,16 +234,6 @@ export default {
       
       this.passwordDialog = false //closes dialog
     },
-    openEmailDialog() {
-      this.emailDialog = true
-      //resets it everytime that you open it which may not be good
-      this.$refs.changeEmailForm.resetValidation() //without this line the there is a bug where it says that you need to input the email and turns red even though you have not clicked on the enter email box yet
-    },
-    openPasswordDialog() {  
-      this.passwordDialog = true
-      //resets it everytime that you open it which may not be good
-      this.$refs.changePasswordForm.resetValidation() //same function as the openEmailDialog method and resetValidaiton line
-    }
   },
   
 }
