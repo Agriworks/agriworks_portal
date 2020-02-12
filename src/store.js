@@ -108,6 +108,7 @@ const store = new Vuex.Store({
     fetchOneDataset(state, datasetId) {
       get(`/dataset/${datasetId}`)
         .then(response => {
+          console.log(response.data);
           this.commit("setDataset", response.data);
           state.commit("setSnackbar", {
             message: "",

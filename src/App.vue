@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     ...mapState(["snackbar"])
-  },
+  },  
   updated() {
     this.showSidebar = this.$router.currentRoute.name != "Home" //we are performing a check on every update
   }
