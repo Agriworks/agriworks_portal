@@ -48,6 +48,7 @@
                           placeholder="Current Password"
                           required
                           autofocus
+                          v-model="passwordEmail"
                         />
                         <input
                           type="email"
@@ -56,6 +57,7 @@
                           placeholder="New Email"
                           required
                           autofocus
+                          v-model="newEmail"
                         />
                       </div>
                     </form>
@@ -65,7 +67,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                       <v-btn color="blue darken-1" text @click="emailDialog = false">Close</v-btn>
-                      <v-btn color="blue darken-1" text @click="emailDialog = false">Save</v-btn>
+                      <v-btn color="blue darken-1" text v-on:click="submitEmail">Save</v-btn>
                   </v-card-actions>
 
                 </v-card>
@@ -121,6 +123,7 @@
                           placeholder="Current Password"
                           required
                           autofocus
+                          v-model="passwordPassword"
                         />
                         <input
                           type="password"
@@ -129,6 +132,7 @@
                           placeholder="New Password"
                           required
                           autofocus
+                          v-model="newPassword"
                         />
                         <input
                           type="password"
@@ -137,6 +141,7 @@
                           placeholder="Confirm New Password"
                           required
                           autofocus
+                          v-model="confirmNewPassword"
                         />
                       </div>
                     </form>      
@@ -178,14 +183,22 @@ export default {
     return {
       emailDialog: false,
       passwordDialog: false,
+      passwordEmail: "", //The password when changing email
+      newEmail: "", //The new email when changing email
+      passwordPassword: "",//the current password when changing password
+      newPassword: "", //The new password when changing password
+      confirmNewPassword: "", //Confirming new pasword
     }
   },
   
   methods: {
     submitEmail() {
       
+      this.emailDialog = false //closes dialog
     },
     submitPassword(){
+      
+      this.passwordDialog = false //closes dialog
     }
   },
   
