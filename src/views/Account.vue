@@ -18,6 +18,7 @@
               <v-dialog
                 v-model="emailDialog"
                 width="500"
+                eager
               >
 
                 <template v-slot:activator="{ on }">
@@ -94,6 +95,7 @@
                <v-dialog
                 v-model="passwordDialog"
                 width="500"
+                eager
               >
 
                 <template v-slot:activator="{ on }">
@@ -225,12 +227,12 @@ export default {
     },
     openEmailDialog() {
       this.emailDialog = true
-      //only works when you have opened the form before, should be the opposite
+      //resets it everytime that you open it which may not be good
       this.$refs.changeEmailForm.resetValidation() //without this line the there is a bug where it says that you need to input the email and turns red even though you have not clicked on the enter email box yet
     },
     openPasswordDialog() {  
       this.passwordDialog = true
-      //only works if you have opened the form before, should be the opposite
+      //resets it everytime that you open it which may not be good
       this.$refs.changePasswordForm.resetValidation() //same function as the openEmailDialog method and resetValidaiton line
     }
   },
