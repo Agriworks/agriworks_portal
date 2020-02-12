@@ -39,28 +39,28 @@
                   </v-card-title>
 
                   <v-card-text>
-                    <form class="form-signin">
+                    <v-form class="form-signin">
                       <div class="form-label-group">
-                        <input
+                        <v-text-field
                           type="password"
                           id="inputCurrentPassword"
-                          class="form-control"
-                          placeholder="Current Password"
+                          label="Current Password"
                           required
                           autofocus
                           v-model="passwordEmail"
-                        />
-                        <input
+                          >
+                        </v-text-field>
+                        <v-text-field
                           type="email"
                           id="inputEmail"
-                          class="form-control"
-                          placeholder="New Email"
+                          label="New Email"
                           required
                           autofocus
                           v-model="newEmail"
-                        />
+                        >
+                        </v-text-field>
                       </div>
-                    </form>
+                    </v-form>
                   
                   </v-card-text>
 
@@ -113,38 +113,35 @@
 
                   <v-card-text>
                     
-                    <form class="form-signin">
+                    <v-form class="form-signin">
                       <div class="form-label-group">
                         
-                        <input
+                        <v-text-field
                           type="password"
                           id="inputCurrentPassword"
-                          class="form-control"
                           placeholder="Current Password"
                           required
                           autofocus
                           v-model="passwordPassword"
-                        />
-                        <input
+                        ></v-text-field>
+                        <v-text-field
                           type="password"
                           id="inputPassword"
-                          class="form-control"
                           placeholder="New Password"
                           required
                           autofocus
                           v-model="newPassword"
-                        />
-                        <input
+                        ></v-text-field>
+                        <v-text-field
                           type="password"
                           id="inputConfirmPassword"
-                          class="form-control"
                           placeholder="Confirm New Password"
                           required
                           autofocus
                           v-model="confirmNewPassword"
-                        />
+                        ></v-text-field>
                       </div>
-                    </form>      
+                    </v-form>      
 
                   </v-card-text>
 
@@ -197,6 +194,7 @@ export default {
       this.emailDialog = false //closes dialog
     },
     submitPassword(){
+
       
       this.passwordDialog = false //closes dialog
     }
@@ -207,12 +205,7 @@ export default {
 
 
 <style scoped>
-.form-control {
-  padding: 1rem 1rem;
-  border: 1px solid #007bff;
-  margin: 1rem 1rem 1rem 1rem;
-  width: 90%;
-}
+
 .emailDiv button {
     float: right; 
 } 
