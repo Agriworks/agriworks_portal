@@ -46,13 +46,15 @@
                     ref="changeEmailForm">
                       <div class="form-label-group">
                         <v-text-field
-                          type="password"
                           id="inputCurrentPassword"
                           label="Current Password"
                           required
                           autofocus
                           v-model="passwordEmail"
                           :rules="enterPasswordRules"
+                          :append-icon="emailPasswordVisibility ? 'visibility' : 'visibility_off'"
+                          @click:append="() => (emailPasswordVisibility = !emailPasswordVisibility)"
+                          :type="emailPasswordVisibility ? 'text' : 'password'"
                           >
                         </v-text-field>
                         <v-text-field
@@ -127,31 +129,37 @@
                       <div class="form-label-group">
                         
                         <v-text-field
-                          type="password"
                           id="inputCurrentPassword"
                           placeholder="Current Password"
                           required
                           autofocus
                           v-model="passwordPassword"
                           :rules="enterPasswordRules"
+                          :append-icon="passwordPasswordVisibility ? 'visibility' : 'visibility_off'"
+                          @click:append="() => (passwordPasswordVisibility = !passwordPasswordVisibility)"
+                          :type="passwordPasswordVisibility ? 'text' : 'password'"
                         ></v-text-field>
                         <v-text-field
-                          type="password"
                           id="inputPassword"
                           placeholder="New Password"
                           required
                           autofocus
                           v-model="newPassword"
                           :rules="enterNewPasswordRules"
+                          :append-icon="passwordNewPasswordVisibility ? 'visibility' : 'visibility_off'"
+                          @click:append="() => (passwordNewPasswordVisibility = !passwordNewPasswordVisibility)"
+                          :type="passwordNewPasswordVisibility ? 'text' : 'password'"
                         ></v-text-field>
                         <v-text-field
-                          type="password"
                           id="inputConfirmPassword"
                           placeholder="Confirm New Password"
                           required
                           autofocus
                           v-model="confirmNewPassword"
                           :rules="enterPasswordRules"
+                          :append-icon="passwordConfirmPasswordVisibility ? 'visibility' : 'visibility_off'"
+                          @click:append="() => (passwordConfirmPasswordVisibility = !passwordConfirmPasswordVisibility)"
+                          :type="passwordConfirmPasswordVisibility ? 'text' : 'password'"
                         ></v-text-field>
                       </div>
                     </v-form>      
@@ -181,6 +189,9 @@
 
 <script>
 
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+
+
 export default {
 
   computed: {
@@ -198,6 +209,11 @@ export default {
       passwordPassword: "",//the current password when changing password
       newPassword: "", //The new password when changing password
       confirmNewPassword: "", //Confirming new pasword
+
+      emailPasswordVisibility: false,
+      passwordPasswordVisibility: false,
+      passwordNewPasswordVisibility: false,
+      passwordConfirmPasswordVisibility: false,
 
       //Rules that the inputs must conform to
       emailRules: [
