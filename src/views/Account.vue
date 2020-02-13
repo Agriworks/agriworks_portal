@@ -22,7 +22,7 @@
 
                 <template v-slot:activator="{ on }">
                   <v-btn
-                    color="blue"
+                    color="green"
                     dark
                     v-on="on"
                   >
@@ -71,8 +71,8 @@
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="emailDialog = false">Close</v-btn>
-                      <v-btn color="blue darken-1" text v-on:click="submitEmail">Save</v-btn>
+                      <v-btn color="green" text @click="emailDialog = false">Close</v-btn>
+                      <v-btn color="green" text v-on:click="submitEmail">Save</v-btn>
                   </v-card-actions>
 
                 </v-card>
@@ -98,7 +98,7 @@
 
                 <template v-slot:activator="{ on }">
                   <v-btn
-                    color="blue"
+                    color="green"
                     dark
                     v-on="on"
                   >
@@ -163,8 +163,8 @@
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="passwordDialog = false">Close</v-btn>
-                      <v-btn color="blue darken-1" text v-on:click="submitPassword">Save</v-btn>
+                      <v-btn color="green" text @click="passwordDialog = false">Close</v-btn>
+                      <v-btn color="green" text v-on:click="submitPassword">Save</v-btn>
                   </v-card-actions>
 
                 </v-card>
