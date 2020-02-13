@@ -53,6 +53,9 @@
                           :append-icon="emailPasswordVisibility ? 'visibility' : 'visibility_off'"
                           @click:append="() => (emailPasswordVisibility = !emailPasswordVisibility)"
                           :type="emailPasswordVisibility ? 'text' : 'password'"
+                          color = "green"
+                          :error="emailEnterPasswordState"
+                          :error-messages="emailEnterPasswordError"
                           >
                         </v-text-field>
                         <v-text-field
@@ -62,6 +65,9 @@
                           required
                           v-model="newEmail"
                           :rules="emailRules"
+                          color = "green"
+                          :error="emailEnterEmailState"
+                          :error-messages="emailEnterEmailError"
                         >
                         </v-text-field>
                       </div>
@@ -133,6 +139,9 @@
                           :append-icon="passwordPasswordVisibility ? 'visibility' : 'visibility_off'"
                           @click:append="() => (passwordPasswordVisibility = !passwordPasswordVisibility)"
                           :type="passwordPasswordVisibility ? 'text' : 'password'"
+                          color = "green"
+                          :error="passwordEnterPasswordState"
+                          :error-messages="passwordEnterPasswordError"
                         ></v-text-field>
                         <v-text-field
                           id="inputPassword"
@@ -143,6 +152,9 @@
                           :append-icon="passwordNewPasswordVisibility ? 'visibility' : 'visibility_off'"
                           @click:append="() => (passwordNewPasswordVisibility = !passwordNewPasswordVisibility)"
                           :type="passwordNewPasswordVisibility ? 'text' : 'password'"
+                          color = "green"
+                          :error="passwordEnterNewPasswordState"
+                          :error-messages="passowrdEnterNewPasswordError"
                         ></v-text-field>
                         <v-text-field
                           id="inputConfirmPassword"
@@ -153,6 +165,9 @@
                           :append-icon="passwordConfirmPasswordVisibility ? 'visibility' : 'visibility_off'"
                           @click:append="() => (passwordConfirmPasswordVisibility = !passwordConfirmPasswordVisibility)"
                           :type="passwordConfirmPasswordVisibility ? 'text' : 'password'"
+                          color = "green"
+                          :error="passwordConfirmNewPasswordState"
+                          :error-messages="passwordConfirmNewPasswordError"
                         ></v-text-field>
                       </div>
                     </v-form>      
@@ -183,6 +198,7 @@
 <script>
 
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import { post } from "../requests";
 
 
 export default {
@@ -208,6 +224,24 @@ export default {
       passwordNewPasswordVisibility: false,
       passwordConfirmPasswordVisibility: false,
 
+      errorMessage: "", // if they put the wrong password e
+
+      emailEnterPasswordState: false,
+      emailEnterEmailState: false,
+
+      passwordEnterPasswordState: false,
+      passwordEnterNewPasswordState: false,
+      passwordConfirmNewPasswordState: false,
+
+      emailEnterPasswordError: [],
+      emailEnterEmailError: [],
+
+      passwordEnterPasswordError: [],
+      passowrdEnterNewPasswordError: [],
+      passwordConfirmNewPasswordError: [],
+
+      
+
       //Rules that the inputs must conform to
       emailRules: [
       v => !!v || 'E-mail is required',
@@ -227,12 +261,18 @@ export default {
   methods: {
     submitEmail() {
       
-      this.emailDialog = false //closes dialog
+   //   this.emailDialog = false //closes dialog
     },
     submitPassword(){
 
-      
-      this.passwordDialog = false //closes dialog
+      if(this.newPassword != this.confirmNewPassword){
+        console.log("This runs")
+        this.passwordConfirmNewPasswordState = true
+        this.passwordConfirmNewPasswordError.push("Confirm password does not match the new password")
+      }
+      else {
+        this.passwordDialog = false //closes dialog
+      }
     },
   },
   
