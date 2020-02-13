@@ -1,7 +1,8 @@
 <template>
   <div>
     <section>
-      <v-parallax src="../assets/landing_banner.jpeg" height="780">
+      <div id="body">
+      <v-parallax id="landing" src="../assets/landing_banner.jpeg">
         <div id="nav">
           <v-toolbar flat color="transparent" fixed="top">
             <v-spacer></v-spacer>
@@ -16,6 +17,7 @@
           <img class="mr-3" :src="require('../assets/logo_transparent_2.png')" height="200" />
         </v-layout>
       </v-parallax>
+      </div>
     </section>
 
     <section>
@@ -102,6 +104,7 @@ export default {
       this.$router.push("registration");
     }
   }
+  
 };
 </script>
 

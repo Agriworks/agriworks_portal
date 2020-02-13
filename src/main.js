@@ -48,14 +48,7 @@ new Vue({
     }
   },
   mounted(){
-    window.document.onscroll = () => {
-        let navBar = document.getElementById('nav');
-        if(window.scrollY > navBar.offsetTop){
-          this.active = true;
-          } else {
-          this.active = false;
-        }
-      }
+    document.getElementById('landing').style.height = '100vh'
     }
 }).$mount('#app')
 
