@@ -125,7 +125,7 @@
                         
                         <v-text-field
                           id="inputCurrentPassword"
-                          placeholder="Current Password"
+                          label="Current Password"
                           required
                           autofocus
                           v-model="passwordPassword"
@@ -136,7 +136,7 @@
                         ></v-text-field>
                         <v-text-field
                           id="inputPassword"
-                          placeholder="New Password"
+                          label="New Password"
                           required
                           v-model="newPassword"
                           :rules="enterNewPasswordRules"
@@ -146,7 +146,7 @@
                         ></v-text-field>
                         <v-text-field
                           id="inputConfirmPassword"
-                          placeholder="Confirm New Password"
+                          label="Confirm New Password"
                           required
                           v-model="confirmNewPassword"
                           :rules="enterPasswordRules"
