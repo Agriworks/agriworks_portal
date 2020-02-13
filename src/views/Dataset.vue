@@ -6,6 +6,13 @@
         <h1> {{ dataset.name }} </h1>
         <h3 v-if="dataset.tags"> Tags: {{ dataset.tags }} </h3>
         <p> By {{ dataset.author }} </p>
+      <div class="row">
+        <div class="col-md-6">
+          <v-btn dark color="#4caf50" id="downloadButton" v-on:click="downloadDataset">
+            <v-icon>mdi-arrow-down-circle-outline</v-icon>Download
+          </v-btn>
+        </div>
+      </div> 
       </div>
       <div class="col-sm-6">
           <v-container>
@@ -38,6 +45,7 @@
 
 <script>
 import DataTable from "../components/DataTable";
+import api from "../api";
 
 export default {
     name: "Dataset", 
@@ -51,6 +59,17 @@ export default {
     },
     created() {
       this.$store.dispatch('fetchOneDataset', this.$route.params.id)
+    },
+    methods: {
+      downloadDataset(){
+        api.downloadDataset(this.$route.params.id)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(response => {
+          console.log(response);
+        })
+      }
     }
 }
 </script>

@@ -24,7 +24,11 @@ const api = {
             newDataset,
             useCredentials,
         )
+    },
+    downloadDataset (id) {
+        return axios.get(apiUrl+"/dataset/download/"+id);
     }
+
 }
 
 export default api;
