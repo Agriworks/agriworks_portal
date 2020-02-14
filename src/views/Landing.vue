@@ -1,17 +1,17 @@
 <template>
   <div>
-    <v-toolbar flat>
-      <img class="mr-3" :src="require('../assets/mini_logo.png')" height="40" />
-      <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <!-- changed flat flag to text because vuetify says so -->
-        <v-btn text tile @click="signUp">Sign Up</v-btn>
-        <v-btn text tile color="#96D34A" @click="login">Sign In</v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
-
     <section>
-      <v-parallax src="../assets/landing_banner.jpeg" height="600">
+      <v-parallax src="../assets/landing_banner.jpeg" height="780">
+        <div id="nav">
+          <v-toolbar flat color="transparent" fixed="top">
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+              <!-- changed flat flag to text because vuetify says so -->
+              <v-btn text tile color="#ffffff" @click="signUp">Sign Up</v-btn>
+              <v-btn text tile color="#ffffff" @click="login">Sign In</v-btn>
+            </v-toolbar-items>
+          </v-toolbar>
+        </div>
         <v-layout column align-center justify-center class="white--text">
           <img class="mr-3" :src="require('../assets/logo_transparent_2.png')" height="200" />
         </v-layout>
@@ -103,5 +103,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+
+#nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: transparent;
+  position: fixed;
+  top: 0;
+}
+
 </style>

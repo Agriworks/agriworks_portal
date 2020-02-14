@@ -46,6 +46,9 @@ export default {
       component: "browse"
     };
   },
+  beforeMount() {
+    this.$store.dispatch("fetchDatasets");
+  },
   methods: {
     searchSubmit() {
       if (document.getElementById("search") == undefined) {

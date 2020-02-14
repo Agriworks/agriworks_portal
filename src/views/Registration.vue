@@ -5,13 +5,13 @@
         <v-card class="shadow rounded">
           <div class="card-body">
             <h3 class="card-title text-center">Sign Up</h3>
-            <form method="POST" action="/signup" class="form-signin">
+            <form @submit.prevent="signup" class="form-signin">
               <div class="form-label-group">
-                <label for="inputText">First Name</label>
+                <label for="firstName">First Name</label>
                 <input
                   name="firstName"
                   type="text"
-                  id="inputText"
+                  id="firstName"
                   class="form-control"
                   placeholder
                   required
@@ -19,11 +19,11 @@
                 />
               </div>
               <div class="form-label-group">
-                <label for="inputText">Last Name</label>
+                <label for="lastName">Last Name</label>
                 <input
                   name="lastName"
                   type="text"
-                  id="inputText"
+                  id="lastName"
                   class="form-control"
                   placeholder
                   required
@@ -55,14 +55,19 @@
                 />
               </div>
 
-              <div class="custom-control custom-checkbox mb-3">
+              <div class="form-label-group custom-control custom-checkbox mb-3">
                 <input type="checkbox" class="custom-control-input" id="customCheck1" />
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
 
               <div class="custom-control custom-checkbox mb-3">
-                <button class="btn btn-lg btn-primary" type="submit">Sign Up</button>
-                <router-link to="/login" class="btn btn-link">Login</router-link>
+                <v-btn color="success" :outlined="true" type="submit">Sign Up</v-btn>
+                <v-btn
+                  to="/login"
+                  color="success"
+                  :outlined="true"
+                  style="text-decoration:none"
+                >Login</v-btn>
               </div>
             </form>
           </div>
@@ -72,6 +77,38 @@
   </div>
 </template>
 
+<script>
+import { post } from "../requests";
+
+export default {
+  methods: {
+    // should probably move this to store
+    signup() {
+      post("/auth/signup", {
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        email: document.getElementById("inputEmail").value,
+        password: document.getElementById("inputPassword").value
+      })
+        .then(res => {
+          this.$router.push("login");
+          this.$store.commit("setSnackbar", {
+            message: res.data.message,
+            show: true,
+            color: "#4CAF50"
+          });
+        })
+        .catch(err => {
+          this.$store.commit("setSnackbar", {
+            message: err.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
+        });
+    }
+  }
+};
+</script>
 
 <style scoped>
 .form-label-group {
@@ -83,7 +120,7 @@ h3 {
 button {
   margin: 15px 15px;
 }
-.rounded-card{
-    border-radius:2% !important;
+.rounded-card {
+  border-radius: 2% !important;
 }
 </style>

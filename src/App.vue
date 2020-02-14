@@ -1,43 +1,52 @@
 <template>
-  <div>
-    <v-app>
-      <Sidebar v-if="mockIsSignedIn" />
-      <v-content v-if="mockIsSignedIn">
-        <div id="header">
-          <div id="header-left"></div>
-          <div id="header-right"></div>
-        </div>
-        <div class="container">
-          <router-view />
-        </div>
-      </v-content>
-      <router-view v-else />
-    </v-app>
-  </div>
+  <v-app>
+    <!-- <Notification Drawer /> -->
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :top="true">
+      {{ snackbar.message }}
+      <v-btn dark text @click="snackbar.show = false">Close</v-btn>
+    </v-snackbar>
+    <v-content>
+      <div class="container" v-if="this.showSidebar">
+        <Sidebar />
+        <router-view />
+      </div>
+      <div v-else>
+        <router-view />
+        <!-- Landing page !-->
+      </div>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
 import Sidebar from "./components/Sidebar";
+import Landing from "./views/Landing";
+import { mapState } from "vuex";
 
 export default {
   name: "app",
   components: { Sidebar },
   data() {
     return {
-      mockIsSignedIn: false
+      colors: { success: "#4CAF50", error: "#F44336", info: "#00ACC1" },
+      routes: this.$router.options.routes,
+      showSidebar: false //by default we are on the homepage
     };
   },
-  created() {
-    this.$store.dispatch("fetchDatasets");
-    this.mockIsSignedIn = this.$router.currentRoute.name != "Home";
-  },
+  computed: {
+    ...mapState(["snackbar"])
+  },  
   updated() {
-    this.mockIsSignedIn = this.$router.currentRoute.name != "Home";
+    this.showSidebar = this.$router.currentRoute.name != "Home" //we are performing a check on every update
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" >
+.form-control:focus {
+  border-color: #4caf50;
+  box-shadow: 0px 0px 8px #4caf50;
+}
 #header {
   display: flex;
   justify-content: space-between;
@@ -45,9 +54,9 @@ export default {
   padding-left: 5rem;
   padding-right: 5rem;
 }
-
 #footer {
   bottom: 0;
   width: 100%;
 }
+
 </style>
