@@ -134,6 +134,7 @@
                         <v-text-field
                           id="inputCurrentPassword"
                           label="Current Password"
+                          ref="passwordCurrent"
                           required
                           autofocus
                           v-model="passwordPassword"
@@ -148,6 +149,7 @@
                         <v-text-field
                           id="inputPassword"
                           label="New Password"
+                          ref="passwordNewPassword"
                           required
                           v-model="newPassword"
                           :rules="enterNewPasswordRules"
@@ -161,6 +163,7 @@
                         <v-text-field
                           id="inputConfirmPassword"
                           label="Confirm New Password"
+                          ref="passwordConfirmPassword"
                           required
                           v-model="confirmNewPassword"
                           :rules="enterPasswordRules"
@@ -176,7 +179,6 @@
 
                   </v-card-text>
 
-                  <!-- <v-divider></v-divider> -->
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
@@ -280,16 +282,13 @@ export default {
 
             //send snackbar saying that the email was updated
             this.$store.commit("setSnackbar", {
-            message: "Email Updated",
-            show: true,
-            color: "#4CAF50"
-          });
+              message: "Email Updated",
+              show: true,
+              color: "#4CAF50"
+            });
 
-            console.log("Good")
           })
           .catch(err => {
-            console.log(err.response)
-            console.log(err.response.data["message"])
 
             if(err.response.data["message"] == "Wrong Password"){
               this.emailEnterPasswordState = true
@@ -305,28 +304,46 @@ export default {
     },
     submitPassword(){
 
-      
-
-      if(this.newPassword != this.confirmNewPassword){
-        console.log("This runs")
-        this.passwordConfirmNewPasswordState = true
-        this.passwordConfirmNewPasswordError.push("Confirm password does not match the new password")
-      }
-      else {
-        const SID = getCookie("SID");
-        post('/admin/account', {
-        sessionID: SID, 
-        submit: "password",
-        inputCurrentPassword: this.passwordPassword,
-        inputPassword: this.newPassword,
-        inputConfirmPassword: this.confirmNewPassword
-      })
-      .then(res => {
-          console.log("Good")
+      //make sure that there are no errors before continuing
+      if(!(this.$refs["passwordCurrent"].hasError || this.$refs["passwordNewPassword"].hasError || this.$refs["passwordConfirmPassword"].hasError))
+      {
+        if(this.newPassword != this.confirmNewPassword){
+          this.passwordConfirmNewPasswordState = true
+          this.passwordConfirmNewPasswordError.push("Confirm password does not match the new password")
+        }
+        else {
+          const SID = getCookie("SID");
+          post('/admin/account', {
+          sessionID: SID, 
+          submit: "password",
+          inputCurrentPassword: this.passwordPassword,
+          inputPassword: this.newPassword,
+          inputConfirmPassword: this.confirmNewPassword
         })
-        .catch(err => {
-          console.log("Bad")
-        });
+        .then(res => {
+            this.passwordDialog = false //close dialog
+
+            //Send snackbar
+            this.$store.commit("setSnackbar", {
+              message: "Password Updated",
+              show: true,
+              color: "#4CAF50"
+            });
+
+
+          })
+          .catch(err => {
+            
+            if(err.response.data["message"] == "Wrong password"){
+              this.passwordEnterPasswordState = true
+              this.passwordEnterPasswordError.push("Incorrect Password")
+            } else{
+              console.log("ERROR")
+            }
+
+
+          });
+        }
       }
     },
   },
