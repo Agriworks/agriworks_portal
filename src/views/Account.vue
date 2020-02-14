@@ -46,6 +46,7 @@
                         <v-text-field
                           id="inputCurrentPassword"
                           label="Current Password"
+                          ref="emailPassword"
                           required
                           autofocus
                           v-model="passwordEmail"
@@ -62,6 +63,7 @@
                           type="email"
                           id="inputEmail"
                           label="New Email"
+                          ref="emailEmail"
                           required
                           v-model="newEmail"
                           :rules="emailRules"
@@ -199,6 +201,9 @@
 
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import { post } from "../requests";
+import {
+  getCookie
+} from "../js/authentication";
 
 
 export default {
@@ -260,10 +265,47 @@ export default {
   
   methods: {
     submitEmail() {
+
+      if(!(this.$refs["emailPassword"].hasError || this.$refs["emailEmail"].hasError)) //if the inputs do not conform to the rules, don't even submit it
+      {
+        const SID = getCookie("SID");
+          post('/admin/account', {
+          sessionID: SID, 
+          submit: "email",
+          inputCurrentPassword: this.passwordEmail,
+          inputEmail: this.newEmail
+        })
+        .then(res => {  
+            this.emailDialog = false //close dialog
+
+            //send snackbar saying that the email was updated
+            this.$store.commit("setSnackbar", {
+            message: "Email Updated",
+            show: true,
+            color: "#4CAF50"
+          });
+
+            console.log("Good")
+          })
+          .catch(err => {
+            console.log(err.response)
+            console.log(err.response.data["message"])
+
+            if(err.response.data["message"] == "Wrong Password"){
+              this.emailEnterPasswordState = true
+              this.emailEnterPasswordError.push("Incorrect Password")
+            } else if(err.response.data["message"] == "Email is already in use"){
+              this.emailEnterEmailState = true
+              this.emailEnterEmailError.push("There is already exists an account with this email")
+            }
+
+          });
+      }
       
-   //   this.emailDialog = false //closes dialog
     },
     submitPassword(){
+
+      
 
       if(this.newPassword != this.confirmNewPassword){
         console.log("This runs")
@@ -271,7 +313,20 @@ export default {
         this.passwordConfirmNewPasswordError.push("Confirm password does not match the new password")
       }
       else {
-        this.passwordDialog = false //closes dialog
+        const SID = getCookie("SID");
+        post('/admin/account', {
+        sessionID: SID, 
+        submit: "password",
+        inputCurrentPassword: this.passwordPassword,
+        inputPassword: this.newPassword,
+        inputConfirmPassword: this.confirmNewPassword
+      })
+      .then(res => {
+          console.log("Good")
+        })
+        .catch(err => {
+          console.log("Bad")
+        });
       }
     },
   },
