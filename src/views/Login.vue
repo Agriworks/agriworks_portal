@@ -69,42 +69,20 @@
 </template>
 
 <script>
+import api from "../api";
+
 export default {
   data() {
     return {
-      // email: "mdesilva@bu.edu",
-      // password: "password",
-      email: "",
-      password: ""
+      email: "mdesilva@bu.edu",
+      password: "password",
     };
   },
 
   methods: {
     // should probably move this to store
     login() {
-      this.$store
-        .dispatch("retrieveSessionID", {
-          email: this.email,
-          password: this.password
-        })
-        .then(response => {
-          //no setUser in store
-          this.$store.commit("setUser", this.email);
-          this.$router.push("/browse");
-          this.$store.commit("setSnackbar", {
-            message: "Successfully logged in.",
-            show: true,
-            color: "#4CAF50"
-          });
-        })
-        .catch(error => {
-          this.$store.commit("setSnackbar", {
-            message: error.response.data.message,
-            show: true,
-            color: "#F44336"
-          });
-          this.$forceUpdate;
-        });
+      api.getSessionID(this.email, this.password)
     }
   }
 };

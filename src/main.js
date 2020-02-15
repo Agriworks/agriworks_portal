@@ -26,6 +26,7 @@ require("./assets/styles.css");
 // Vue.component('fa-icon', FontAwesomeIcon);
 
 Vue.use(BootstrapVue);
+
 Vue.config.productionTip = false;
 
 new Vue({

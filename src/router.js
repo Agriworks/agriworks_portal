@@ -108,6 +108,7 @@ router.beforeEach((to, from, next) => {
         if (admin) {
           next();
         } else {
+          console.log("no admin")
         }
       } else {
         //authorize to dashboard if user is logged in but is not admin
