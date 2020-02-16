@@ -12,6 +12,11 @@
         </v-list-item>
         <v-card-actions>
             <v-btn text> <router-link :to="datasetLink"> Open </router-link> </v-btn>
+            
+            <v-btn v-if="manage == true" text> <router-link :to="datasetLink"> Delete </router-link> </v-btn>
+            
+            <v-btn v-if="manage == true" color = "error"> <router-link :to="datasetLink"> Delete </router-link> </v-btn>
+
         </v-card-actions>
     </v-card>
 </template>
@@ -19,7 +24,7 @@
 <script>
 export default {
   name: "DatasetCard",
-  props: ["dataset"],
+  props: ["dataset", "manage"],
   computed: {
       datasetLink: function() {
           return "/dataset/" + this.dataset.id;
