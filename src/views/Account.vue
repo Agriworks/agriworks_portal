@@ -307,7 +307,6 @@ export default {
       //basically do the same thing but if they had a repeating email
       var passEmail = false; //for some reason it takes two tries to submit the form if you got the password wrong last time, this bypasses that error
 
-      console.log(this.forms.email.fields.email.error)
       //Maybe in the future as soon as they changed what was in box, the error goes away
       if(this.forms.email.fields.email.error.length == 1){ //if the only error is that the password was wrong last time, clear it
         const error = this.forms.email.fields.email.error.pop()
@@ -320,7 +319,6 @@ export default {
         }
       }
 
-      console.log("Pass email " + passEmail)
 
 
 
@@ -348,9 +346,6 @@ export default {
             if(err.response.data["message"] == "Wrong password"){
               this.forms.email.fields.password.state = true
               this.forms.email.fields.password.error.push("Incorrect Password")
-              console.log("Here")
-              console.log(this.forms.email.fields.password.error)
-              console.log(this.forms.email.fields.password.state)
             } else if(err.response.data["message"] == "Email is already in use"){
               this.forms.email.fields.email.state = true
               this.forms.email.fields.email.error.push("There is already exists an account with this email")
