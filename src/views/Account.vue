@@ -16,7 +16,7 @@
             </div>
             <div class="col text-right">
               <v-dialog
-                v-model="emailDialog"
+                v-model="forms.email.show"
                 width="500"
               >
 
@@ -49,14 +49,14 @@
                           ref="emailPassword"
                           required
                           autofocus
-                          v-model="passwordEmail"
-                          :rules="enterPasswordRules"
-                          :append-icon="emailPasswordVisibility ? 'visibility' : 'visibility_off'"
-                          @click:append="() => (emailPasswordVisibility = !emailPasswordVisibility)"
-                          :type="emailPasswordVisibility ? 'text' : 'password'"
+                          v-model="forms.email.fields.password.input"
+                          :rules="forms.email.fields.password.rules"
+                          :append-icon="forms.email.fields.password.visibility ? 'visibility' : 'visibility_off'"
+                          @click:append="() => (forms.email.fields.password.visibility = !forms.email.fields.password.visibility)"
+                          :type="forms.email.fields.password.visibility ? 'text' : 'password'"
                           color = "green"
-                          :error="emailEnterPasswordState"
-                          :error-messages="emailEnterPasswordError"
+                          :error="forms.email.fields.password.state"
+                          :error-messages="forms.email.fields.password.error"
                           >
                         </v-text-field>
                         <v-text-field
@@ -65,11 +65,11 @@
                           label="New Email"
                           ref="emailEmail"
                           required
-                          v-model="newEmail"
-                          :rules="emailRules"
+                          v-model="forms.email.fields.email.input"
+                          :rules="forms.email.fields.email.rules"
                           color = "green"
-                          :error="emailEnterEmailState"
-                          :error-messages="emailEnterEmailError"
+                          :error="forms.email.fields.email.state"
+                          :error-messages="forms.email.fields.email.error"
                         >
                         </v-text-field>
                       </div>
@@ -79,7 +79,7 @@
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                      <v-btn color="green" text @click="emailDialog = false">Close</v-btn>
+                      <v-btn color="green" text @click="forms.email.show = false">Close</v-btn>
                       <v-btn color="green" text v-on:click="submitEmail">Save</v-btn>
                   </v-card-actions>
 
@@ -100,7 +100,7 @@
             <div class="col text-right">
               
                <v-dialog
-                v-model="passwordDialog"
+                v-model="forms.password.show"
                 width="500"
               >
 
@@ -137,42 +137,42 @@
                           ref="passwordCurrent"
                           required
                           autofocus
-                          v-model="passwordPassword"
-                          :rules="enterPasswordRules"
-                          :append-icon="passwordPasswordVisibility ? 'visibility' : 'visibility_off'"
-                          @click:append="() => (passwordPasswordVisibility = !passwordPasswordVisibility)"
-                          :type="passwordPasswordVisibility ? 'text' : 'password'"
+                          v-model="forms.password.fields.currentPassword.input"
+                          :rules="forms.password.fields.currentPassword.rules"
+                          :append-icon="forms.password.fields.currentPassword.visibility ? 'visibility' : 'visibility_off'"
+                          @click:append="() => (forms.password.fields.currentPassword.visibility = !forms.password.fields.currentPassword.visibility)"
+                          :type="forms.password.fields.currentPassword.visibility ? 'text' : 'password'"
                           color = "green"
-                          :error="passwordEnterPasswordState"
-                          :error-messages="passwordEnterPasswordError"
+                          :error="forms.password.fields.currentPassword.state"
+                          :error-messages="forms.password.fields.currentPassword.error"
                         ></v-text-field>
                         <v-text-field
                           id="inputPassword"
                           label="New Password"
                           ref="passwordNewPassword"
                           required
-                          v-model="newPassword"
-                          :rules="enterNewPasswordRules"
-                          :append-icon="passwordNewPasswordVisibility ? 'visibility' : 'visibility_off'"
-                          @click:append="() => (passwordNewPasswordVisibility = !passwordNewPasswordVisibility)"
-                          :type="passwordNewPasswordVisibility ? 'text' : 'password'"
+                          v-model="forms.password.fields.newPassword.input"
+                          :rules="forms.password.fields.newPassword.rules"
+                          :append-icon="forms.password.fields.newPassword.visibility ? 'visibility' : 'visibility_off'"
+                          @click:append="() => (forms.password.fields.newPassword.visibility = !forms.password.fields.newPassword.visibility)"
+                          :type="forms.password.fields.newPassword.visibility ? 'text' : 'password'"
                           color = "green"
-                          :error="passwordEnterNewPasswordState"
-                          :error-messages="passowrdEnterNewPasswordError"
+                          :error="forms.password.fields.newPassword.state"
+                          :error-messages="forms.password.fields.newPassword.error"
                         ></v-text-field>
                         <v-text-field
                           id="inputConfirmPassword"
                           label="Confirm New Password"
                           ref="passwordConfirmPassword"
                           required
-                          v-model="confirmNewPassword"
-                          :rules="enterPasswordRules"
-                          :append-icon="passwordConfirmPasswordVisibility ? 'visibility' : 'visibility_off'"
-                          @click:append="() => (passwordConfirmPasswordVisibility = !passwordConfirmPasswordVisibility)"
-                          :type="passwordConfirmPasswordVisibility ? 'text' : 'password'"
+                           v-model="forms.password.fields.confirmNewPassword.input"
+                          :rules="forms.password.fields.confirmNewPassword.rules"
+                          :append-icon="forms.password.fields.confirmNewPassword.visibility ? 'visibility' : 'visibility_off'"
+                          @click:append="() => (forms.password.fields.confirmNewPassword.visibility = !forms.password.fields.confirmNewPassword.visibility)"
+                          :type="forms.password.fields.confirmNewPassword.visibility ? 'text' : 'password'"
                           color = "green"
-                          :error="passwordConfirmNewPasswordState"
-                          :error-messages="passwordConfirmNewPasswordError"
+                          :error="forms.password.fields.confirmNewPassword.state"
+                          :error-messages="forms.password.fields.confirmNewPassword.error"
                         ></v-text-field>
                       </div>
                     </v-form>      
@@ -182,7 +182,7 @@
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                      <v-btn color="green" text @click="passwordDialog = false">Close</v-btn>
+                      <v-btn color="green" text @click="forms.password.show = false">Close</v-btn>
                       <v-btn color="green" text v-on:click="submitPassword">Save</v-btn>
                   </v-card-actions>
 
@@ -210,75 +210,131 @@ import {
 
 export default {
 
+
   computed: {
       email() {
         return this.$store.state.user
       }
   }, 
 
+
   data () {
     return {
-      emailDialog: false,
-      passwordDialog: false,
-      passwordEmail: "", //The password when changing email
-      newEmail: "", //The new email when changing email
-      passwordPassword: "",//the current password when changing password
-      newPassword: "", //The new password when changing password
-      confirmNewPassword: "", //Confirming new pasword
 
-      emailPasswordVisibility: false,
-      passwordPasswordVisibility: false,
-      passwordNewPasswordVisibility: false,
-      passwordConfirmPasswordVisibility: false,
 
-      errorMessage: "", // if they put the wrong password e
+      forms: {
+        email: {
 
-      emailEnterPasswordState: false,
-      emailEnterEmailState: false,
+          show: false,
 
-      passwordEnterPasswordState: false,
-      passwordEnterNewPasswordState: false,
-      passwordConfirmNewPasswordState: false,
+          fields: {
+            password: {
+              input: "",
+              visibility: false,
+              state: false, //if error or not 
+              error: [],
+              rules: [
+                v => !!v || 'Password is required'
+              ]
+            },
+            email: {
+              input: "",
+              state: false, //if error or not state: false,
+              error: [],
+              rules: [
+                v => !!v || 'E-mail is required',
+                v => /.+@.+/.test(v) || 'E-mail must be valid', //must have @ sign
+              ]
+            }
+          }
+        },
+        password: {
 
-      emailEnterPasswordError: [],
-      emailEnterEmailError: [],
+          show: false,
 
-      passwordEnterPasswordError: [],
-      passowrdEnterNewPasswordError: [],
-      passwordConfirmNewPasswordError: [],
+          fields: {
+            currentPassword: {
+              input: "",
+              visibility: false,
+              state: false, //if error or not 
+              error: [],
+              rules: [
+                v => !!v || 'Password is required'
+              ]
+            },
+            newPassword: {
+              input: "",
+              visibility: false,
+              state: false, //if error or not 
+              error: [],
+              rules: [
+                v => !!v || 'Password is required'
+              ]
+            },
+            confirmNewPassword: {
+              input: "",
+              visibility: false,
+              state: false, //if error or not 
+              error: [],
+              rules: [
+                v => !!v || 'Confirm Password is required'
+              ]
+            }
 
-      
-
-      //Rules that the inputs must conform to
-      emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+/.test(v) || 'E-mail must be valid', //must have @ sign
-    ],
-    //Rules for entering current password, used in both dialogs
-    enterPasswordRules: [
-      v => !!v || 'Password is required'
-    ],
-    //Rules for entering new password. Currently nothing but could make it a min length or a max length or have an uppercase letter ect.
-    enterNewPasswordRules: [
-      v => !!v || 'Password is required'
-    ]
+          }
+        }
+      },
     }
   },
   
   methods: {
+
     submitEmail() {
 
-      if(!(this.$refs["emailPassword"].hasError || this.$refs["emailEmail"].hasError)) //if the inputs do not conform to the rules, don't even submit it
+      var passPassword = false; //for some reason it takes two tries to submit the form if you got the password wrong last time, this bypasses that error
+
+      //Maybe in the future as soon as they changed what was in box, the error goes away
+      if(this.forms.email.fields.password.error.length == 1){ //if the only error is that the password was wrong last time, clear it
+        const error = this.forms.email.fields.password.error.pop()
+        if(error == "Incorrect Password") { //if the error was wrong password clear it
+          passPassword = true 
+          this.forms.email.fields.password.state = false;
+        }else{
+          this.forms.email.fields.password.error.push(error) //if it wasn't put it back
+        }
+      }
+
+      //basically do the same thing but if they had a repeating email
+      var passEmail = false; //for some reason it takes two tries to submit the form if you got the password wrong last time, this bypasses that error
+
+      console.log(this.forms.email.fields.email.error)
+      //Maybe in the future as soon as they changed what was in box, the error goes away
+      if(this.forms.email.fields.email.error.length == 1){ //if the only error is that the password was wrong last time, clear it
+        const error = this.forms.email.fields.email.error.pop()
+        if(error == "There is already exists an account with this email") { //if the error was wrong password clear it
+          passEmail = true 
+          this.forms.email.fields.email.state = false;
+          this.$refs["emailEmail"].resetValidation()
+        }else{
+          this.forms.email.fields.email.error.push(error) //if it wasn't put it back
+        }
+      }
+
+      console.log("Pass email " + passEmail)
+
+
+
+      if(!((this.$refs["emailPassword"].hasError && !passPassword)|| (this.$refs["emailEmail"].hasError && !passEmail))) //if the inputs do not conform to the rules, don't even submit it
       {
         const SID = getCookie("SID");
           post('/admin/account', {
           sessionID: SID, 
           submit: "email",
-          inputCurrentPassword: this.passwordEmail,
-          inputEmail: this.newEmail
+          inputCurrentPassword: this.forms.email.fields.password.input,
+          inputEmail: this.forms.email.fields.email.input
         })
         .then(res => {  
-            this.emailDialog = false //close dialog
+            this.forms.email.show = false //close dialog
 
             //send snackbar saying that the email was updated
             this.$store.commit("setSnackbar", {
@@ -289,39 +345,76 @@ export default {
 
           })
           .catch(err => {
-
-            if(err.response.data["message"] == "Wrong Password"){
-              this.emailEnterPasswordState = true
-              this.emailEnterPasswordError.push("Incorrect Password")
+            if(err.response.data["message"] == "Wrong password"){
+              this.forms.email.fields.password.state = true
+              this.forms.email.fields.password.error.push("Incorrect Password")
+              console.log("Here")
+              console.log(this.forms.email.fields.password.error)
+              console.log(this.forms.email.fields.password.state)
             } else if(err.response.data["message"] == "Email is already in use"){
-              this.emailEnterEmailState = true
-              this.emailEnterEmailError.push("There is already exists an account with this email")
+              this.forms.email.fields.email.state = true
+              this.forms.email.fields.email.error.push("There is already exists an account with this email")
             }
 
           });
+
+
+          
       }
       
     },
     submitPassword(){
 
+
+      var passCurrent = false
+
+      //Maybe in the future as soon as they changed what was in box, the error goes away
+      if(this.forms.password.fields.currentPassword.error.length == 1){ //if the only error is that the password was wrong last time, clear it
+        const error = this.forms.password.fields.currentPassword.error.pop()
+        if(error == "Incorrect Password") { //if the error was wrong password clear it 
+          this.forms.password.fields.currentPassword.state = false;
+          passCurrent = true
+        }else{
+          this.forms.password.fields.currentPassword.error.push(error) //if it wasn't put it back
+        }
+      }
+
+
+      var passConfirm = false
+
+      //Maybe in the future as soon as they changed what was in box, the error goes away
+      if(this.forms.password.fields.confirmNewPassword.error.length == 1){ //if the only error is that the password was wrong last time, clear it
+        const error = this.forms.password.fields.confirmNewPassword.error.pop()
+        if(error == "Confirm password does not match the new password") { //if the error was wrong password clear it 
+          this.forms.password.fields.confirmNewPassword.state = false;
+          passConfirm = true
+        }else{
+          this.forms.password.fields.confirmNewPassword.error.push(error) //if it wasn't put it back
+        }
+      }
+
+
+      
+      
+
       //make sure that there are no errors before continuing
-      if(!(this.$refs["passwordCurrent"].hasError || this.$refs["passwordNewPassword"].hasError || this.$refs["passwordConfirmPassword"].hasError))
+      if(!((this.$refs["passwordCurrent"].hasError && !passCurrent) || this.$refs["passwordNewPassword"].hasError || (this.$refs["passwordConfirmPassword"].hasError && !passConfirm)))
       {
-        if(this.newPassword != this.confirmNewPassword){
-          this.passwordConfirmNewPasswordState = true
-          this.passwordConfirmNewPasswordError.push("Confirm password does not match the new password")
+        if(this.forms.password.fields.newPassword.input != this.forms.password.fields.confirmNewPassword.input){
+          this.forms.password.fields.confirmNewPassword.state = true
+          this.forms.password.fields.confirmNewPassword.error.push("Confirm password does not match the new password")
         }
         else {
           const SID = getCookie("SID");
           post('/admin/account', {
           sessionID: SID, 
           submit: "password",
-          inputCurrentPassword: this.passwordPassword,
-          inputPassword: this.newPassword,
-          inputConfirmPassword: this.confirmNewPassword
+          inputCurrentPassword: this.forms.password.fields.currentPassword.input,
+          inputPassword: this.forms.password.fields.newPassword.input,
+          inputConfirmPassword: this.forms.password.fields.confirmNewPassword.input
         })
         .then(res => {
-            this.passwordDialog = false //close dialog
+            this.forms.password.show = false //close dialog
 
             //Send snackbar
             this.$store.commit("setSnackbar", {
@@ -335,8 +428,8 @@ export default {
           .catch(err => {
             
             if(err.response.data["message"] == "Wrong password"){
-              this.passwordEnterPasswordState = true
-              this.passwordEnterPasswordError.push("Incorrect Password")
+              this.forms.password.fields.currentPassword.state = true
+              this.forms.password.fields.currentPassword.error.push("Incorrect Password")
             } else{
               console.log("ERROR")
             }
