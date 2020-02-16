@@ -10,7 +10,7 @@
         <Sidebar />
         <router-view />
       </div>
-      <div class="container-fluid" v-else>
+      <div v-else>
         <router-view />
         <!-- Landing page !-->
       </div>
@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     ...mapState(["snackbar"])
-  },
+  },  
   updated() {
     this.showSidebar = this.$router.currentRoute.name != "Home" //we are performing a check on every update
   }
@@ -58,4 +58,5 @@ export default {
   bottom: 0;
   width: 100%;
 }
+
 </style>
