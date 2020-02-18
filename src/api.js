@@ -66,6 +66,9 @@ const api = {
                     response.data.value,
                     response.data.expires
                 );
+                if (response.data.admin == true){
+                    store.commit("setIsAdmin");
+                }
                 store.commit("setUser", this.email);
                 store.commit("setLoggedInTrue");
                 router.push("/browse");
