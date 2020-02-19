@@ -2,9 +2,35 @@
   <div class="table">
     <v-form ref="form">
       <v-text-field v-model="datasetName" required label="Dataset name"></v-text-field>
-      <v-text-field v-model="datasetTags" label="Dataset tags"></v-text-field>
       <v-select v-model="datasetPermissions" required :items="permissionOptions" label="Permissions"></v-select>
       <v-select v-model="datasetType" required :items="typeOptions" label="Dataset type"></v-select>
+      <v-combobox
+      v-model="datasetTags"
+      :search-input.sync="search"
+      hide-selected
+      label="Tags"
+      multiple
+      small-chips
+    >
+    <template v-slot:selection="{item}">
+      <v-chip
+        close
+        @click:close="remove(item)"
+        color="#96D34A"
+      >
+        {{ item }}
+      </v-chip>
+    </template>
+      <!-- <template v-slot:no-data>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title>
+              No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </template> -->
+    </v-combobox>
     </v-form>
       
       <b-card-group deck class="lastRow">
@@ -34,7 +60,7 @@ export default {
   data() {
     return {
       datasetName: "Sample",
-      datasetTags: "Untitled",
+      datasetTags: [],
       datasetPermissions: "Public",
       datasetType: "Land Use",
       permissionOptions: ["Public", "Private"],
@@ -55,6 +81,10 @@ export default {
         this.loading = false;
         this.$store.dispatch("notifyError", error.response.data.message);
       })
+    },
+    remove (item) {
+        this.datasetTags.splice(this.datasetTags.indexOf(item), 1)
+        this.datasetTags = [...this.datasetTags]
     },
   }
 }

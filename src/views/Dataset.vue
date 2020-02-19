@@ -4,7 +4,21 @@
       <div class="d-flex justify-content-center col-sm-6" id="datasetInfoContainer">
         <h5> {{dataset.type}} </h5>
         <h1> {{ dataset.name }} </h1>
-        <h3 v-if="dataset.tags"> Tags: {{ dataset.tags }} </h3>
+        <div v-if="hideTags">
+          <p @click="changeTagStatus()" style="color: #96D34A; text-decoration: underline;">Show tags +</p>
+        </div>
+        <div v-else>
+          <p @click="changeTagStatus()" style="color: #96D34A; text-decoration: underline;">Hide tags -</p>
+          <div>
+            <span ><v-chip 
+              v-for="tag in tags" 
+              v-bind:key="tag"
+              color="#96D34A" 
+              style="margin-left: 5px;margin-bottom: 5px;">{{ tag }}
+              </v-chip>
+            </span>
+          </div>
+        </div>
         <p> By {{ dataset.author }} </p>
       </div>
       <div class="col-sm-6">
@@ -41,12 +55,25 @@ import DataTable from "../components/DataTable";
 
 export default {
     name: "Dataset", 
+    data() {
+      return {
+        hideTags : true,
+      };
+    },
+    methods: {
+      changeTagStatus() {
+        this.hideTags = !this.hideTags;
+      }
+    },
     components: {
       DataTable
     },
     computed: {
       dataset() {
         return this.$store.state.dataset
+      },
+      tags() {
+        return this.$store.state.dataset.tags
       }
     },
     created() {

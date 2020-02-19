@@ -9,7 +9,7 @@
       permanent
     >
       <v-list-item>
-        <v-img v-if="!mini" src="../assets/logo_transparent_2.png" />
+        <v-img v-if="!mini" src="../assets/logo_transparent_2_white_text.png" />
         <v-img v-else src="../assets/mini_logo.png" />
       </v-list-item>
 
