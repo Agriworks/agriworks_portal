@@ -18,6 +18,23 @@ function urlEncode(data) {
   return urlEncodedString.slice(0, -1); //remove the trailing '&'
 }
 
+
+export function deleteRoute(endpoint) {
+  return new Promise((resolve, reject) => {
+    axios
+      .delete(apiUrl + endpoint, axiosConfig)
+      .then(response => {
+        console.log("INFO: Response received for endpoint " + endpoint + ".");
+        resolve(response);
+      })
+      .catch(error => {
+        console.error(error);
+        reject(error);
+      });
+  });
+}
+
+
 export function post(endpoint, payload) {
   return new Promise((resolve, reject) => {
     axios

@@ -41,7 +41,6 @@
 import api from "../api";
 
 export default {
-    
   name: "DatasetCard",
   props: ["dataset", "manage"],
   computed: {
@@ -56,7 +55,8 @@ export default {
   }, 
   methods: {
       deleteDataset() {
-          api.deleteDataset(this.dataset.id)
+        //   api.deleteDataset(this.dataset.id)
+          this.dialog = false; 
       }
   }
 };

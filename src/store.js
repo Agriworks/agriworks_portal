@@ -70,7 +70,6 @@ const store = new Vuex.Store({
       api.fetchDatasets();
     },
     fetchDataset(state, id) {
-      console.log(id);
       api.fetchDataset(id);
     },
     fetchUserDatasets(state) {
@@ -79,9 +78,12 @@ const store = new Vuex.Store({
     filterDatasets(state,searchQuery) {
       api.filterDatasets(searchQuery);
     },
+    deleteDataset(state, id) {
+      console.log("made it here"); 
+    }, 
     logout(state){
       api.logout(getCookie("SID"));
-    }
+    }, 
   }
 });
 

@@ -1,7 +1,7 @@
 import axios from "axios"
 import { addCookie, deleteCookie } from "./js/authentication";
 import router from "./router";
-import { post, get } from "./requests";
+import { post, get, deleteRoute } from "./requests";
 import store from "./store"; //might be a circular import
 import notify from "./utilities/notify";
 import { colors } from "./utilities/branding";
@@ -35,6 +35,13 @@ const api = {
             console.log(err)
             notify("Error fetching your datasets", colors.red); 
         })
+    }, 
+    deleteDataset(id) {
+       return deleteRoute(`/dataset/${id}`)
+       .then(response => console.log(response.data))
+       .catch(err => {
+           notify("Error deleting dataset", colors.red); 
+       });
     }, 
     uploadDataset (file, name, tags, permissions, type) {
         let newDataset = new FormData();
