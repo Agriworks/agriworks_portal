@@ -5,7 +5,12 @@
         <h5> {{dataset.type}} </h5>
         <h1> {{ dataset.name }} </h1>
         <div v-if="hideTags">
-          <p @click="changeTagStatus()" style="color: #96D34A; text-decoration: underline;">Show tags +</p>
+          <div v-if="tags.length < 1">
+            <p>No tags</p>
+          </div>
+          <div v-else>
+            <p @click="changeTagStatus()" style="color: #96D34A; text-decoration: underline;">Show tags +</p>
+          </div>
         </div>
         <div v-else>
           <p @click="changeTagStatus()" style="color: #96D34A; text-decoration: underline;">Hide tags -</p>
