@@ -24,6 +24,18 @@ const api = {
             notify("Error fetching dataset", colors.red);
         });
     },
+    fetchUserDatasets() {
+        // return axios.get(
+        //     apiUrl + "/dataset/userdatasets/","",useCredentials
+        // )
+        // .then(response => store.commit("setDatasets", response.data))
+        return get("/dataset/userdatasets/")
+        .then(response => console.log(response.data))
+        .catch(err => {
+            console.log(err)
+            notify("Error fetching your datasets", colors.red); 
+        })
+    }, 
     uploadDataset (file, name, tags, permissions, type) {
         let newDataset = new FormData();
         newDataset.append('file', file);
@@ -66,6 +78,7 @@ const api = {
                     response.data.value,
                     response.data.expires
                 );
+                console.log(response.data.key, response.data.value, response.data.expires)
                 if (response.data.admin == true){
                     store.commit("setIsAdmin");
                 }

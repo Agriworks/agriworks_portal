@@ -73,6 +73,9 @@ const store = new Vuex.Store({
       console.log(id);
       api.fetchDataset(id);
     },
+    fetchUserDatasets(state) {
+      api.fetchUserDatasets(); 
+    }, 
     filterDatasets(state,searchQuery) {
       api.filterDatasets(searchQuery);
     },

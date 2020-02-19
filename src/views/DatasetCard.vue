@@ -13,21 +13,50 @@
         <v-card-actions>
             <v-btn text> <router-link :to="datasetLink"> Open </router-link> </v-btn>
             
-            <v-btn v-if="manage == true" text> <router-link :to="datasetLink"> Delete </router-link> </v-btn>
-            
-            <v-btn v-if="manage == true" color = "error"> <router-link :to="datasetLink"> Delete </router-link> </v-btn>
+            <v-btn v-if="manage == true" text color = "error"> <router-link :to="datasetLink"> Edit </router-link> </v-btn>
+            <template>
+                <v-row justify="center">
+                    <v-dialog v-model="dialog" persistent max-width="290">
+                        <template v-slot:activator="{ on }">
+                            <v-btn v-if="manage == true" text color = "error" v-on="on">Delete</v-btn>
+                        </template>
+                        <v-card>
+                            <v-card-title class="headline">Delete dataset?</v-card-title>
+                            <v-card-text>Once you delete this dataset you will not be able to revert these changes.</v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+                                <v-btn color="error" text @click="deleteDataset()">Delete</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                </v-row>
+            </template>
 
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
+import api from "../api";
+
 export default {
+    
   name: "DatasetCard",
   props: ["dataset", "manage"],
   computed: {
       datasetLink: function() {
           return "/dataset/" + this.dataset.id;
+      }
+  },
+  data() {
+      return {
+          dialog: false 
+      }
+  }, 
+  methods: {
+      deleteDataset() {
+          api.deleteDataset(this.dataset.id)
       }
   }
 };

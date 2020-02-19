@@ -20,6 +20,10 @@ export default {
       return this.$store.state.datasets;
     }
   },
+  beforeMount() {
+    this.$store.dispatch("fetchUserDatasets");
+  },    
+  
 };
 </script>
 <style scoped></style>
