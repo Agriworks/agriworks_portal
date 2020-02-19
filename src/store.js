@@ -8,6 +8,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     //Initial state
+    isAdmin: false,
     loggedIn: wasAlreadyLoggedIn(),
     snackbar: {
       message: "",
@@ -19,6 +20,9 @@ const store = new Vuex.Store({
     user: "" //the email address of the user
   },
   mutations: {
+    setIsAdmin(state) {
+      state.isAdmin = true; 
+    },
     setLoggedInFalse(state) {
       state.loggedIn = false;
     },
@@ -42,6 +46,9 @@ const store = new Vuex.Store({
     }
   },
   getters: {
+    isAdmin: state => {
+      return state.isAdmin
+    },
     isLoggedIn: state => {
       return state.loggedIn;
     },
