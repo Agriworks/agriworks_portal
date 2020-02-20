@@ -19,10 +19,6 @@ const api = {
     },
     fetchDataset (id) {
         return get(`/dataset/${id}`)
-        .then(response => store.commit("setDataset", response.data))
-        .catch(err => {
-            notify("Error fetching dataset", colors.red);
-        });
     },
     uploadDataset (file, name, tags, permissions, type) {
         let newDataset = new FormData();

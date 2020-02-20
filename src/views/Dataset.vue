@@ -1,5 +1,5 @@
 <template>
-<div id="datasetContainer">
+<div id="datasetContainer" v-if="this.dataset">
     <div class="row">
       <div class="d-flex justify-content-center col-sm-6" id="datasetInfoContainer">
         <h5> {{dataset.type}} </h5>
@@ -31,26 +31,43 @@
       <DataTable :headers="dataset.headers" :data="dataset.data" id="datatable"/>
     </div>
   </div>
-  
+  <div v-else>
+    <div v-if="!this.hideLoadingIndicator">
+      <LoadingIndicator/>
+    </div>
+  </div>
 </template>
 
 
 
 <script>
 import DataTable from "../components/DataTable";
+import LoadingIndicator from "../components/LoadingIndicator";
+import api from '../api';
+import notify from '../utilities/notify';
+import { colors } from '../utilities/branding';
 
 export default {
     name: "Dataset", 
     components: {
-      DataTable
+      DataTable,
+      LoadingIndicator
     },
-    computed: {
-      dataset() {
-        return this.$store.state.dataset
+    data(){
+      return {
+        dataset: null,
+        hideLoadingIndicator: false
       }
     },
-    created() {
-      this.$store.dispatch('fetchDataset', this.$route.params.id)
+    created(){
+      api.fetchDataset(this.$route.params.id)
+      .then((response) => {
+        this.dataset = response.data;
+      })
+      .catch((err) => {
+        this.hideLoadingIndicator = true
+        notify("Error fetching dataset. Please try again", colors.red);
+      })
     }
 }
 </script>
@@ -70,4 +87,5 @@ export default {
 #metadataContainer {
   border: 1px solid #a2e510;
 }
+
 </style>
