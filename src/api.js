@@ -5,9 +5,11 @@ import { post, get, deleteRoute } from "./requests";
 import store from "./store"; //might be a circular import
 import notify from "./utilities/notify";
 import { colors } from "./utilities/branding";
+import { VMenu } from "vuetify/lib";
 
 const apiUrl = "http://localhost:4000";
 const useCredentials = {withCredentials: true}; // Automatically embeds cookie with request. Use for all authenticated requests.
+
 
 const api = {
     fetchDatasets () {
@@ -25,20 +27,18 @@ const api = {
         });
     },
     fetchUserDatasets() {
-        // return axios.get(
-        //     apiUrl + "/dataset/userdatasets/","",useCredentials
-        // )
-        // .then(response => store.commit("setDatasets", response.data))
-        return get("/dataset/userdatasets/")
-        .then(response => console.log(response.data))
+        // return get("/dataset/userdatasets/")
+        return axios.get("http://localhost:4000" + "/dataset/user/", useCredentials)
+        // return axios.post("http://localhost:4000" + "/dataset/userdatasets/", "", useCredentials)
+        .then(response => store.commit("setDatasets", response.data))
         .catch(err => {
-            console.log(err)
+            console.log(err); 
             notify("Error fetching your datasets", colors.red); 
         })
     }, 
     deleteDataset(id) {
        return deleteRoute(`/dataset/${id}`)
-       .then(response => console.log(response.data))
+       .then(response => fetchDatasets())
        .catch(err => {
            notify("Error deleting dataset", colors.red); 
        });

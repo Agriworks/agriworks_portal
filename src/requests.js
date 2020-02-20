@@ -5,7 +5,8 @@ const apiUrl = "http://localhost:4000";
 const axiosConfig = {
   headers: {
     "content-type": "application/x-www-form-urlencoded",
-    "Access-Control-Allow-Origin": "*"
+    "Access-Control-Allow-Origin": "*", 
+    withCredentials: true 
   }
 };
 
@@ -39,6 +40,22 @@ export function post(endpoint, payload) {
   return new Promise((resolve, reject) => {
     axios
       .post(apiUrl + endpoint, urlEncode(payload), axiosConfig)
+      .then(response => {
+        console.log("INFO: Response received for endpoint " + endpoint + ".");
+        resolve(response);
+      })
+      .catch(error => {
+        console.error(error);
+        reject(error);
+      });
+  });
+}
+
+// embedded with cookie
+export function getWithCookie(endpoint, cookie) {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(apiUrl + endpoint, {})
       .then(response => {
         console.log("INFO: Response received for endpoint " + endpoint + ".");
         resolve(response);

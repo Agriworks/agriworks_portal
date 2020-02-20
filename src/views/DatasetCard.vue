@@ -55,8 +55,9 @@ export default {
   }, 
   methods: {
       deleteDataset() {
-        //   api.deleteDataset(this.dataset.id)
+          api.deleteDataset(this.dataset.id)
           this.dialog = false; 
+          this.$$forceUpdate; 
       }
   }
 };
