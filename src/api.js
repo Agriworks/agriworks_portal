@@ -26,7 +26,11 @@ const api = {
         )
     },
     downloadDataset (id) {
-        return axios.get(apiUrl+"/dataset/download/"+id);
+        return axios({
+            method: 'get',
+            url: apiUrl + "/dataset/download/" + id,
+            responseType: 'blob'
+        })
     }
 
 }
