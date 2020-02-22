@@ -6,7 +6,6 @@ const axiosConfig = {
   headers: {
     "content-type": "application/x-www-form-urlencoded",
     "Access-Control-Allow-Origin": "*", 
-    withCredentials: true 
   }
 };
 
