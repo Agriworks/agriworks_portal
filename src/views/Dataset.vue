@@ -64,9 +64,9 @@ export default {
       downloadDataset(){
         api.downloadDataset(this.$route.params.id)
         .then(response => {
-          var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-          var fileLink = document.createElement('a');
-          var fileName = this.$route.params.id + '.csv';
+          const fileURL = window.URL.createObjectURL(new Blob([response.data]));
+          let fileLink = document.createElement('a');
+          const fileName = this.$route.params.id + '.csv';
 
           fileLink.href = fileURL;
           fileLink.setAttribute('download', fileName);
