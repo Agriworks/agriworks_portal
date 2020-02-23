@@ -73,7 +73,14 @@ const api = {
             .catch(error => {
                 notify("Incorrect username or password. Please try again", colors.red);
             })
-        }
+    },
+    downloadDataset(id) {
+        return axios({
+            method: 'get',
+            url: apiUrl + "/dataset/download/" + id,
+            responseType: 'blob'
+        })
+    }
 }
 
 
