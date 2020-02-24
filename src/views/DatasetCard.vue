@@ -7,7 +7,8 @@
                 <v-list-item-subtitle> By {{ dataset.author }} </v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-avatar size="80" tile>
-                <v-img src="https://cdn4.iconfinder.com/data/icons/business-app-enjoy/74/2-512.png"/>
+                 <v-img v-if="!$vuetify.theme.dark" src="https://cdn4.iconfinder.com/data/icons/business-app-enjoy/74/2-512.png"/> 
+                <v-img v-if="$vuetify.theme.dark" src="https://www.ndctech.net/media/2018/08/icon-build-future.png"/>
             </v-list-item-avatar>
         </v-list-item>
         <v-card-actions>
