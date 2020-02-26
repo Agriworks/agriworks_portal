@@ -62,12 +62,7 @@
 
               <div class="custom-control custom-checkbox mb-3">
                 <v-btn color="success" :outlined="true" type="submit">Sign Up</v-btn>
-                <v-btn
-                  to="/login"
-                  color="success"
-                  :outlined="true"
-                  style="text-decoration:none"
-                >Login</v-btn>
+                <p>Already have an Account? Press <a href="/login">here</a> to login. </p>
               </div>
             </form>
           </div>
