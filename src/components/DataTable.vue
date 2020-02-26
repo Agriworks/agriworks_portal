@@ -1,9 +1,11 @@
 <template>
-  <v-data-table 
-  :headers="headers"
-  :items="data"
-  :items-per-page="5"
-  ></v-data-table>
+  <div>
+    <v-data-table 
+    :headers="headers"
+    :items="data"
+    :items-per-page="5"
+    ></v-data-table>
+  </div>
 </template>
 <script>
 
