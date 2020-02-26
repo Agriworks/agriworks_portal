@@ -98,6 +98,7 @@ export default {
         lastName: document.getElementById("lastName").value,
         email: document.getElementById("inputEmail").value,
         password: document.getElementById("inputPassword").value
+        //, comfirmPassword: document.getElementByID("comfirmPassword").value (needs to be done in backend)
       })
         .then(res => {
           this.$router.push("login");
