@@ -46,15 +46,29 @@
               <div class="form-label-group">
                 <label for="inputPassword">Password</label>
                 <input
+                  v-validate="'required|'"
                   name="password"
                   type="password"
                   id="inputPassword"
+                  ref="password"
                   class="form-control"
                   placeholder
                   required
                 />
               </div>
-
+              <div class="form-label-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input
+                  v-validate="'required|confirmed:password'"
+                  name="password_confirmation"
+                  type="password"
+                  id="confirmPassword"
+                  data-vv-as="password"
+                  class="form-control"
+                  placeholder
+                  required
+                />
+              </div>
               <div class="form-label-group custom-control custom-checkbox mb-3">
                 <input type="checkbox" class="custom-control-input" id="customCheck1" />
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
