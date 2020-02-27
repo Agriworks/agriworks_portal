@@ -24,6 +24,13 @@ const api = {
             notify("Error fetching dataset", colors.red);
         });
     },
+    fetchTags (type) {
+        return get(`/upload/${type}`)
+            .then(response => store.commit("setTags", response.data))
+            .catch(err => {
+                notify("Error fetching tags", colors.red);
+            });
+    },
     uploadDataset (file, name, tags, permissions, type) {
         let newDataset = new FormData();
         newDataset.append('file', file);

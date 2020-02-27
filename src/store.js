@@ -17,7 +17,8 @@ const store = new Vuex.Store({
     },
     datasets: [],
     dataset: [],
-    user: "" //the email address of the user
+    user: "", //the email address of the user
+    tagsOfChosenType: []
   },
   mutations: {
     setIsAdmin(state) {
@@ -43,7 +44,11 @@ const store = new Vuex.Store({
     setUser(state, email) {
       state.user = email;
       state.loggedIn = true;
+    },
+    setTags(state, tags) {
+      state.tagsOfChosenType = tags;
     }
+
   },
   getters: {
     isAdmin: state => {
@@ -72,6 +77,9 @@ const store = new Vuex.Store({
     fetchDataset(state, id) {
       console.log(id);
       api.fetchDataset(id);
+    },
+    fetchTags(state, type) {
+      api.fetchTags(type);
     },
     filterDatasets(state,searchQuery) {
       api.filterDatasets(searchQuery);

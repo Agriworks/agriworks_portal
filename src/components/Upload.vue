@@ -6,8 +6,6 @@
       <v-select v-model="datasetType" required :items="typeOptions" label="Dataset type"></v-select>
       <v-combobox
       v-model="datasetTags"
-      :search-input.sync="search"
-      hide-selected
       label="Tags"
       multiple
       small-chips
@@ -18,7 +16,7 @@
         @click:close="remove(item)"
         color="#96D34A"
       >
-        {{ item }}
+        {{ item.toLowerCase() }}
       </v-chip>
     </template>
       <!-- <template v-slot:no-data>
@@ -60,6 +58,7 @@ export default {
   data() {
     return {
       datasetName: "Sample",
+      tagsOfChosenType: this.$store.state.tagsOfChosenType,
       datasetTags: [],
       datasetPermissions: "Public",
       datasetType: "Land Use",
@@ -69,9 +68,16 @@ export default {
       loading: false
     }
   },
+  watch: {
+    datasetTags: function () {
+      this.datasetTags[this.datasetTags.length-1] = this.datasetTags[this.datasetTags.length-1].toLowerCase();
+    },
+    
+  },
   methods: {
     processForm() {
       this.loading = true;
+      this.datasetTags = [...new Set(this.datasetTags)];
       api.uploadDataset(this.file, this.datasetName, this.datasetTags, this.datasetPermissions, this.datasetType)
       .then(response => {
         this.loading = false;
@@ -86,7 +92,10 @@ export default {
         this.datasetTags.splice(this.datasetTags.indexOf(item), 1)
         this.datasetTags = [...this.datasetTags]
     },
-  }
+  },
+  created() {
+      this.$store.dispatch('fetchTags', this.datasetType)
+    }
 }
 </script>
 
