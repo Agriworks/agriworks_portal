@@ -24,8 +24,16 @@ const router = new Router({
     },
     {
       path: "/browse",
-      name: "brose",
+      name: "browse",
       component: () => import("./views/DatasetBrowserView.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/manage",
+      name: "manage",
+      component: () => import("./views/Manage.vue"),
       meta: {
         requiresAuth: true
       }

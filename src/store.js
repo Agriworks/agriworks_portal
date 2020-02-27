@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { getCookie, wasAlreadyLoggedIn} from "./js/authentication";
-import api from './api'
+import { getCookie, wasAlreadyLoggedIn } from "./js/authentication";
+import api from "./api";
 
 Vue.use(Vuex);
 
@@ -21,7 +21,7 @@ const store = new Vuex.Store({
   },
   mutations: {
     setIsAdmin(state) {
-      state.isAdmin = true; 
+      state.isAdmin = true;
     },
     setLoggedInFalse(state) {
       state.loggedIn = false;
@@ -47,7 +47,7 @@ const store = new Vuex.Store({
   },
   getters: {
     isAdmin: state => {
-      return state.isAdmin
+      return state.isAdmin;
     },
     isLoggedIn: state => {
       return state.loggedIn;
@@ -70,13 +70,18 @@ const store = new Vuex.Store({
       api.fetchDatasets();
     },
     fetchDataset(state, id) {
-      console.log(id);
       api.fetchDataset(id);
     },
-    filterDatasets(state,searchQuery) {
+    fetchUserDatasets(state) {
+      api.fetchUserDatasets();
+    },
+    filterDatasets(state, searchQuery) {
       api.filterDatasets(searchQuery);
     },
-    logout(state){
+    deleteDataset(state, id) {
+      api.deleteDataset(id);
+    },
+    logout(state) {
       api.logout(getCookie("SID"));
     }
   }
