@@ -7,13 +7,12 @@
         <v-list-item-subtitle>By {{ dataset.author }}</v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-avatar size="80" tile>
-        <v-img src="https://cdn4.iconfinder.com/data/icons/business-app-enjoy/74/2-512.png" />
+        <v-img v-if="!$vuetify.theme.dark" src="../assets/chartNormal.png"/>
+        <v-img v-if="$vuetify.theme.dark" src="../assets/chartDarkMode.png"/>
       </v-list-item-avatar>
     </v-list-item>
     <v-card-actions>
-      <v-btn text>
-        <router-link :to="datasetLink">Open</router-link>
-      </v-btn>
+       <v-btn dark router-link :to="datasetLink" text color="var(--v-primary-base)"> Open </v-btn>  
 
       <v-btn v-if="manage == true" text color="error">
         <router-link :to="datasetLink">Edit</router-link>
