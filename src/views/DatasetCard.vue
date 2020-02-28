@@ -20,7 +20,7 @@
         <v-row justify="center">
           <v-dialog v-model="dialog" persistent max-width="290">
             <template v-slot:activator="{ on }"> 
-              <v-btn cv-if="manage == true" text color="error" v-on="on">Delete</v-btn>
+              <v-btn v-if="manage == true" text color="error" v-on="on">Delete</v-btn>
             </template>
             <v-card>
               <v-card-title class="headline">Delete dataset?</v-card-title>
