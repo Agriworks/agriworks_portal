@@ -18,7 +18,13 @@ const api = {
       });
   },
   fetchDataset(id) {
-    return get(`/dataset/${id}`);
+    return axios
+      .get(apiUrl + `/dataset/${id}`, useCredentials)
+      .then(response => store.commit("setDatasets", response.data))
+      .catch(err => {
+        notify("Error fetching your datasets", colors.red);
+      });
+    // return get(`/dataset/${id}`, useCredentials);
   },
   uploadDataset(file, name, tags, permissions, type) {
     let newDataset = new FormData();
@@ -79,7 +85,7 @@ const api = {
       });
   },
   fetchPopularDatasets() {
-    return get("/popular/")
+    return get("/dataset/popular/")
       .then(response => store.commit("setPopularDatasets", response.data))
       .catch(err => {
         notify("Error fetching datasets", colors.red);
