@@ -91,6 +91,14 @@ const api = {
         notify("Error fetching datasets", colors.red);
       });
   },
+  fetchRecentDatasets() {
+    return axios
+      .get(apiUrl + "/dataset/recent/", useCredentials)
+      .then(response => store.commit("setRecentDatasets", response.data))
+      .catch(err => {
+        notify("Error fetching recent datasets", colors.red);
+      });
+  },
   deleteDataset(id) {
     return _delete(`/dataset/${id}`)
       .then(response => this.fetchUserDatasets())

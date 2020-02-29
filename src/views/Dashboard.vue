@@ -154,12 +154,15 @@ export default {
     popularDatasets() {
       return this.$store.state.popularDatasets;
     },
-    recentDatasets() {},
+    recentDatasets() {
+      return this.$store.state.recentDatasets;
+    },
     newDatasets() {}
   },
 
   beforeMount() {
     this.$store.dispatch("fetchPopularDatasets");
+    this.$store.dispatch("fetchRecentDatasets");
   },
 
   data() {
@@ -183,5 +186,8 @@ export default {
 .carousel-control-next,
 .carousel-control-prev {
   filter: invert(100%);
+}
+.carousel-item DatasetCard {
+  margin-left: 15px;
 }
 </style>
