@@ -17,6 +17,7 @@ const store = new Vuex.Store({
     },
     datasets: [],
     dataset: [],
+    popularDatasets: [],
     user: "" //the email address of the user
   },
   mutations: {
@@ -39,6 +40,9 @@ const store = new Vuex.Store({
     },
     setDataset(state, dataset) {
       state.dataset = dataset;
+    },
+    setPopularDatasets(state, datasets) {
+      state.popularDatasets = datasets;
     },
     setUser(state, email) {
       state.user = email;
@@ -74,6 +78,9 @@ const store = new Vuex.Store({
     },
     fetchUserDatasets(state) {
       api.fetchUserDatasets();
+    },
+    fetchPopularDatasets(state) {
+      api.fetchPopularDatasets();
     },
     filterDatasets(state, searchQuery) {
       api.filterDatasets(searchQuery);
