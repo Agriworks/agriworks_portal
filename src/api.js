@@ -1,7 +1,7 @@
 import axios from "axios"
 import { addCookie, deleteCookie } from "./js/authentication";
 import router from "./router";
-import { post, get } from "./requests";
+import { post, get, _delete } from "./requests";
 import store from "./store"; //might be a circular import
 import notify from "./utilities/notify";
 import { colors } from "./utilities/branding";
@@ -19,10 +19,6 @@ const api = {
     },
     fetchDataset (id) {
         return get(`/dataset/${id}`)
-        .then(response => store.commit("setDataset", response.data))
-        .catch(err => {
-            notify("Error fetching dataset", colors.red);
-        });
     },
     fetchTags (type) {
         return get(`/upload/${type}`)
@@ -51,7 +47,7 @@ const api = {
             get(`/dataset/search/${searchQuery}`)
             .then(response => store.commit("setDatasets", response.data))
             .catch(err =>  notify("Error filtering datasets", colors.red))
-          }
+        }
     },
     logout(sessionId){
         post("/auth/logout", { sessionId: sessionId })
@@ -84,7 +80,23 @@ const api = {
             .catch(error => {
                 notify("Incorrect username or password. Please try again", colors.red);
             })
-        }
+    },
+    fetchUserDatasets() {
+        // return get("/dataset/userdatasets/")
+        return axios
+          .get("http://localhost:4000" + "/dataset/user/", useCredentials)
+          .then(response => store.commit("setDatasets", response.data))
+          .catch(err => {
+            notify("Error fetching your datasets", colors.red);
+          });
+    },
+    deleteDataset(id) {
+        return _delete(`/dataset/${id}`)
+        .then(response => this.fetchUserDatasets())
+        .catch(err => {
+            notify("Error deleting dataset", colors.red);
+        });
+    },
 }
 
 

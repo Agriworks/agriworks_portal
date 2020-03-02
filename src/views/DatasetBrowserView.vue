@@ -10,9 +10,11 @@
             <v-icon>mdi-plus</v-icon>Create
           </v-btn>
         </router-link>
+        <router-link to="/manage">
         <v-btn dark color="success" small class="dashboardButton">
           <v-icon>mdi-format-list-bulleted-square</v-icon>Manage
         </v-btn>
+        </router-link>
       </div>
       <div class="col-md-6">
         <b-nav-form @submit.prevent="searchSubmit">
