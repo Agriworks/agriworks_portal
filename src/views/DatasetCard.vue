@@ -1,27 +1,25 @@
 <template>
-  <v-card class="datasetCard">
+  <v-card primary tile class="datasetCard">
     <v-list-item three-line>
       <v-list-item-content>
-        <div class="overline mb-4 datasetType">{{ dataset.type }}</div>
+        <div primary  class="overline mb-4 datasetType">{{ dataset.type }}</div>
         <v-list-item-title>{{ dataset.name }}</v-list-item-title>
         <v-list-item-subtitle>By {{ dataset.author }}</v-list-item-subtitle>
       </v-list-item-content>
       <v-list-item-avatar size="80" tile>
-        <v-img src="https://cdn4.iconfinder.com/data/icons/business-app-enjoy/74/2-512.png" />
+        <v-img v-if="!$vuetify.theme.dark" src="../assets/chartNormal.png"/>
+        <v-img v-if="$vuetify.theme.dark" src="../assets/chartDarkMode.png"/>
       </v-list-item-avatar>
     </v-list-item>
     <v-card-actions>
-      <v-btn text>
-        <router-link :to="datasetLink">Open</router-link>
-      </v-btn>
-
-      <v-btn v-if="manage == true" text color="error">
-        <router-link :to="datasetLink">Edit</router-link>
+       <v-btn class="linkButton" router-link :to="datasetLink" text color="var(--v-primary-base)"> Open </v-btn>  
+      <v-btn class="linkButton" v-if="manage == true" router-link :to="datasetLink" text color="orange">
+        Edit
       </v-btn>
       <template>
         <v-row justify="center">
           <v-dialog v-model="dialog" persistent max-width="290">
-            <template v-slot:activator="{ on }">
+            <template v-slot:activator="{ on }"> 
               <v-btn v-if="manage == true" text color="error" v-on="on">Delete</v-btn>
             </template>
             <v-card>
@@ -76,5 +74,11 @@ export default {
 .datasetType {
   font-weight: bold;
   color: var(--v-primary-base);
+}
+
+/*Makes the button not underline when you hover over it, not sure that it actually make it looks nice
+If you do make it have an underline, make sure that the delete button alos has an underline */
+.linkButton {
+  text-decoration: none
 }
 </style>
