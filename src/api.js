@@ -78,7 +78,7 @@ const api = {
   },
   fetchUserDatasets() {
     return axios
-      .get("http://localhost:4000" + "/dataset/user/", useCredentials)
+      .get(apiUrl + "/dataset/user/", useCredentials)
       .then(response => store.commit("setDatasets", response.data))
       .catch(err => {
         notify("Error fetching your datasets", colors.red);
@@ -97,6 +97,14 @@ const api = {
       .then(response => store.commit("setRecentDatasets", response.data))
       .catch(err => {
         notify("Error fetching recent datasets", colors.red);
+      });
+  },
+  fetchNewDatasets() {
+    return axios
+      .get(apiUrl + "/dataset/new/", useCredentials)
+      .then(response => store.commit("setNewDatasets", response.data))
+      .catch(err => {
+        notify("Error fetching new datasets", colors.red);
       });
   },
   deleteDataset(id) {

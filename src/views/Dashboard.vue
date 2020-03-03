@@ -157,12 +157,15 @@ export default {
     recentDatasets() {
       return this.$store.state.recentDatasets;
     },
-    newDatasets() {}
+    newDatasets() {
+      return this.$store.state.newDatasets;
+    }
   },
 
   beforeMount() {
     this.$store.dispatch("fetchPopularDatasets");
     this.$store.dispatch("fetchRecentDatasets");
+    this.$store.dispatch("fetchNewDatasets");
   },
 
   data() {
@@ -187,7 +190,8 @@ export default {
 .carousel-control-prev {
   filter: invert(100%);
 }
-.carousel-item DatasetCard {
-  margin-left: 15px;
+
+.carousel-inner {
+  padding-left: 350px;
 }
 </style>
