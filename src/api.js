@@ -18,13 +18,7 @@ const api = {
       });
   },
   fetchDataset(id) {
-    return axios
-      .get(apiUrl + `/dataset/${id}`, useCredentials)
-      .then(response => store.commit("setDatasets", response.data))
-      .catch(err => {
-        notify("Error fetching your datasets", colors.red);
-      });
-    // return get(`/dataset/${id}`, useCredentials);
+    return axios.get(apiUrl + `/dataset/${id}`, useCredentials);
   },
   uploadDataset(file, name, tags, permissions, type) {
     let newDataset = new FormData();
