@@ -36,7 +36,7 @@
         </div>
       </div> 
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6" v-if="dataset.legendRequired == true">
           <v-container>
             <v-layout>
               <v-flex>
