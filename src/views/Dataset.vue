@@ -36,11 +36,11 @@
         </div>
       </div> 
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6" v-if="Object.keys(this.dataset.legend).length > 0" id="metadataContainer">
           <v-container>
             <v-layout>
               <v-flex>
-                <v-card hover id="metadataContainer">
+                <v-card hover id="metadataCard">
                   <v-card-title>
                     <h2>Metadata</h2>
                   </v-card-title>
@@ -98,6 +98,8 @@ export default {
       api.fetchDataset(this.$route.params.id)
       .then((response) => {
         this.dataset = response.data;
+        console.log(this.dataset.legend);
+        console.log(Object.keys(this.dataset.legend).length);
       })
       .catch((err) => {
         this.hideLoadingIndicator = true
@@ -138,7 +140,7 @@ export default {
   flex-direction: column
 }
 
-#metadataContainer {
+#metadataCard{
   border: 1px solid #a2e510;
 }
 
