@@ -1,4 +1,3 @@
-import axios from "axios";
 import { addCookie, deleteCookie } from "./js/authentication";
 import router from "./router";
 import { post, get, _delete } from "./requests";
@@ -6,19 +5,16 @@ import store from "./store"; //might be a circular import
 import notify from "./utilities/notify";
 import { colors } from "./utilities/branding";
 
-const apiUrl = "http://localhost:4000";
-const useCredentials = { withCredentials: true }; // Automatically embeds cookie with request. Use for all authenticated requests.
-
 const api = {
   fetchDatasets() {
     return get("/dataset/")
       .then(response => store.commit("setDatasets", response.data))
-      .catch(err => {
+      .catch(() => {
         notify("Error fetching datasets", colors.red);
       });
   },
   fetchDataset(id) {
-    return axios.get(apiUrl + `/dataset/${id}`, useCredentials);
+    return get(`/dataset/${id}`);
   },
   uploadDataset(file, name, tags, permissions, type) {
     let newDataset = new FormData();
@@ -27,7 +23,7 @@ const api = {
     newDataset.append("tags", tags);
     newDataset.append("permissions", permissions);
     newDataset.append("type", type);
-    return axios.post(apiUrl + "/upload/", newDataset, useCredentials);
+    return post("/upload/", newDataset, true);
   },
   filterDatasets(searchQuery) {
     if (searchQuery == undefined || searchQuery == "" || searchQuery == " ") {
@@ -35,18 +31,18 @@ const api = {
     } else {
       get(`/dataset/search/${searchQuery}`)
         .then(response => store.commit("setDatasets", response.data))
-        .catch(err => notify("Error filtering datasets", colors.red));
+        .catch(() => notify("Error filtering datasets", colors.red));
     }
   },
   logout(sessionId) {
     post("/auth/logout", { sessionId: sessionId })
-      .then(res => {
+      .then(() => {
         deleteCookie("SID");
         store.commit("setLoggedInFalse");
         router.push("/");
         notify("User logged out", colors.green);
       })
-      .catch(err => {
+      .catch(() => {
         notify("Unable to logout. Please try again later. ", colors.red);
       });
   },
@@ -66,45 +62,42 @@ const api = {
         router.push("/browse");
         notify("Successfully logged in", colors.green);
       })
-      .catch(error => {
+      .catch(() => {
         notify("Incorrect username or password. Please try again", colors.red);
       });
   },
   fetchUserDatasets() {
-    return axios
-      .get(apiUrl + "/dataset/user/", useCredentials)
+    get("/dataset/user/")
       .then(response => store.commit("setDatasets", response.data))
-      .catch(err => {
+      .catch(() => {
         notify("Error fetching your datasets", colors.red);
       });
   },
   fetchPopularDatasets() {
-    return get("/dataset/popular/")
+    get("/dataset/popular/")
       .then(response => store.commit("setPopularDatasets", response.data))
-      .catch(err => {
+      .catch(() => {
         notify("Error fetching datasets", colors.red);
       });
   },
   fetchRecentDatasets() {
-    return axios
-      .get(apiUrl + "/dataset/recent/", useCredentials)
+    get("/dataset/recent/")
       .then(response => store.commit("setRecentDatasets", response.data))
-      .catch(err => {
+      .catch(() => {
         notify("Error fetching recent datasets", colors.red);
       });
   },
   fetchNewDatasets() {
-    return axios
-      .get(apiUrl + "/dataset/new/", useCredentials)
+    return get("/dataset/new/")
       .then(response => store.commit("setNewDatasets", response.data))
-      .catch(err => {
+      .catch(() => {
         notify("Error fetching new datasets", colors.red);
       });
   },
   deleteDataset(id) {
     return _delete(`/dataset/${id}`)
-      .then(response => this.fetchUserDatasets())
-      .catch(err => {
+      .then(() => this.fetchUserDatasets())
+      .catch(() => {
         notify("Error deleting dataset", colors.red);
       });
   }

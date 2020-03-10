@@ -1,12 +1,10 @@
 import axios from "axios";
 
-const apiUrl = "http://localhost:4000";
-
 const axiosConfig = {
   headers: {
     "content-type": "application/x-www-form-urlencoded",
-    "Access-Control-Allow-Origin": "*", 
-  }
+  },
+  withCredentials: true
 };
 
 // This needs work to be able to be used with non-trivial payloads
@@ -22,7 +20,7 @@ function urlEncode(data) {
 export function _delete(endpoint) {
   return new Promise((resolve, reject) => {
     axios
-      .delete(apiUrl + endpoint, axiosConfig)
+      .delete(endpoint, axiosConfig)
       .then(response => {
         console.log("INFO: Response received for endpoint " + endpoint + ".");
         resolve(response);
@@ -34,27 +32,16 @@ export function _delete(endpoint) {
   });
 }
 
-
-export function post(endpoint, payload) {
+/*
+Default post function urlencodes payload. To prevent urlencoding, pass in additional parameter (keepDataAsIs) = true
+*/
+export function post(endpoint, payload, keepDataAsIs=false) {
+  if (!keepDataAsIs) {
+    payload = urlEncode(payload)
+  }
   return new Promise((resolve, reject) => {
     axios
-      .post(apiUrl + endpoint, urlEncode(payload), axiosConfig)
-      .then(response => {
-        console.log("INFO: Response received for endpoint " + endpoint + ".");
-        resolve(response);
-      })
-      .catch(error => {
-        console.error(error);
-        reject(error);
-      });
-  });
-}
-
-// embedded with cookie
-export function getWithCookie(endpoint, cookie) {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(apiUrl + endpoint, {})
+      .post(endpoint, payload, axiosConfig)
       .then(response => {
         console.log("INFO: Response received for endpoint " + endpoint + ".");
         resolve(response);
@@ -69,7 +56,7 @@ export function getWithCookie(endpoint, cookie) {
 export function get(endpoint) {
   return new Promise((resolve, reject) => {
     axios
-      .get(apiUrl + endpoint, axiosConfig)
+      .get(endpoint, axiosConfig)
       .then(response => {
         console.log("INFO: Response received for endpoint " + endpoint + ".");
         resolve(response);
