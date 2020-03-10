@@ -7,6 +7,8 @@ const axiosConfig = {
   withCredentials: true
 };
 
+const routePrefix = "/api"
+
 // This needs work to be able to be used with non-trivial payloads
 function urlEncode(data) {
   var urlEncodedString = "";
@@ -20,7 +22,7 @@ function urlEncode(data) {
 export function _delete(endpoint) {
   return new Promise((resolve, reject) => {
     axios
-      .delete(endpoint, axiosConfig)
+      .delete(routePrefix + endpoint, axiosConfig)
       .then(response => {
         console.log("INFO: Response received for endpoint " + endpoint + ".");
         resolve(response);
@@ -41,7 +43,7 @@ export function post(endpoint, payload, keepDataAsIs=false) {
   }
   return new Promise((resolve, reject) => {
     axios
-      .post(endpoint, payload, axiosConfig)
+      .post(routePrefix + endpoint, payload, axiosConfig)
       .then(response => {
         console.log("INFO: Response received for endpoint " + endpoint + ".");
         resolve(response);
@@ -56,7 +58,7 @@ export function post(endpoint, payload, keepDataAsIs=false) {
 export function get(endpoint) {
   return new Promise((resolve, reject) => {
     axios
-      .get(endpoint, axiosConfig)
+      .get(routePrefix + endpoint, axiosConfig)
       .then(response => {
         console.log("INFO: Response received for endpoint " + endpoint + ".");
         resolve(response);
