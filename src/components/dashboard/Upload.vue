@@ -1,5 +1,6 @@
 <template>
   <div class="table">
+    <h1> Create New Dataset </h1>
     <v-form ref="form">
       <v-text-field v-model="datasetName" required label="Dataset name"></v-text-field>
       <v-select v-model="datasetPermissions" required :items="permissionOptions" label="Permissions"></v-select>
@@ -53,7 +54,7 @@
 </template>
 
 <script>
-import api from "../api";
+import api from "../../api";
 
 export default {
   name: 'Upload',

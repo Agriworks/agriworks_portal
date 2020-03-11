@@ -20,7 +20,8 @@ const store = new Vuex.Store({
     popularDatasets: [],
     recentDatasets: [],
     newDatasets: [],
-    user: "" //the email address of the user
+    user: "", //the email address of the user,
+    userDatasets: []
   },
   mutations: {
     setIsAdmin(state) {
@@ -55,6 +56,9 @@ const store = new Vuex.Store({
     setUser(state, email) {
       state.user = email;
       state.loggedIn = true;
+    },
+    setUserDatasets(state, datasets) {
+      state.userDatasets = datasets
     }
   },
   getters: {

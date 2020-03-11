@@ -31,14 +31,6 @@ const router = new Router({
       }
     },
     {
-      path: "/manage",
-      name: "manage",
-      component: () => import("./views/Manage.vue"),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
       path: "/forgot-password",
       name: "forgot-password",
       component: () => import("./views/ForgotPassword.vue")
@@ -47,14 +39,6 @@ const router = new Router({
       path: "/reset-password/:id",
       name: "reset-password",
       component: () => import("./views/ResetPassword.vue")
-    },
-    {
-      path: "/upload",
-      name: "uploadscreen",
-      component: () => import("./views/UploadScreen.vue"),
-      meta: {
-        requiresAuth: true
-      }
     },
     {
       path: "/login",

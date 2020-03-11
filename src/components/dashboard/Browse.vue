@@ -20,6 +20,9 @@ export default {
       return this.$store.state.datasets;
     }
   },
+  beforeMount() {
+    this.$store.dispatch("fetchDatasets");
+  }
 };
 </script>
 <style scoped></style>

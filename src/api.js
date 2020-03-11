@@ -68,7 +68,7 @@ const api = {
   },
   fetchUserDatasets() {
     get("/dataset/user/")
-      .then(response => store.commit("setDatasets", response.data))
+      .then(response => store.commit("setUserDatasets", response.data))
       .catch(() => {
         notify("Error fetching your datasets", colors.red);
       });
