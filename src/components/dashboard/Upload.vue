@@ -7,7 +7,6 @@
       <v-select v-model="datasetType" required :items="typeOptions" label="Dataset type"></v-select>
       <v-combobox
       v-model="datasetTags"
-      :search-input.sync="search"
       hide-selected
       label="Tags"
       multiple

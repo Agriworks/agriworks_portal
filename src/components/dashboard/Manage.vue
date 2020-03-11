@@ -1,9 +1,16 @@
 <template>
-  <div class="row">
+<div>
+  <div class="row" v-if="this.datasets.length > 0">
     <div v-for="dataset in datasets" v-bind:key="dataset.id">
       <DatasetCard v-bind:dataset="dataset" v-bind:manage="true" />
     </div>
   </div>
+  <div class="row" v-else>
+    <div class="col-md-12">
+      <h6> You don't have any datasets yet. Click Create to upload a new dataset. </h6>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -20,7 +27,7 @@ export default {
       return this.$store.state.userDatasets;
     }
   },
-  beforeCreate() {
+  mounted() {
     this.$store.dispatch("fetchUserDatasets");
   }
 };

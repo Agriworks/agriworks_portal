@@ -12,7 +12,7 @@
           <v-icon>mdi-format-list-bulleted-square</v-icon>Manage
         </v-btn>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6" v-if="this.component == 'browse'">
         <b-nav-form @submit.prevent="searchSubmit">
           <b-form-input
             size="sm"
@@ -26,9 +26,7 @@
         </b-nav-form>
       </div>
     </div>
-    <div class="row">
-      <component v-bind:is="component"></component>
-    </div>
+    <component v-bind:is="component"></component>
 </div>
 </template>
 
@@ -45,7 +43,7 @@ export default {
   },
   data() {
     return {
-      component: "browse"
+      component: (this.$route.params.component ? this.validateComponent(this.$route.params.component) : "browse")
     };
   },
   methods: {
@@ -60,8 +58,26 @@ export default {
       }
     },
     switchComponent(component) {
-      this.component = component;
+      this.component = this.validateComponent(component);
+      if (this.component != "browse") {
+        this.$router.push("/browse/" + this.component); 
+      }
+      else {
+        this.$router.push("/browse");
+      }
+    },
+    validateComponent(component) {
+      const allowedComponents = ["browse", "manage", "upload"]
+      if (allowedComponents.includes(component)) {
+        return component;
+      }
+      else {
+        return "browse"; 
+      }
     }
+  },
+  mounted() {
+    this.$store.dispatch("fetchUserDatasets")
   }
 };
 </script>

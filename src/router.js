@@ -23,8 +23,16 @@ const router = new Router({
       beforeEnter: (to, from, next) => redirectIfLoggedIn(next)
     },
     {
-      path: "/browse",
+      path: "/browse/:component",
       name: "browse",
+      component: () => import("./views/DatasetBrowserView.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/browse",
+      name: "browseDefault",
       component: () => import("./views/DatasetBrowserView.vue"),
       meta: {
         requiresAuth: true
