@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const axiosConfig = {
+const defaultRequestConfig = {
   headers: {
     "content-type": "application/x-www-form-urlencoded",
   },
@@ -22,7 +22,7 @@ function urlEncode(data) {
 export function _delete(endpoint) {
   return new Promise((resolve, reject) => {
     axios
-      .delete(routePrefix + endpoint, axiosConfig)
+      .delete(routePrefix + endpoint, defaultRequestConfig)
       .then(response => {
         console.log("INFO: Response received for endpoint " + endpoint + ".");
         resolve(response);
@@ -43,7 +43,7 @@ export function post(endpoint, payload, keepDataAsIs=false) {
   }
   return new Promise((resolve, reject) => {
     axios
-      .post(routePrefix + endpoint, payload, axiosConfig)
+      .post(routePrefix + endpoint, payload, defaultRequestConfig)
       .then(response => {
         console.log("INFO: Response received for endpoint " + endpoint + ".");
         resolve(response);
@@ -58,7 +58,7 @@ export function post(endpoint, payload, keepDataAsIs=false) {
 export function get(endpoint) {
   return new Promise((resolve, reject) => {
     axios
-      .get(routePrefix + endpoint, axiosConfig)
+      .get(routePrefix + endpoint, defaultRequestConfig)
       .then(response => {
         console.log("INFO: Response received for endpoint " + endpoint + ".");
         resolve(response);

@@ -27,7 +27,7 @@
         <p> By {{ dataset.author }} </p>
       <div class="row">
         <div class="col-md-6">
-          <v-btn small dark color="#4caf50" id="downloadButton" v-on:click="downloadDataset" style="margin-right:0.5rem;">
+          <v-btn small dark color="#4caf50" id="downloadButton" style="margin-right:0.5rem;" @click="downloadDataset()">
             <v-icon small>mdi-arrow-down-circle-outline</v-icon>Download
           </v-btn>
           <v-btn small dark color="purple">
@@ -78,6 +78,10 @@ import { colors } from '../utilities/branding';
 
 export default {
     name: "Dataset", 
+    components: {
+      DataTable,
+      LoadingIndicator
+    },
     data(){
       return {
         hideTags : true,
@@ -85,21 +89,10 @@ export default {
         hideLoadingIndicator: false
       }
     },
-    components: {
-      DataTable,
-      LoadingIndicator
-    },
-    methods: {
-      changeTagStatus() {
-        this.hideTags = !this.hideTags;
-      }
-    },
     created(){
       api.fetchDataset(this.$route.params.id)
       .then((response) => {
         this.dataset = response.data;
-        console.log(this.dataset.legend);
-        console.log(Object.keys(this.dataset.legend).length);
       })
       .catch((err) => {
         this.hideLoadingIndicator = true
@@ -107,7 +100,10 @@ export default {
       })
     },
     methods: {
-      downloadDataset(){
+      changeTagStatus() {
+        this.hideTags = !this.hideTags;
+      },
+      downloadDataset() {
         api.downloadDataset(this.$route.params.id)
         .then(response => {
           const fileURL = window.URL.createObjectURL(new Blob([response.data]));

@@ -100,7 +100,10 @@ const api = {
       .catch(() => {
         notify("Error deleting dataset", colors.red);
       });
-  }
+  },
+  downloadDataset (id) {
+    return get(`/dataset/download/${id}`)
+}
 };
 
 export default api;
