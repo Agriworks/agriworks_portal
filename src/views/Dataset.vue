@@ -30,9 +30,11 @@
           <v-btn small dark color="#4caf50" id="downloadButton" style="margin-right:0.5rem;" @click="downloadDataset()">
             <v-icon small>mdi-arrow-down-circle-outline</v-icon>Download
           </v-btn>
+          <!--
           <v-btn small dark color="purple">
             <v-icon small>mdi-graph-outline</v-icon> Visualize
           </v-btn>
+          !-->
         </div>
       </div> 
       </div>
