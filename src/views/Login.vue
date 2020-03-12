@@ -66,7 +66,6 @@ export default {
 
   methods: {
     login() {
-      console.log("method");
       api.getSessionID(this.email, this.password)
     }
   }

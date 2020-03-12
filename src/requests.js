@@ -24,7 +24,7 @@ export function _delete(endpoint) {
     axios
       .delete(routePrefix + endpoint, defaultRequestConfig)
       .then(response => {
-        console.log("INFO: Response received for endpoint " + endpoint + ".");
+        console.log("INFO[DELETE]: Response received for endpoint " + endpoint + ".");
         resolve(response);
       })
       .catch(error => {
@@ -45,7 +45,7 @@ export function post(endpoint, payload, keepDataAsIs=false) {
     axios
       .post(routePrefix + endpoint, payload, defaultRequestConfig)
       .then(response => {
-        console.log("INFO: Response received for endpoint " + endpoint + ".");
+        console.log("INFO[POST]: Response received for endpoint " + endpoint + ".");
         resolve(response);
       })
       .catch(error => {
@@ -60,7 +60,7 @@ export function get(endpoint) {
     axios
       .get(routePrefix + endpoint, defaultRequestConfig)
       .then(response => {
-        console.log("INFO: Response received for endpoint " + endpoint + ".");
+        console.log("INFO[GET]: Response received for endpoint " + endpoint + ".");
         resolve(response);
       })
       .catch(error => {
