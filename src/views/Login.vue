@@ -27,7 +27,7 @@
               @click:append="passwordVisible = !passwordVisible"
               required
               />
-              <v-btn color="success" :outlined="true" type="submit" @click="login" block id="submitButton">Login</v-btn>
+              <v-btn color="success" :outlined="true" @click="login" block id="submitButton">Login</v-btn>
             </v-form>
               <div class="custom-control custom-checkbox mb-3" id="alternateOptionsRow">
                 <v-btn to="/registration" color="success" :text="true">Register</v-btn>|
@@ -58,8 +58,8 @@ import api from "../api";
 export default {
   data() {
     return {
-      email: "skywalker@bu.edu",
-      password: "password",
+      email: "",
+      password: "",
       passwordVisible: false
     };
   },

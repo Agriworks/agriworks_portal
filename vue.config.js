@@ -9,6 +9,6 @@ module.exports = {
     config.resolve.alias.set("api-client", path.resolve(__dirname, `src/api/${apiClient}`))
   },
   devServer: {
-    proxy:  "http://localhost:4000"
+    proxy: "http://localhost:4000"
   }
 }
