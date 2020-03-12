@@ -38,7 +38,7 @@
 
     </div>
     <div class="col-md-6" id="infoContainer">
-      <h2> Transform the Agricultural Landscape with Data </h2>
+      <h2> Transform your Agricultural Landscape with Data </h2>
       <ul id="bulletPoints">
         <li class="bulletPoint"> <v-icon medium color="#96D34A">mdi-hammer-screwdriver</v-icon> Create and share datasets </li>
         <li class="bulletPoint"> <v-icon medium color="#96D34A">mdi-graph</v-icon> Visualize your datasets </li>
