@@ -1,70 +1,54 @@
 <template>
 <b-container>
-  <b-row class="mt-12">
-    <b-column class="col-md-6">
-      <v-card class="rounded-card" >
+  <div class="row mt-12">
+    <div class="col-md-6" id="loginFormContainer">
+      <v-card class="rounded-card" :elevation="5">
           <div class="card-body">
-            <h3 class="card-title text-center">Login</h3>
-            <form class="form-signin" @submit.prevent="login">
-              <div class="form-label-group">
-                <label for="inputEmail">Username</label>
-                <input
-                  type="email"
-                  id="inputEmail"
-                  class="form-control"
-                  v-model="email"
-                  autofocus
-                  required
-                />
-              </div>
-              <div class="form-label-group">
-                <label for="inputPassword">Password</label>
-                <input
-                  type="password"
-                  id="inputPassword"
-                  class="form-control"
-                  v-model="password"
-                  required
-                  autofocus
-                />
-                <span toggle="inputPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-              </div>
-              <div class="custom-control custom-checkbox mb-3">
-                <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                <label class="custom-control-label" for="customCheck1">Remember password</label>
-              </div>
-              <div class="custom-control custom-checkbox mb-3">
-                <v-btn color="success" :outlined="true" type="submit">Login</v-btn>
-              </div>
-              <div class="custom-control custom-checkbox mb-3">
+            <img
+            class="card-img center"
+            src="../assets/logo_transparent_cropped.png"
+            alt="Card image cap"
+            align="middle"
+            id="logo"
+          />
+            <v-form>
+              <v-text-field
+              v-model="email"
+              label="Username"
+              type="email"
+              autofocus
+              required
+              />
+              <v-text-field
+              v-model="password"
+              label="Password"
+              :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="passwordVisible ? 'text' : 'password'"
+              @click:append="passwordVisible = !passwordVisible"
+              required
+              />
+              <v-btn color="success" :outlined="true" type="submit" @click="login" block id="submitButton">Login</v-btn>
+            </v-form>
+              <div class="custom-control custom-checkbox mb-3" id="alternateOptionsRow">
                 <v-btn to="/registration" color="success" :text="true">Register</v-btn>|
                 <v-btn to="/forgot-password" color="success" :text="true">Forgot Password?</v-btn>
               </div>
-            </form>
           </div>
         </v-card>
 
-    </b-column>
-    <b-column class="col-md-5">
-      <div class="placeholder">
-          <img
-            class="card-img center"
-            src="../assets/Welcome.png"
-            alt="Card image cap"
-            align="middle"
-          />
-          <p>
-            Donec sed odio dui. Cras justo odio, dapibus ac facilisis in,
-            egestas eget quam. Vestibulum id ligula porta felis euismod semper.
-            Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
-            nibh, ut fermentum massa justo sit amet risus.
-          </p>
-          <a href="#!">
-            <div class="mask rgba-white-slight"></div>
-          </a>
-        </div>
-    </b-column>
-  </b-row>
+    </div>
+    <div class="col-md-6" id="infoContainer">
+      <h2> Transform the Agricultural Landscape with Data </h2>
+      <ul id="bulletPoints">
+        <li class="bulletPoint"> <v-icon medium color="#96D34A">mdi-hammer-screwdriver</v-icon> Create and share datasets </li>
+        <li class="bulletPoint"> <v-icon medium color="#96D34A">mdi-graph</v-icon> Visualize your datasets </li>
+        <li class="bulletPoint"> <v-icon medium color="#96D34A">mdi-send</v-icon> Formulate dataset templates for data collection </li>
+      </ul>
+      <div id="h4iStampContainer">
+        <h5> Proudly built by  <a href="https://www.hack4impactbu.com/index.html" target="_blank"><img src="../assets/hack4impactlogo.png" width="35%"/></a></h5>
+      </div>
+    </div>
+  </div>
 </b-container> 
 </template>
 
@@ -74,14 +58,15 @@ import api from "../api";
 export default {
   data() {
     return {
-      email: "",
-      password: "",
+      email: "skywalker@bu.edu",
+      password: "password",
+      passwordVisible: false
     };
   },
 
   methods: {
-    // should probably move this to store
     login() {
+      console.log("method");
       api.getSessionID(this.email, this.password)
     }
   }
@@ -92,8 +77,42 @@ export default {
 .rounded-card {
   border-radius: 2% !important;
 }
-/* .padding-top-20 {
-    padding-top: 1.25em
-    } */
 
+#logo {
+  width: 75%;
+  margin-bottom:2rem;
+}
+
+#loginFormContainer {
+  text-align: center;
+}
+
+#submitButton {
+  margin-top: 1rem;
+}
+
+#alternateOptionsRow {
+  margin-top: 1rem;
+}
+
+#infoContainer {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#bulletPoints {
+  list-style: none;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.bulletPoint {
+  padding: 10px;
+}
+
+#h4iStampContainer {
+  margin-top: 2rem;
+}
 </style>
