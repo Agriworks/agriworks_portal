@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <!-- <Notification Drawer /> -->
-    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :top="true">
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :top="true" :timeout="1500">
       {{ snackbar.message }}
       <v-btn dark text @click="snackbar.show = false">Close</v-btn>
     </v-snackbar>
@@ -9,6 +9,7 @@
       <div class="container" v-if="this.showSidebar">
         <Sidebar />
         <router-view />
+        <!-- App !-->
       </div>
       <div v-else>
         <router-view />

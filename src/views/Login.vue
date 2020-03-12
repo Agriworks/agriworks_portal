@@ -74,8 +74,8 @@ import api from "../api";
 export default {
   data() {
     return {
-      email: "mdesilva@bu.edu",
-      password: "password",
+      email: "",
+      password: "",
     };
   },
 

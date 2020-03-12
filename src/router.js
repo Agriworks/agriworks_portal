@@ -1,12 +1,15 @@
 import Vue from "vue";
 import Router from "vue-router";
 import store from "./store"; // TODO: How do we import the store globally ?
+import api from "./api";
 
 Vue.use(Router);
 
 const redirectIfLoggedIn = function(next) {
-  if (store.getters.isLoggedIn) {
+  if (store.getters.isLoggedIn == true) {
     next("browse");
+  } else if (store.getters.isLoggedIn == "unset") {
+    api.verifyLogin();
   } else {
     next();
   }
@@ -23,8 +26,16 @@ const router = new Router({
       beforeEnter: (to, from, next) => redirectIfLoggedIn(next)
     },
     {
+      path: "/browse/:component",
+      name: "browse",
+      component: () => import("./views/DatasetBrowserView.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: "/browse",
-      name: "brose",
+      name: "browseDefault",
       component: () => import("./views/DatasetBrowserView.vue"),
       meta: {
         requiresAuth: true
@@ -39,14 +50,6 @@ const router = new Router({
       path: "/reset-password/:id",
       name: "reset-password",
       component: () => import("./views/ResetPassword.vue")
-    },
-    {
-      path: "/upload",
-      name: "uploadscreen",
-      component: () => import("./views/UploadScreen.vue"),
-      meta: {
-        requiresAuth: true
-      }
     },
     {
       path: "/login",
@@ -98,11 +101,13 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  let auth = store.getters.isLoggedIn;
+  let authorized = store.getters.isLoggedIn;
   let admin = false; //TODO: Set admin permission
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (auth) {
+    if (authorized == "unset") {
+      api.verifyLogin();
+    } else if (authorized == true) {
       if (to.matched.some(record => record.meta.is_admin)) {
         //check to see if admin
         if (admin) {

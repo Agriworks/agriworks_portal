@@ -1,12 +1,12 @@
 <template>
   <div class="table">
+    <h1> Create New Dataset </h1>
     <v-form ref="form">
       <v-text-field v-model="datasetName" required label="Dataset name"></v-text-field>
       <v-select v-model="datasetPermissions" required :items="permissionOptions" label="Permissions"></v-select>
       <v-select v-model="datasetType" required :items="typeOptions" label="Dataset type"></v-select>
       <v-combobox
       v-model="datasetTags"
-      :search-input.sync="search"
       hide-selected
       label="Tags"
       multiple
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import api from "../api";
+import api from "../../api";
 
 export default {
   name: 'Upload',

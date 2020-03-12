@@ -46,15 +46,29 @@
               <div class="form-label-group">
                 <label for="inputPassword">Password</label>
                 <input
+                  v-validate="'required|'"
                   name="password"
                   type="password"
                   id="inputPassword"
+                  ref="password"
                   class="form-control"
                   placeholder
                   required
                 />
               </div>
-
+              <div class="form-label-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input
+                  v-validate="'required|confirmed:password'"
+                  name="password_confirmation"
+                  type="password"
+                  id="confirmPassword"
+                  data-vv-as="password"
+                  class="form-control"
+                  placeholder
+                  required
+                />
+              </div>
               <div class="form-label-group custom-control custom-checkbox mb-3">
                 <input type="checkbox" class="custom-control-input" id="customCheck1" />
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
@@ -62,12 +76,7 @@
 
               <div class="custom-control custom-checkbox mb-3">
                 <v-btn color="success" :outlined="true" type="submit">Sign Up</v-btn>
-                <v-btn
-                  to="/login"
-                  color="success"
-                  :outlined="true"
-                  style="text-decoration:none"
-                >Login</v-btn>
+                <p>Already have an Account? Press <a href="/login">here</a> to login. </p>
               </div>
             </form>
           </div>
@@ -89,6 +98,7 @@ export default {
         lastName: document.getElementById("lastName").value,
         email: document.getElementById("inputEmail").value,
         password: document.getElementById("inputPassword").value
+        //, comfirmPassword: document.getElementByID("comfirmPassword").value (needs to be done in backend)
       })
         .then(res => {
           this.$router.push("login");
