@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { getCookie, wasAlreadyLoggedIn } from "./js/authentication";
 import api from "./api";
 
 Vue.use(Vuex);
@@ -9,7 +8,7 @@ const store = new Vuex.Store({
   state: {
     //Initial state
     isAdmin: false,
-    loggedIn: wasAlreadyLoggedIn(),
+    loggedIn: "unset",
     snackbar: {
       message: "",
       show: false,
@@ -107,7 +106,7 @@ const store = new Vuex.Store({
       api.deleteDataset(id);
     },
     logout(state) {
-      api.logout(getCookie("SID"));
+      api.logout();
     }
   }
 });

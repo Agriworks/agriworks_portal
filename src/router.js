@@ -1,12 +1,15 @@
 import Vue from "vue";
 import Router from "vue-router";
 import store from "./store"; // TODO: How do we import the store globally ?
+import api from "./api";
 
 Vue.use(Router);
 
 const redirectIfLoggedIn = function(next) {
-  if (store.getters.isLoggedIn) {
+  if (store.getters.isLoggedIn == true) {
     next("browse");
+  } else if (store.getters.isLoggedIn == "unset") {
+    api.verifyLogin();
   } else {
     next();
   }
@@ -98,11 +101,13 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  let auth = store.getters.isLoggedIn;
+  let authorized = store.getters.isLoggedIn;
   let admin = false; //TODO: Set admin permission
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (auth) {
+    if (authorized == "unset") {
+      api.verifyLogin();
+    } else if (authorized == true) {
       if (to.matched.some(record => record.meta.is_admin)) {
         //check to see if admin
         if (admin) {

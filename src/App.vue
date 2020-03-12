@@ -9,6 +9,7 @@
       <div class="container" v-if="this.showSidebar">
         <Sidebar />
         <router-view />
+        <!-- App !-->
       </div>
       <div v-else>
         <router-view />
