@@ -16,7 +16,7 @@
           <p @click="changeTagStatus()" style="color: #96D34A; text-decoration: underline;">Hide tags -</p>
           <div>
             <span ><v-chip 
-              v-for="tag in tags" 
+              v-for="tag in dataset.tags" 
               v-bind:key="tag"
               color="#96D34A" 
               style="margin-left: 5px;margin-bottom: 5px;">{{ tag }}
