@@ -1,9 +1,8 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <!-- <div class="col-md-1"></div> -->
-      <div class="col-md-6">
-        <v-card class="rounded-card">
+<b-container>
+  <b-row class="mt-12">
+    <b-column class="col-md-6">
+      <v-card class="rounded-card" >
           <div class="card-body">
             <h3 class="card-title text-center">Login</h3>
             <form class="form-signin" @submit.prevent="login">
@@ -28,6 +27,7 @@
                   required
                   autofocus
                 />
+                <span toggle="inputPassword" class="fa fa-fw fa-eye field-icon toggle-password"></span>
               </div>
               <div class="custom-control custom-checkbox mb-3">
                 <input type="checkbox" class="custom-control-input" id="customCheck1" />
@@ -43,10 +43,10 @@
             </form>
           </div>
         </v-card>
-      </div>
-      <div class="col-md-1"></div>
-      <div class="col-md-5">
-        <div class="placeholder">
+
+    </b-column>
+    <b-column class="col-md-5">
+      <div class="placeholder">
           <img
             class="card-img center"
             src="../assets/Welcome.png"
@@ -63,9 +63,9 @@
             <div class="mask rgba-white-slight"></div>
           </a>
         </div>
-      </div>
-    </div>
-  </div>
+    </b-column>
+  </b-row>
+</b-container> 
 </template>
 
 <script>
@@ -92,4 +92,8 @@ export default {
 .rounded-card {
   border-radius: 2% !important;
 }
+/* .padding-top-20 {
+    padding-top: 1.25em
+    } */
+
 </style>
