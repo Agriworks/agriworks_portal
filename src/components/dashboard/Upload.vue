@@ -32,14 +32,16 @@
       </template> -->
     </v-combobox>
     </v-form>
-      
       <b-card-group deck class="lastRow">
-        <b-card title="Data Selection" style="max-width: 50%;">
+        <v-flex xs12 sm6>
+        <v-card max-width="95%">
+          <v-card-title> Data selection </v-card-title>
           <div>
-            <p> Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV </p>
+            <v-card-text> Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV </v-card-text>
             <v-file-input v-model="file" label="Select a file" show-size accept=".csv"></v-file-input>
           </div>
-        </b-card>
+        </v-card>
+        </v-flex>
         <v-btn @click="processForm" class="submitButton" x-large color="success" dark :loading="this.loading"> <v-icon>mdi-folder-plus-outline </v-icon> Create </v-btn> 
         <!--
         <b-card title="Preparation" style="max-width: 50%;">
@@ -106,5 +108,8 @@ export default {
 
 .submitButton {
   flex: auto;
+}
+.v-file-input {
+  max-width: 95%;
 }
 </style>
