@@ -5,7 +5,8 @@
         <v-card class="shadow rounded">
           <div class="card-body">
             <h3 class="card-title text-center">Sign Up</h3>
-            <form @submit.prevent="signup" class="form-signin">
+            <form @submit.prevent="signup" class="form-signin"
+            oninput="password2.setCustomValidity(password2.value != password.value ? 'Passwords do not match.' : '')">
               <div class="form-label-group">
                 <label for="firstName">First Name</label>
                 <input
@@ -59,10 +60,10 @@
               <div class="form-label-group">
                 <label for="confirmPassword">Confirm Password</label>
                 <input
-                  v-validate="'required|confirmed:password'"
-                  name="password_confirmation"
+                  v-validate="'required|'"
+                  name="password2"
                   type="password"
-                  id="confirmPassword"
+                  id="password2"
                   data-vv-as="password"
                   class="form-control"
                   placeholder
@@ -98,7 +99,6 @@ export default {
         lastName: document.getElementById("lastName").value,
         email: document.getElementById("inputEmail").value,
         password: document.getElementById("inputPassword").value
-        //, comfirmPassword: document.getElementByID("comfirmPassword").value (needs to be done in backend)
       })
         .then(res => {
           this.$router.push("login");
