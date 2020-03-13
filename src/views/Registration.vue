@@ -70,15 +70,8 @@
                   required
                 />
               </div>
-              <div class="form-label-group custom-control custom-checkbox mb-3">
-                <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                <label class="custom-control-label" for="customCheck1">Remember password</label>
-              </div>
-
-              <div class="custom-control custom-checkbox mb-3">
-                <v-btn color="success" :outlined="true" type="submit">Sign Up</v-btn>
-                <p>Already have an Account? Press <a href="/login">here</a> to login. </p>
-              </div>
+              <v-btn color="success" :outlined="true" type="submit">Sign Up</v-btn>
+              <p>Already have an Account? Press <a href="/login">here</a> to login. </p>
             </form>
           </div>
         </v-card>
