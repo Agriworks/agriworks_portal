@@ -38,6 +38,7 @@
 
 <script>
 import Browse from "./Browse.vue";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 export default {
   components: {
