@@ -61,11 +61,28 @@
     <div class="row">
       <DataTable :headers="dataset.headers" :data="dataset.data" id="datatable"/>
     </div>
+
+    <v-btn
+      v-scroll="onScroll" 
+      v-show="upButton"
+      fab
+      dark
+      fixed
+      bottom
+      right
+      color="green"
+      @click="toTop"
+    >
+      <v-icon>mdi-chevron-up</v-icon>
+    </v-btn>
   </div>
   <div v-else>
     <div v-if="!hideLoadingIndicator">
       <LoadingIndicator/>
-    </div>
+  </div>
+
+  
+
   </div>
 </template>
 
@@ -88,7 +105,8 @@ export default {
       return {
         hideTags : true,
         dataset: null,
-        hideLoadingIndicator: false
+        hideLoadingIndicator: false,
+        upButton: false
       }
     },
     created(){
@@ -121,7 +139,16 @@ export default {
         .catch(response => {
           notify("Unable to download file. Please try again later.", colors.red)
         })
+      }, 
+      onScroll(e) {
+        console.log("This is called")
+        const top = window.pageYOffset || e.target.scrollTop || 0
+        this.upButton = top > 20
+      },
+      toTop () {
+        this.$vuetify.goTo(0)
       }
+
     }
 }
 </script>

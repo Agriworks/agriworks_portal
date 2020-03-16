@@ -4,9 +4,10 @@
   :items="data"
   :items-per-page="10"
   :footer-props="{
-    'items-per-page-options': [10, 30, 50, 100, 250, 500]
-  }"
+    'items-per-page-options': [10, 30, 50, 100, 250, 500],
+  }" 
   ></v-data-table>
+
 </template>
 <script>
 
