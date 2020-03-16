@@ -143,7 +143,7 @@ export default {
       onScroll(e) {
         console.log("This is called")
         const top = window.pageYOffset || e.target.scrollTop || 0
-        this.upButton = top > 20
+        this.upButton = top > 60
       },
       toTop () {
         this.$vuetify.goTo(0)
@@ -167,6 +167,10 @@ export default {
 
 #metadataCard{
   border: 1px solid #a2e510;
+}
+
+.v-btn--absolute.v-btn--bottom, .v-btn--fixed.v-btn--bottom {
+    bottom: 60px;
 }
 
 </style>
