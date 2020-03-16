@@ -1,11 +1,13 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="col-sm-9 col-md-7 col-lg-10 mx-auto">
         <v-card class="shadow rounded">
           <div class="card-body">
             <h3 class="card-title text-center">Sign Up</h3>
             <form @submit.prevent="signup" class="form-signin">
+            <v-col sm="6">
+            
               <div class="form-label-group">
                 <label for="firstName">First Name</label>
                 <input
@@ -73,7 +75,14 @@
                 <input type="checkbox" class="custom-control-input" id="customCheck1" />
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
-
+            </v-col>
+            <v-col sm="6">
+              <v-select
+                :items = "items"
+                label="Select"
+                outlined
+              ></v-select>
+            </v-col>
               <div class="custom-control custom-checkbox mb-3">
                 <v-btn color="success" :outlined="true" type="submit">Sign Up</v-btn>
                 <p>Already have an Account? Press <a href="/login">here</a> to login. </p>
@@ -90,6 +99,9 @@
 import { post } from "../requests";
 
 export default {
+  data: () => ({
+    items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+  }),
   methods: {
     // should probably move this to store
     signup() {
