@@ -6,8 +6,8 @@
           <div class="card-body">
             <h3 class="card-title text-center">Sign Up</h3>
             <form @submit.prevent="signup" class="form-signin">
-            <v-col sm="6">
-            
+            <v-row >
+            <v-col cols="12" sm="6">
               <div class="form-label-group">
                 <label for="firstName">First Name</label>
                 <input
@@ -76,17 +76,33 @@
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
             </v-col>
-            <v-col sm="6">
+            <v-col cols="6" sm="6">
+              <div class="form-label-group">
+                <label for="organization">Organization</label>
+                <input
+                  name="organization"
+                  type="text"
+                  id="organization"
+                  class="form-control"
+                  placeholder
+                  required
+                  autofocus
+                />
+              </div>
+              <label for="userType">What kind of user are you?</label>
               <v-select
                 :items = "items"
                 label="Select"
                 outlined
               ></v-select>
             </v-col>
+            <div align="center">
               <div class="custom-control custom-checkbox mb-3">
                 <v-btn color="success" :outlined="true" type="submit">Sign Up</v-btn>
                 <p>Already have an Account? Press <a href="/login">here</a> to login. </p>
               </div>
+              </div>
+              </v-row>
             </form>
           </div>
         </v-card>
@@ -100,7 +116,7 @@ import { post } from "../requests";
 
 export default {
   data: () => ({
-    items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+    items: ['Researcher', 'Policy Maker', 'Activist', 'Concerned Citizen'],
   }),
   methods: {
     // should probably move this to store
