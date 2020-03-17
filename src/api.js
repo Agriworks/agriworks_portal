@@ -6,12 +6,19 @@ import notify from "./utilities/notify";
 import { colors } from "./utilities/branding";
 
 const api = {
-  fetchDatasets() {
-    return get("/dataset/")
-      .then(response => store.commit("setDatasets", response.data))
+  fetchDatasets(pageNumber = 0) {
+
+    return get(`/dataset/list/${pageNumber}`)
+      .then(response => {
+        if (pageNumber == 0) { store.commit("setDatasets", { datasets: response.data, append: false }) }
+        else {
+          store.commit("setDatasets", { datasets: response.data, append: true })
+        }
+      })
       .catch(() => {
         notify("Error fetching datasets", colors.red);
       });
+
   },
   fetchDataset(id) {
     return get(`/dataset/${id}`);
@@ -98,7 +105,7 @@ const api = {
         notify("Error deleting dataset", colors.red);
       });
   },
-  downloadDataset (id) {
+  downloadDataset(id) {
     return get(`/dataset/download/${id}`)
   },
   verifyLogin() {
@@ -108,7 +115,7 @@ const api = {
       router.push("/");
       return false;
     }
-    return post("/auth/verifySession", {sessionId: sessionId})
+    return post("/auth/verifySession", { sessionId: sessionId })
       .then(() => {
         store.commit("setLoggedInTrue");
         router.push("/browse");
