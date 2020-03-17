@@ -5,7 +5,8 @@
         <v-card class="shadow rounded">
           <div class="card-body">
             <h3 class="card-title text-center">Sign Up</h3>
-            <form @submit.prevent="signup" class="form-signin">
+            <form @submit.prevent="signup" class="form-signin"
+            oninput="password2.setCustomValidity(password2.value != password.value ? 'Passwords do not match.' : '')">
               <div class="form-label-group">
                 <label for="firstName">First Name</label>
                 <input
@@ -59,25 +60,18 @@
               <div class="form-label-group">
                 <label for="confirmPassword">Confirm Password</label>
                 <input
-                  v-validate="'required|confirmed:password'"
-                  name="password_confirmation"
+                  v-validate="'required|'"
+                  name="password2"
                   type="password"
-                  id="confirmPassword"
+                  id="password2"
                   data-vv-as="password"
                   class="form-control"
                   placeholder
                   required
                 />
               </div>
-              <div class="form-label-group custom-control custom-checkbox mb-3">
-                <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                <label class="custom-control-label" for="customCheck1">Remember password</label>
-              </div>
-
-              <div class="custom-control custom-checkbox mb-3">
-                <v-btn color="success" :outlined="true" type="submit">Sign Up</v-btn>
-                <p>Already have an Account? Press <a href="/login">here</a> to login. </p>
-              </div>
+              <v-btn color="success" :outlined="true" type="submit">Sign Up</v-btn>
+              <p>Already have an Account? Press <a href="/login">here</a> to login. </p>
             </form>
           </div>
         </v-card>
@@ -98,7 +92,6 @@ export default {
         lastName: document.getElementById("lastName").value,
         email: document.getElementById("inputEmail").value,
         password: document.getElementById("inputPassword").value
-        //, comfirmPassword: document.getElementByID("comfirmPassword").value (needs to be done in backend)
       })
         .then(res => {
           this.$router.push("login");
