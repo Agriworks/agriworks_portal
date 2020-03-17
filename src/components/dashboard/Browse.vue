@@ -1,17 +1,19 @@
 <template>
-<div>
-  <div class="row" v-if="this.datasets.length > 0">
-    <div v-for="dataset in datasets" v-bind:key="dataset.id">
-      <DatasetCard v-bind:dataset="dataset" />
-    </div>
-    <div style="background-color:green;width:100vw;height:100px;display:block" v-intersect.once.quiet="onIntersect">
+  <div>
+    <div class="row" v-if="this.datasets.length > 0">
+      <div v-for="dataset in datasets" v-bind:key="dataset.id">
+        <DatasetCard v-bind:dataset="dataset" />
+      </div>
 
+      <div v-intersect.quiet="onIntersect"></div>
+      <div style="width:100vw;" v-if="this.loading">
+        <LoadingIndicator />
+      </div>
+    </div>
+    <div v-else>
+      <LoadingIndicator />
     </div>
   </div>
-  <div v-else>
-    <LoadingIndicator/>
-  </div>
-</div>
 </template>
 
 <script>
@@ -25,10 +27,11 @@ export default {
     DatasetCard,
     LoadingIndicator
   },
-  data(){
+  data() {
     return {
-      pageNumber: 0
-    }
+      pageNumber: 0,
+      loading: false
+    };
   },
   computed: {
     datasets() {
@@ -36,13 +39,22 @@ export default {
     }
   },
   methods: {
-    onIntersect(){
-      this.$store.dispatch("fetchDatasets", this.pageNumber++);
-      console.log("interesect")
+    onIntersectPromise() {
+      return new Promise((resolve, reject) => {
+        this.$store.dispatch("fetchDatasets", ++this.pageNumber, true);
+        resolve(response);
+      }).catch(error => {
+        reject(error);
+      });
+    },
+    onIntersect() {
+      if (this.pageNumber * 12 + 16 <= this.datasets.length) {
+        this.loading = true;
+        this.onIntersectPromise()
+          .then(res => (this.loading = false))
+          .catch(err => (this.loading = false));
+      }
     }
-  },
-  mounted() {
-    this.$store.dispatch("fetchDatasets", this.pageNumber);
   }
 };
 </script>

@@ -38,7 +38,12 @@ const store = new Vuex.Store({
       state.snackbar.color = snackbar.color;
     },
     setDatasets(state, datasets) {
-      state.datasets = datasets;
+      if (datasets.append) {
+        state.datasets = [...state.datasets, ...datasets.datasets];
+      }
+      else {
+        state.datasets = datasets.datasets;
+      }
     },
     setDataset(state, dataset) {
       state.dataset = dataset;
