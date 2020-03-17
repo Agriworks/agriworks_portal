@@ -77,8 +77,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("fetchUserDatasets")
-    this.$store.dispatch("fetchDatasets", 0);
+    this.$store.dispatch("fetchUserDatasets");
   }
 };
 </script>

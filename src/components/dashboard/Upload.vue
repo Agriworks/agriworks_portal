@@ -1,6 +1,6 @@
 <template>
   <div class="table">
-    <h1> Create New Dataset </h1>
+    <h1> Create New Dataset  </h1> 
     <v-form ref="form">
       <v-text-field v-model="datasetName" required label="Dataset name"></v-text-field>
       <v-select v-model="datasetPermissions" required :items="permissionOptions" label="Permissions"></v-select>
@@ -34,12 +34,10 @@
     </v-form>
       <b-card-group deck class="lastRow">
         <v-flex xs12 sm6>
-        <v-card max-width="95%">
-          <v-card-title> Data selection </v-card-title>
-          <div>
-            <v-card-text> Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV </v-card-text>
-            <v-file-input v-model="file" label="Select a file" show-size accept=".csv"></v-file-input>
-          </div>
+        <v-card max-width="95%" style="padding: 1rem;">
+          <v-card-title>  <h3> Data selection  </h3></v-card-title>
+          <v-card-text> Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV </v-card-text>
+          <v-file-input v-model="file" label="Select a file" show-size accept=".csv"></v-file-input>
         </v-card>
         </v-flex>
         <v-btn @click="processForm" class="submitButton" x-large color="success" dark :loading="this.loading"> <v-icon>mdi-folder-plus-outline </v-icon> Create </v-btn> 
