@@ -6,8 +6,8 @@ import notify from "./utilities/notify";
 import { colors } from "./utilities/branding";
 
 const api = {
-  fetchDatasets() {
-    return get("/dataset/")
+  fetchDatasets(pageNumber = 0) {
+    return get(`/dataset/${pageNumber}`,)
       .then(response => store.commit("setDatasets", response.data))
       .catch(() => {
         notify("Error fetching datasets", colors.red);

@@ -81,8 +81,8 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    fetchDatasets(state) {
-      api.fetchDatasets();
+    fetchDatasets(state, pageNumber) {
+      api.fetchDatasets(pageNumber);
     },
     fetchDataset(state, id) {
       api.fetchDataset(id);
