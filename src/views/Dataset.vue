@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="row">
-      <DataTable :headers="dataset.headers" :data="dataset.data" id="datatable"/>
+      <DataTable :headers="dataset.headers" :data="dataset.data" :footerOptions="footerOptions" id="datatable"/>
     </div>
 
     <v-btn
@@ -79,6 +79,10 @@
   <div v-else>
     <div v-if="!hideLoadingIndicator">
       <LoadingIndicator/>
+      <div v-if="numRows > 999">
+        <h1>Loading Large Dataset</h1>
+      </div>
+        
   </div>
 
   
@@ -106,18 +110,54 @@ export default {
         hideTags : true,
         dataset: null,
         hideLoadingIndicator: false,
-        upButton: false
+        upButton: false,
+        numRows: 0,
+      }
+    },
+    computed: {
+      footerOptions() {
+        var ret = [10];
+        var possible = [30, 50, 100, 250, 500];
+        if (this.numRows == 0 || this.numRows == -1){
+          return ret;
+        } 
+        for(var i = 0; i < possible.length; i++){
+          if(possible[i] <= this.numRows){
+            ret.push(possible[i]);
+          }else{
+            ret.push(-1);
+            return ret;
+          }
+        }
+
+        return ret;
       }
     },
     created(){
-      api.fetchDataset(this.$route.params.id)
+      api.fetchDatasetSize(this.$route.params.id)
       .then((response) => {
-        this.dataset = response.data;
-      })
+        const message = response.data.message
+        if(message == "NONE"){
+          this.numRows = -1;
+        }else{
+          this.numRows = parseInt(message, 10)
+        }
+
+        api.fetchDataset(this.$route.params.id)
+        .then((response) => {
+          this.dataset = response.data;
+        })
+        .catch((err) => {
+          this.hideLoadingIndicator = true
+          notify("Error fetching dataset. Please try again", colors.red);
+        })
+
+      })  
       .catch((err) => {
         this.hideLoadingIndicator = true
         notify("Error fetching dataset. Please try again", colors.red);
       })
+     
     },
     methods: {
       changeTagStatus() {

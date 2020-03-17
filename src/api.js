@@ -16,6 +16,9 @@ const api = {
   fetchDataset(id) {
     return get(`/dataset/${id}`);
   },
+  fetchDatasetSize(id){
+    return get(`/dataset/${id}/size`);
+  },
   uploadDataset(file, name, tags, permissions, type) {
     let newDataset = new FormData();
     newDataset.append("file", file);

@@ -4,7 +4,7 @@
   :items="data"
   :items-per-page="10"
   :footer-props="{
-    'items-per-page-options': [10, 30, 50, 100, 250, 500],
+    'items-per-page-options': footerOptions,
   }" 
   ></v-data-table>
 
@@ -14,7 +14,7 @@
 import Vue from "vue";
 export default {
     name: "DataTable",
-    props: ["headers", "data"],
+    props: ["headers", "data", "footerOptions"],
       
 }
 </script>
