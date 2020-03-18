@@ -79,7 +79,7 @@
         >
           <div class="card-body">
             <div id="recentCarousel" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner">
+              <div v-if="recentDatasets.length > 0" class="carousel-inner">
                 <div
                   class="carousel-item"
                   v-for="(dataset, index) in recentDatasets"
@@ -89,7 +89,13 @@
                   <DatasetCard v-bind:dataset="dataset" />
                 </div>
               </div>
+              <div v-else class="carousel-inner">
+                <div class="col-md-12">
+                  <h6>You haven't opened any datasets recently. Click Browse to see datasets</h6>
+                </div>
+              </div>
               <a
+                v-if="recentDatasets.length > 0"
                 class="carousel-control-prev"
                 href="#recentCarousel"
                 role="button"
@@ -99,6 +105,7 @@
                 <span class="sr-only">Previous</span>
               </a>
               <a
+                v-if="recentDatasets.length > 0"
                 class="carousel-control-next"
                 href="#recentCarousel"
                 role="button"
@@ -129,7 +136,7 @@
         <div id="newContent" class="collapse" aria-labelledby="headerNew" data-parent="#types">
           <div class="card-body">
             <div id="newCarousel" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner">
+              <div v-if="newDatasets.length > 0" class="carousel-inner">
                 <div
                   class="carousel-item"
                   v-for="(dataset, index) in newDatasets"
@@ -139,11 +146,33 @@
                   <DatasetCard v-bind:dataset="dataset" />
                 </div>
               </div>
-              <a class="carousel-control-prev" href="#newCarousel" role="button" data-slide="prev">
+              <div v-else class="noneTag">
+                <div>
+                  <h6>
+                    You don't have any recently created datasets. Click
+                    <span>
+                      <a @click="redirectCreate">Create</a>
+                    </span> to upload a new dataset.
+                  </h6>
+                </div>
+              </div>
+              <a
+                v-if="newDatasets.length > 0"
+                class="carousel-control-prev"
+                href="#newCarousel"
+                role="button"
+                data-slide="prev"
+              >
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
               </a>
-              <a class="carousel-control-next" href="#newCarousel" role="button" data-slide="next">
+              <a
+                v-if="newDatasets.length > 0"
+                class="carousel-control-next"
+                href="#newCarousel"
+                role="button"
+                data-slide="next"
+              >
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
               </a>
@@ -165,7 +194,13 @@ export default {
   },
 
   methods: {
-    togglePopular() {}
+    redirectCreate() {
+      this.$router.push("/browse/upload");
+    },
+
+    redirectBrowse() {
+      this.$router.push("/browse");
+    }
   },
 
   computed: {
@@ -216,5 +251,9 @@ export default {
 .datasetTitle {
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.noneTag {
+  padding-left: 220px;
 }
 </style>
