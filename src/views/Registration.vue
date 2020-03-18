@@ -91,9 +91,12 @@
               </div>
               <label for="userType">What kind of user are you?</label>
               <v-select
-                :items = "items"
+                :options = "items"
                 label="Select"
                 id="inputUserType"
+                @input="changedLabel"
+                placeholder
+                required
                 outlined
               ></v-select>
             </v-col>
@@ -118,8 +121,12 @@ import { post } from "../requests";
 export default {
   data: () => ({
     items: ['Researcher', 'Policy Maker', 'Activist', 'Concerned Citizen'],
+    selected: null
   }),
   methods: {
+    changedLabel(event) {
+      this.selected = event;
+    },
     // should probably move this to store
     signup() {
       post("/auth/signup", {
