@@ -82,7 +82,7 @@
                 <input
                   name="organization"
                   type="text"
-                  id="organization"
+                  id="inputOrganization"
                   class="form-control"
                   placeholder
                   required
@@ -93,6 +93,7 @@
               <v-select
                 :items = "items"
                 label="Select"
+                id="inputUserType"
                 outlined
               ></v-select>
             </v-col>
@@ -125,7 +126,8 @@ export default {
         firstName: document.getElementById("firstName").value,
         lastName: document.getElementById("lastName").value,
         email: document.getElementById("inputEmail").value,
-        password: document.getElementById("inputPassword").value
+        password: document.getElementById("inputPassword").value,
+        organization: document.getElementById("inputOrganization").value
         //, comfirmPassword: document.getElementByID("comfirmPassword").value (needs to be done in backend)
       })
         .then(res => {
