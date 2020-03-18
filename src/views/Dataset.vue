@@ -76,18 +76,33 @@
       <v-icon>mdi-chevron-up</v-icon>
     </v-btn>
   </div>
+
+
   <div v-else>
-    <div v-if="!hideLoadingIndicator">
-      <LoadingIndicator/>
-      <div v-if="numRows > 999">
-        <h1>Loading Large Dataset</h1>
+    
+      <div v-if="!hideLoadingIndicator">
+        <v-row
+        align="center"
+        justify="center">
+        <LoadingIndicator/>
+        </v-row>
+
+        <div v-if="numRows > 2000">
+          <v-row
+          align="center"
+          justify="center">
+          <v-col
+          align="center"
+          justify="center">
+            <h2 style="color:green">Loading Large Dataset</h2>
+          </v-col>
+          </v-row>
+        </div>    
+
       </div>
-        
+    
   </div>
 
-  
-
-  </div>
 </template>
 
 
@@ -122,7 +137,7 @@ export default {
           return ret;
         } 
         for(var i = 0; i < possible.length; i++){
-          if(possible[i] <= this.numRows){
+          if(possible[i] < this.numRows){
             ret.push(possible[i]);
           }else{
             ret.push(-1);
@@ -137,7 +152,7 @@ export default {
       api.fetchDatasetSize(this.$route.params.id)
       .then((response) => {
         const message = response.data.message
-        if(message == "NONE"){
+        if(message == "None"){
           this.numRows = -1;
         }else{
           this.numRows = parseInt(message, 10)
