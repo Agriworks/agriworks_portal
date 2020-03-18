@@ -1,11 +1,15 @@
 <template>
   <div class="table">
+    <h1> Create New Dataset </h1>
     <v-form ref="form">
       <v-text-field v-model="datasetName" required label="Dataset name"></v-text-field>
       <v-select v-model="datasetPermissions" required :items="permissionOptions" label="Permissions"></v-select>
       <v-select v-model="datasetType" required :items="typeOptions" label="Dataset type"></v-select>
       <v-combobox
       v-model="datasetTags"
+      :items="tagsOfChosenType"
+      :search-input.sync="search"
+      hide-selected
       label="Tags"
       multiple
       small-chips
@@ -19,15 +23,15 @@
         {{ item.toLowerCase() }}
       </v-chip>
     </template>
-      <!-- <template v-slot:no-data>
+    <template v-slot:no-data>
         <v-list-item>
           <v-list-item-content>
             <v-list-item-title>
-              No results matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
+              No tags matching "<strong>{{ search }}</strong>". Press <kbd>enter</kbd> to create a new one
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-      </template> -->
+      </template>
     </v-combobox>
     </v-form>
       
@@ -51,14 +55,17 @@
 </template>
 
 <script>
-import api from "../api";
+import api from "../../api";
+import notify from '../../utilities/notify';
+import { colors } from '../../utilities/branding';
+
 
 export default {
   name: 'Upload',
   data() {
     return {
       datasetName: "Sample",
-      tagsOfChosenType: this.$store.state.tagsOfChosenType,
+      tagsOfChosenType: [],
       datasetTags: [],
       datasetPermissions: "Public",
       datasetType: "Land Use",
@@ -72,7 +79,9 @@ export default {
     datasetTags: function () {
       this.datasetTags[this.datasetTags.length-1] = this.datasetTags[this.datasetTags.length-1].toLowerCase();
     },
-    
+    datasetType: function(){
+      this.getTags(this.datasetType)
+    }
   },
   methods: {
     processForm() {
@@ -92,9 +101,18 @@ export default {
         this.datasetTags.splice(this.datasetTags.indexOf(item), 1)
         this.datasetTags = [...this.datasetTags]
     },
+    getTags(datasetType) {
+        api.fetchTags(datasetType)
+        .then((response) => {
+          this.tagsOfChosenType = response.data;
+        })
+        .catch((err) => {
+          notify("Error fetching tags.", colors.red);
+        })
+    }
   },
   created() {
-      this.$store.dispatch('fetchTags', this.datasetType)
+      this.getTags(this.datasetType)
     }
 }
 </script>

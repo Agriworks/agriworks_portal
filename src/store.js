@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { getCookie, wasAlreadyLoggedIn } from "./js/authentication";
 import api from "./api";
 
 Vue.use(Vuex);
@@ -9,7 +8,7 @@ const store = new Vuex.Store({
   state: {
     //Initial state
     isAdmin: false,
-    loggedIn: wasAlreadyLoggedIn(),
+    loggedIn: "unset",
     snackbar: {
       message: "",
       show: false,
@@ -17,8 +16,11 @@ const store = new Vuex.Store({
     },
     datasets: [],
     dataset: [],
-    user: "", //the email address of the user
-    tagsOfChosenType: []
+    popularDatasets: [],
+    recentDatasets: [],
+    newDatasets: [],
+    user: "", //the email address of the user,
+    userDatasets: [],
   },
   mutations: {
     setIsAdmin(state) {
@@ -41,12 +43,21 @@ const store = new Vuex.Store({
     setDataset(state, dataset) {
       state.dataset = dataset;
     },
+    setPopularDatasets(state, datasets) {
+      state.popularDatasets = datasets;
+    },
+    setRecentDatasets(state, datasets) {
+      state.recentDatasets = datasets;
+    },
+    setNewDatasets(state, datasets) {
+      state.newDatasets = datasets;
+    },
     setUser(state, email) {
       state.user = email;
       state.loggedIn = true;
     },
-    setTags(state, tags) {
-      state.tagsOfChosenType = tags;
+    setUserDatasets(state, datasets) {
+      state.userDatasets = datasets
     }
 
   },
@@ -77,12 +88,17 @@ const store = new Vuex.Store({
     fetchDataset(state, id) {
       api.fetchDataset(id);
     },
-    fetchTags(state, type) {
-      api.fetchTags(type);
-    },
-    filterDatasets(state,searchQuery) {
     fetchUserDatasets(state) {
       api.fetchUserDatasets();
+    },
+    fetchPopularDatasets(state) {
+      api.fetchPopularDatasets();
+    },
+    fetchRecentDatasets(state) {
+      api.fetchRecentDatasets();
+    },
+    fetchNewDatasets(state) {
+      api.fetchNewDatasets();
     },
     filterDatasets(state, searchQuery) {
       api.filterDatasets(searchQuery);
@@ -91,7 +107,7 @@ const store = new Vuex.Store({
       api.deleteDataset(id);
     },
     logout(state) {
-      api.logout(getCookie("SID"));
+      api.logout();
     }
   }
 });

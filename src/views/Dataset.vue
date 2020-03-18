@@ -16,7 +16,7 @@
           <p @click="changeTagStatus()" style="color: #96D34A; text-decoration: underline;">Hide tags -</p>
           <div>
             <span ><v-chip 
-              v-for="tag in tags" 
+              v-for="tag in dataset.tags" 
               v-bind:key="tag"
               color="#96D34A" 
               style="margin-left: 5px;margin-bottom: 5px;">{{ tag }}
@@ -27,20 +27,22 @@
         <p> By {{ dataset.author }} </p>
       <div class="row">
         <div class="col-md-6">
-          <v-btn small dark color="#4caf50" id="downloadButton" v-on:click="downloadDataset" style="margin-right:0.5rem;">
+          <v-btn small dark color="#4caf50" id="downloadButton" style="margin-right:0.5rem;" @click="downloadDataset()">
             <v-icon small>mdi-arrow-down-circle-outline</v-icon>Download
           </v-btn>
+          <!--
           <v-btn small dark color="purple">
             <v-icon small>mdi-graph-outline</v-icon> Visualize
           </v-btn>
+          !-->
         </div>
       </div> 
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6" v-if="Object.keys(this.dataset.legend).length > 0" id="metadataContainer">
           <v-container>
             <v-layout>
               <v-flex>
-                <v-card hover id="metadataContainer">
+                <v-card hover id="metadataCard">
                   <v-card-title>
                     <h2>Metadata</h2>
                   </v-card-title>
@@ -78,6 +80,10 @@ import { colors } from '../utilities/branding';
 
 export default {
     name: "Dataset", 
+    components: {
+      DataTable,
+      LoadingIndicator
+    },
     data(){
       return {
         hideTags : true,
@@ -85,15 +91,21 @@ export default {
         hideLoadingIndicator: false
       }
     },
-    components: {
-      DataTable,
-      LoadingIndicator
+    created(){
+      api.fetchDataset(this.$route.params.id)
+      .then((response) => {
+        this.dataset = response.data;
+      })
+      .catch((err) => {
+        this.hideLoadingIndicator = true
+        notify("Error fetching dataset. Please try again", colors.red);
+      })
     },
     methods: {
       changeTagStatus() {
         this.hideTags = !this.hideTags;
       },
-      downloadDataset(){
+      downloadDataset() {
         api.downloadDataset(this.$route.params.id)
         .then(response => {
           const fileURL = window.URL.createObjectURL(new Blob([response.data]));
@@ -111,16 +123,6 @@ export default {
         })
       }
     },
-    created(){
-      api.fetchDataset(this.$route.params.id)
-      .then((response) => {
-        this.dataset = response.data;
-      })
-      .catch((err) => {
-        this.hideLoadingIndicator = true
-        notify("Error fetching dataset. Please try again", colors.red);
-      })
-    },
 }
 </script>
 
@@ -136,7 +138,7 @@ export default {
   flex-direction: column
 }
 
-#metadataContainer {
+#metadataCard{
   border: 1px solid #a2e510;
 }
 
