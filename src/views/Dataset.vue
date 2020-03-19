@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="row">
-      <DataTable :headers="dataset.headers" :data="dataset.data" id="datatable"/>
+      <DataTable :headers="dataset.headers" :data="data" id="datatable"/>
     </div>
   </div>
   <div v-else>
@@ -88,7 +88,9 @@ export default {
       return {
         hideTags : true,
         dataset: null,
-        hideLoadingIndicator: false
+        hideLoadingIndicator: false,
+        data: [],
+        test: ""
       }
     },
     created(){
@@ -99,7 +101,15 @@ export default {
       .catch((err) => {
         this.hideLoadingIndicator = true
         notify("Error fetching dataset. Please try again", colors.red);
-      })
+      });
+      let datasetSource = new EventSource(`/api/dataset/stream/${this.$route.params.id}`);
+      datasetSource.addEventListener("message", (e) => {
+        if (e.data == "stop") {
+          datasetSource.close();
+        } else {
+          this.data.push(JSON.parse(e.data));
+        } 
+      });
     },
     methods: {
       changeTagStatus() {
@@ -121,7 +131,7 @@ export default {
         .catch(response => {
           notify("Unable to download file. Please try again later.", colors.red)
         })
-      }
+      },
     }
 }
 </script>
