@@ -55,9 +55,6 @@ export default {
           .catch(err => (this.loading = false));
       }
     }
-  },
-  mounted() {
-      this.$store.dispatch("fetchDatasets", 0);
   }
 };
 </script>
