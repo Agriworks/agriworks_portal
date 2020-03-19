@@ -81,9 +81,11 @@
                       outlined
                     ></v-select>
                   </v-col>
-                  <div align="center">
-                    <v-btn color="success" :outlined="true" @click="signup" id="submitButton">Sign Up</v-btn>
-                  </div>
+                  <v-flex align-center>
+                    <div align="center">
+                      <v-btn color="success" :outlined="true" @click="signup" id="submitButton">Sign Up</v-btn>
+                    </div>
+                  </v-flex>
                 </v-row>
               </v-form>
               <div align="center">
