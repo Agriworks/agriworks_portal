@@ -122,7 +122,7 @@ export default {
           notify("Unable to download file. Please try again later.", colors.red)
         })
       }
-    }
+    },
 }
 </script>
 

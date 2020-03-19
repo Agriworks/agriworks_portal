@@ -128,6 +128,9 @@ const api = {
         notify(error.response.data.message, colors.red);
         return false;
       })
+  },
+  fetchTags(datasetType) {
+    return get(`/upload/getTags/${datasetType}`);
   }
 };
 
