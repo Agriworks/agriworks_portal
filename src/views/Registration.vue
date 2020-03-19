@@ -91,10 +91,11 @@
               </div>
               <label for="userType">What kind of user are you?</label>
               <v-select
-                :options = "items"
+                v-model="selectedType"
+                :items = "items"
                 label="Select"
-                id="inputUserType"
-                @input="changedLabel"
+                item-text="type"
+                return-object
                 placeholder
                 required
                 outlined
@@ -120,13 +121,15 @@ import { post } from "../requests";
 
 export default {
   data: () => ({
-    items: ['Researcher', 'Policy Maker', 'Activist', 'Concerned Citizen'],
-    selected: null
+    items: [
+      {type: 'Researcher'},
+      {type: 'Policy Maker'},
+      {type: 'Activist'},
+      {type: 'Concerned Citizen'}
+    ],
+    selectedType: null
   }),
   methods: {
-    changedLabel(event) {
-      this.selected = event;
-    },
     // should probably move this to store
     signup() {
       post("/auth/signup", {
@@ -134,7 +137,8 @@ export default {
         lastName: document.getElementById("lastName").value,
         email: document.getElementById("inputEmail").value,
         password: document.getElementById("inputPassword").value,
-        organization: document.getElementById("inputOrganization").value
+        organization: document.getElementById("inputOrganization").value,
+        userType: this.selectedType.type
         //, comfirmPassword: document.getElementByID("comfirmPassword").value (needs to be done in backend)
       })
         .then(res => {
