@@ -17,7 +17,6 @@ const api = {
       .catch(() => {
         notify("Error fetching datasets", colors.red);
       });
-
   },
   fetchDataset(id) {
     return get(`/dataset/${id}`);
