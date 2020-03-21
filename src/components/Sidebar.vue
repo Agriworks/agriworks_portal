@@ -38,12 +38,14 @@
           </v-list-item-content>
         </v-list-item>
         </div>
-          <v-card-actions class="card-actions">
+        <template v-if="!mini">
+        <v-card-actions class="card-actions">
         <v-list-item>
           <v-switch v-model="$vuetify.theme.dark"  color="green"></v-switch>
           <v-list-item-title> Dark Mode </v-list-item-title>
         </v-list-item>
         </v-card-actions>
+        </template>
       </v-list>
     </v-navigation-drawer>
   </nav>
