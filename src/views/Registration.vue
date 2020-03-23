@@ -41,8 +41,10 @@
                       v-model="password"
                       name="password"
                       label="Password"
-                      type="password"
-                      placeholder
+                      :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="passwordVisible ? 'text' : 'password'"
+                      @click:append="passwordVisible = !passwordVisible"
+                      
                       required
                     />
                     <v-text-field
@@ -50,7 +52,9 @@
                       v-model="confirmPassword"
                       name="password_confirmation"
                       label="Confirm Password"
-                      type="password"
+                      :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="passwordVisible ? 'text' : 'password'"
+                      @click:append="passwordVisible = !passwordVisible"
                       placeholder
                       required
                     />
@@ -109,7 +113,8 @@ export default {
       {type: 'Activist'},
       {type: 'Concerned Citizen'}
     ],
-    selectedType: null
+    selectedType: null,
+    passwordVisible: false
   }),
   methods: {
     // should probably move this to store
