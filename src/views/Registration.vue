@@ -44,7 +44,7 @@
                       :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
                       :type="passwordVisible ? 'text' : 'password'"
                       @click:append="passwordVisible = !passwordVisible"
-                      
+                      placeholder
                       required
                     />
                     <v-text-field
