@@ -93,7 +93,7 @@
                 <h6>
                   You haven't opened any datasets recently. Click
                   <span>
-                    <a href @click="redirectBrowse">Browse</a>
+                    <router-link to="/browse">Browse</router-link>
                   </span> to view the datasets.
                 </h6>
               </div>
@@ -153,7 +153,7 @@
                 <h6>
                   You don't have any recently created datasets. Click on the Create Tab on the
                   <span>
-                    <a href @click="redirectBrowse">Browse</a>
+                    <router-link to="/browse">Browse</router-link>
                   </span> screen to upload a new dataset.
                 </h6>
               </div>
@@ -192,12 +192,6 @@ export default {
   name: "DashboardView",
   components: {
     DatasetCard
-  },
-
-  methods: {
-    redirectBrowse() {
-      this.$router.push("/browse");
-    }
   },
 
   computed: {
@@ -246,11 +240,12 @@ export default {
 }
 
 .datasetTitle {
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 50px;
+  text-align: center;
 }
 
-.noneTag {
-  padding-left: 240px;
+.noneTag h6 {
+  text-align: center;
 }
 </style>
