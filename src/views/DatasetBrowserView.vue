@@ -1,14 +1,32 @@
 <template>
-<div>
+  <div>
     <div class="row">
       <div class="col-md-6">
-        <v-btn dark color="success" small class="dashboardButton" @click="switchComponent('browse')">
+        <v-btn
+          dark
+          color="success"
+          small
+          class="dashboardButton"
+          @click="switchComponent('browse')"
+        >
           <v-icon>mdi-view-carousel</v-icon>Browse
         </v-btn>
-          <v-btn dark color="success" small class="dashboardButton" @click="switchComponent('upload')">
-            <v-icon>mdi-plus</v-icon>Create
-          </v-btn>
-        <v-btn dark color="success" small class="dashboardButton" @click="switchComponent('manage')">
+        <v-btn
+          dark
+          color="success"
+          small
+          class="dashboardButton"
+          @click="switchComponent('upload')"
+        >
+          <v-icon>mdi-plus</v-icon>Create
+        </v-btn>
+        <v-btn
+          dark
+          color="success"
+          small
+          class="dashboardButton"
+          @click="switchComponent('manage')"
+        >
           <v-icon>mdi-format-list-bulleted-square</v-icon>Manage
         </v-btn>
       </div>
@@ -27,7 +45,7 @@
       </div>
     </div>
     <component v-bind:is="component"></component>
-</div>
+  </div>
 </template>
 
 <script>
@@ -43,13 +61,22 @@ export default {
   },
   data() {
     return {
-      component: (this.$route.params.component ? this.validateComponent(this.$route.params.component) : "browse")
+      component: this.$route.params.component
+        ? this.validateComponent(this.$route.params.component)
+        : "browse"
     };
   },
   methods: {
     searchSubmit() {
       if (document.getElementById("search") == undefined) {
         this.$store.dispatch("filterDatasets", "");
+      } else if (
+        (document.getElementById("search") == undefined ||
+          document.getElementById("search").value == "" ||
+          document.getElementById("search").value == " ") &&
+        this.component == "manage"
+      ) {
+        this.$store.dispatch("fetchUserDatasets");
       } else {
         this.$store.dispatch(
           "filterDatasets",
@@ -60,19 +87,17 @@ export default {
     switchComponent(component) {
       this.component = this.validateComponent(component);
       if (this.component != "browse") {
-        this.$router.push("/browse/" + this.component); 
-      }
-      else {
+        this.$router.push("/browse/" + this.component);
+      } else {
         this.$router.push("/browse");
       }
     },
     validateComponent(component) {
-      const allowedComponents = ["browse", "manage", "upload"]
+      const allowedComponents = ["browse", "manage", "upload"];
       if (allowedComponents.includes(component)) {
         return component;
-      }
-      else {
-        return "browse"; 
+      } else {
+        return "browse";
       }
     }
   },
