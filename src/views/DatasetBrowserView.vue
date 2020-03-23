@@ -12,7 +12,7 @@
           <v-icon>mdi-format-list-bulleted-square</v-icon>Manage
         </v-btn>
       </div>
-      <div class="col-md-6" v-if="this.component == 'browse'">
+      <div class="col-md-6" v-if="this.component == 'browse' || 'manage'">
         <b-nav-form @submit.prevent="searchSubmit">
           <b-form-input
             size="sm"

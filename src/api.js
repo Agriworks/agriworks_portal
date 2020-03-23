@@ -35,7 +35,13 @@ const api = {
       store.dispatch("fetchDatasets");
     } else {
       get(`/dataset/search/${searchQuery}`)
-        .then(response => store.commit("setDatasets", response.data))
+        .then(response => {
+          if (response.data.type == "user") {
+            store.commit("setUserDatasets", response.data.datasets)
+          } else {
+            store.commit("setDatasets", { datasets: response.data.datasets, append: false })
+          }
+        })
         .catch(() => notify("Error filtering datasets", colors.red));
     }
   },
