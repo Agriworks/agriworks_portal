@@ -58,10 +58,6 @@
                       placeholder
                       required
                     />
-                    <div class="form-label-group custom-control custom-checkbox mb-3">
-                      <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                      <label class="custom-control-label" for="customCheck1">Remember password</label>
-                    </div>
                   </v-col>
                   <v-col cols="6" sm="6">
                     <v-text-field
