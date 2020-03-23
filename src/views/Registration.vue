@@ -8,48 +8,48 @@
               <v-form @submit.prevent="signup" class="form-signin">
                 <v-row>
                   <v-col cols="12" sm="6">
-                    <label for="firstName">First Name</label>
                     <v-text-field
                       v-model="firstName"
                       name="firstName"
+                      label="First Name"
                       type="text"
                       placeholder
                       required
                       autofocus
                     />
-                    <label for="lastName">Last Name</label>
                     <v-text-field
                       v-model="lastName"
                       name="lastName"
+                      label="Last Name"
                       type="text"
                       placeholder
                       required
                       autofocus
                     />
-                    <label for="inputEmail">Email</label>
                     <v-text-field
                       v-model="email"
                       name="email"
+                      label="Email"
                       type="email"
                       placeholder
                       required
                       autofocus
                     />
                     <p></p>
-                    <label for="inputPassword">Password</label>
                     <v-text-field
                       v-validate="'required|'"
                       v-model="password"
                       name="password"
+                      label="Password"
                       type="password"
                       placeholder
                       required
                     />
-                    <label for="confirmPassword">Confirm Password</label>
                     <v-text-field
                       v-validate="'required|confirmed:password'"
                       v-model="confirmPassword"
                       name="password_confirmation"
+                      label="Confirm Password"
                       type="password"
                       placeholder
                       required
@@ -60,25 +60,23 @@
                     </div>
                   </v-col>
                   <v-col cols="6" sm="6">
-                    <label for="organization">Organization</label>
                     <v-text-field
                       v-model="inputOrganization"
                       name="organization"
+                      label="Organization"
                       type="text"
                       placeholder
                       required
                       autofocus
                     />
-                    <label for="userType">What kind of user are you?</label>
                     <v-select
                       v-model="selectedType"
                       :items = "items"
-                      label="Select"
+                      label="What kind of user are you?"
                       item-text="type"
                       return-object
                       placeholder
                       required
-                      outlined
                     ></v-select>
                   </v-col>
                   <v-flex align-center>
