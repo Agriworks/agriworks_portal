@@ -89,10 +89,13 @@
                   <DatasetCard v-bind:dataset="dataset" />
                 </div>
               </div>
-              <div v-else class="carousel-inner">
-                <div class="col-md-12">
-                  <h6>You haven't opened any datasets recently. Click Browse to see datasets</h6>
-                </div>
+              <div v-else class="noneTag">
+                <h6>
+                  You haven't opened any datasets recently. Click
+                  <span>
+                    <a href @click="redirectBrowse">Browse</a>
+                  </span> to view the datasets.
+                </h6>
               </div>
               <a
                 v-if="recentDatasets.length > 0"
@@ -147,14 +150,12 @@
                 </div>
               </div>
               <div v-else class="noneTag">
-                <div>
-                  <h6>
-                    You don't have any recently created datasets. Click
-                    <span>
-                      <a @click="redirectCreate">Create</a>
-                    </span> to upload a new dataset.
-                  </h6>
-                </div>
+                <h6>
+                  You don't have any recently created datasets. Click on the Create Tab on the
+                  <span>
+                    <a href @click="redirectBrowse">Browse</a>
+                  </span> screen to upload a new dataset.
+                </h6>
               </div>
               <a
                 v-if="newDatasets.length > 0"
@@ -194,10 +195,6 @@ export default {
   },
 
   methods: {
-    redirectCreate() {
-      this.$router.push("/browse/upload");
-    },
-
     redirectBrowse() {
       this.$router.push("/browse");
     }
@@ -250,10 +247,10 @@ export default {
 
 .datasetTitle {
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 .noneTag {
-  padding-left: 220px;
+  padding-left: 240px;
 }
 </style>
