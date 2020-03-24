@@ -1,97 +1,135 @@
 <template>
-  <div class="container">
+  <b-container>
     <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <v-card class="shadow rounded">
+      <div class="col-sm-9 col-md-7 col-lg-10 mx-auto" id="singupFormContainer">
+        <v-card class="rounded-card" :elevation="5">
           <div class="card-body">
             <h3 class="card-title text-center">Sign Up</h3>
-            <form @submit.prevent="signup" class="form-signin"
-            oninput="password2.setCustomValidity(password2.value != password.value ? 'Passwords do not match.' : '')">
-              <div class="form-label-group">
-                <label for="firstName">First Name</label>
-                <input
-                  name="firstName"
-                  type="text"
-                  id="firstName"
-                  class="form-control"
-                  placeholder
-                  required
-                  autofocus
-                />
+              <v-form @submit.prevent="signup" class="form-signin">
+                <v-row>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="firstName"
+                      name="firstName"
+                      label="First Name"
+                      type="text"
+                      placeholder
+                      required
+                      autofocus
+                    />
+                    <v-text-field
+                      v-model="lastName"
+                      name="lastName"
+                      label="Last Name"
+                      type="text"
+                      placeholder
+                      required
+                      autofocus
+                    />
+                    <v-text-field
+                      v-model="email"
+                      name="email"
+                      label="Email"
+                      type="email"
+                      placeholder
+                      required
+                      autofocus
+                    />
+                    <p></p>
+                    <v-text-field
+                      v-validate="'required|'"
+                      v-model="password"
+                      name="password"
+                      label="Password"
+                      :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="passwordVisible ? 'text' : 'password'"
+                      @click:append="passwordVisible = !passwordVisible"
+                      placeholder
+                      required
+                    />
+                    <v-text-field
+                      v-validate="'required|confirmed:password'"
+                      v-model="confirmPassword"
+                      name="password_confirmation"
+                      label="Confirm Password"
+                      :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="passwordVisible ? 'text' : 'password'"
+                      @click:append="passwordVisible = !passwordVisible"
+                      placeholder
+                      required
+                    />
+                  </v-col>
+                  <v-col cols="6" sm="6">
+                    <v-text-field
+                      v-model="inputOrganization"
+                      name="organization"
+                      label="Organization"
+                      type="text"
+                      placeholder
+                      required
+                      autofocus
+                    />
+                    <v-select
+                      v-model="selectedType"
+                      :items = "items"
+                      label="What kind of user are you?"
+                      item-text="type"
+                      return-object
+                      placeholder
+                      required
+                    ></v-select>
+                    <img
+                    class="card-img center"
+                    src="../assets/logo_transparent_cropped.png"
+                    alt="Card image cap"
+                    align="middle"
+                    id="logo"
+                    />
+                  </v-col>
+                  <v-flex align-center>
+                    <div align="center">
+                      <v-btn color="success" :outlined="true" @click="signup" id="submitButton">Sign Up</v-btn>
+                    </div>
+                  </v-flex>
+                </v-row>
+              </v-form>
+              <div align="center">
+                <div class="custom-control custom-checkbox mb-3">
+                  <p>Already have an Account? Press <a href="/login">here</a> to login. </p>
+                </div>
               </div>
-              <div class="form-label-group">
-                <label for="lastName">Last Name</label>
-                <input
-                  name="lastName"
-                  type="text"
-                  id="lastName"
-                  class="form-control"
-                  placeholder
-                  required
-                  autofocus
-                />
-              </div>
-              <div class="form-label-group">
-                <label for="inputEmail">Email</label>
-                <input
-                  name="email"
-                  type="email"
-                  id="inputEmail"
-                  class="form-control"
-                  placeholder
-                  required
-                  autofocus
-                />
-              </div>
-              <p></p>
-              <div class="form-label-group">
-                <label for="inputPassword">Password</label>
-                <input
-                  v-validate="'required|'"
-                  name="password"
-                  type="password"
-                  id="inputPassword"
-                  ref="password"
-                  class="form-control"
-                  placeholder
-                  required
-                />
-              </div>
-              <div class="form-label-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <input
-                  v-validate="'required|'"
-                  name="password2"
-                  type="password"
-                  id="password2"
-                  data-vv-as="password"
-                  class="form-control"
-                  placeholder
-                  required
-                />
-              </div>
-              <v-btn color="success" :outlined="true" type="submit">Sign Up</v-btn>
-              <p>Already have an Account? Press <a href="/login">here</a> to login. </p>
-            </form>
           </div>
         </v-card>
       </div>
     </div>
-  </div>
+  </b-container>
 </template>
 
 <script>
 import { post } from "../requests";
 
 export default {
+  data: () => ({
+    items: [
+      {type: 'Researcher'},
+      {type: 'Policy Maker'},
+      {type: 'Activist'},
+      {type: 'Concerned Citizen'}
+    ],
+    selectedType: null,
+    passwordVisible: false
+  }),
   methods: {
     // should probably move this to store
     signup() {
       post("/auth/signup", {
-        firstName: document.getElementById("firstName").value,
-        lastName: document.getElementById("lastName").value,
-        email: document.getElementById("inputEmail").value,
-        password: document.getElementById("inputPassword").value
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
+        organization: this.inputOrganization,
+        userType: this.selectedType.type
+        //, comfirmPassword: document.getElementByID("comfirmPassword").value (needs to be done in backend)
       })
         .then(res => {
           this.$router.push("login");
@@ -125,5 +163,9 @@ button {
 }
 .rounded-card {
   border-radius: 2% !important;
+}
+
+#logo {
+  margin-top: 2rem;
 }
 </style>
