@@ -78,6 +78,13 @@
                       placeholder
                       required
                     ></v-select>
+                    <img
+                    class="card-img center"
+                    src="../assets/logo_transparent_cropped.png"
+                    alt="Card image cap"
+                    align="middle"
+                    id="logo"
+                    />
                   </v-col>
                   <v-flex align-center>
                     <div align="center">
@@ -156,5 +163,9 @@ button {
 }
 .rounded-card {
   border-radius: 2% !important;
+}
+
+#logo {
+  margin-top: 2rem;
 }
 </style>
