@@ -4,13 +4,24 @@
     <div class="col-md-6" id="loginFormContainer">
       <v-card class="rounded-card" :elevation="5">
           <div class="card-body">
-            <img
-            class="card-img center"
-            src="../assets/logo_transparent_cropped.png"
-            alt="Card image cap"
-            align="middle"
-            id="logo"
-          />
+            <div v-if="!$vuetify.theme.dark">
+              <img
+              class="card-img center"
+              src="../assets/logo_transparent_2_black.png"
+              alt="Card image cap"
+              align="middle"
+              id="logo"
+            />
+            </div>
+            <div v-if="$vuetify.theme.dark">
+              <img
+              class="card-img center"
+              src="../assets/logo_transparent_2_white_text.png"
+              alt="Card image cap"
+              align="middle"
+              id="logo"
+            />
+            </div>
             <v-form>
               <v-text-field
               v-model="email"
@@ -45,7 +56,7 @@
         <li class="bulletPoint"> <v-icon medium color="#96D34A">mdi-send</v-icon> Formulate dataset templates for data collection </li>
       </ul>
       <div id="h4iStampContainer">
-        <h5> Proudly built by  <a href="https://www.hack4impactbu.com/index.html" target="_blank"><img src="../assets/hack4impactlogo.png" width="35%"/></a></h5>
+        <h5> Proudly built by  <a href="https://www.hack4impactbu.com/index.html" target="_blank"><span v-if="!$vuetify.theme.dark"><img src="../assets/hack4impactlogo.png" width="35%"/></span><span v-if="$vuetify.theme.dark"><img src="../assets/hack4impactlogo_white.png" width="35%"/></span></a></h5>
       </div>
     </div>
   </div>
