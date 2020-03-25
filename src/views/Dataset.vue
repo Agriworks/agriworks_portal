@@ -1,5 +1,5 @@
 <template>
-<div id="datasetContainer" v-if="this.dataset">
+<div id="datasetContainer">
     <div class="row">
       <div class="d-flex justify-content-center col-sm-6" id="datasetInfoContainer">
         <h5> {{dataset.type}} </h5>
@@ -59,12 +59,11 @@
       </div>
     </div>
     <div class="row">
-      <DataTable :headers="dataset.headers" :data="data" id="datatable"/>
-    </div>
-  </div>
-  <div v-else>
-    <div v-if="!hideLoadingIndicator">
-      <LoadingIndicator/>
+       <DataTable :headers="dataset.headers" :data="data" :isLoading="tableIsLoading" id="datatable"/>
+      <div class="row" v-if="additionalDataObjectsLoading" id="SubsequentDataObjectLoadingIndicator">
+        <p> Loading data ... </p>
+        <LoadingIndicator/>
+      </div>
     </div>
   </div>
 </template>
@@ -77,39 +76,77 @@ import LoadingIndicator from "../components/LoadingIndicator";
 import api from '../api';
 import notify from '../utilities/notify';
 import { colors } from '../utilities/branding';
+import $ from "jquery";
 
 export default {
     name: "Dataset", 
     components: {
       DataTable,
-      LoadingIndicator
+      LoadingIndicator,
     },
     data(){
       return {
         hideTags : true,
         dataset: null,
-        hideLoadingIndicator: false,
         data: [],
-        test: ""
+        cacheId: null,
+        tableIsLoading: true,
+        additionalDataObjectsLoading: false
       }
     },
     created(){
-      api.fetchDataset(this.$route.params.id)
+      api.fetchDatasetInfo(this.$route.params.id)
       .then((response) => {
         this.dataset = response.data;
       })
-      .catch((err) => {
-        this.hideLoadingIndicator = true
-        notify("Error fetching dataset. Please try again", colors.red);
+      .catch(() => {
+        notify("Error fetching dataset metadata.", colors.red);
       });
-      let datasetSource = new EventSource(`/api/dataset/stream/${this.$route.params.id}`);
-      datasetSource.addEventListener("message", (e) => {
-        if (e.data == "stop") {
-          datasetSource.close();
-        } else {
-          this.data.push(JSON.parse(e.data));
-        } 
+      api.fetchPrimaryDatasetObjects(this.$route.params.id)
+      .then((response) => {
+        this.data = response.data.datasetObjects;
+        this.tableIsLoading = false;
+        if (response.data.cacheId) {
+          this.cacheId = response.data.cacheId;
+        }
+      })
+      .catch(() => {
+        notify("Error fetching dataset objects.", colors.red);
       });
+      $(window).scroll(() => {
+        if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+          if (this.cacheId && !this.additionalDataObjectsLoading) {
+            this.additionalDataObjectsLoading = true;
+            api.fetchSubsequentDatasetObjects(this.cacheId)
+            .then((response) => {
+              this.data = this.data.concat(response.data.datasetObjects);
+              this.additionalDataObjectsLoading = false;
+              if (response.data.cacheId) {
+                this.cacheId = response.data.cacheId;
+              } else {
+                this.cacheId = null;
+              }
+            })
+           .catch(() => {
+             notify("Error fetching subsequent dataset objects.", colors.red);
+           })
+          }
+        }
+      });
+    },
+    destroyed() {
+      if (this.cacheId) {
+        api.evictDatasetFromCache(this.cacheId)
+        .then(() => {
+          notify("Evicted dataset from cache.", colors.green);
+        })
+        .catch(() => {
+          notify("Error evicting dataset from cache.", colors.red);
+        })
+      }
+      this.cacheId = null;
+      this.dataset = null;
+      this.data = null;
     },
     methods: {
       changeTagStatus() {
@@ -128,12 +165,14 @@ export default {
 
           fileLink.click();
         })
-        .catch(response => {
+        .catch(() => {
           notify("Unable to download file. Please try again later.", colors.red)
         })
       },
     }
 }
+
+
 </script>
 
 <style scoped>
@@ -152,4 +191,10 @@ export default {
   border: 1px solid #a2e510;
 }
 
+#SubsequentDataObjectLoadingIndicator {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 1rem;
+}
 </style>

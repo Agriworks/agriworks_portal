@@ -2,7 +2,10 @@
   <v-data-table 
   :headers="headers"
   :items="data"
-  :items-per-page="10"
+  :disable-pagination="true"
+  :loading="isLoading"
+  :fixed-header="true"
+  :hide-default-footer="true"
   ></v-data-table>
 </template>
 <script>
@@ -10,7 +13,7 @@
 import Vue from "vue";
 export default {
     name: "DataTable",
-    props: ["headers", "data"],
+    props: ["headers", "data", "isLoading"],
 }
 </script>
 <style scoped>

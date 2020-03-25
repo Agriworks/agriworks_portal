@@ -20,8 +20,17 @@ const api = {
       });
 
   },
-  fetchDataset(id) {
-    return get(`/dataset/${id}`);
+  fetchDatasetInfo(id) {
+    return get(`/dataset/metadata/${id}`);
+  },
+  fetchPrimaryDatasetObjects(id) {
+    return get(`/dataset/objects/primary/${id}`);
+  },
+  fetchSubsequentDatasetObjects(cacheId) {
+    return get(`/dataset/objects/subsequent/${cacheId}`);
+  },
+  evictDatasetFromCache(cacheId) {
+    return get(`/dataset/objects/evict/${cacheId}`)
   },
   uploadDataset(file, name, tags, permissions, type) {
     let newDataset = new FormData();
