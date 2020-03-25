@@ -1,18 +1,19 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
-import store from "./store"; // TODO: How do we import the store globally ? 
+import store from "./store"; // TODO: How do we import the store globally ?
+import api from "./api";
 
 Vue.use(Router);
 
 const redirectIfLoggedIn = function(next) {
-  if (store.getters.isLoggedIn) {
-    next("dashboard");
-  }
-  else{
+  if (store.getters.isLoggedIn == true) {
+    next("browse");
+  } else if (store.getters.isLoggedIn == "unset") {
+    api.verifyLogin();
+  } else {
     next();
   }
-}
+};
 
 const router = new Router({
   mode: "history",
@@ -21,15 +22,34 @@ const router = new Router({
     {
       path: "/",
       name: "Home",
-      component: Home
+      component: () => import("./views/Landing.vue"),
+      beforeEnter: (to, from, next) => redirectIfLoggedIn(next)
     },
     {
-      path: '/upload',
-      name: 'uploadscreen',
-      component: () => import('./views/UploadScreen.vue'),
+      path: "/browse/:component",
+      name: "browse",
+      component: () => import("./views/DatasetBrowserView.vue"),
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/browse",
+      name: "browseDefault",
+      component: () => import("./views/DatasetBrowserView.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/forgot-password",
+      name: "forgot-password",
+      component: () => import("./views/ForgotPassword.vue")
+    },
+    {
+      path: "/reset-password/:id",
+      name: "reset-password",
+      component: () => import("./views/ResetPassword.vue")
     },
     {
       path: "/login",
@@ -56,21 +76,13 @@ const router = new Router({
       name: "dataset",
       component: () => import("./views/Dataset.vue"),
       meta: {
-        requiresAuth: false,
+        requiresAuth: false
       }
     },
     {
       path: "/account",
       name: "Account",
-      component: () =>import("./views/Account.vue"),
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: "/browse",
-      name: "Browse",
-      component: () => import("./views/DatasetBrowserView.vue"),
+      component: () => import("./views/Account.vue"),
       meta: {
         requiresAuth: true
       }
@@ -89,35 +101,30 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  let auth = store.getters.isLoggedIn;
+  let authorized = store.getters.isLoggedIn;
   let admin = false; //TODO: Set admin permission
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (auth) {
+    if (authorized == "unset") {
+      api.verifyLogin();
+    } else if (authorized == true) {
       if (to.matched.some(record => record.meta.is_admin)) {
         //check to see if admin
         if (admin) {
           next();
-        }
-        else{
-          store.commit("setErrorMessage", "User Does Not Have Admin Privileges")
-          store.commit("setShowError", true)
+        } else {
+          console.log("no admin")
         }
       } else {
-        store.commit("setErrorMessage", "User Does Not Have Admin Privileges")
-        store.commit("setShowError", true)
         //authorize to dashboard if user is logged in but is not admin
         next();
       }
     } else {
       //redirect to login page if user is not authorized to view dashboard
-      store.commit("setErrorMessage", "User Is Not Logged In")
-      store.commit("setShowError", true)
       next({
         path: "/login",
         query: { redirect: to.fullPath }
       });
-
     }
   } else {
     next();

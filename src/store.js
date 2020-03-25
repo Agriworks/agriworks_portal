@@ -1,80 +1,120 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import { post } from './requests';
-import { addCookie, wasAlreadyLoggedIn } from './js/authentication';
-import client from "api-client" //TODO: check config value 
-import server from "./api/server/index"
+import Vue from "vue";
+import Vuex from "vuex";
+import api from "./api";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    loggedIn: true, 
-    errorMessage: "", 
-    showError: false,
+    //Initial state
+    isAdmin: false,
+    loggedIn: "unset",
+    snackbar: {
+      message: "",
+      show: false,
+      color: ""
+    },
     datasets: [],
-    dataset: {},
-    user: ""
+    dataset: [],
+    popularDatasets: [],
+    recentDatasets: [],
+    newDatasets: [],
+    user: "", //the email address of the user,
+    userDatasets: [],
   },
   mutations: {
+    setIsAdmin(state) {
+      state.isAdmin = true;
+    },
+    setLoggedInFalse(state) {
+      state.loggedIn = false;
+    },
     setLoggedInTrue(state) {
       state.loggedIn = true;
-    }, 
-    setErrorMessage (state, error) {
-      state.errorMessage = error; 
-    }, 
-    setShowError (state, val) {
-      state.showError = val; 
     },
-    setDatasets (state, datasets) {
-      state.datasets = datasets;
+    setSnackbar(state, snackbar) {
+      state.snackbar.message = snackbar.message;
+      state.snackbar.show = snackbar.show;
+      state.snackbar.color = snackbar.color;
+    },
+    setDatasets(state, datasets) {
+      if (datasets.append) {
+        state.datasets = [...state.datasets, ...datasets.datasets];
+      }
+      else {
+        state.datasets = datasets.datasets;
+      }
     },
     setDataset(state, dataset) {
       state.dataset = dataset;
     },
-    setUser(state, user) {
-      state.user = user;
+    setPopularDatasets(state, datasets) {
+      state.popularDatasets = datasets;
+    },
+    setRecentDatasets(state, datasets) {
+      state.recentDatasets = datasets;
+    },
+    setNewDatasets(state, datasets) {
+      state.newDatasets = datasets;
+    },
+    setUser(state, email) {
+      state.user = email;
+      state.loggedIn = true;
+    },
+    setUserDatasets(state, datasets) {
+      state.userDatasets = datasets
     }
+
   },
   getters: {
-    isLoggedIn: (state) => {
-      return state.loggedIn
-    }, 
-    getErrorMessage: (state) => {
-      return state.errorMessage
-    }, 
-    getShowError: (state) => {
-      return state.showError
+    isAdmin: state => {
+      return state.isAdmin;
     },
-    getUser: (state) => {
-      return state.user 
+    isLoggedIn: state => {
+      return state.loggedIn;
+    },
+    getErrorMessage: state => {
+      return state.snackbar.errorMessage;
+    },
+    getShowError: state => {
+      return state.snackbar.showError;
+    },
+    getSuccessMessage: state => {
+      return state.snackbar.successMessage;
+    },
+    getShowSuccess: state => {
+      return state.snackbar.showSuccess;
     }
   },
   actions: {
-    retrieveSessionID(state, payload) {
-      return new Promise((resolve, reject) => {
-        post("/auth/login", payload)
-          .then(response => {
-            addCookie(response.data.key, response.data.value, response.data.expires);
-            store.commit("setLoggedInTrue");
-            resolve(response);
-          })
-          .catch(error => {
-            console.log(error);
-            reject(error);
-          })
-      })
+    fetchDatasets(state, pageNumber) {
+      api.fetchDatasets(pageNumber);
     },
-    fetchDatasets ({commit}) {
-      return server.fetchDatasets().then(datasets => commit('setDatasets', datasets))
+    fetchDataset(state, id) {
+      api.fetchDataset(id);
     },
-    fetchDataset ({commit}, data) {
-      return server.fetchDataset(data.id).then(dataset => commit('setDataset', dataset)) 
+    fetchUserDatasets(state) {
+      api.fetchUserDatasets();
     },
-    uploadDataset ({commit}, newDataset) {
-      return server.uploadDataset(newDataset.file, newDataset.name, newDataset.tags, newDataset.permissions, newDataset.type)//TODO: correctly return success/error message
+    fetchPopularDatasets(state) {
+      api.fetchPopularDatasets();
+    },
+    fetchRecentDatasets(state) {
+      api.fetchRecentDatasets();
+    },
+    fetchNewDatasets(state) {
+      api.fetchNewDatasets();
+    },
+    filterDatasets(state, searchQuery) {
+      api.filterDatasets(searchQuery);
+    },
+    deleteDataset(state, id) {
+      api.deleteDataset(id);
+    },
+    logout(state) {
+      api.logout();
     }
   }
-})
+});
 
 export default store;

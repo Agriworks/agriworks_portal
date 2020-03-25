@@ -2,7 +2,7 @@
   <v-data-table 
   :headers="headers"
   :items="data"
-  :items-per-page="5"
+  :items-per-page="10"
   ></v-data-table>
 </template>
 <script>
