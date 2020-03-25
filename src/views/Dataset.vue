@@ -137,9 +137,6 @@ export default {
     destroyed() {
       if (this.cacheId) {
         api.evictDatasetFromCache(this.cacheId)
-        .then(() => {
-          notify("Evicted dataset from cache.", colors.green);
-        })
         .catch(() => {
           notify("Error evicting dataset from cache.", colors.red);
         })
