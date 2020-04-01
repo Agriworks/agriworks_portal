@@ -96,6 +96,11 @@ const router = new Router({
       path: "/charts",
       name: "Charts",
       component: () => import("./views/Charts.vue")
+    },
+    {
+      path: "/waitforupload",
+      name: "WaitForUpload",
+      component: () => import("./views/UploadWaitView.vue")
     }
   ]
 });

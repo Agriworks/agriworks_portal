@@ -56,6 +56,7 @@
 
 <script>
 import api from "../../api";
+import router from "../../router";
 import notify from '../../utilities/notify';
 import { colors } from '../../utilities/branding';
 
@@ -86,15 +87,22 @@ export default {
   methods: {
     processForm() {
       this.loading = true;
+
+      var timer = setTimeout(function() {
+        router.push({name: "WaitForUpload"});
+      }, 7515);
+
       this.datasetTags = [...new Set(this.datasetTags)];
       api.uploadDataset(this.file, this.datasetName, this.datasetTags, this.datasetPermissions, this.datasetType)
       .then(response => {
         this.loading = false;
         this.$router.push(`/dataset/${response.data.message}`);
+        clearTimeout(timer);
       })
       .catch(error => {
         this.loading = false;
         this.$store.dispatch("notifyError", error.response.data.message);
+        clearTimeout(timer);
       })
     },
     remove (item) {
