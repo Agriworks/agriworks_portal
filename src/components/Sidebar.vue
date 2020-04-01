@@ -8,8 +8,8 @@
       expand-on-hover
       permanent
     >
-      <v-list-item>
-        <v-img v-if="!mini" src="../assets/logo_transparent_2_white_text.png" />
+      <v-list-item >
+        <v-img v-if="!mini" src="../assets/logo_transparent_2_white_text.png" contain="true" />
         <v-img v-else src="../assets/mini_logo.png" max-height="50" max-width="50" />
       </v-list-item>
 
