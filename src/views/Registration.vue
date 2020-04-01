@@ -65,7 +65,7 @@
                     />
                     <v-text-field
                     ref="password"
-                    v-validate="'required'"
+                    v-validate="'required|password'"
                     v-model="password"
                     name="password"
                     label="Password"
@@ -82,6 +82,8 @@
                     label="Confirm Password"
                     :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
                     :type="passwordVisible ? 'text' : 'password'"
+
+                    :error-messages = "passwordMatchError"
                     @click:append="passwordVisible = !passwordVisible"
                     placeholder
                     required
@@ -120,7 +122,6 @@ export default {
     ],
     selectedType: null,
     passwordVisible: false,
-    location: null,
     password: '',
     confirmPassword: ""
   }),
@@ -134,7 +135,7 @@ export default {
         password: this.password,
         confirmPassword: this.confirmPassword,
         organization: this.inputOrganization,
-        location: this.location,
+        location: this.inputLocation,
         userType: this.selectedType.type
         //, comfirmPassword: document.getElementByID("comfirmPassword").value (needs to be done in backend)
       })
