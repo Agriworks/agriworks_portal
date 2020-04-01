@@ -5,7 +5,7 @@
       dark
       :color="color"
       :mini-variant.sync="mini"
-      expand-on-hover
+      :expand-on-hover="expand_on_hover"
       permanent
     >
       <v-list-item>
@@ -39,12 +39,18 @@
         </v-list-item>
         </div>
         <template v-if="!mini">
-        <v-card-actions class="card-actions">
-        <v-list-item>
-          <v-switch v-model="$vuetify.theme.dark"  color="green"></v-switch>
-          <v-list-item-title> Dark Mode </v-list-item-title>
-        </v-list-item>
-        </v-card-actions>
+          <v-card-actions class="card-actions">
+            <v-list dense style="display:flex;flex-direction:column;">
+              <v-list-item>
+                <v-switch v-model="$vuetify.theme.dark"  color="green"></v-switch>
+                <v-list-item-title> Dark Mode </v-list-item-title>
+              </v-list-item>
+              <v-list-item>
+                <v-switch v-model="lockSidebar" color="green"></v-switch>
+                <v-list-item-title> Always open sidebar </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-card-actions>
         </template>
       </v-list>
     </v-navigation-drawer>
@@ -89,8 +95,22 @@ export default {
         }
       ],
       mini: true,
-      color: "#212121"
+      color: "#212121",
+      lockSidebar: false,
+      expand_on_hover: true,
     };
+  },
+  watch: {
+      lockSidebar: function() {
+        if (this.lockSidebar == true) {
+          this.expand_on_hover= false
+        }
+        else
+        {
+          this.expand_on_hover= true
+
+        }
+      }
   },
   methods: {
     mockSignOut() {
