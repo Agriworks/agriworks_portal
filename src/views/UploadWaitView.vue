@@ -1,6 +1,6 @@
 <template>
     <div class="waitmessage">
-        <img src="../assets/upload (2).png" alt="upload icon">
+        <img src="../assets/upload.png" alt="upload icon">
         <h3>Congratulations! Your dataset is being processed. You are free to leave this page and you'll receive an email once it's finished.</h3>
     </div>
 </template>
