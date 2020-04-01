@@ -1,5 +1,6 @@
 <template>
   <v-data-table 
+  height="95vh"
   :headers="headers"
   :items="data"
   :disable-pagination="true"
