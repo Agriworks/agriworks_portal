@@ -101,7 +101,7 @@ export default {
       })
       .catch(error => {
         this.loading = false;
-        this.$store.dispatch("notifyError", error.response.data.message);
+        notify(error.response.data.message, colors.red);
         clearTimeout(timer);
       })
     },
