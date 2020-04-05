@@ -1,6 +1,6 @@
 <template>
+<!-- to stick the data table header to top, pass in height attribute e.g height=95vh !-->
   <v-data-table 
-  height="95vh"
   :headers="headers"
   :items="data"
   :disable-pagination="true"
