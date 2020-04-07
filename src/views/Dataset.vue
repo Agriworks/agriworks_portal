@@ -101,6 +101,7 @@ export default {
       })
       .catch(() => {
         notify("Error fetching dataset metadata.", colors.red);
+        this.$router.push("/browse");
       });
       api.fetchPrimaryDatasetObjects(this.$route.params.id)
       .then((response) => {
@@ -112,6 +113,7 @@ export default {
       })
       .catch(() => {
         notify("Error fetching dataset objects.", colors.red);
+        this.$router.push("/browse");
       });
       $(window).scroll(() => {
         if ($(window).scrollTop() + $(window).height() == $(document).height()) {
