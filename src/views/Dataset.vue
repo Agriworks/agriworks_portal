@@ -98,21 +98,21 @@ export default {
       api.fetchDatasetInfo(this.$route.params.id)
       .then((response) => {
         this.dataset = response.data;
+        api.fetchPrimaryDatasetObjects(this.$route.params.id)
+        .then((response) => {
+          this.data = response.data.datasetObjects;
+          this.tableIsLoading = false;
+          if (response.data.cacheId) {
+            this.cacheId = response.data.cacheId;
+          }
+        })
+        .catch((error) => {
+          notify(error.response.data.message, colors.red);
+          this.$router.push("/browse");
+        });
       })
-      .catch(() => {
-        notify("Error fetching dataset metadata.", colors.red);
-        this.$router.push("/browse");
-      });
-      api.fetchPrimaryDatasetObjects(this.$route.params.id)
-      .then((response) => {
-        this.data = response.data.datasetObjects;
-        this.tableIsLoading = false;
-        if (response.data.cacheId) {
-          this.cacheId = response.data.cacheId;
-        }
-      })
-      .catch(() => {
-        notify("Error fetching dataset objects.", colors.red);
+      .catch((error) => {
+        notify(error.response.data.message, colors.red);
         this.$router.push("/browse");
       });
       $(window).scroll(() => {
