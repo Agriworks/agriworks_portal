@@ -95,7 +95,11 @@ export default {
           });
         })
         .catch(err => {
-          console.log(err);
+          this.$store.commit("setSnackbar", {
+            message: err.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
         });
     }
   },
