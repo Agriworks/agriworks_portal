@@ -4,6 +4,7 @@
       <div class="col-sm-9 col-md-7 col-lg-10 mx-auto" id="singupFormContainer">
         <v-card class="rounded-card" :elevation="5">
           <div class="card-body">
+          
             <h3 class="card-title text-center">Sign Up</h3>
               <v-form @submit.prevent="signup" class="form-signin">
                 <v-row>
@@ -35,40 +36,6 @@
                       required
                       autofocus
                     />
-                    <p></p>
-                    <v-text-field
-                      v-validate="'required|'"
-                      v-model="password"
-                      name="password"
-                      label="Password"
-                      :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                      :type="passwordVisible ? 'text' : 'password'"
-                      @click:append="passwordVisible = !passwordVisible"
-                      placeholder
-                      required
-                    />
-                    <v-text-field
-                      v-validate="'required|confirmed:password'"
-                      v-model="confirmPassword"
-                      name="password_confirmation"
-                      label="Confirm Password"
-                      :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-                      :type="passwordVisible ? 'text' : 'password'"
-                      @click:append="passwordVisible = !passwordVisible"
-                      placeholder
-                      required
-                    />
-                  </v-col>
-                  <v-col cols="6" sm="6">
-                    <v-text-field
-                      v-model="inputOrganization"
-                      name="organization"
-                      label="Organization"
-                      type="text"
-                      placeholder
-                      required
-                      autofocus
-                    />
                     <v-select
                       v-model="selectedType"
                       :items = "items"
@@ -78,13 +45,50 @@
                       placeholder
                       required
                     ></v-select>
-                    <img
-                    class="card-img center"
-                    src="../assets/logo_transparent_cropped.png"
-                    alt="Card image cap"
-                    align="middle"
-                    id="logo"
+                  </v-col>
+                  <v-col cols="6" sm="6">
+                    <v-text-field
+                      v-model="inputOrganization"
+                      name="organization"
+                      label="Organization (optional)"
+                      type="text"
+                      placeholder
+                      autofocus
                     />
+                    <v-text-field
+                      v-model="inputLocation"
+                      name="location"
+                      label="Location (optional)"
+                      type="text"
+                      placeholder
+                      autofocus
+                    />
+                    <v-text-field
+                    ref="password"
+                    v-validate="'required|password'"
+                    v-model="password"
+                    name="password"
+                    label="Password"
+                    :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="passwordVisible ? 'text' : 'password'"
+                    @click:append="passwordVisible = !passwordVisible"
+                    placeholder
+                    required
+                    />
+                    <v-text-field
+                    v-validate="'required|confirmed:password'"
+                    v-model="confirmPassword"
+                    name="password_confirmation"
+                    label="Confirm Password"
+                    :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="passwordVisible ? 'text' : 'password'"
+
+                    :error-messages = "passwordMatchError"
+                    @click:append="passwordVisible = !passwordVisible"
+                    placeholder
+                    required
+                    />
+                    
                   </v-col>
                   <v-flex align-center>
                     <div align="center">
@@ -117,7 +121,9 @@ export default {
       {type: 'Concerned Citizen'}
     ],
     selectedType: null,
-    passwordVisible: false
+    passwordVisible: false,
+    password: '',
+    confirmPassword: ""
   }),
   methods: {
     // should probably move this to store
@@ -127,7 +133,9 @@ export default {
         lastName: this.lastName,
         email: this.email,
         password: this.password,
+        confirmPassword: this.confirmPassword,
         organization: this.inputOrganization,
+        location: this.inputLocation,
         userType: this.selectedType.type
         //, comfirmPassword: document.getElementByID("comfirmPassword").value (needs to be done in backend)
       })

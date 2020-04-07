@@ -4,15 +4,11 @@
       <div v-for="dataset in datasets" v-bind:key="dataset.id">
         <DatasetCard v-bind:dataset="dataset" />
       </div>
-
-      <div v-intersect.quiet="onIntersect"></div>
-      <div style="width:100vw;" v-if="this.loading">
-        <LoadingIndicator />
-      </div>
     </div>
     <div v-else>
       <LoadingIndicator />
     </div>
+      <div v-intersect.quiet="onIntersect"></div>
   </div>
 </template>
 

@@ -1,4 +1,5 @@
 <template>
+<!-- to stick the data table header to top, pass in height attribute e.g height=95vh !-->
   <v-data-table 
   :headers="headers"
   :items="data"
