@@ -5,23 +5,23 @@
         <DatasetCard v-bind:dataset="dataset" />
       </div>
     </div>
-    <div v-else>
-      <LoadingIndicator />
+    <div class="row" v-else>
+      <div class="col-md-12">
+        <h6>No datasets found that match your query. Please search again.</h6>
+      </div>
     </div>
-      <div v-intersect.quiet="onIntersect"></div>
+    <div v-intersect.quiet="onIntersect"></div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import DatasetCard from "@/views/DatasetCard.vue";
-import LoadingIndicator from "../LoadingIndicator";
 
 export default {
   name: "DatasetBrowserView",
   components: {
-    DatasetCard,
-    LoadingIndicator
+    DatasetCard
   },
   data() {
     return {
