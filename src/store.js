@@ -13,7 +13,6 @@ const store = new Vuex.Store({
       message: "",
       show: false,
       color: "",
-      timeout: 1500,
     },
     datasets: [],
     dataset: [],
@@ -37,9 +36,6 @@ const store = new Vuex.Store({
       state.snackbar.message = snackbar.message;
       state.snackbar.show = snackbar.show;
       state.snackbar.color = snackbar.color;
-      if (state.snackbar.timeout !== undefined) {
-        state.snackbar.timeout = snackbar.timeout;
-      }
     },
     setDatasets(state, datasets) {
       if (datasets.append) {
