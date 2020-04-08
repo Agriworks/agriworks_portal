@@ -5,7 +5,7 @@
       dark
       :color="color"
       :mini-variant.sync="mini"
-      expand-on-hover
+      :expand-on-hover="expand_on_hover"
       permanent
     >
       <v-list-item>
@@ -38,13 +38,19 @@
           </v-list-item-content>
         </v-list-item>
         </div>
+        <v-divider></v-divider>
         <template v-if="!mini">
-        <v-card-actions class="card-actions">
-        <v-list-item>
-          <v-switch v-model="$vuetify.theme.dark"  color="green"></v-switch>
-          <v-list-item-title> Dark Mode </v-list-item-title>
-        </v-list-item>
-        </v-card-actions>
+          <div class="text-center">
+            <template>
+              <v-btn
+                color="#4caf50"
+                dark
+                @click.stop="openDialog()"
+              >
+                Settings
+              </v-btn>
+            </template>
+          </div>
         </template>
       </v-list>
     </v-navigation-drawer>
@@ -88,14 +94,20 @@ export default {
           displayOnLoggedIn: true
         }
       ],
-      mini: true,
-      color: "#212121"
+      color: "#212121",
     };
+  },
+  props: {
+    mini: Boolean,
+    expand_on_hover: Boolean,
   },
   methods: {
     mockSignOut() {
       // this.$emit("signedOut", true);
       this.$store.dispatch("logout");
+    },
+    openDialog(){
+      this.$emit('openDialog', true)
     }
   }
 };
