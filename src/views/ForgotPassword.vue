@@ -21,26 +21,18 @@
                   autofocus
                 />
               </div>
-              <div
-                class="custom-control custom-checkbox mb-3 text-center"
-                style="padding:0"
-              >
+              <div class="custom-control custom-checkbox mb-3 text-center" style="padding:0">
                 <v-btn
                   color="success"
                   :outlined="true"
                   type="submit"
                   style="margin:0"
                   :loading="loading"
-                  >Reset Password</v-btn
-                >
+                >Reset Password</v-btn>
               </div>
               <div class="text-center">
-                <v-btn to="/login" color="success" :text="true"
-                  >Return to login</v-btn
-                >|
-                <v-btn to="/registration" color="success" :text="true"
-                  >Create new account</v-btn
-                >
+                <v-btn to="/login" color="success" :text="true">Return to login</v-btn>|
+                <v-btn to="/registration" color="success" :text="true">Create new account</v-btn>
               </div>
             </form>
           </div>
@@ -69,7 +61,8 @@ export default {
           this.$store.commit("setSnackbar", {
             message: res.data.message,
             show: true,
-            color: "#4CAF50"
+            color: "#4CAF50",
+            timeout: 0
           });
         })
         .catch(err => {

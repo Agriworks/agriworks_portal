@@ -1,7 +1,12 @@
 <template>
   <v-app>
     <!-- <Notification Drawer /> -->
-    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :top="true" :timeout="1500">
+    <v-snackbar
+      v-model="snackbar.show"
+      :color="snackbar.color"
+      :top="true"
+      :timeout="snackbar.timeout"
+    >
       {{ snackbar.message }}
       <v-btn dark text @click="snackbar.show = false">Close</v-btn>
     </v-snackbar>
@@ -36,9 +41,9 @@ export default {
   },
   computed: {
     ...mapState(["snackbar"])
-  },  
+  },
   updated() {
-    this.showSidebar = this.$router.currentRoute.name != "Home" //we are performing a check on every update
+    this.showSidebar = this.$router.currentRoute.name != "Home"; //we are performing a check on every update
   }
 };
 </script>
@@ -59,5 +64,4 @@ export default {
   bottom: 0;
   width: 100%;
 }
-
 </style>
