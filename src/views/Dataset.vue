@@ -139,12 +139,12 @@ export default {
         })
         .catch((error) => {
           notify(error.response.data.message, colors.red);
-          this.$router.push("/browse");
+          this.$router.push("/browse").catch(err => {});
         });
       })
       .catch((error) => {
         notify(error.response.data.message, colors.red);
-        this.$router.push("/browse");
+        this.$router.push("/browse").catch(err => {});
       });
     $(window).scroll(() => {
       if ($(window).scrollTop() + $(window).height() == $(document).height()) {
