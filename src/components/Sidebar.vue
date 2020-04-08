@@ -8,9 +8,9 @@
       :expand-on-hover="expand_on_hover"
       permanent
     >
-      <v-list-item>
-        <v-img v-if="!mini" src="../assets/logo_transparent_2_white_text.png" />
-        <v-img v-else src="../assets/mini_logo.png" />
+      <v-list-item >
+        <v-img v-if="!mini" src="../assets/logo_transparent_2_white_text.png" contain="true" max-height="50" aspect-ratio="1"/>
+        <v-img v-else src="../assets/mini_logo.png" contain="true" max-height="50" max-width="50" />
       </v-list-item>
 
       <v-divider></v-divider>
@@ -61,7 +61,7 @@
 export default {
   data() {
     return {
-      drawer: true,
+      drawer: false,
       items: [
         {
           title: "Home",
