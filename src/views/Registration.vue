@@ -132,6 +132,7 @@ export default {
       ],
       password: "",
       confirmPassword: "",
+      passwordVisible: false,
       passwordRules: [v => !!v || "Password is required"],
       confirmPasswordRules: [v => !!v || "Password is required"]
   }),
