@@ -152,7 +152,6 @@ export default {
         organization: this.inputOrganization,
         location: this.inputLocation,
         userType: this.selectedType.type
-        //, comfirmPassword: document.getElementByID("comfirmPassword").value (needs to be done in backend)
       })
         .then(res => {
           this.$router.push("login");
