@@ -1,5 +1,6 @@
 import Vue from "vue";
 import BootstrapVue from "bootstrap-vue";
+import Vuelidate from "vuelidate"
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -26,6 +27,7 @@ require("./assets/styles.css");
 // Vue.component('fa-icon', FontAwesomeIcon);
 
 Vue.use(BootstrapVue);
+Vue.use(Vuelidate)
 
 Vue.config.productionTip = false;
 

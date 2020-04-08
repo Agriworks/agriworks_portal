@@ -111,6 +111,7 @@
 
 <script>
 import { post } from "../requests";
+import { required, email } from "vuelidate/lib/validators"
 
 export default {
   data: () => ({
@@ -125,6 +126,18 @@ export default {
     password: '',
     confirmPassword: ""
   }),
+  validations: {
+    firstName: {
+      required
+    },
+    lastName: {
+      required
+    },
+    email: {
+      required,
+      email
+    }
+  },
   methods: {
     // should probably move this to store
     signup() {
