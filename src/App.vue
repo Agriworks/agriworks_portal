@@ -13,16 +13,22 @@
               <v-switch v-model="$vuetify.theme.dark" color="green"></v-switch>
               <v-list-item-title>Dark Mode</v-list-item-title>
             </v-list-item>
+            <!--
             <v-list-item>
-              <v-switch v-model="openSidebar" color="green"></v-switch>
-              <v-list-item-title>Always open sidebar</v-list-item-title>
+              <v-switch v-model="" color="green"></v-switch>
+              <v-list-item-title>Always keep the sidebar visible</v-list-item-title>
             </v-list-item>
+            !-->
           </v-list>
         </v-card>
       </v-dialog>
       <div class="container" v-if="this.showSidebar">
-        <Sidebar @openDialog="openDialog()" :mini="mini" :expand_on_hover="expand_on_hover" />
-        <router-view />
+        <div v-on:mouseover="setExpandedTrue">
+          <Sidebar @openDialog="openDialog()" v-bind:isExpanded="isExpanded"/>
+        </div>
+        <div v-on:mouseover="setExpandedFalse">
+          <router-view />
+        </div>
         <!-- App !-->
       </div>
       <div v-else>
@@ -47,18 +53,18 @@ export default {
       routes: this.$router.options.routes,
       showSidebar: false, //by default we are on the homepage
       dialog: false,
-      mini: true,
-      expand_on_hover: true,
-      openSidebar: false
-    };
+      isExpanded: false,
+    }
   },
-  watch: {
-    openSidebar: function() {
-      if (this.openSidebar === true) {
-        (this.mini = false), (this.expand_on_hover = false);
-      } else {
-        (this.mini = true), (this.expand_on_hover = true);
-      }
+  methods: {
+    openDialog() {
+      this.dialog = true;
+    },
+    setExpandedTrue() {
+      this.isExpanded = true;
+    },
+    setExpandedFalse() {
+      this.isExpanded = false;
     }
   },
   computed: {
