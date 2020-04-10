@@ -6,28 +6,22 @@
       <v-btn dark text @click="snackbar.show = false">Close</v-btn>
     </v-snackbar>
     <v-content>
-      <v-dialog
-        v-model="dialog"
-        width="500"
-      >
+      <v-dialog v-model="dialog" width="500">
         <v-card>
           <v-list dense style="display:flex;flex-direction:column;">
             <v-list-item>
-              <v-switch v-model="$vuetify.theme.dark"  color="green"></v-switch>
-              <v-list-item-title> Dark Mode </v-list-item-title>
+              <v-switch v-model="$vuetify.theme.dark" color="green"></v-switch>
+              <v-list-item-title>Dark Mode</v-list-item-title>
             </v-list-item>
             <v-list-item>
               <v-switch v-model="openSidebar" color="green"></v-switch>
-              <v-list-item-title> Always open sidebar </v-list-item-title>
+              <v-list-item-title>Always open sidebar</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-card>
       </v-dialog>
       <div class="container" v-if="this.showSidebar">
-        <Sidebar 
-        @openDialog="openDialog()"
-        :mini="mini"
-        :expand_on_hover="expand_on_hover"/>
+        <Sidebar @openDialog="openDialog()" :mini="mini" :expand_on_hover="expand_on_hover" />
         <router-view />
         <!-- App !-->
       </div>
@@ -61,25 +55,17 @@ export default {
   watch: {
     openSidebar: function() {
       if (this.openSidebar === true) {
-        this.mini = false,
-        this.expand_on_hover = false
-      }
-      else {
-        this.mini = true,
-        this.expand_on_hover = true
+        (this.mini = false), (this.expand_on_hover = false);
+      } else {
+        (this.mini = true), (this.expand_on_hover = true);
       }
     }
   },
   computed: {
     ...mapState(["snackbar"])
-  },  
-  methods: {
-    openDialog() {
-      this.dialog = true
-    }
   },
   updated() {
-    this.showSidebar = this.$router.currentRoute.name != "Home" //we are performing a check on every update
+    this.showSidebar = this.$router.currentRoute.name != "Home"; //we are performing a check on every update
   }
 };
 </script>
@@ -100,5 +86,4 @@ export default {
   bottom: 0;
   width: 100%;
 }
-
 </style>
