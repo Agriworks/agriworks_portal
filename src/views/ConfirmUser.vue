@@ -41,7 +41,6 @@ export default {
       post(`/auth/confirm-user/${this.$route.params.id}`, {
       })
         .then(res => {
-          this.showLinkError = false;
           this.$store.commit("setSnackbar", {
             message: res.data.message,
             show: true,
