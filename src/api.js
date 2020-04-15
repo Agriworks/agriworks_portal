@@ -121,7 +121,7 @@ const api = {
   downloadDataset(id) {
     return get(`/dataset/download/${id}`)
   },
-  verifyLogin() {
+  verifyLogin(destination) {
     const sessionId = getCookie("SID");
     if (!sessionId) {
       store.commit("setLoggedInFalse");
@@ -131,7 +131,7 @@ const api = {
     return post("/auth/verifySession", { sessionId: sessionId })
       .then(() => {
         store.commit("setLoggedInTrue");
-        router.push("/browse");
+        router.push(destination);
         return true;
       })
       .catch((error) => {

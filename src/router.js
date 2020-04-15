@@ -5,16 +5,6 @@ import api from "./api";
 
 Vue.use(Router);
 
-const redirectIfLoggedIn = function(next) {
-  if (store.getters.isLoggedIn == true) {
-    next("browse");
-  } else if (store.getters.isLoggedIn == "unset") {
-    api.verifyLogin();
-  } else {
-    next();
-  }
-};
-
 const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
@@ -23,15 +13,7 @@ const router = new Router({
       path: "/",
       name: "Home",
       component: () => import("./views/Landing.vue"),
-      beforeEnter: (to, from, next) => redirectIfLoggedIn(next)
-    },
-    {
-      path: "/browse/:component",
-      name: "browse",
-      component: () => import("./views/DatasetBrowserView.vue"),
-      meta: {
-        requiresAuth: true
-      }
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
     {
       path: "/browse",
@@ -42,31 +24,9 @@ const router = new Router({
       }
     },
     {
-      path: "/forgot-password",
-      name: "forgot-password",
-      component: () => import("./views/ForgotPassword.vue")
-    },
-    {
-      path: "/reset-password/:id",
-      name: "reset-password",
-      component: () => import("./views/ResetPassword.vue")
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: () => import("./views/Login.vue"),
-      beforeEnter: (to, from, next) => redirectIfLoggedIn(next)
-    },
-    {
-      path: "/registration",
-      name: "registration",
-      component: () => import("./views/Registration.vue"),
-      beforeEnter: (to, from, next) => redirectIfLoggedIn(next)
-    },
-    {
-      path: "/dashboard",
-      name: "Dashboard",
-      component: () => import("./views/Dashboard.vue"),
+      path: "/browse/:component",
+      name: "browse",
+      component: () => import("./views/DatasetBrowserView.vue"),
       meta: {
         requiresAuth: true
       }
@@ -76,7 +36,15 @@ const router = new Router({
       name: "dataset",
       component: () => import("./views/Dataset.vue"),
       meta: {
-        requiresAuth: false
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/dashboard",
+      name: "Dashboard",
+      component: () => import("./views/Dashboard.vue"),
+      meta: {
+        requiresAuth: true
       }
     },
     {
@@ -88,14 +56,28 @@ const router = new Router({
       }
     },
     {
-      path: "/table",
-      name: "Datatable",
-      component: () => import("./components/DataTable.vue")
+      path: "/login",
+      name: "login",
+      component: () => import("./views/Login.vue"),
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
     {
-      path: "/charts",
-      name: "Charts",
-      component: () => import("./views/Charts.vue")
+      path: "/registration",
+      name: "registration",
+      component: () => import("./views/Registration.vue"),
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
+    },
+    {
+      path: "/forgot-password",
+      name: "forgot-password",
+      component: () => import("./views/ForgotPassword.vue"),
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
+    },
+    {
+      path: "/reset-password/:id",
+      name: "reset-password",
+      component: () => import("./views/ResetPassword.vue"),
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
     {
       path: "/waitforupload",
@@ -107,25 +89,12 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   let authorized = store.getters.isLoggedIn;
-  let admin = false; //TODO: Set admin permission
-
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (authorized == "unset") {
-      api.verifyLogin();
+      api.verifyLogin(to.path);
     } else if (authorized == true) {
-      if (to.matched.some(record => record.meta.is_admin)) {
-        //check to see if admin
-        if (admin) {
-          next();
-        } else {
-          console.log("no admin")
-        }
-      } else {
-        //authorize to dashboard if user is logged in but is not admin
         next();
-      }
     } else {
-      //redirect to login page if user is not authorized to view dashboard
       next({
         path: "/login",
         query: { redirect: to.fullPath }
@@ -135,4 +104,19 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+/*
+If the user is signed in and attempts to access a public view, such as the homepage or login, redirect them to browse/.
+Else, send them to their destination
+*/
+const redirectFromPublicRouteIfSignedIn = function(next) {
+  if (store.getters.isLoggedIn == true) {
+    next("browse");
+  } else if (store.getters.isLoggedIn == "unset") {
+    api.verifyLogin("/browse");
+  } else {
+    next();
+  }
+};
+
 export default router;
