@@ -9,7 +9,6 @@
               <form
                 class="form-signin"
                 @submit.prevent="submit"
-                oninput="password2.setCustomValidity(password2.value != password.value ? 'Passwords do not match.' : '')"
               >
                 <div class="custom-control custom-checkbox mb-3 text-center" style="padding:0">
                   <v-btn
@@ -49,12 +48,6 @@ export default {
           this.$router.push("/login");
         })
         .catch(err => {
-          if (
-            err.response.data.message ===
-            "Your password reset link is either invalid or expired. Please request a new one."
-          ) {
-            this.showLinkError = true;
-          }
           this.$store.commit("setSnackbar", {
             message: err.response.data.message,
             show: true,
