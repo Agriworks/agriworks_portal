@@ -30,10 +30,6 @@
 <script>
 import { post } from "../requests";
 export default {
-  data() {
-    return {
-    };
-  },
   methods: {
     submit() {
       post(`/auth/confirm-user/${this.$route.params.id}`, {
