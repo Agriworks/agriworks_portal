@@ -95,7 +95,7 @@
               </v-form>
               <div align="center">
                 <div class="custom-control custom-checkbox mb-3">
-                  <p>Already have an Account? Press <a href="/login">here</a> to login. </p>
+                  <p>Already have an Account? Press <router-link to="/login">here</router-link> to login. </p>
                 </div>
               </div>
           </div>
