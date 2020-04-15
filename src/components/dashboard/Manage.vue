@@ -37,7 +37,7 @@ export default {
   watch: {
     datasets() {
       this.showIndicator = true;
-      setTimeout(() => (this.showIndicator = false), 1000);
+      setTimeout(() => (this.showIndicator = false), 2000);
     }
   },
   computed: {
@@ -47,6 +47,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("fetchUserDatasets");
+    setTimeout(() => (this.showIndicator = false), 2000);
   }
 };
 </script>
