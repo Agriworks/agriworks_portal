@@ -11,5 +11,6 @@ module.exports = {
   devServer: {
     proxy: "http://localhost:4000"
   },
+  assetsDir: "assets",
   outputDir: "../agriworks_platform/dist/"
 }
