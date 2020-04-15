@@ -32,7 +32,6 @@ import { post } from "../requests";
 export default {
   data() {
     return {
-      showLinkError: false
     };
   },
   methods: {
