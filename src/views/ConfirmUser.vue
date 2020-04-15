@@ -5,7 +5,7 @@
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
           <div class="card card-signin my-5">
             <div class="card-body">
-              <h3 class="card-title text-center">Please confirm below:</h3>
+              <h3 class="card-title text-center">Please confirm your account:</h3>
               <form
                 class="form-signin"
                 @submit.prevent="submit"
