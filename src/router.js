@@ -83,7 +83,12 @@ const router = new Router({
       path: "/waitforupload",
       name: "WaitForUpload",
       component: () => import("./views/UploadWaitView.vue")
-    }
+    },
+    {
+      path: "/confirm-user/:id",
+      name: "confirm-user",
+      component: () => import("./views/ConfirmUser.vue"),
+    },
   ]
 });
 

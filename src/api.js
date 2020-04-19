@@ -79,8 +79,8 @@ const api = {
         router.push("/browse");
         notify("Successfully logged in", colors.green);
       })
-      .catch(() => {
-        notify("Incorrect username or password. Please try again", colors.red);
+      .catch((error) => {
+        notify(error.response.data.message, colors.red);
       });
   },
   fetchUserDatasets() {
