@@ -54,7 +54,7 @@ const router = new Router({
     {
       path: "/confirm-user/:id",
       name: "confirm-user",
-      component: () => import("./views/ConfirmUser.vue")
+      component: () => import("./views/ConfirmUser.vue"),
     },
     {
       path: "/login",
