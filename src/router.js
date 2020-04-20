@@ -17,7 +17,7 @@ const router = new Router({
       path: "/",
       name: "Home",
       component: () => import("./views/Landing.vue"),
-      // beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
     {
       path: "/browse",
@@ -63,25 +63,25 @@ const router = new Router({
       path: "/login",
       name: "login",
       component: () => import("./views/Login.vue"),
-      // beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
     {
       path: "/registration",
       name: "registration",
       component: () => import("./views/Registration.vue"),
-      // beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
     {
       path: "/forgot-password",
       name: "forgot-password",
       component: () => import("./views/ForgotPassword.vue"),
-      // beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
     {
       path: "/reset-password/:id",
       name: "reset-password",
       component: () => import("./views/ResetPassword.vue"),
-      // beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
     {
       path: "/waitforupload",
@@ -92,50 +92,57 @@ const router = new Router({
       path: "/confirm-user/:id",
       name: "confirm-user",
       component: () => import("./views/ConfirmUser.vue"),
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
   ]
 });
 
-router.beforeEach(async (to, from, next) => {
+const verifyLoginAndRedirect = async (redirect, next) => {
   let isLoggedIn = store.getters.isLoggedIn;
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (isLoggedIn == "unset") {
-      if (!sessionExists()) {
-        next({path: "/login", query: {redirect: to.fullPath}});
-      } else {
-        const {isValidSession, error} = await api.verifyLogin();
-        if (!isValidSession) {
-          deleteCookie("SID");
-          store.commit("setLoggedInFalse");
-          next({path: "/login", query: {redirect: to.fullPath}});
-          notify(error, colors.red);
-        } else {
-          store.commit("setLoggedInTrue");
-          next();
-        }
-      }
-    } else if (isLoggedIn == true) {
-      next();
+  if (isLoggedIn == "unset") {
+    if (!sessionExists()) {
+      redirect();
     } else {
-      next({path: "/login", query: {redirect: to.fullPath}});
+      const {isValidSession, error} = await api.verifyLogin();
+      if (!isValidSession) {
+        deleteCookie("SID");
+        store.commit("setLoggedInFalse");
+        redirect();
+        notify(error, colors.red);
+      } else {
+        store.commit("setLoggedInTrue");
+        next();
+      }
     }
-  } else {
+  } else if (isLoggedIn == true) {
     next();
+  } else {
+    redirect();
   }
-});
+}
 
 /*
 If the user is signed in and attempts to access a public view, such as the homepage or login, redirect them to browse/.
 Else, send them to their destination
 */
-// const redirectFromPublicRouteIfSignedIn = function(next) {
-//   if (store.getters.isLoggedIn == true) {
-//     next("browse");
-//   } else if (store.getters.isLoggedIn == "unset") {
-//     api.verifyLogin("/browse");
-//   } else {
-//     next();
-//   }
-// };
+const redirectFromPublicRouteIfSignedIn = function(next) {
+  const redirectToBrowse = () => next("browse");
+  if (store.getters.isLoggedIn == true) {
+    redirectToBrowse();
+  } else if (store.getters.isLoggedIn == "unset") {
+    verifyLoginAndRedirect(next, redirectToBrowse);
+  } else {
+    next();
+  }
+};
+
+router.beforeEach(async (to, from, next) => {
+  const redirectToLogin = () => next({path: "/login", query: {redirect: to.fullPath}});
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    verifyLoginAndRedirect(redirectToLogin, next);
+  } else {
+    next();
+  }
+});
 
 export default router;
