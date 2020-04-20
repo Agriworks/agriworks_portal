@@ -5,7 +5,7 @@
         <div class="col-md-6 card" style="text-align:center;">
             <div class="card-body">
               <h4> {{ confirmationStatus }} </h4>
-              <div v-if="!this.receivedReply">
+              <div v-if="!this.hideLoadingIndicator">
                   <LoadingIndicator/>
               </div>
               <div v-if="this.errorReply">
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { post } from "../requests";
+import api from "../api";
 import LoadingIndicator from "../components/LoadingIndicator";
 import Button from "../components/Button";
 
@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       confirmationStatus: "Validating confirmation code...",
-      receivedReply: false,
+      hideLoadingIndicator: false,
       errorReply: "",
     }
   },
@@ -37,22 +37,21 @@ export default {
     Button: Button
   },
   created(){
-    post(`/auth/confirm-user/${this.$route.params.id}`, {
-    })
-      .then(res => {
-        this.receivedReply = true;
-        this.$router.push("/login");
-        this.$store.commit("setSnackbar", {
-          message: res.data.message,
-          show: true,
-          color: "#4CAF50"
-        });
-      })
-      .catch(err => {
-        this.confirmationStatus = "Invalid confirmation code";
-        this.receivedReply = true;
-        this.errorReply = err.response.data.message
+    api.confirmUserEmail(this.$route.params.id)
+    .then(res => {
+      this.hideLoadingIndicator = true;
+      this.$router.push("/login");
+      this.$store.commit("setSnackbar", {
+        message: res.data.message,
+        show: true,
+        color: "#4CAF50"
       });
+    })
+    .catch(err => {
+      this.confirmationStatus = "Invalid confirmation code";
+      this.hideLoadingIndicator = true;
+      this.errorReply = err.response.data.message
+    });
   }
 };
 </script>

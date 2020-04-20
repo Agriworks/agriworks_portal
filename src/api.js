@@ -267,6 +267,9 @@ const api = {
         color: "#F44336"
       });
     });
+  },
+  confirmUserEmail(confirmationId) {
+    return post(`/auth/confirm-user/${confirmationId}`, {})
   }
 };
 
