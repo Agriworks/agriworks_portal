@@ -96,6 +96,9 @@
         </div>
       </div>
     </div>
+    <div v-else>
+      <LoadingIndicator/>
+    </div>
   </div>
 </template>
 
