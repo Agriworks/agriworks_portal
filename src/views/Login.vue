@@ -77,7 +77,7 @@ export default {
 
   methods: {
     login() {
-      api.getSessionID(this.email, this.password)
+      api.login(this.email, this.password, this.$route.query.redirect);
     }
   }
 };

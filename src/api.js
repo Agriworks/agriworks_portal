@@ -66,22 +66,21 @@ const api = {
         notify("Unable to logout. Please try again later. ", colors.red);
       });
   },
-  getSessionID(username, password) {
+  login(username, password, redirect) {
     post("/auth/login", { email: username, password: password })
-      .then(() => {
-        /*
-        if (response.data.admin == true) {
-          store.commit("setIsAdmin");
-        }
-        */
-        store.commit("setUser", username);
-        store.commit("setLoggedInTrue");
+    .then(() => {
+      store.commit("setUser", username);
+      store.commit("setLoggedInTrue");
+      if (redirect) {
+        router.push(redirect);
+      } else {
         router.push("/browse");
-        notify("Successfully logged in", colors.green);
-      })
-      .catch((error) => {
-        notify(error.response.data.message, colors.red);
-      });
+      }
+      notify("Successfully logged in", colors.green);
+    })
+    .catch((error) => {
+      notify(error.response.message.data);
+    });
   },
   fetchUserDatasets() {
     get("/dataset/user/")
@@ -121,25 +120,13 @@ const api = {
   downloadDataset(id) {
     return get(`/dataset/download/${id}`)
   },
-  verifyLogin(destination) {
-    const sessionId = getCookie("SID");
-    if (!sessionId) {
-      store.commit("setLoggedInFalse");
-      router.push("/");
-      return false;
-    }
-    return post("/auth/verifySession", { sessionId: sessionId })
+  verifyLogin() {
+    return post("/auth/verifySession", { sessionId: getCookie("SID") })
       .then(() => {
-        store.commit("setLoggedInTrue");
-        router.push(destination);
-        return true;
+        return {isValidSession: true, error: null};
       })
       .catch((error) => {
-        deleteCookie("SID");
-        store.commit("setLoggedInFalse");
-        router.push("/login");
-        notify(error.response.data.message, colors.red);
-        return false;
+        return {isValidSession: false, error: error};
       })
   },
   fetchTags(datasetType) {

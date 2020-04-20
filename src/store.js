@@ -69,10 +69,7 @@ const store = new Vuex.Store({
       return state.isAdmin;
     },
     isLoggedIn: (state) => {
-      if (state.loggedIn == "unset" || state.loggedIn == false) {
-        return false;
-      }
-      return true;
+      return state.loggedIn;
     },
     getErrorMessage: (state) => {
       return state.snackbar.errorMessage;
