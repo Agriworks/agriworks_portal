@@ -126,7 +126,7 @@ const api = {
         return {isValidSession: true, error: null};
       })
       .catch((error) => {
-        return {isValidSession: false, error: error};
+        return {isValidSession: false, error: error.response.data.message};
       })
   },
   fetchTags(datasetType) {
