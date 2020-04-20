@@ -144,7 +144,7 @@ export default {
     },
     // should probably move this to store
     signup() {
-      api.postSignup(this)
+      api.signup(this)
     }
   },
   computed: {

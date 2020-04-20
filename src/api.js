@@ -145,7 +145,7 @@ const api = {
   fetchTags(datasetType) {
     return get(`/upload/getTags/${datasetType}`);
   },
-  postPassword(data) {
+  updatePassword(data) {
     const SID = getCookie("SID");
     post('/admin/account', {
       sessionID: SID, 
@@ -177,7 +177,7 @@ const api = {
 
       });
   },
-  postEmail(data) {
+  updateEmail(data) {
     const SID = getCookie("SID");
     post('/admin/account', {
     sessionID: SID, 
@@ -207,7 +207,7 @@ const api = {
 
     });
   },
-  postForgotPassword(data) {
+  requestPasswordResetCode(data) {
     data.loading = true;
       post("/auth/forgot-password", {
         email: document.getElementById("inputText").value
@@ -226,7 +226,7 @@ const api = {
           });
         });
   },
-  postSignup(data){
+  signup(data){
     post("/auth/signup", {
       firstName: data.firstName,
       lastName: data.lastName,
@@ -253,7 +253,7 @@ const api = {
         });
       });
   },
-  postResetPassword(data) {
+  resetPassword(data) {
     post(`/auth/reset-password/${data.$route.params.id}`, {
       password: document.getElementById("password").value,
       confirmPassword: document.getElementById("password2").value

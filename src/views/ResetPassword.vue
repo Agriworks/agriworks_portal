@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     submit() {
-      api.postResetPassword(this);
+      api.resetPassword(this);
     }
   }
 };

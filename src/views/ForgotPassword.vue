@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     submit() {
-      api.postForgotPassword(this);
+      api.requestPasswordResetCode(this);
     },
     resetForm() {
       this.emailSent = false;

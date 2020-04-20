@@ -324,7 +324,7 @@ export default {
 
       if(!((this.$refs["emailPassword"].hasError && !passPassword)|| (this.$refs["emailEmail"].hasError && !passEmail))) //if the inputs do not conform to the rules, don't even submit it
       {
-        api.postPassword(this);
+        api.updateEmail(this);
       }
       
     },
@@ -370,7 +370,7 @@ export default {
           this.forms.password.fields.confirmNewPassword.error.push("Confirm password does not match the new password")
         }
         else {
-          api.postPassword(this);
+          api.updatePassword(this);
         }
       }
     },
