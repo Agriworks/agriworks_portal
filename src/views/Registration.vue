@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import { post } from "../requests";
+import api from "../api.js";
 
 export default {
   data: () => ({
@@ -144,31 +144,7 @@ export default {
     },
     // should probably move this to store
     signup() {
-      post("/auth/signup", {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password,
-        confirmPassword: this.confirmPassword,
-        organization: this.inputOrganization,
-        location: this.inputLocation,
-        userType: this.selectedType.type
-      })
-        .then(res => {
-          this.$router.push("login");
-          this.$store.commit("setSnackbar", {
-            message: res.data.message,
-            show: true,
-            color: "#4CAF50"
-          });
-        })
-        .catch(err => {
-          this.$store.commit("setSnackbar", {
-            message: err.response.data.message,
-            show: true,
-            color: "#F44336"
-          });
-        });
+      api.signup(this)
     }
   },
   computed: {

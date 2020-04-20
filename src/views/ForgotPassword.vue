@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { post } from "../requests";
+import api from "../api.js";
 export default {
   data() {
     return {
@@ -64,23 +64,7 @@ export default {
   },
   methods: {
     submit() {
-      this.loading = true;
-      post("/auth/forgot-password", {
-        email: document.getElementById("inputText").value
-      })
-        .then(res => {
-          this.loading = false;
-          this.emailSent = true;
-          this.emailMessage = res.data.message;
-        })
-        .catch(err => {
-          this.loading = false;
-          this.$store.commit("setSnackbar", {
-            message: err.response.data.message,
-            show: true,
-            color: "#F44336"
-          });
-        });
+      api.requestPasswordResetCode(this);
     },
     resetForm() {
       this.emailSent = false;

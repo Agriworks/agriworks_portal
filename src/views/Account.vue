@@ -202,10 +202,10 @@
 <script>
 
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import { post } from "../requests";
 import {
   getCookie
 } from "../js/authentication";
+import api from "../api.js";
 
 
 export default {
@@ -324,37 +324,7 @@ export default {
 
       if(!((this.$refs["emailPassword"].hasError && !passPassword)|| (this.$refs["emailEmail"].hasError && !passEmail))) //if the inputs do not conform to the rules, don't even submit it
       {
-        const SID = getCookie("SID");
-          post('/admin/account', {
-          sessionID: SID, 
-          submit: "email",
-          inputCurrentPassword: this.forms.email.fields.password.input,
-          inputEmail: this.forms.email.fields.email.input
-        })
-        .then(res => {  
-            this.forms.email.show = false //close dialog
-
-            //send snackbar saying that the email was updated
-            this.$store.commit("setSnackbar", {
-              message: "Email Updated",
-              show: true,
-              color: "#4CAF50"
-            });
-
-          })
-          .catch(err => {
-            if(err.response.data["message"] == "Wrong password"){
-              this.forms.email.fields.password.state = true
-              this.forms.email.fields.password.error.push("Incorrect Password")
-            } else if(err.response.data["message"] == "Email is already in use"){
-              this.forms.email.fields.email.state = true
-              this.forms.email.fields.email.error.push("There is already exists an account with this email")
-            }
-
-          });
-
-
-          
+        api.updateEmail(this);
       }
       
     },
@@ -400,36 +370,7 @@ export default {
           this.forms.password.fields.confirmNewPassword.error.push("Confirm password does not match the new password")
         }
         else {
-          const SID = getCookie("SID");
-          post('/admin/account', {
-          sessionID: SID, 
-          submit: "password",
-          inputCurrentPassword: this.forms.password.fields.currentPassword.input,
-          inputPassword: this.forms.password.fields.newPassword.input,
-          inputConfirmPassword: this.forms.password.fields.confirmNewPassword.input
-        })
-        .then(res => {
-            this.forms.password.show = false //close dialog
-
-            //Send snackbar
-            this.$store.commit("setSnackbar", {
-              message: "Password Updated",
-              show: true,
-              color: "#4CAF50"
-            });
-
-
-          })
-          .catch(err => {
-            
-            if(err.response.data["message"] == "Wrong password"){
-              this.forms.password.fields.currentPassword.state = true
-              this.forms.password.fields.currentPassword.error.push("Incorrect Password")
-            } else{
-              console.log("ERROR")
-            }
-
-          });
+          api.updatePassword(this);
         }
       }
     },

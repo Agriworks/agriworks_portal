@@ -131,6 +131,142 @@ const api = {
   },
   fetchTags(datasetType) {
     return get(`/upload/getTags/${datasetType}`);
+  },
+  updatePassword(data) {
+    const SID = getCookie("SID");
+    post('/admin/account', {
+      sessionID: SID, 
+      submit: "password",
+      inputCurrentPassword: data.forms.password.fields.currentPassword.input,
+      inputPassword: data.forms.password.fields.newPassword.input,
+      inputConfirmPassword: data.forms.password.fields.confirmNewPassword.input
+    })
+    .then(res => {
+        data.forms.password.show = false //close dialog
+
+        //Send snackbar
+        data.$store.commit("setSnackbar", {
+          message: "Password Updated",
+          show: true,
+          color: "#4CAF50"
+        });
+
+
+      })
+      .catch(err => {
+        
+        if(err.response.data["message"] == "Wrong password"){
+          data.forms.password.fields.currentPassword.state = true
+          data.forms.password.fields.currentPassword.error.push("Incorrect Password")
+        } else{
+          console.log("ERROR")
+        }
+
+      });
+  },
+  updateEmail(data) {
+    const SID = getCookie("SID");
+    post('/admin/account', {
+    sessionID: SID, 
+    submit: "email",
+    inputCurrentPassword: data.forms.email.fields.password.input,
+    inputEmail: data.forms.email.fields.email.input
+  })
+  .then(res => {  
+      data.forms.email.show = false //close dialog
+
+      //send snackbar saying that the email was updated
+      data.$store.commit("setSnackbar", {
+        message: "Email Updated",
+        show: true,
+        color: "#4CAF50"
+      });
+
+    })
+    .catch(err => {
+      if(err.response.data["message"] == "Wrong password"){
+        data.forms.email.fields.password.state = true
+        data.forms.email.fields.password.error.push("Incorrect Password")
+      } else if(err.response.data["message"] == "Email is already in use"){
+        data.forms.email.fields.email.state = true
+        data.forms.email.fields.email.error.push("There is already exists an account with this email")
+      }
+
+    });
+  },
+  requestPasswordResetCode(data) {
+    data.loading = true;
+      post("/auth/forgot-password", {
+        email: document.getElementById("inputText").value
+      })
+        .then(res => {
+          data.loading = false;
+          data.emailSent = true;
+          data.emailMessage = res.data.message;
+        })
+        .catch(err => {
+          data.loading = false;
+          data.$store.commit("setSnackbar", {
+            message: err.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
+        });
+  },
+  signup(data){
+    post("/auth/signup", {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+      organization: data.inputOrganization,
+      location: data.inputLocation,
+      userType: data.selectedType.type
+    })
+      .then(res => {
+        data.$router.push("login");
+        data.$store.commit("setSnackbar", {
+          message: res.data.message,
+          show: true,
+          color: "#4CAF50"
+        });
+      })
+      .catch(err => {
+        data.$store.commit("setSnackbar", {
+          message: err.response.data.message,
+          show: true,
+          color: "#F44336"
+        });
+      });
+  },
+  resetPassword(data) {
+    post(`/auth/reset-password/${data.$route.params.id}`, {
+      password: document.getElementById("password").value,
+      confirmPassword: document.getElementById("password2").value
+    })
+    .then(res => {
+      data.showLinkError = false;
+      data.$store.commit("setSnackbar", {
+        message: res.data.message,
+        show: true,
+        color: "#4CAF50"
+      });
+      data.$router.push("/login");
+    })
+    .catch(err => {
+      if (
+        err.response.data.message ===
+        "Your password reset link is either invalid or expired. Please request a new one."
+      ) {
+        data.showLinkError = true;
+      }
+      data.$store.commit("setSnackbar", {
+        message: err.response.data.message,
+        show: true,
+        color: "#F44336"
+      });
+    });
   }
 };
 
