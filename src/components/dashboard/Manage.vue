@@ -47,7 +47,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("fetchUserDatasets");
-    setTimeout(() => (this.showIndicator = false), 2000);
   }
 };
 </script>
