@@ -240,6 +240,9 @@ const api = {
         });
       });
   },
+  resendConfirmationEmail(data) {
+
+  },
   resetPassword(data) {
     post(`/auth/reset-password/${data.$route.params.id}`, {
       password: document.getElementById("password").value,
