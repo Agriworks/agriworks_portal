@@ -1,28 +1,25 @@
 <template>
     <v-container fluid>
       <v-row
-      style="margin-left:0; width:97%"
+        style="margin-left:0; width:97%"
       >
         <v-col
           flex-column       
-         cols="11"
+          cols="11"
          >
           <v-row
           >
             <v-btn
-          dark
-          color="success"
-          small
-          class="dashboardButton"
-          @click="switchComponent('browse')"
-          large
-        >
-          
-        
+              dark
+              color="success"
+              small
+              class="dashboardButton"
+              @click="switchComponent('browse')"
+              large
+            >
           <v-icon>mdi-view-carousel</v-icon>Browse
         </v-btn> 
-            
-            <v-btn
+        <v-btn
           dark
           color="success"
           small
@@ -46,7 +43,6 @@
         <v-spacer />
         <template v-if="this.component == 'browse' || this.component == 'manage'">
         <v-text-field
-            
             color="red"
             clearable
             @click:clear="clear"
