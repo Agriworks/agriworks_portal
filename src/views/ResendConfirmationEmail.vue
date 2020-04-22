@@ -11,10 +11,10 @@
               </center>
             </div>
             <v-flex align-center>
-                  <div align="center">
-                    <v-btn color="success" :outlined="true" @click="resendConfirmationEmail" id="resendEmailButton">Resend Email</v-btn>
-                  </div>
-                </v-flex>
+              <div align="center">
+                <v-btn color="success" :outlined="true" @click="resendConfirmationEmail" >Resend Email</v-btn>
+              </div>
+            </v-flex>
           </div>
         </v-card>
       </div>
@@ -25,11 +25,11 @@
 <script>
 import api from "../api.js";
 export default {
-    methods: {
-        resendConfirmationEmail() {
-            api.resendConfirmationEmail(this.$route.params.email)
-        }
+  methods: {
+    resendConfirmationEmail() {
+      api.resendConfirmationEmail(this.$route.params.email)
     }
+  }
 };
 
 </script>
