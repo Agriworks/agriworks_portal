@@ -32,15 +32,28 @@
       </div>
       <div class="col-md-6" v-if="this.component == 'browse' || 'manage'">
         <b-nav-form @submit.prevent="searchSubmit">
-          <b-form-input
-            size="md"
-            class="mr-lg-2 searchBar"
-            id="search"
-            placeholder="Search across datasets"
-          ></b-form-input>
-          <b-button size="sm" class="my-2 my-sm-0" type="submit">
+          <b-input-group>
+            <template v-slot:prepend>
+             <b-button size="sm" class="my-2 my-sm-0" type="submit">
             <v-icon>mdi-magnify</v-icon>
-          </b-button>
+          </b-button> 
+            </template>
+            <b-form-input
+              size="md"
+              id="search"
+              placeholder="Search across datasets"
+              type="search"
+              v-model="searchQuery"
+            >
+            </b-form-input>
+              <template v-slot:append>
+                   <template v-on:click.native="clear" v-if="searchQuery != ''">
+                <b-button @click="clear"><strong class="text" @click="clear">X</strong></b-button>
+                </template>
+                 
+              </template>
+          </b-input-group>
+          
         </b-nav-form>
       </div>
     </div>
@@ -61,12 +74,17 @@ export default {
   },
   data() {
     return {
+      searchQuery: "",
       component: this.$route.params.component
         ? this.validateComponent(this.$route.params.component)
         : "browse"
     };
   },
   methods: {
+    clear(){
+      this.searchQuery = ""
+      this.searchSubmit()
+    },  
     searchSubmit() {
       if (document.getElementById("search") == undefined) {
         this.$store.dispatch("filterDatasets", "");
