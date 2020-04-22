@@ -8,8 +8,6 @@
          cols="11"
          >
           <v-row
-            :align="center"
-            :justify="center"
           >
             <v-btn
           dark
@@ -51,14 +49,14 @@
             
             color="red"
             clearable
+            @click:clear="clear"
             solo
             dense
             v-model="searchQuery"
             full-width
-            
-            @click:append-outer="searchSubmit"
+            v-on:keyup.enter="searchSubmit"
             label="Search Datasets">
-            <v-icon slot="append" color = "success">mdi-magnify</v-icon>
+            <v-icon slot="append" color = "success" @click="searchSubmit">mdi-magnify</v-icon>
         </v-text-field>
         </template>
       </v-row>
@@ -90,20 +88,29 @@ export default {
     };
   },
   methods: {
+    clear() {
+        if(this.component == "manage"){
+          this.$store.dispatch("fetchUserDatasets");
+        }
+        else
+        {
+          this.$store.dispatch("filterDatasets", "");
+        }
+    },
     searchSubmit() {
-      if (document.getElementById("search") == undefined) {
+      if (this.searchQuery == "") {
         this.$store.dispatch("filterDatasets", "");
       } else if (
-        (document.getElementById("search") == undefined ||
-          document.getElementById("search").value == "" ||
-          document.getElementById("search").value == " ") &&
+        (this.searchQuery == undefined ||
+          this.searchQuery == "" ||
+          this.searchQuery == " ") &&
         this.component == "manage"
       ) {
         this.$store.dispatch("fetchUserDatasets");
       } else {
         this.$store.dispatch(
           "filterDatasets",
-          document.getElementById("search").value
+          this.searchQuery
         );
       }
     },
