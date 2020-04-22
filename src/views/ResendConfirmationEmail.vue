@@ -2,7 +2,7 @@
   <b-container>
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-7 mx-auto" id="resendEmailFormContainer">
-        <v-card v-if=emailSent class="rounded-card" :elevation="5">
+        <v-card class="rounded-card" :elevation="5">
           <div class="card-body">
             <h3 class="card-title text-center">Confirmation Email Sent</h3>
             <div class="col-sm-9 col-md-7 col-lg-10 mx-auto" >
@@ -12,26 +12,22 @@
             </div>
             <v-flex align-center>
                   <div align="center">
-                    <v-btn color="success" :outlined="true" @click="resendConfirmationEmail" :disabled="!valid" id="resendEmailButton">Resend Email</v-btn>
+                    <v-btn color="success" :outlined="true" @click="resendConfirmationEmail" id="resendEmailButton">Resend Email</v-btn>
                   </div>
                 </v-flex>
           </div>
         </v-card>
       </div>
     </div>
-</b-container>
+  </b-container>
 </template>
 
 <script>
 import api from "../api.js";
 export default {
-    data: () => ({
-      email = this.$route.params.email
-  }),
     methods: {
         resendConfirmationEmail() {
-            //api.resendConfirmationEmail(this)
-            print(this.$route.params.email)
+            api.resendConfirmationEmail(this.$route.params.email)
         }
     }
 };

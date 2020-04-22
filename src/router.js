@@ -73,8 +73,9 @@ const router = new Router({
     },
     {
       path: "/resend-confirmation-email/:email",
-      name: "resend-confirmation-email"
-
+      name: "resend-confirmation-email",
+      component: () => import("./views/ResendConfirmationEmail.vue"),
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
     {
       path: "/forgot-password",

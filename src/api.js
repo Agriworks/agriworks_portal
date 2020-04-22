@@ -225,7 +225,7 @@ const api = {
       userType: data.selectedType.type
     })
       .then(res => {
-        data.$router.push("login");
+        data.$router.push({name: "resend-confirmation-email", params: { email: email }});
         data.$store.commit("setSnackbar", {
           message: res.data.message,
           show: true,
@@ -241,9 +241,7 @@ const api = {
       });
   },
   resendConfirmationEmail(data) {
-    post("/auth/signup/resend-confirmation-email", {
-      email: data.email
-    })
+    post(`/auth/resend-confirmation-email/${data.$route.params.email}`, {})
     .then(res => {
       data.$store.commit("setSnackbar", {
         message: res.data.message,
