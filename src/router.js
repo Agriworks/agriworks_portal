@@ -72,6 +72,11 @@ const router = new Router({
       beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
     {
+      path: "/resend-confirmation-email/:email",
+      name: "resend-confirmation-email"
+
+    },
+    {
       path: "/forgot-password",
       name: "forgot-password",
       component: () => import("./views/ForgotPassword.vue"),

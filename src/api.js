@@ -241,8 +241,23 @@ const api = {
       });
   },
   resendConfirmationEmail(data) {
-    // get backend to resend confirmation email without creating the user again
-    
+    post("/auth/signup/resend-confirmation-email", {
+      email: data.email
+    })
+    .then(res => {
+      data.$store.commit("setSnackbar", {
+        message: res.data.message,
+        show: true,
+        color: "#4CAF50"
+      });
+    })
+    .catch(err => {
+      data.$store.commit("setSnackbar", {
+        message: err.response.data.message,
+        show: true,
+        color: "#F44336"
+      });
+    });
   },
   resetPassword(data) {
     post(`/auth/reset-password/${data.$route.params.id}`, {
