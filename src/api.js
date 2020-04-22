@@ -242,11 +242,11 @@ const api = {
   },
   resendConfirmationEmail(email) {
     post(`/auth/resend-confirmation-email/${email}`, {})
-    .then(() => {
-      notify("succes", colors.green)
+    .then((res) => {
+      notify("New confirmation email sent.", colors.green)
     })
     .catch((error) => {
-      notify(error.response.message.data);
+      notify(error.response.data.message, colors.red);
     });
   },
   resetPassword(data) {
