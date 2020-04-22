@@ -108,8 +108,6 @@
 import DataTable from "../components/DataTable";
 import LoadingIndicator from "../components/LoadingIndicator";
 import api from "../api";
-import notify from "../utilities/notify";
-import { colors } from "../utilities/branding";
 import $ from "jquery";
 
 export default {
@@ -135,7 +133,7 @@ export default {
         this.dataset = response.data;
       })
       .catch(() => {
-        notify("Error fetching dataset metadata.", colors.red);
+        this.$notify("Error fetching dataset metadata.", this.$colors.red);
       });
     api
       .fetchPrimaryDatasetObjects(this.$route.params.id)
@@ -147,7 +145,8 @@ export default {
         }
       })
       .catch(() => {
-        notify("Error fetching dataset objects.", colors.red);
+        this.$notify("Error fetching dataset objects.", this.$colors.red);
+        this.$router.push("/browse").catch(err => {})
       });
     $(window).scroll(() => {
       if ($(window).scrollTop() + $(window).height() == $(document).height()) {
@@ -165,7 +164,7 @@ export default {
               }
             })
             .catch(() => {
-              notify("Error fetching subsequent dataset objects.", colors.red);
+              this.$notify("Error fetching subsequent dataset objects.", this.$colors.red);
             });
         }
       }
@@ -174,7 +173,7 @@ export default {
   destroyed() {
     if (this.cacheId) {
       api.evictDatasetFromCache(this.cacheId).catch(() => {
-        notify("Error evicting dataset from cache.", colors.red);
+        this.$notify("Error evicting dataset from cache.", this.$colors.red);
       });
     }
     this.cacheId = null;
@@ -200,9 +199,9 @@ export default {
           fileLink.click();
         })
         .catch(() => {
-          notify(
+          this.$notify(
             "Unable to download file. Please try again later.",
-            colors.red
+            this.$colors.red
           );
         });
     }

@@ -71,8 +71,6 @@
 <script>
 import api from "../../api";
 import router from "../../router";
-import notify from "../../utilities/notify";
-import { colors } from "../../utilities/branding";
 
 export default {
   name: "Upload",
@@ -139,7 +137,7 @@ export default {
           this.tagsOfChosenType = response.data;
         })
         .catch(err => {
-          notify("Error fetching tags.", colors.red);
+          this.$notify("Error fetching tags.", this.$colors.red);
         });
     }
   },

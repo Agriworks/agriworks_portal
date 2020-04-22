@@ -7,6 +7,10 @@ import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import vuetify from "./plugins/vuetify";
+
+import notify from "./utilities/notify";
+import { colors } from "./utilities/branding";
+
 require("./assets/styles.css");
 // import { library } from '@fortawesome/fontawesome-svg-core' //https://github.com/FortAwesome/vue-fontawesome
 // import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -25,6 +29,17 @@ require("./assets/styles.css");
 
 // Vue.component('fa-icon', FontAwesomeIcon);
 
+const plugins = {
+  install () {
+      Vue.notify = notify;
+      Vue.prototype.$notify = notify;
+
+      Vue.colors = colors;
+      Vue.prototype.$colors = colors;
+  }
+}
+
+Vue.use(plugins);
 Vue.use(BootstrapVue);
 
 Vue.config.productionTip = false;
