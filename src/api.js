@@ -242,19 +242,11 @@ const api = {
   },
   resendConfirmationEmail(email) {
     post(`/auth/resend-confirmation-email/${email}`, {})
-    .then(res => {
-      data.$store.commit("setSnackbar", {
-        message: res.data.message,
-        show: true,
-        color: "#4CAF50"
-      });
+    .then(() => {
+      notify("succes", colors.green)
     })
-    .catch(err => {
-      data.$store.commit("setSnackbar", {
-        message: err.response.data.message,
-        show: true,
-        color: "#F44336"
-      });
+    .catch((error) => {
+      notify(error.response.message.data);
     });
   },
   resetPassword(data) {
