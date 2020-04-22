@@ -33,7 +33,7 @@
       <div class="col-md-6" v-if="this.component == 'browse' || 'manage'">
         <b-nav-form @submit.prevent="searchSubmit">
           <b-form-input
-            size="sm"
+            size="md"
             class="mr-lg-2 searchBar"
             id="search"
             placeholder="Search across datasets"
