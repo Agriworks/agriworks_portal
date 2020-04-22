@@ -12,7 +12,7 @@ const store = new Vuex.Store({
     snackbar: {
       message: "",
       show: false,
-      color: ""
+      color: "",
     },
     datasets: [],
     dataset: [],
@@ -40,8 +40,7 @@ const store = new Vuex.Store({
     setDatasets(state, datasets) {
       if (datasets.append) {
         state.datasets = [...state.datasets, ...datasets.datasets];
-      }
-      else {
+      } else {
         state.datasets = datasets.datasets;
       }
     },
@@ -62,29 +61,28 @@ const store = new Vuex.Store({
       state.loggedIn = true;
     },
     setUserDatasets(state, datasets) {
-      state.userDatasets = datasets
-    }
-
+      state.userDatasets = datasets;
+    },
   },
   getters: {
-    isAdmin: state => {
+    isAdmin: (state) => {
       return state.isAdmin;
     },
-    isLoggedIn: state => {
+    isLoggedIn: (state) => {
       return state.loggedIn;
     },
-    getErrorMessage: state => {
+    getErrorMessage: (state) => {
       return state.snackbar.errorMessage;
     },
-    getShowError: state => {
+    getShowError: (state) => {
       return state.snackbar.showError;
     },
-    getSuccessMessage: state => {
+    getSuccessMessage: (state) => {
       return state.snackbar.successMessage;
     },
-    getShowSuccess: state => {
+    getShowSuccess: (state) => {
       return state.snackbar.showSuccess;
-    }
+    },
   },
   actions: {
     fetchDatasets(state, pageNumber) {
@@ -113,8 +111,8 @@ const store = new Vuex.Store({
     },
     logout(state) {
       api.logout();
-    }
-  }
+    },
+  },
 });
 
 export default store;

@@ -6,9 +6,16 @@
       </div>
     </div>
     <div v-else>
-      <LoadingIndicator />
+      <div v-if="showIndicator">
+        <LoadingIndicator />
+      </div>
+      <div class="row" v-else>
+        <div class="col-md-12">
+          <h6>No datasets found that match your query. Please search again.</h6>
+        </div>
+      </div>
     </div>
-      <div v-intersect.quiet="onIntersect"></div>
+    <div v-intersect.quiet="onIntersect"></div>
   </div>
 </template>
 
@@ -16,7 +23,6 @@
 // @ is an alias to /src
 import DatasetCard from "@/views/DatasetCard.vue";
 import LoadingIndicator from "../LoadingIndicator";
-
 export default {
   name: "DatasetBrowserView",
   components: {
@@ -26,12 +32,19 @@ export default {
   data() {
     return {
       pageNumber: 0,
-      loading: false
+      loading: false,
+      showIndicator: true
     };
   },
   computed: {
     datasets() {
       return this.$store.state.datasets;
+    }
+  },
+  watch: {
+    datasets() {
+      this.showIndicator = true;
+      setTimeout(() => (this.showIndicator = false), 2000);
     }
   },
   methods: {

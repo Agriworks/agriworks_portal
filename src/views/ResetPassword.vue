@@ -1,6 +1,29 @@
 <template>
   <div>
-    <div class="container" v-if="this.validSessionId">
+    <div class="container" v-if="showLinkError">
+      <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div class="card card-signin my-5">
+            <div class="card-body">
+              <h3 class="card-title text-center">Invalid link</h3>
+              <h6
+                class="card-title text-center"
+              >Your password reset link is invalid or is expired. Please head to the password reset page to request another link.</h6>
+              <div class="custom-control custom-checkbox mb-3 text-center" style="padding:0">
+                <v-btn
+                  to="/forgot-password"
+                  color="success"
+                  :outlined="true"
+                  v-on:click="redirect"
+                  style="text-decoration:none"
+                >Request new link</v-btn>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container" v-else>
       <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
           <div class="card card-signin my-5">
@@ -48,29 +71,6 @@
         </div>
       </div>
     </div>
-    <div class="container" v-else>
-      <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-          <div class="card card-signin my-5">
-            <div class="card-body">
-              <h3 class="card-title text-center">Invalid link</h3>
-              <h6
-                class="card-title text-center"
-              >Your password reset link is invalid or is expired. Please head to the password reset page to request another link.</h6>
-              <div class="custom-control custom-checkbox mb-3 text-center" style="padding:0">
-                <v-btn
-                  to="/forgot-password"
-                  color="success"
-                  :outlined="true"
-                  v-on:click="redirect"
-                  style="text-decoration:none"
-                >Request new link</v-btn>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -79,46 +79,38 @@ import { post } from "../requests";
 export default {
   data() {
     return {
-      validSessionId: true
+      showLinkError: false
     };
   },
   methods: {
     submit() {
       post(`/auth/reset-password/${this.$route.params.id}`, {
-        password: document.getElementById("password").value
+        password: document.getElementById("password").value,
+        confirmPassword: document.getElementById("password2").value
       })
         .then(res => {
+          this.showLinkError = false;
           this.$store.commit("setSnackbar", {
             message: res.data.message,
             show: true,
             color: "#4CAF50"
           });
+          this.$router.push("/login");
         })
         .catch(err => {
-          console.log(err);
+          if (
+            err.response.data.message ===
+            "Your password reset link is either invalid or expired. Please request a new one."
+          ) {
+            this.showLinkError = true;
+          }
+          this.$store.commit("setSnackbar", {
+            message: err.response.data.message,
+            show: true,
+            color: "#F44336"
+          });
         });
     }
-  },
-  created() {
-    post(`/auth/reset-password/${this.$route.params.id}`, {
-      initial: "initialCheck"
-    })
-      .then(res => {
-        this.validSessionId = true;
-        this.$store.commit("setSnackbar", {
-          message: res.data.message,
-          show: false,
-          color: "#4CAF50"
-        });
-      })
-      .catch(err => {
-        this.validSessionId = false;
-        this.$store.commit("setSnackbar", {
-          message: err.response.data.message,
-          show: true,
-          color: "#F44336"
-        });
-      });
   }
 };
 </script>

@@ -6,11 +6,9 @@
           <h5>{{dataset.type}}</h5>
           <h1>{{ dataset.name }}</h1>
           <div v-if="hideTags">
-            <div v-if="dataset">
               <div v-if="dataset.tags.length < 1">
                 <p>No tags</p>
               </div>
-            </div>
             <div v-else>
               <p
                 @click="changeTagStatus()"
