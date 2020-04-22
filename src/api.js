@@ -241,7 +241,8 @@ const api = {
       });
   },
   resendConfirmationEmail(data) {
-
+    // get backend to resend confirmation email without creating the user again
+    
   },
   resetPassword(data) {
     post(`/auth/reset-password/${data.$route.params.id}`, {
