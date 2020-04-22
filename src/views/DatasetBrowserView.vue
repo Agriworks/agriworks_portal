@@ -48,7 +48,7 @@
             </b-form-input>
               <template v-slot:append>
                    <template v-on:click.native="clear" v-if="searchQuery != ''">
-                <b-button @click="clear"><strong class="text" @click="clear">X</strong></b-button>
+                <b-button variant="danger" @click="clear"><strong class="text" @click="clear">X</strong></b-button>
                 </template>
                  
               </template>
