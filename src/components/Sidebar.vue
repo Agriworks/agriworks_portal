@@ -16,7 +16,7 @@
       <v-list dense style="display:flex;flex-direction:column;justify-content:space-between">
         <div>
           <v-list-item
-            v-for="item in items.filter(n => {if(this.$store.getters.isLoggedIn){return n.displayOnLoggedIn}else{return !n.displayOnLoggedIn}})"
+            v-for="item in items.filter(n => {if(this.$store.getters.isLoggedIn == true){return n.displayOnLoggedIn}else{return !n.displayOnLoggedIn}})"
             :key="item.title"
             :to="item.link"
           >
@@ -28,7 +28,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item @click="mockSignOut()" v-if="this.$store.getters.isLoggedIn">
+          <v-list-item @click="mockSignOut()" v-if="this.$store.getters.isLoggedIn == true">
             <v-list-item-icon>
               <v-icon>mdi-logout</v-icon>
             </v-list-item-icon>

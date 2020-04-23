@@ -79,7 +79,7 @@ const api = {
       notify("Successfully logged in", colors.green);
     })
     .catch((error) => {
-      notify(error.response.message.data);
+      notify(error.response.data.message);
     });
   },
   fetchUserDatasets() {
