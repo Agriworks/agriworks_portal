@@ -83,6 +83,11 @@ const router = new Router({
       path: "/waitforupload",
       name: "WaitForUpload",
       component: () => import("./views/UploadWaitView.vue")
+    },
+    {
+      path: "/aboutus",
+      name: "AboutUs",
+      component: () => import("./views/StaticContent.vue")
     }
   ]
 });
@@ -93,7 +98,7 @@ router.beforeEach((to, from, next) => {
     if (authorized == "unset") {
       api.verifyLogin(to.path);
     } else if (authorized == true) {
-        next();
+      next();
     } else {
       next({
         path: "/login",
@@ -109,7 +114,7 @@ router.beforeEach((to, from, next) => {
 If the user is signed in and attempts to access a public view, such as the homepage or login, redirect them to browse/.
 Else, send them to their destination
 */
-const redirectFromPublicRouteIfSignedIn = function(next) {
+const redirectFromPublicRouteIfSignedIn = function (next) {
   if (store.getters.isLoggedIn == true) {
     next("browse");
   } else if (store.getters.isLoggedIn == "unset") {
