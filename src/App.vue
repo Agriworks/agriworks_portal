@@ -67,6 +67,18 @@ export default {
       this.isExpanded = false;
     }
   },
+  watch: {
+    openSidebar: function() {
+      if (this.openSidebar === true) {
+        this.mini = false,
+        this.expand_on_hover = false
+      }
+      else {
+        this.mini = true,
+        this.expand_on_hover = true
+      }
+    }
+  },
   computed: {
     ...mapState(["snackbar"])
   },
