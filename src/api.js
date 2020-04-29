@@ -141,7 +141,7 @@ const api = {
       inputPassword: data.forms.password.fields.newPassword.input,
       inputConfirmPassword: data.forms.password.fields.confirmNewPassword.input
     })
-    .then(res => {
+    .then(() => {
         data.forms.password.show = false //close dialog
 
         //Send snackbar
@@ -172,7 +172,7 @@ const api = {
     inputCurrentPassword: data.forms.email.fields.password.input,
     inputEmail: data.forms.email.fields.email.input
   })
-  .then(res => {  
+  .then(() => {  
       data.forms.email.show = false //close dialog
 
       //send snackbar saying that the email was updated
@@ -225,7 +225,7 @@ const api = {
       userType: data.selectedType.type
     })
       .then(res => {
-        data.$router.push("login");
+        data.$router.push("resend-confirmation-email/"+data.email);
         data.$store.commit("setSnackbar", {
           message: res.data.message,
           show: true,
@@ -239,6 +239,15 @@ const api = {
           color: "#F44336"
         });
       });
+  },
+  resendConfirmationEmail(email) {
+    post(`/auth/resend-confirmation-email/${email}`, {})
+    .then(() => {
+      notify("New confirmation email sent.", colors.green)
+    })
+    .catch((error) => {
+      notify(error.response.data.message, colors.red);
+    });
   },
   resetPassword(data) {
     post(`/auth/reset-password/${data.$route.params.id}`, {
