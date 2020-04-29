@@ -41,7 +41,6 @@
 
 <script>
 import Sidebar from "./components/Sidebar";
-import Landing from "./views/Landing";
 import { mapState } from "vuex";
 
 export default {
