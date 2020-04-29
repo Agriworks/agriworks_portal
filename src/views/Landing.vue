@@ -14,6 +14,10 @@
         </div>
         <v-layout column align-center justify-center class="white--text">
           <img class="mr-3" :src="require('../assets/logo_transparent_2.png')" height="200" />
+          <div>
+            <v-btn @click="$vuetify.goTo('#agriwatch-container')" text large color="white">Agriwatch</v-btn>
+            <v-btn @click="$vuetify.goTo('#agribase-container')" text large color="white">Agribase</v-btn>
+          </div>
         </v-layout>
       </v-parallax>
     </section>
@@ -81,6 +85,26 @@
         </v-flex>
       </v-layout>
     </section>
+    <section id="agriwatch-container">
+      <v-layout column wrap class="my-12" align-center>
+        <v-flex xs12 sm4 class="my-4">
+          <div class="text-center">
+            <h2 class="headline">Agriwatch</h2>
+            <span class="subheading">Info about Agriwatch.</span>
+          </div>
+        </v-flex>
+      </v-layout>
+    </section>
+    <section id="agribase-container">
+      <v-layout column wrap class="my-12" align-center>
+        <v-flex xs12 sm4 class="my-4">
+          <div class="text-center">
+            <h2 class="headline">Agribase</h2>
+            <span class="subheading">Info about Agribase.</span>
+          </div>
+        </v-flex>
+      </v-layout>
+    </section>
   </div>
 </template>
 
@@ -104,7 +128,6 @@ export default {
 </script>
 
 <style>
-
 #nav {
   display: flex;
   justify-content: space-between;
@@ -113,5 +136,4 @@ export default {
   position: fixed;
   top: 0;
 }
-
 </style>
