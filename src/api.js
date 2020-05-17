@@ -279,6 +279,15 @@ const api = {
   },
   confirmUserEmail(confirmationId) {
     return post(`/auth/confirm-user/${confirmationId}`, {})
+  },
+  deleteAccount(email) {
+    post(`/auth/delete-account/${email}`, {})
+    .then(() => {
+      notify("Account deleted", colors.green)
+    })
+    .catch((error) => {
+      notify(error.response.data.message, colors.red);
+    });
   }
 };
 

@@ -195,7 +195,7 @@
           <div class="row">
             <div class="text-xs-center">
                <v-dialog
-                v-model="deleteAccount"
+                v-model="deleteAccountConfirmation"
                 width="500"
               >
                 <template v-slot:activator="{ on }">
@@ -217,14 +217,14 @@
                   </v-card-title>
 
                   <v-card-text>
-                    Deleting your account will delete your datasets.
+                    Deleting your account will also delete your datasets.
 
                   </v-card-text>
 
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                      <v-btn color="grey" text @click="deleteAccount = false">Close</v-btn>
+                      <v-btn color="grey" text @click="deleteAccountConfirmation = false">Close</v-btn>
                       <v-btn color="red" text v-on:click="dialog = false">Delete Account</v-btn>
                   </v-card-actions>
 
@@ -263,7 +263,7 @@ export default {
   data () {
     return {
 
-      deleteAccount: false,
+      deleteAccountConfirmation: false,
       forms: {
         email: {
 
@@ -416,6 +416,9 @@ export default {
         }
       }
     },
+    deleteAccount() {
+      api.deleteAccount(this.$store.state.user)
+    }
   },
   
 }
