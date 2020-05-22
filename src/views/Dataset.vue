@@ -127,25 +127,25 @@ export default {
     };
   },
   created() {
-    api
-      .fetchDatasetInfo(this.$route.params.id)
+    api.fetchDatasetInfo(this.$route.params.id)
       .then(response => {
         this.dataset = response.data;
+        api.fetchPrimaryDatasetObjects(this.$route.params.id)
+        .then((response) => {
+          this.data = response.data.datasetObjects;
+          this.tableIsLoading = false;
+          if (response.data.cacheId) {
+            this.cacheId = response.data.cacheId;
+          }
+        })
+        .catch((error) => {
+          notify(error.response.data.message, colors.red);
+          this.$router.push("/browse").catch(err => {});
+        });
       })
-      .catch(() => {
-        notify("Error fetching dataset metadata.", colors.red);
-      });
-    api
-      .fetchPrimaryDatasetObjects(this.$route.params.id)
-      .then(response => {
-        this.data = response.data.datasetObjects;
-        this.tableIsLoading = false;
-        if (response.data.cacheId) {
-          this.cacheId = response.data.cacheId;
-        }
-      })
-      .catch(() => {
-        notify("Error fetching dataset objects.", colors.red);
+      .catch((error) => {
+        notify(error.response.data.message, colors.red);
+        this.$router.push("/browse").catch(err => {});
       });
     $(window).scroll(() => {
       if ($(window).scrollTop() + $(window).height() == $(document).height()) {
