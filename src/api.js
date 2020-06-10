@@ -281,9 +281,12 @@ const api = {
     return post(`/auth/confirm-user/${confirmationId}`, {})
   },
   deleteAccount(email) {
-    post(`/auth/delete-account/${email}`, {})
+    post(`/auth/delete-account/${email}`, {sessionId: getCookie("SID")})
     .then(() => {
-      notify("Account deleted", colors.green)
+      deleteCookie("SID");
+      store.commit("setLoggedInFalse");
+      router.push("/");
+      notify("Account deleted", colors.green);
     })
     .catch((error) => {
       notify(error.response.data.message, colors.red);

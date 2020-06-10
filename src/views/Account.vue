@@ -225,7 +225,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                       <v-btn color="grey" text @click="deleteAccountConfirmation = false">Close</v-btn>
-                      <v-btn color="red" text v-on:click="dialog = false">Delete Account</v-btn>
+                      <v-btn color="red" text v-on:click="deleteAccount">Delete Account</v-btn>
                   </v-card-actions>
 
                 </v-card>
