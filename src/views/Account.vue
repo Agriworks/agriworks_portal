@@ -417,7 +417,7 @@ export default {
       }
     },
     deleteAccount() {
-      api.deleteAccount(this.$store.state.user)
+      api.deleteAccount()
     }
   },
   
