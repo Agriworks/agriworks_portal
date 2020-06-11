@@ -280,8 +280,8 @@ const api = {
   confirmUserEmail(confirmationId) {
     return post(`/auth/confirm-user/${confirmationId}`, {})
   },
-  deleteAccount(email) {
-    post(`/auth/delete-account/${email}`, {sessionId: getCookie("SID")})
+  deleteAccount() {
+    post("/auth/delete-account", {sessionId: getCookie("SID")})
     .then(() => {
       deleteCookie("SID");
       store.commit("setLoggedInFalse");
