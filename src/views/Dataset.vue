@@ -2,6 +2,9 @@
   <div id="datasetContainer">
     <div v-if="dataset">
       <div class="row">
+        <heat-map/>
+      </div>
+      <div class="row">
         <div class="d-flex justify-content-center col-sm-6" id="datasetInfoContainer">
           <h5>{{dataset.type}}</h5>
           <h1>{{ dataset.name }}</h1>
@@ -103,6 +106,7 @@
 
 
 <script>
+import HeatMap from '../components/HeatMap.vue';
 import DataTable from "../components/DataTable";
 import LoadingIndicator from "../components/LoadingIndicator";
 import api from "../api";
@@ -114,7 +118,8 @@ export default {
   name: "Dataset",
   components: {
     DataTable,
-    LoadingIndicator
+    LoadingIndicator,
+    HeatMap
   },
   data() {
     return {
