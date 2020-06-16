@@ -45,11 +45,15 @@
               >
                 <v-icon small>mdi-arrow-down-circle-outline</v-icon>Download
               </v-btn>
-              <!--
-          <v-btn small dark color="purple">
+              
+          <!-- <v-btn small dark color="purple">
             <v-icon small>mdi-graph-outline</v-icon> Visualize
+          </v-btn> -->
+
+          <v-btn small dark color="red" v-if="heatMappable">
+            <v-icon small>mdi-graph</v-icon>Heat Map
           </v-btn>
-              !-->
+              
             </div>
           </div>
         </div>
@@ -123,7 +127,8 @@ export default {
       data: [],
       cacheId: null,
       tableIsLoading: true,
-      additionalDataObjectsLoading: false
+      additionalDataObjectsLoading: false,
+      heatMappable: true,
     };
   },
   created() {
