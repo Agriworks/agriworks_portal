@@ -46,13 +46,36 @@
                 <v-icon small>mdi-arrow-down-circle-outline</v-icon>Download
               </v-btn>
               
-          <!-- <v-btn small dark color="purple">
+          <!-- Second option for heatmap icon
+            <v-btn small dark color="purple">
             <v-icon small>mdi-graph-outline</v-icon> Visualize
           </v-btn> -->
-
-          <v-btn small dark color="red" v-if="heatMappable">
+          <v-btn small dark color="red" 
+          v-if="heatMappable"
+          @click.stop="heatMapDialog = true">
             <v-icon small>mdi-graph</v-icon>Heat Map
+            
           </v-btn>
+
+
+          <v-dialog 
+          v-model="heatMapDialog"
+          scrollable
+          max-width="80%"
+          >
+          
+          <v-card>
+            <v-toolbar>
+            <v-toolbar-title>Heat Map</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items>
+              <v-btn icon @click="heatMapDialog = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+            </v-toolbar-items>
+          </v-toolbar>
+          </v-card>
+          </v-dialog>
               
             </div>
           </div>
@@ -129,6 +152,7 @@ export default {
       tableIsLoading: true,
       additionalDataObjectsLoading: false,
       heatMappable: true,
+      heatMapDialog: false,
     };
   },
   created() {
