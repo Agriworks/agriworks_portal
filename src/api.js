@@ -80,6 +80,9 @@ const api = {
     })
     .catch((error) => {
       notify(error.response.data.message);
+      if (error.response.data.message == "You must confirm your account to log in.") {
+        router.push(`/resend-confirmation-email/${username}`)
+      }
     });
   },
   fetchUserDatasets() {
