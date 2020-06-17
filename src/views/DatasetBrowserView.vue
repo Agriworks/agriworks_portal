@@ -128,7 +128,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("fetchUserDatasets");
+    // this.$store.dispatch("fetchUserDatasets");  // seems to be fetched a second time after all the components are mounted
   }
 };
 </script>
