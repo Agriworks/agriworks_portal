@@ -71,6 +71,7 @@ const api = {
     .then(() => {
       store.commit("setUser", username);
       store.commit("setLoggedInTrue");
+      store.commit("setIsSubmitting", false); 
       if (redirect) {
         router.push(redirect);
       } else {
@@ -79,6 +80,7 @@ const api = {
       notify("Successfully logged in", colors.green);
     })
     .catch((error) => {
+      store.commit("setIsSubmitting", false); 
       notify(error.response.data.message);
       if (error.response.data.message == "You must confirm your account to log in.") {
         router.push(`/resend-confirmation-email/${username}`)
@@ -228,6 +230,7 @@ const api = {
       userType: data.selectedType.type
     })
       .then(res => {
+        data.$store.commit("setIsSubmitting", false); 
         data.$router.push("resend-confirmation-email/"+data.email);
         data.$store.commit("setSnackbar", {
           message: res.data.message,
@@ -236,6 +239,7 @@ const api = {
         });
       })
       .catch(err => {
+        data.$store.commit("setIsSubmitting", false); 
         data.$store.commit("setSnackbar", {
           message: err.response.data.message,
           show: true,

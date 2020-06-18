@@ -8,6 +8,7 @@ const store = new Vuex.Store({
   state: {
     //Initial state
     isAdmin: false,
+    isSubmitting: false, 
     loggedIn: "unset",
     snackbar: {
       message: "",
@@ -25,6 +26,9 @@ const store = new Vuex.Store({
   mutations: {
     setIsAdmin(state) {
       state.isAdmin = true;
+    },
+    setIsSubmitting(state, val) {
+      state.isSubmitting = val; 
     },
     setLoggedInFalse(state) {
       state.loggedIn = false;
@@ -71,6 +75,9 @@ const store = new Vuex.Store({
     isLoggedIn: (state) => {
       return state.loggedIn;
     },
+    getIsSubmitting: (state) => {
+      return state.isSubmitting; 
+    }, 
     getErrorMessage: (state) => {
       return state.snackbar.errorMessage;
     },

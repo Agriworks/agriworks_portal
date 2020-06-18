@@ -90,7 +90,7 @@
                 </v-col>
                 <v-flex align-center>
                   <div align="center">
-                    <v-btn color="success" :outlined="true" @click="signup" :disabled="!valid" id="submitButton">Sign Up</v-btn>
+                    <v-btn color="success" :outlined="true" @click="signup" :disabled="!valid || isSubmitting" id="submitButton">Sign Up</v-btn>
                   </div>
                 </v-flex>
               </v-row>
@@ -109,6 +109,8 @@
 
 <script>
 import api from "../api.js";
+import { mapState } from 'vuex';
+
 
 export default {
   data: () => ({
@@ -143,6 +145,7 @@ export default {
     },
     // should probably move this to store
     signup() {
+      this.$store.commit("setIsSubmitting", true);  
       api.signup(this)
     }
   },
@@ -150,7 +153,10 @@ export default {
     passwordConfirmationRule() {
       return () =>
         this.password === this.confirmPassword || "Password must match";
-    }
+    },
+    isSubmitting() {
+      return this.$store.getters.getIsSubmitting;
+    } 
   }
 };
 </script>

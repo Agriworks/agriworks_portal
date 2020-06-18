@@ -38,7 +38,7 @@
               @click:append="passwordVisible = !passwordVisible"
               required
               />
-              <v-btn color="success" :outlined="true" @click="login" block id="submitButton">Login</v-btn>
+              <v-btn color="success" :outlined="true" @click="login" block :disabled="isSubmitting" id="submitButton">Login</v-btn>
             </v-form>
               <div class="custom-control custom-checkbox mb-3" id="alternateOptionsRow">
                 <v-btn to="/registration" color="success" :text="true">Register</v-btn>|
@@ -77,8 +77,14 @@ export default {
 
   methods: {
     login() {
+      this.$store.commit("setIsSubmitting", true);  
       api.login(this.email, this.password, this.$route.query.redirect);
     }
+  }, 
+  computed: {
+    isSubmitting() {
+      return this.$store.getters.getIsSubmitting;
+    } 
   }
 };
 </script>
