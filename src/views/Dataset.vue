@@ -2,7 +2,9 @@
   <div id="datasetContainer">
     <div v-if="dataset">
       <div class="row">
-        <heat-map/>
+        <heat-map
+          :data="data"
+        />
       </div>
       <div class="row">
         <div class="d-flex justify-content-center col-sm-6" id="datasetInfoContainer">

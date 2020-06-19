@@ -8,80 +8,54 @@ import { loadModules } from 'esri-loader';
 
 export default {
   name: 'heat-map',
-  props: 'data',
+  props: ['data'],
   mounted() {
     // lazy load the required ArcGIS API for JavaScript modules and CSS
-    loadModules(['esri/Map', 'esri/views/MapView', 'esri/layers/FeatureLayer'], { css: true })
-    .then(([Map, MapView, FeatureLayer]) => {
-      const defaultSym = {
-        type: "simple-fill", // autocasts as new SimpleFillSymbol()
-        outline: {
-          // autocasts as new SimpleLineSymbol()
-          color: [128, 128, 128, 0.2],
-          width: "0.5px"
-        }
+    loadModules(['esri/Map', 'esri/views/MapView', 'esri/layers/CSVLayer'], { css: true })
+    .then(([Map, MapView, CSVLayer]) => {
+
+      const template = {
+        title: "{place}",
+        content: "Magnitude {mag} {type} hit {place} on {time}."
       };
+
+      // The heatmap renderer assigns each pixel in the view with
+      // an intensity value. The ratio of that intensity value
+      // to the maxPixel intensity is used to assign a color
+      // from the continuous color ramp in the colorStops property
 
       const renderer = {
-        type: "simple", // autocasts as new SimpleRenderer()
-        symbol: defaultSym,
-        label: "U.S. County",
-        visualVariables: [
-          {
-            type: "color",
-            field: "POP_POVERTY",
-            normalizationField: "TOTPOP_CY",
-            legendOptions: {
-              title: "% population in poverty by county"
-            },
-            stops: [
-              {
-                value: 0.1,
-                color: "#FFFCD4",
-                label: "<10%"
-              },
-              {
-                value: 0.3,
-                color: "#350242",
-                label: ">30%"
-              }
-            ]
-          }
-        ]
+        type: "heatmap",
+        colorStops: [
+          { color: "rgba(63, 40, 102, 0)", ratio: 0 },
+          { color: "#472b77", ratio: 0.083 },
+          { color: "#4e2d87", ratio: 0.166 },
+          { color: "#563098", ratio: 0.249 },
+          { color: "#5d32a8", ratio: 0.332 },
+          { color: "#6735be", ratio: 0.415 },
+          { color: "#7139d4", ratio: 0.498 },
+          { color: "#7b3ce9", ratio: 0.581 },
+          { color: "#853fff", ratio: 0.664 },
+          { color: "#a46fbf", ratio: 0.747 },
+          { color: "#c29f80", ratio: 0.83 },
+          { color: "#e0cf40", ratio: 0.913 },
+          { color: "#ffff00", ratio: 1 }
+        ],
+        maxPixelIntensity: 25,
+        minPixelIntensity: 0
       };
 
-      const graduatedColorLayer = new FeatureLayer({
-        url:
-          "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/counties_politics_poverty/FeatureServer/0",
-        renderer: renderer,
-        title: "Poverty in the southeast U.S.",
-        popupTemplate: {
-          // autocasts as new PopupTemplate()
-          title: "{COUNTY}, {STATE}",
-          content:
-            "{POP_POVERTY} of {TOTPOP_CY} people live below the poverty line.",
-          fieldInfos: [
-            {
-              fieldName: "POP_POVERTY",
-              format: {
-                digitSeparator: true,
-                places: 0
-              }
-            },
-            {
-              fieldName: "TOTPOP_CY",
-              format: {
-                digitSeparator: true,
-                places: 0
-              }
-            }
-          ]
-        }
+      const layer = new CSVLayer({
+        url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.csv",
+        title: "Magnitude 2.5+ earthquakes from the last week",
+        copyright: "USGS Earthquakes",
+        popupTemplate: template,
+        renderer: renderer
       });
 
       const map = new Map({
-        basemap: 'gray',
-        layers: [graduatedColorLayer]
+        basemap: "gray",
+        layers: [layer]
       });
 
       this.view = new MapView({
