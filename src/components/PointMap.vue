@@ -7,12 +7,12 @@
 import { loadModules } from 'esri-loader';
 
 export default {
-  name: 'heat-map',
+  name: 'point-map',
   props: ['data'],
   mounted() {
     // lazy load the required ArcGIS API for JavaScript modules and CSS
-    loadModules(['esri/Map', 'esri/views/MapView', 'esri/Graphic', 'esri/layers/FeatureLayer'], { css: true })
-    .then(([Map, MapView, Graphic, FeatureLayer]) => {
+    loadModules(['esri/Map', 'esri/views/MapView', 'esri/Graphic', 'esri/layers/GraphicsLayer'], { css: true })
+    .then(([Map, MapView, Graphic, GraphicsLayer]) => {
 
       // The heatmap renderer assigns each pixel in the view with
       // an intensity value. The ratio of that intensity value
@@ -20,12 +20,11 @@ export default {
       // from the continuous color ramp in the colorStops property
 
       var graphics = [];
-      
+
       for (var key in this.data) {
         var item = this.data[key]
         var pointGraphic = new Graphic({
           attributes: {
-            ObjectId: item.place,
             name: item.place
           },
           geometry: {
@@ -58,31 +57,8 @@ export default {
         graphics.push(pointGraphic);
       }
 
-      const renderer = {
-        type: "heatmap",
-        colorStops: [
-          { color: "rgba(63, 40, 102, 0)", ratio: 0 },
-          { color: "#472b77", ratio: 0.083 },
-          { color: "#4e2d87", ratio: 0.166 },
-          { color: "#563098", ratio: 0.249 },
-          { color: "#5d32a8", ratio: 0.332 },
-          { color: "#6735be", ratio: 0.415 },
-          { color: "#7139d4", ratio: 0.498 },
-          { color: "#7b3ce9", ratio: 0.581 },
-          { color: "#853fff", ratio: 0.664 },
-          { color: "#a46fbf", ratio: 0.747 },
-          { color: "#c29f80", ratio: 0.83 },
-          { color: "#e0cf40", ratio: 0.913 },
-          { color: "#ffff00", ratio: 1 }
-        ],
-        maxPixelIntensity: 25,
-        minPixelIntensity: 0
-      };
-
-      const layer = new FeatureLayer({
-        source: graphics,
-        renderer: renderer,
-        objectIdField: "ObjectID"
+      const layer = new GraphicsLayer({
+        graphics: graphics
       });
 
       const map = new Map({
