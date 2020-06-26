@@ -13,18 +13,18 @@
               <v-switch v-model="$vuetify.theme.dark" color="green"></v-switch>
               <v-list-item-title>Dark Mode</v-list-item-title>
             </v-list-item>
-            <!--
+            
             <v-list-item>
-              <v-switch v-model="" color="green"></v-switch>
+              <v-switch v-model="sidebarAlways" color="green"></v-switch>
               <v-list-item-title>Always keep the sidebar visible</v-list-item-title>
             </v-list-item>
-            !-->
+            
           </v-list>
         </v-card>
       </v-dialog>
       <div class="container" v-if="this.showSidebar">
         <div v-on:mouseover="setExpandedTrue">
-          <Sidebar @openDialog="openDialog()" v-bind:isExpanded="isExpanded"/>
+          <Sidebar @openDialog="openDialog()" v-bind:isExpanded="isExpanded || sidebarAlways"/>
         </div>
         <div v-on:mouseover="setExpandedFalse">
           <router-view />
@@ -79,7 +79,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(["snackbar"])
+    ...mapState(["snackbar", "sidebarAlwaysExpanded"]), 
+    sidebarAlways: {
+      set(val) {
+        this.$store.commit("setSidebarAlwaysExpanded", val)
+      }, 
+      get() {
+        return this.sidebarAlwaysExpanded; 
+      }
+    } 
   },
   updated() {
     this.showSidebar = this.$router.currentRoute.name != "Home"; //we are performing a check on every update
