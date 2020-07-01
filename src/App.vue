@@ -90,7 +90,13 @@ export default {
     } 
   },
   updated() {
-    this.showSidebar = this.$router.currentRoute.name != "Home"; //we are performing a check on every update
+    this.showSidebar = this.$router.currentRoute.name != "Home" 
+                    && this.$router.currentRoute.name != "login" 
+                    && this.$router.currentRoute.name != "registration"
+                    && this.$router.currentRoute.name != "resend-confirmation-email"
+                    && this.$router.currentRoute.name != "forgot-password"
+                    && this.$router.currentRoute.name != "reset-password"
+                    && this.$router.currentRoute.name != "confirm-user"; //we are performing a check on every update
   }
 };
 </script>

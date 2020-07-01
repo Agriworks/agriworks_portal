@@ -79,7 +79,7 @@ const api = {
       notify("Successfully logged in", colors.green);
     })
     .catch((error) => {
-      notify(error.response.data.message);
+      notify(error.response.data.message, colors.red);
       if (error.response.data.message == "You must confirm your account to log in.") {
         router.push(`/resend-confirmation-email/${username}`)
       }

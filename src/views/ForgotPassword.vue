@@ -1,5 +1,20 @@
 <template>
-  <div class="container">
+<div class="row mb-0">
+    <LeftView />
+    <div class="col-lg-6 col-sm-12 right" id="infoContainer">
+      <v-container class="pl-8">
+        <div v-row>
+          <div class="col-lg-6 col-sm-12">
+            <div v-row align="center" justify="start">
+               <h3 class="card-title text-center">Reset Password</h3>
+            </div>
+          </div>
+        </div>
+      </v-container>
+      <Footer />
+    </div>
+</div>
+  <!-- <div class="container">
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
@@ -49,12 +64,19 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
 import api from "../api.js";
+import LeftView from "./LeftView"
+import Footer from "./Footer"
+  
 export default {
+  components: {
+    LeftView,
+    Footer
+  },
   data() {
     return {
       loading: false,

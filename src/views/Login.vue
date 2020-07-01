@@ -1,85 +1,102 @@
 <template>
-<b-container>
-  <div class="row mt-12">
-    <div class="col-md-6" id="loginFormContainer">
-      <v-card class="rounded-card" :elevation="5">
-          <div class="card-body">
-            <div v-if="!$vuetify.theme.dark">
-              <img
-              class="card-img center"
-              src="../assets/logo_transparent_2_black.png"
-              alt="Card image cap"
-              align="middle"
-              id="logo"
-            />
-            </div>
-            <div v-if="$vuetify.theme.dark">
-              <img
-              class="card-img center"
-              src="../assets/logo_transparent_2_white_text.png"
-              alt="Card image cap"
-              align="middle"
-              id="logo"
-            />
-            </div>
-            <v-form>
+  <div class="row mb-0">
+    <LeftView />
+    <div class="col-lg-6 col-sm-12 right" id="infoContainer">
+      <v-container class="pl-8">
+        <div v-row>
+          <div class="col-lg-6 col-sm-12">
+            <div v-row align="center" justify="start">
               <v-text-field
-              v-model="email"
-              label="Username"
-              type="email"
-              autofocus
-              required
-              />
-              <v-text-field
-              v-model="password"
-              label="Password"
-              :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="passwordVisible ? 'text' : 'password'"
-              @click:append="passwordVisible = !passwordVisible"
-              required
-              />
-              <v-btn color="success" :outlined="true" @click="login" block id="submitButton">Login</v-btn>
-            </v-form>
-              <div class="custom-control custom-checkbox mb-3" id="alternateOptionsRow">
-                <v-btn to="/registration" color="success" :text="true">Register</v-btn>|
-                <v-btn to="/forgot-password" color="success" :text="true">Forgot Password?</v-btn>
-              </div>
+                  label="Email"
+                  v-model="email"
+                  type="email"
+                  outlined
+                  autofocus
+                  required
+                  dense
+                  color="#96D34A"
+              ></v-text-field>
           </div>
-        </v-card>
-
-    </div>
-    <div class="col-md-6" id="infoContainer">
-      <h2> Transform your Agricultural Landscape with Data </h2>
+          <div v-row align="center" justify="start">
+            <v-text-field
+                v-model="password"
+                label="Password"
+                :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="passwordVisible ? 'text' : 'password'"
+                @click:append="passwordVisible = !passwordVisible"
+                color="#96D34A"
+                required
+                outlined
+                dense
+            ></v-text-field>
+          </div>
+          <div v-row align="start" justify="start">
+            <p class="forgotText button padding" @click="forgot()">Forgot your username or password?</p>
+          </div>
+          <div v-row align="start" justify="start">
+            <p class="forgotText button padding" @click="registration()">Need an account?</p>
+          </div>
+          <div v-row align="start" justify="start">
+            <v-btn color="#96D34A" :outlined="true" @click="login()" id="submitButton" :loading="loading">Sign In</v-btn>
+          </div>
+        </div>
+      </div>
+      </v-container>
+      <!-- <h2> Transform your Agricultural Landscape with Data </h2>
       <ul id="bulletPoints">
         <li class="bulletPoint"> <v-icon medium color="#96D34A">mdi-hammer-screwdriver</v-icon> Create and share datasets </li>
         <li class="bulletPoint"> <v-icon medium color="#96D34A">mdi-graph</v-icon> Visualize your datasets </li>
         <li class="bulletPoint"> <v-icon medium color="#96D34A">mdi-send</v-icon> Formulate dataset templates for data collection </li>
-      </ul>
-      <div id="h4iStampContainer">
-        <h5> Proudly built by  <a href="https://www.hack4impactbu.com/index.html" target="_blank"><span v-if="!$vuetify.theme.dark"><img src="../assets/hack4impactlogo.png" width="35%"/></span><span v-if="$vuetify.theme.dark"><img src="../assets/hack4impactlogo_white.png" width="35%"/></span></a></h5>
-      </div>
+      </ul> -->
+      <Footer/>
     </div>
   </div>
-</b-container> 
 </template>
 
 <script>
 import api from "../api";
+import Footer from "./Footer"
+import LeftView from "./LeftView"
 
 export default {
+  components: {
+    Footer,
+    LeftView
+  },
   data() {
     return {
       email: "",
       password: "",
-      passwordVisible: false
+      passwordVisible: false,
+      loading: false
     };
   },
 
   methods: {
     login() {
-      api.login(this.email, this.password, this.$route.query.redirect);
+        this.loading = true
+        api.login(this.email, this.password, this.$route.query.redirect);
+        setTimeout(() => (this.loading = false), 1500);
+    },
+    forgot() {
+      this.$router.push("/forgot-password");
+    },
+    registration() {
+      this.$router.push("/registration");
+    },
+    handleEnterPress() {
+      if (event.keyCode === 13) { 
+        this.login()
+      }
     }
+  },
+  mounted() {
+    window.addEventListener('keyup', this.handleEnterPress)
+  },
+  destroyed() {
+    window.removeEventListener('keyup', this.handleEnterPress) 
   }
+
 };
 </script>
 
@@ -93,10 +110,6 @@ export default {
   margin-bottom:2rem;
 }
 
-#loginFormContainer {
-  text-align: center;
-}
-
 #submitButton {
   margin-top: 1rem;
 }
@@ -106,6 +119,7 @@ export default {
 }
 
 #infoContainer {
+  min-height: 100vh;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -125,4 +139,11 @@ export default {
 #h4iStampContainer {
   margin-top: 2rem;
 }
+.forgotText {
+  font-size: 15px;
+  color:#96D34A;
+}
+
+p.button:hover { cursor: pointer; }
+p.padding  { padding:0; margin:0;}
 </style>

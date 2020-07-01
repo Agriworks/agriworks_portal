@@ -1,5 +1,17 @@
 <template>
-  <div>
+<div class="row mb-0">
+    <LeftView />
+    <div class="col-lg-6 col-sm-12 right" id="infoContainer">
+      <v-container class="pl-8">
+        <div v-row>
+          <div class="col-lg-6 col-sm-12">
+          </div>
+        </div>
+      </v-container>
+      <Footer />
+    </div>
+</div>
+  <!-- <div>
     <div class="container" v-if="showLinkError">
       <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -71,12 +83,18 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
 import api from "../api.js";
+import LeftView from "./LeftView"
+import Footer from "./Footer"
 export default {
+  components: {
+    LeftView,
+    Footer
+  },
   data() {
     return {
       showLinkError: false
