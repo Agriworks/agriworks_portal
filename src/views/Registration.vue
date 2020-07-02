@@ -226,4 +226,7 @@ export default {
 
 p.button:hover { cursor: pointer; }
 p.padding  { padding:0; margin-top:20px;}
+p {
+  display: inline-block;
+}
 </style>

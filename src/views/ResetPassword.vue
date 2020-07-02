@@ -17,7 +17,7 @@
           </v-row>
           <v-row align="start" justify="start" v-if="showLinkError" no-gutters>
             <v-col>
-               <v-btn color="#96D34A" :outlined="true" to="/forgot-password" @click="redirect" :loading="loading">Request new link</v-btn>
+               <v-btn color="#96D34A" :outlined="true" @click="redirect" :loading="loading">Request new link</v-btn>
             </v-col>
           </v-row>
           <v-row align="start" justify="start" v-if="!showLinkError" no-gutters>
@@ -100,6 +100,9 @@ export default {
   methods: {
     submit() {
       api.resetPassword(this);
+    },
+    redirect() {
+      this.$router.push("/forgot-password");
     }
   },
   computed: {
