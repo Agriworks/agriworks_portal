@@ -5,8 +5,38 @@
       <v-container class="pl-8">
         <div v-row>
           <div class="col-lg-6 col-sm-12">
+            <div v-row align="start" justify="start">
+               <p class="text">Enter your user account's email address and we will send you a
+                password reset link.</p>
+            </div>
             <div v-row align="center" justify="start">
-               <h3 class="card-title text-center">Reset Password</h3>
+              <v-form v-model="valid"  @submit.prevent="submit">
+                <div class="form-label-group">
+                  <v-text-field
+                      v-model="email"
+                      name="email"
+                      label="Email"
+                      type="email"
+                      :rules="emailRules"
+                      placeholder
+                      required
+                      color="#96D34A"
+                      outlined
+                      dense
+                />
+                </div>
+              </v-form>
+            </div>
+            <div v-row align="center" justify="start">
+              <div v-row align="start" justify="start">
+                <v-btn color="#96D34A" :outlined="true" @click="submit" :disabled="!valid" id="submitButton">Send reset link</v-btn>
+              </div>
+            </div>
+            <div v-row align="start" justify="start">
+              <p class="text route button padding"  @click="login()">Go to login</p>
+            </div>
+            <div v-row align="start" justify="start">
+              <p class="text route button padding btm" @click="registration()">Go to registration</p>
             </div>
           </div>
         </div>
@@ -79,8 +109,13 @@ export default {
   },
   data() {
     return {
+      valid: true,
       loading: false,
       emailSent: false,
+      emailRules: [
+      v => !!v || "E-mail is required",
+      v => /.+@.+/.test(v) || "E-mail must be valid"
+      ],
       emailMessage: ""
     };
   },
@@ -90,18 +125,33 @@ export default {
     },
     resetForm() {
       this.emailSent = false;
-    }
+    },
+    login() {
+      this.$router.push("/login");
+    },
+    registration()  {
+      this.$router.push("/registration");
+    },
   }
 };
 </script>
 <style scoped>
-.form-label-group {
-  margin: 35px 10px;
+#infoContainer {
+  min-height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-h3 {
-  margin: 20px 15px;
+.text {
+  font-size: 15px;
 }
-button {
-  margin: 15px 15px;
+.text.route {
+  color:#96D34A;
 }
+
+p.button:hover { cursor: pointer; }
+p.padding  { padding:0; margin-top:10px;}
+p.padding.btm {margin-top:-10px;}
+
 </style>
