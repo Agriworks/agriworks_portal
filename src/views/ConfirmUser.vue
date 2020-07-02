@@ -1,28 +1,43 @@
 <template>
-  <div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 card" style="text-align:center;">
-            <div class="card-body">
-              <h4> {{ confirmationStatus }} </h4>
-              <div v-if="!this.hideLoadingIndicator">
-                  <LoadingIndicator/>
-              </div>
-              <div v-if="this.errorReply">
-                <p> {{ this.errorReply }} </p>
-                <Button title="Request New Code"/>
-            </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+<v-row>
+  <LeftView />
+  <v-col lg="6" sm="12">
+    <v-container fluid fill-height class="pl-10">
+      <v-row align="center" justify="start">
+        <v-col lg="6" sm="12">
+          <v-row align="start" justify="start" no-gutters>
+            <v-col>
+               <p class="text">{{ confirmationStatus }}</p>
+            </v-col>
+          </v-row>
+          <v-row align="start" justify="start" v-if="!this.hideLoadingIndicator" no-gutters>
+            <v-col>
+               <LoadingIndicator />
+            </v-col>
+          </v-row>
+          <v-row align="start" justify="start" v-if="this.errorReply" no-gutters>
+            <v-col>
+               <p class="text route">{{ this.errorReply }}</p>
+            </v-col>
+          </v-row>
+          <v-row align="start" justify="start" v-if="this.errorReply" no-gutters>
+            <v-col>
+               <v-btn color="#96D34A" :outlined="true" @click="resendConfirmationEmail()">Request New Code</v-btn>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+    <Footer />
+  </v-col>
+</v-row>
 </template>
 
 <script>
 import api from "../api";
-import LoadingIndicator from "../components/LoadingIndicator";
-import Button from "../components/Button";
+import LeftView from "./LeftView"
+import Footer from "./Footer"
+import LoadingIndicator from "../components/LoadingIndicator"
 
 export default {
   data() {
@@ -33,8 +48,9 @@ export default {
     }
   },
   components: {
-    LoadingIndicator: LoadingIndicator,
-    Button: Button
+    LeftView,
+    Footer,
+    LoadingIndicator
   },
   created(){
     api.confirmUserEmail(this.$route.params.id)
@@ -56,13 +72,18 @@ export default {
 };
 </script>
 <style scoped>
-.form-label-group {
-  margin: 35px 10px;
+.text {
+  font-size: 15px;
 }
-h3 {
-  margin: 20px 15px;
+.text.route {
+  color:#96D34A;
 }
-button {
-  margin: 15px 15px;
+
+p.button:hover { cursor: pointer; }
+p.padding  { padding:0; margin-top:20px;}
+p.padding.btm {margin-top: -20px;}
+
+p {
+  display: inline-block;
 }
 </style>

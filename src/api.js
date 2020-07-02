@@ -254,8 +254,8 @@ const api = {
   },
   resetPassword(data) {
     post(`/auth/reset-password/${data.$route.params.id}`, {
-      password: document.getElementById("password").value,
-      confirmPassword: document.getElementById("password2").value
+      password: data.password,
+      confirmPassword: data.confirmPassword
     })
     .then(res => {
       data.showLinkError = false;

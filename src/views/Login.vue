@@ -36,12 +36,12 @@
           </v-row>
           <v-row align="start" justify="start" no-gutters>
             <v-col>
-               <p class="forgotText button padding" @click="forgot()">Forgot your username or password?</p>
+               <p class="text button padding" @click="forgot()">Forgot your username or password?</p>
             </v-col>
           </v-row>
           <v-row align="start" justify="start" no-gutters>
             <v-col>
-               <p class="forgotText button padding" @click="registration()">Need an account?</p>
+               <p class="text button padding" @click="registration()">Need an account?</p>
             </v-col>
           </v-row>
           <v-row align="start" justify="start" no-gutters>
@@ -108,11 +108,14 @@ export default {
 #submitButton {
   margin-top: 1rem;
 }
-.forgotText {
+.text {
   font-size: 15px;
   color:#96D34A;
 }
 
 p.button:hover { cursor: pointer; }
 p.padding  { padding:0; margin:0;}
+p {
+  display: inline-block;
+}
 </style>

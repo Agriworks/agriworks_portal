@@ -144,7 +144,7 @@
           </v-row>
           <v-row align="start" justify="start" no-gutters>
               <v-col>
-                <p class="forgotText button padding" @click="login()">Already have an account?</p>
+                <p class="text button padding" @click="login()">Already have an account?</p>
               </v-col>
           </v-row>
         </v-col>
@@ -218,18 +218,8 @@ export default {
 #submitButton {
   margin-top: 1rem;
 }
-#infoContainer {
-  min-height: 100vh;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-#h4iStampContainer {
-  margin-top: 2rem;
-}
 
-.forgotText {
+.text {
   font-size: 15px;
   color:#96D34A;
 }

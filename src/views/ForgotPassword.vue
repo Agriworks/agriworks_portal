@@ -111,7 +111,10 @@ export default {
 }
 
 p.button:hover { cursor: pointer; }
-p.padding  { padding:0; margin-top:10px;}
-p.padding.btm {margin-top:-10px;}
+p.padding  { padding:0; margin-top:20px;}
+p.padding.btm {margin-top: -20px;}
 
+p {
+  display: inline-block;
+}
 </style>
