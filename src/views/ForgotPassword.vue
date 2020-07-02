@@ -5,11 +5,11 @@
       <v-container class="pl-8">
         <div v-row>
           <div class="col-lg-6 col-sm-12">
-            <div v-row align="start" justify="start">
+            <div v-row align="start" justify="start" v-if="!emailSent">
                <p class="text">Enter your user account's email address and we will send you a
                 password reset link.</p>
             </div>
-            <div v-row align="center" justify="start">
+            <div v-row align="center" justify="start" v-if="!emailSent">
               <v-form v-model="valid"  @submit.prevent="submit">
                 <div class="form-label-group">
                   <v-text-field
@@ -27,10 +27,8 @@
                 </div>
               </v-form>
             </div>
-            <div v-row align="center" justify="start">
-              <div v-row align="start" justify="start">
-                <v-btn color="#96D34A" :outlined="true" @click="submit" :disabled="!valid" id="submitButton">Send reset link</v-btn>
-              </div>
+            <div v-row align="start" justify="start" v-if="!emailSent">
+              <v-btn color="#96D34A" :outlined="true" @click="submit" :disabled="!valid" id="submitButton">Send reset link</v-btn>
             </div>
             <div v-row align="start" justify="start">
               <p class="text route button padding"  @click="login()">Go to login</p>
