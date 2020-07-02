@@ -1,12 +1,13 @@
 <template>
-  <div class="row mb-0">
-    <LeftView />
-    <div class="col-lg-6 col-sm-12 right" id="infoContainer">
-      <v-container class="pl-8">
-        <div v-row>
-          <div class="col-lg-6 col-sm-12">
-            <v-form v-model="valid" @submit.prevent="signup" class="form-signin">
-              <div v-row align="center" justify="start">
+<v-row>
+  <LeftView />
+  <v-col lg="6" sm="12">
+    <v-container fluid fill-height class="pl-10">
+      <v-row align="center" justify="start">
+        <v-col lg="6" sm="12">
+          <v-form v-model="valid" @submit.prevent="signup" class="form-signin">
+            <v-row align="start" justify="start" no-gutters>
+              <v-col>
                 <v-text-field
                       v-model="firstName"
                       name="firstName"
@@ -20,9 +21,11 @@
                       outlined
                       dense
                 />
-            </div>
-            <div v-row align="center" justify="start">
-              <v-text-field
+              </v-col>
+            </v-row>
+            <v-row align="start" justify="start" no-gutters>
+              <v-col>
+                <v-text-field
                       v-model="lastName"
                       name="lastName"
                       label="Last Name"
@@ -33,10 +36,12 @@
                       color="#96D34A"
                       outlined
                       dense
-              />
-            </div>
-            <div v-row align="center" justify="start">
-              <v-text-field
+                />
+              </v-col>
+            </v-row>
+            <v-row align="start" justify="start" no-gutters>
+              <v-col>
+                <v-text-field
                       v-model="email"
                       name="email"
                       label="Email"
@@ -47,9 +52,11 @@
                       color="#96D34A"
                       outlined
                       dense
-              />
-            </div>
-            <div v-row align="center" justify="start">
+                />
+              </v-col>
+            </v-row>
+            <v-row align="start" justify="start" no-gutters>
+              <v-col>
                 <v-text-field
                     ref="password"
                     v-model="password"
@@ -65,9 +72,11 @@
                     outlined
                     dense
                 />
-            </div>
-            <div v-row align="center" justify="start">
-              <v-text-field
+              </v-col>
+            </v-row>
+            <v-row align="start" justify="start" no-gutters>
+              <v-col>
+                <v-text-field
                   v-model="confirmPassword"
                   name="password_confirmation"
                   label="Confirm Password"
@@ -80,10 +89,12 @@
                   color="#96D34A"
                   outlined
                   dense
-              />
-            </div>
-            <div v-row align="center" justify="start">
-              <v-select
+                />
+              </v-col>
+            </v-row>
+            <v-row align="start" justify="start" no-gutters>
+              <v-col>
+                <v-select
                       v-model="selectedType"
                       :items = "items"
                       label="What kind of user are you?"
@@ -94,10 +105,12 @@
                       color="#96D34A"
                       dense
                       :rules="[required('User Type')]"
-                ></v-select>
-            </div>
-            <div v-row align="center" justify="start">
-              <v-text-field
+                />
+              </v-col>
+            </v-row>
+            <v-row align="start" justify="start" no-gutters>
+              <v-col>
+                <v-text-field
                       v-model="inputOrganization"
                       name="organization"
                       label="Organization (optional)"
@@ -106,10 +119,12 @@
                       color="#96D34A"
                       outlined
                       dense
-              />
-            </div>
-            <div v-row align="center" justify="start">
-              <v-text-field
+                />
+              </v-col>
+            </v-row>
+            <v-row align="start" justify="start" no-gutters>
+              <v-col>
+                <v-text-field
                       v-model="inputLocation"
                       name="location"
                       label="Location (optional)"
@@ -118,22 +133,26 @@
                       color="#96D34A"
                       outlined
                       dense
-              />
-            </div>
+               />
+              </v-col>
+            </v-row>
           </v-form>
-
-          <div v-row align="start" justify="start">
-            <v-btn color="#96D34A" :outlined="true" @click="signup" :disabled="!valid" id="submitButton">Sign Up</v-btn>
-          </div>
-          <div v-row align="start" justify="start">
-            <p class="forgotText button padding" @click="login()">Already have an account?</p>
-          </div>
-        </div>
-      </div>
-      </v-container>
-      <Footer />
-    </div>
-  </div>
+          <v-row align="start" justify="start" no-gutters>
+              <v-col>
+                <v-btn color="#96D34A" :outlined="true" @click="signup" :disabled="!valid" id="submitButton">Sign Up</v-btn>
+              </v-col>
+          </v-row>
+          <v-row align="start" justify="start" no-gutters>
+              <v-col>
+                <p class="forgotText button padding" @click="login()">Already have an account?</p>
+              </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+    <Footer />
+  </v-col>
+</v-row>
 </template>
 <script>
 import api from "../api.js";

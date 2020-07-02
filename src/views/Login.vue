@@ -1,12 +1,13 @@
 <template>
-  <div class="row mb-0">
-    <LeftView />
-    <div class="col-lg-6 col-sm-12 right" id="infoContainer">
-      <v-container class="pl-8">
-        <div v-row>
-          <div class="col-lg-6 col-sm-12">
-            <div v-row align="center" justify="start">
-              <v-text-field
+<v-row>
+  <LeftView />
+  <v-col lg="6" sm="12">
+    <v-container fluid fill-height class="pl-10">
+      <v-row align="center" justify="start">
+        <v-col lg="6" sm="12">
+          <v-row align="start" justify="start" no-gutters>
+            <v-col>
+               <v-text-field
                   label="Email"
                   v-model="email"
                   type="email"
@@ -15,10 +16,12 @@
                   required
                   dense
                   color="#96D34A"
-              ></v-text-field>
-          </div>
-          <div v-row align="center" justify="start">
-            <v-text-field
+                />
+            </v-col>
+          </v-row>
+          <v-row align="start" justify="start" no-gutters>
+            <v-col>
+               <v-text-field
                 v-model="password"
                 label="Password"
                 :append-icon="passwordVisible ? 'mdi-eye' : 'mdi-eye-off'"
@@ -28,29 +31,30 @@
                 required
                 outlined
                 dense
-            ></v-text-field>
-          </div>
-          <div v-row align="start" justify="start">
-            <p class="forgotText button padding" @click="forgot()">Forgot your username or password?</p>
-          </div>
-          <div v-row align="start" justify="start">
-            <p class="forgotText button padding" @click="registration()">Need an account?</p>
-          </div>
-          <div v-row align="start" justify="start">
-            <v-btn color="#96D34A" :outlined="true" @click="login()" id="submitButton" :loading="loading">Sign In</v-btn>
-          </div>
-        </div>
-      </div>
-      </v-container>
-      <!-- <h2> Transform your Agricultural Landscape with Data </h2>
-      <ul id="bulletPoints">
-        <li class="bulletPoint"> <v-icon medium color="#96D34A">mdi-hammer-screwdriver</v-icon> Create and share datasets </li>
-        <li class="bulletPoint"> <v-icon medium color="#96D34A">mdi-graph</v-icon> Visualize your datasets </li>
-        <li class="bulletPoint"> <v-icon medium color="#96D34A">mdi-send</v-icon> Formulate dataset templates for data collection </li>
-      </ul> -->
-      <Footer/>
-    </div>
-  </div>
+                />
+            </v-col>
+          </v-row>
+          <v-row align="start" justify="start" no-gutters>
+            <v-col>
+               <p class="forgotText button padding" @click="forgot()">Forgot your username or password?</p>
+            </v-col>
+          </v-row>
+          <v-row align="start" justify="start" no-gutters>
+            <v-col>
+               <p class="forgotText button padding" @click="registration()">Need an account?</p>
+            </v-col>
+          </v-row>
+          <v-row align="start" justify="start" no-gutters>
+            <v-col>
+               <v-btn color="#96D34A" :outlined="true" @click="login()" id="submitButton" :loading="loading">Sign In</v-btn>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+    <Footer />
+  </v-col>
+</v-row>
 </template>
 
 <script>
@@ -101,43 +105,8 @@ export default {
 </script>
 
 <style scoped>
-.rounded-card {
-  border-radius: 2% !important;
-}
-
-#logo {
-  width: 75%;
-  margin-bottom:2rem;
-}
-
 #submitButton {
   margin-top: 1rem;
-}
-
-#alternateOptionsRow {
-  margin-top: 1rem;
-}
-
-#infoContainer {
-  min-height: 100vh;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-#bulletPoints {
-  list-style: none;
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.bulletPoint {
-  padding: 10px;
-}
-
-#h4iStampContainer {
-  margin-top: 2rem;
 }
 .forgotText {
   font-size: 15px;

@@ -200,7 +200,7 @@ const api = {
   requestPasswordResetCode(data) {
     data.loading = true;
       post("/auth/forgot-password", {
-        email: document.getElementById("inputText").value
+        email: data.email
       })
         .then(res => {
           data.loading = false;
