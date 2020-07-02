@@ -92,31 +92,31 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    fetchDatasets(pageNumber) {
+    fetchDatasets(state, pageNumber) {
       api.fetchDatasets(pageNumber);
     },
-    fetchDataset(id) {
+    fetchDataset(state, id) {
       api.fetchDataset(id);
     },
     fetchUserDatasets() {
       api.fetchUserDatasets();
     },
-    fetchPopularDatasets() {
+    fetchPopularDatasets(state) {
       api.fetchPopularDatasets();
     },
-    fetchRecentDatasets() {
+    fetchRecentDatasets(state) {
       api.fetchRecentDatasets();
     },
-    fetchNewDatasets() {
+    fetchNewDatasets(state) {
       api.fetchNewDatasets();
     },
-    filterDatasets(searchQuery) {
+    filterDatasets(state, searchQuery) {
       api.filterDatasets(searchQuery);
     },
-    deleteDataset(id) {
+    deleteDataset(state, id) {
       api.deleteDataset(id);
     },
-    logout() {
+    logout(state) {
       api.logout();
     },
   },
