@@ -294,6 +294,15 @@ const api = {
     .catch((error) => {
       notify(error.response.data.message, colors.red);
     });
+  },
+  oauth() {
+    get(`/auth/authorize`)
+    .then(res => {
+      window.location.href  = res.data.authorization_url
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 };
 

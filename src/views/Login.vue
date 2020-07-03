@@ -49,6 +49,11 @@
                <v-btn color="#96D34A" :outlined="true" @click="login()" id="submitButton" :loading="loading">Sign In</v-btn>
             </v-col>
           </v-row>
+          <v-row align="start" justify="start" no-gutters>
+            <v-col>
+               <v-btn color="#96D34A" :outlined="true" @click="loginWithGoogle()" id="submitButton">Sign in with Google</v-btn>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
@@ -81,6 +86,9 @@ export default {
         this.loading = true
         api.login(this.email, this.password, this.$route.query.redirect);
         setTimeout(() => (this.loading = false), 1500);
+    },
+    loginWithGoogle() {
+        api.oauth()
     },
     forgot() {
       this.$router.push("/forgot-password");
