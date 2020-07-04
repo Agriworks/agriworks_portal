@@ -227,7 +227,7 @@ const api = {
       confirmPassword: data.confirmPassword,
       organization: data.inputOrganization,
       location: data.inputLocation,
-      userType: data.selectedType.type
+      userType: data.selectedType
     })
       .then(res => {
         store.commit("setIsSubmitting", false); 

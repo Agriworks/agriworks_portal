@@ -22,6 +22,7 @@ const store = new Vuex.Store({
     newDatasets: [],
     user: "", //the email address of the user,
     userDatasets: [],
+    sidebarAlwaysExpanded: false, 
   },
   mutations: {
     setIsAdmin(state) {
@@ -36,6 +37,9 @@ const store = new Vuex.Store({
     setLoggedInTrue(state) {
       state.loggedIn = true;
     },
+    setSidebarAlwaysExpanded(state, val) {
+      state.sidebarAlwaysExpanded = val; 
+    }, 
     setSnackbar(state, snackbar) {
       state.snackbar.message = snackbar.message;
       state.snackbar.show = snackbar.show;
@@ -90,6 +94,9 @@ const store = new Vuex.Store({
     getShowSuccess: (state) => {
       return state.snackbar.showSuccess;
     },
+    getSidebarExpanded: (state) => {
+      return state.sidebarAlwaysExpanded; 
+    }
   },
   actions: {
     fetchDatasets(state, pageNumber) {

@@ -2,7 +2,7 @@
   <b-container>
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-10 mx-auto" id="signupFormContainer">
-        <v-card v-if=!emailSent class="rounded-card" :elevation="5">
+        <v-card class="rounded-card" :elevation="5">
           <div class="card-body">
             <h3 class="card-title text-center">Sign Up</h3>
             <v-form v-model="valid" @submit.prevent="signup" class="form-signin">
@@ -41,9 +41,9 @@
                     :items = "items"
                     label="What kind of user are you?"
                     item-text="type"
-                    return-object
                     placeholder
                     required
+                    :rules="[required('User Type')]"
                   ></v-select>
                 </v-col>
                 <v-col cols="6" sm="6">
@@ -63,7 +63,6 @@
                   />
                   <v-text-field
                   ref="password"
-                  v-validate="'required|password'"
                   v-model="password"
                   name="password"
                   label="Password"
@@ -75,7 +74,6 @@
                   required
                   />
                   <v-text-field
-                  v-validate="'required|confirmed:password'"
                   v-model="confirmPassword"
                   name="password_confirmation"
                   label="Confirm Password"
@@ -126,6 +124,9 @@ export default {
       required(propertyType) {
         return v => v && v.length > 0 || propertyType+' is required'
       },
+      selectedType: "",
+      inputOrganization: "", 
+      inputLocation: "",  
       email: "",
       emailRules: [
       v => !!v || "E-mail is required",
@@ -147,7 +148,7 @@ export default {
     signup() {
       this.$store.commit("setIsSubmitting", true);  
       api.signup(this)
-    }
+    }, 
   },
   computed: {
     passwordConfirmationRule() {
