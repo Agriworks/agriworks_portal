@@ -150,7 +150,7 @@ const api = {
         data.forms.password.show = false //close dialog
 
         //Send snackbar
-        data.$store.commit("setSnackbar", {
+        store.commit("setSnackbar", {
           message: "Password Updated",
           show: true,
           color: "#4CAF50"
@@ -181,7 +181,7 @@ const api = {
       data.forms.email.show = false //close dialog
 
       //send snackbar saying that the email was updated
-      data.$store.commit("setSnackbar", {
+      store.commit("setSnackbar", {
         message: "Email Updated",
         show: true,
         color: "#4CAF50"
@@ -211,7 +211,7 @@ const api = {
         })
         .catch(err => {
           data.loading = false;
-          data.$store.commit("setSnackbar", {
+          store.commit("setSnackbar", {
             message: err.response.data.message,
             show: true,
             color: "#F44336"
@@ -230,17 +230,17 @@ const api = {
       userType: data.selectedType.type
     })
       .then(res => {
-        data.$store.commit("setIsSubmitting", false); 
-        data.$router.push("resend-confirmation-email/"+data.email);
-        data.$store.commit("setSnackbar", {
+        store.commit("setIsSubmitting", false); 
+        router.push("resend-confirmation-email/"+data.email);
+        store.commit("setSnackbar", {
           message: res.data.message,
           show: true,
           color: "#4CAF50"
         });
       })
       .catch(err => {
-        data.$store.commit("setIsSubmitting", false); 
-        data.$store.commit("setSnackbar", {
+        store.commit("setIsSubmitting", false); 
+        store.commit("setSnackbar", {
           message: err.response.data.message,
           show: true,
           color: "#F44336"
@@ -263,12 +263,12 @@ const api = {
     })
     .then(res => {
       data.showLinkError = false;
-      data.$store.commit("setSnackbar", {
+      store.commit("setSnackbar", {
         message: res.data.message,
         show: true,
         color: "#4CAF50"
       });
-      data.$router.push("/login");
+      router.push("/login");
     })
     .catch(err => {
       if (
@@ -277,7 +277,7 @@ const api = {
       ) {
         data.showLinkError = true;
       }
-      data.$store.commit("setSnackbar", {
+      store.commit("setSnackbar", {
         message: err.response.data.message,
         show: true,
         color: "#F44336"
