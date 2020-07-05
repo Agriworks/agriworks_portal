@@ -2,9 +2,11 @@
   <div id="datasetContainer">
     <div v-if="dataset">
       <div class="row">
-        <heat-map
-          :data="data"
-        />
+
+          <heat-map
+            :data="data"
+          />
+
       </div>
       <div class="row">
         <div class="d-flex justify-content-center col-sm-6" id="datasetInfoContainer">
@@ -129,6 +131,7 @@ export default {
       dataset: null,
       data: [],
       cacheId: null,
+      dataLoaded: false,
       tableIsLoading: true,
       additionalDataObjectsLoading: false
     };
@@ -141,6 +144,7 @@ export default {
         .then((response) => {
           this.data = response.data.datasetObjects;
           this.tableIsLoading = false;
+          this.dataLoaded = true;
           if (response.data.cacheId) {
             this.cacheId = response.data.cacheId;
           }
