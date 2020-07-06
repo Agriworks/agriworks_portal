@@ -79,7 +79,7 @@ const api = {
       notify("Successfully logged in", colors.green);
     })
     .catch((error) => {
-      notify(error.response.data.message);
+      notify(error.response.data.message, colors.red);
       if (error.response.data.message == "You must confirm your account to log in.") {
         router.push(`/resend-confirmation-email/${username}`)
       }
@@ -200,7 +200,7 @@ const api = {
   requestPasswordResetCode(data) {
     data.loading = true;
       post("/auth/forgot-password", {
-        email: document.getElementById("inputText").value
+        email: data.email
       })
         .then(res => {
           data.loading = false;
@@ -254,8 +254,8 @@ const api = {
   },
   resetPassword(data) {
     post(`/auth/reset-password/${data.$route.params.id}`, {
-      password: document.getElementById("password").value,
-      confirmPassword: document.getElementById("password2").value
+      password: data.password,
+      confirmPassword: data.confirmPassword
     })
     .then(res => {
       data.showLinkError = false;

@@ -98,7 +98,7 @@ const store = new Vuex.Store({
     fetchDataset(state, id) {
       api.fetchDataset(id);
     },
-    fetchUserDatasets(state) {
+    fetchUserDatasets() {
       api.fetchUserDatasets();
     },
     fetchPopularDatasets(state) {
