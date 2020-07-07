@@ -50,7 +50,7 @@
             dense
             v-model="searchQuery"
             full-width
-            v-on:keyup.enter="searchSubmit"
+            v-on:keyup="searchSubmit"
             label="Search Datasets">
             <v-icon slot="append" color = "success" @click="searchSubmit">mdi-magnify</v-icon>
         </v-text-field>
