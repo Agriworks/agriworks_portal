@@ -4,8 +4,9 @@
     <div class="table">
       <v-form ref="form">
         <v-text-field v-model="templateName" required label="Template Name"></v-text-field>
-        <v-text-field v-model="templateHeaders" required label="Template Header"></v-text-field>
-        <v-text-field v-model="units" required label="Units"></v-text-field>
+        <v-text-field v-model="author" required label="Author"></v-text-field>
+        <v-text-field v-model="headerName" required label="Template Header"></v-text-field>
+        <v-text-field v-model="headerUnit" required label="Units"></v-text-field>
         <v-btn
           @click="addHeader"
           class="submitButton"
@@ -20,7 +21,40 @@
 
       <!-- Create a section that displays each of the headers that have been added, with an option to remove
       headers that have been added here, if they were put on accident !-->
-
+      <div id="headers-table">
+        <p v-if="headers.length < 1" class="empty-table">
+          View you headers here
+        </p>
+        <v-simple-table v-else> 
+          <thead>
+            <tr>
+              <th>Header name</th>
+              <th>Header unit</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="header in headers" :key="header.id">
+              <td v-if="editing === header.id">
+                <v-text-field solo v-model="header.name"></v-text-field>
+              </td>
+              <td v-else>{{ header.name }}</td>
+              <td v-if="editing === header.id">
+                <v-text-field solo v-model="header.unit"></v-text-field>
+              </td>
+              <td v-else>{{ header.unit }}</td>
+              <td v-if="editing === header.id">
+                <v-btn @click="editHeader(header)">Save</v-btn>
+                <v-btn class="muted-button" @click="cancelEdit(header)">Cancel</v-btn>
+              </td>
+              <td v-else>
+                <v-btn @click="editMode(header)">Edit</v-btn>
+                <v-btn @click="deleteHeader(header)">Delete</v-btn>
+              </td>
+            </tr>
+          </tbody>
+        </v-simple-table>
+    </div>
 
       <!-- Create a section for the button that will send this information to the backend once the user finishes
       creating the headings !-->
@@ -41,41 +75,62 @@
 </template>
 
 <script>
-import api from "../../api";
-import router from "../../router";
-import notify from "../../utilities/notify";
-import { colors } from "../../utilities/branding";
+import api from "../api";
+import router from "../router";
+import notify from "../utilities/notify";
+import { colors } from "../utilities/branding";
 
 export default {
-  name: "Upload",
+  name: "CreateTemplate",
   data() {
     return {
-      templateName: "Sample",
+      templateName: "",
+      author: "",
+      headerName: "",
+      headerUnit: "",
       headers: [],
+      editing: null,
+      cachedHeader: null,
       file: null,
       loading: false,
       search: ""
     };
   },
-  watch: {
-    datasetTags: function() {
-      this.datasetTags[this.datasetTags.length - 1] = this.datasetTags[
-        this.datasetTags.length - 1
-      ].toLowerCase();
-    },
-    datasetType: function() {
-      this.getTags(this.datasetType);
-    }
-  },
   methods: {
 
     //Create method called addHeader, which will add the typed Header to the headers array
     addHeader() {
-      headers.push()
+      const headerId = this.headers.length < 1 ? 0 : this.headers[this.headers.length - 1].id + 1;
+      const newHeader = {
+        "id": headerId,
+        "name": this.headerName,
+        "unit": this.headerUnit
+      }
+      this.headers.push(newHeader);
     },
-    //Create method called removeHeader, which will remove a typed Header from the headers array
-    removeHeader() {
-
+    editMode(header) {
+      this.cachedHeader = Object.assign({}, header);
+      this.editing = header.id;
+    },
+    editHeader(header) {
+      if (header.name === "" || header.unit === "") {
+        this.cancelEdit(header);
+        return;
+      } 
+      this.editing = null;
+    },
+    cancelEdit(header) {
+      Object.assign(header, this.cachedHeader);
+      this.editing = null;
+    },
+    deleteHeader(header) {
+      let i;
+      for (i = 0; i < this.headers.length; i++) {
+        if (this.headers[i].id === header.id) {
+          this.headers.splice(i, 1);
+          break;
+        }
+      }
     },
     //Need to edit the processForm (and, therefore, the api) to upload the template to the backend, along with its name
     processForm() {
@@ -86,19 +141,15 @@ export default {
         router.push({ name: "WaitForUpload" });
       }, 7515);
 
-      //Creates
-      this.datasetTags = [...new Set(this.datasetTags)];
+      //Creates the template
       api
-        .uploadDataset(
-          this.file,
-          this.datasetName,
-          this.datasetTags,
-          this.datasetPermissions,
-          this.datasetType
+        .uploadTemplate(
+          this.templateName,
+          this.author,
+          this.headers
         )
         .then(response => {
           this.loading = false;
-          this.$router.push(`/dataset/${response.data.message}`);
           clearTimeout(timer);
         })
         .catch(error => {
@@ -106,26 +157,9 @@ export default {
           notify(error.response.data.message, colors.red);
           clearTimeout(timer);
         });
-    },
-    remove(item) {
-      this.datasetTags.splice(this.datasetTags.indexOf(item), 1);
-      this.datasetTags = [...this.datasetTags];
-    },
-    getTags(datasetType) {
-      api
-        .fetchTags(datasetType)
-        .then(response => {
-          this.tagsOfChosenType = response.data;
-        })
-        .catch(err => {
-          notify("Error fetching tags.", colors.red);
-        });
     }
-  },
-  created() {
-    this.getTags(this.datasetType);
   }
-};
+}
 </script>
 
 <style lang="css">
@@ -147,5 +181,9 @@ export default {
 }
 .v-file-input {
   max-width: 95%;
+}
+
+.headers-table {
+  padding: 5%;
 }
 </style>
