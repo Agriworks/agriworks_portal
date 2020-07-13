@@ -4,7 +4,6 @@
     <div class="table">
       <v-form ref="form">
         <v-text-field v-model="templateName" required label="Template Name"></v-text-field>
-        <v-text-field v-model="author" required label="Author"></v-text-field>
         <v-text-field v-model="headerName" required label="Template Header"></v-text-field>
         <v-text-field v-model="headerUnit" required label="Units"></v-text-field>
         <v-btn
@@ -85,7 +84,6 @@ export default {
   data() {
     return {
       templateName: "",
-      author: "",
       headerName: "",
       headerUnit: "",
       headers: [],
@@ -145,7 +143,6 @@ export default {
       api
         .uploadTemplate(
           this.templateName,
-          this.author,
           this.headers
         )
         .then(response => {

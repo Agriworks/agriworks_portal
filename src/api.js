@@ -39,14 +39,13 @@ const api = {
     newDataset.append("type", type);
     return post("/upload/", newDataset, true);
   },
-  uploadTemplate(templateName, author, headers) {
+  uploadTemplate(templateName, headers) {
     // let newTemplate = new FormData();
     // newTemplate.append("name", templateName);
     // newTemplate.append("author", author);
     // newTemplate.append("headers", headers);
     let newTemplate = {
       "name": templateName,
-      "author": author,
       "headers": JSON.stringify(headers)
     }
     console.log(newTemplate);
