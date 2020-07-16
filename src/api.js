@@ -294,6 +294,9 @@ const api = {
     .catch((error) => {
       notify(error.response.data.message, colors.red);
     });
+  },
+  getMap() {
+    get("/mapview/", {})
   }
 };
 
