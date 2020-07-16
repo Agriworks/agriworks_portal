@@ -99,7 +99,7 @@ const router = new Router({
       name: "confirm-user",
       component: () => import("./views/ConfirmUser.vue"),
       beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
-    },
+    }
   ]
 });
 
