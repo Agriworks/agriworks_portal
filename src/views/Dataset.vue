@@ -2,13 +2,6 @@
   <div id="datasetContainer">
     <div v-if="dataset">
       <div class="row">
-
-          <heat-map
-            :data="data"
-          />
-
-      </div>
-      <div class="row">
         <div class="d-flex justify-content-center col-sm-6" id="datasetInfoContainer">
           <h5>{{dataset.type}}</h5>
           <h1>{{ dataset.name }}</h1>
@@ -60,27 +53,30 @@
           <v-btn small dark color="red" 
           v-if="heatMappable"
           @click.stop="heatMapDialog = true">
-            <v-icon small>mdi-graph</v-icon>Heat Map
-            
+            <v-icon small>mdi-graph</v-icon>Heat Map            
           </v-btn>
-
 
           <v-dialog 
           v-model="heatMapDialog"
           scrollable
+          eager
           max-width="80%"
+          max-height="80%"
           >
           
           <v-card>
             <v-toolbar>
-            <v-toolbar-title>Heat Map</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-              <v-btn icon @click="heatMapDialog = false">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-            </v-toolbar-items>
-          </v-toolbar>
+              <v-toolbar-title>Heat Map</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-items>
+                <v-btn icon @click="heatMapDialog = false">
+                <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
+                  <heat-map
+                    :data="data"
+                  />
           </v-card>
           </v-dialog>
               
