@@ -61,7 +61,6 @@
           scrollable
           eager
           max-width="80%"
-          max-height="80%"
           >
           
           <v-card>

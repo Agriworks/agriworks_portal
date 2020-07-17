@@ -118,6 +118,6 @@ div {
   padding: 2;
   margin: 2;
   width: 100%;
-  height: 500px;
+  height: 1000px;
 }
 </style>
