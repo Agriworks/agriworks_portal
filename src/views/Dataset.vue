@@ -156,7 +156,7 @@ export default {
       dataLoaded: false,
       tableIsLoading: true,
       additionalDataObjectsLoading: false,
-      heatMappable: true,
+      heatMappable: false,
       heatMapDialog: false,
     };
   },
@@ -167,6 +167,7 @@ export default {
         api.fetchPrimaryDatasetObjects(this.$route.params.id)
         .then((response) => {
           this.data = response.data.datasetObjects;
+          this.isHeatMappable();
           this.tableIsLoading = false;
           this.dataLoaded = true;
           if (response.data.cacheId) {
@@ -238,6 +239,11 @@ export default {
             colors.red
           );
         });
+    },
+    isHeatMappable() {
+      if (this.data[0].latitude!==void(0)) {
+        this.heatMappable = true
+      }
     }
   }
 };
