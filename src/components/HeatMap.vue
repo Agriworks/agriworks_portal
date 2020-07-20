@@ -8,7 +8,7 @@ import { loadModules } from 'esri-loader';
 
 export default {
   name: 'heat-map',
-  props: ['data'],
+  props: ['data','latCol','lonCol','idCol'],
   watch: {
     data: {
       handler() {
@@ -22,18 +22,22 @@ export default {
           // from the continuous color ramp in the colorStops property
 
           var graphics = [];
+
+          var lat = this.latCol
+          var lon = this.lonCol
+          var id = this.idCol
           
           for (var key in this.data) {
             var item = this.data[key]
             var pointGraphic = new Graphic({
               attributes: {
-                ObjectId: item.place,
-                name: item.place
+                ObjectId: item[id],
+                name: item[id]
               },
               geometry: {
                 type: "point",                     // autocasts as new Point()
-                longitude: item.longitude,
-                latitude: item.latitude
+                longitude: item[lon],
+                latitude: item[lat]
               },
               symbol: {
                 type: "simple-marker",             // autocasts as new SimpleMarkerSymbol()
@@ -42,20 +46,7 @@ export default {
                   color: [ 255, 255, 255 ],
                   width: 2
                 }
-              },
-              popupTemplate: {                     // autocasts as new PopupTemplate()
-                title: item.type,
-                content: [{
-                  type: "fields",
-                  fieldInfos: [
-                    {
-                      fieldName: "name",
-                      label: "Place",
-                      visible: true
-                    }
-                  ]
-                }]
-              },
+              }
             });
             graphics.push(pointGraphic);
           }
