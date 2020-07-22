@@ -8,7 +8,7 @@ import { loadModules } from 'esri-loader';
 
 export default {
   name: 'heat-map',
-  props: ['data','latCol','lonCol','idCol'],
+  props: ['data','latCol','lonCol'],
   watch: {
     data: {
       handler() {
@@ -30,10 +30,7 @@ export default {
           for (var key in this.data) {
             var item = this.data[key]
             var pointGraphic = new Graphic({
-              attributes: {
-                ObjectId: item[id],
-                name: item[id]
-              },
+              
               geometry: {
                 type: "point",                     // autocasts as new Point()
                 longitude: item[lon],

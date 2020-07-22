@@ -77,7 +77,6 @@
                     :data="data"
                     :latCol="latCol"
                     :lonCol="lonCol"
-                    :idCol="idCol"
                   />
           </v-card>
           </v-dialog>
@@ -162,8 +161,7 @@ export default {
       heatMappable: false,
       heatMapDialog: false,
       latCol:"latitude",
-      lonCol:"longitude",
-      idCol:"place"
+      lonCol:"longitude"
     };
   },
   created() {
