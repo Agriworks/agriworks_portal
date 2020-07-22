@@ -11,6 +11,17 @@
           label="Permissions"
         ></v-select>
         <v-select v-model="datasetType" required :items="typeOptions" label="Dataset type"></v-select>
+        <v-select v-model="template" required :items="templateOptions" @change="checkTemplate" label="Template"></v-select>
+        <v-simple-table>
+          <thead>
+            <tr>
+              <th v-for="header in templates[template]" :key="header.id">
+                {{header.name}}
+              </th>
+            </tr>
+          </thead>
+        </v-simple-table>
+        
         <v-combobox
           v-model="datasetTags"
           :items="tagsOfChosenType"
@@ -43,7 +54,7 @@
               <h3>Data selection</h3>
             </v-card-title>
             <v-card-text>Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV</v-card-text>
-            <v-file-input v-model="file" label="Select a file" show-size accept=".csv"></v-file-input>
+            <v-file-input v-model="file" label="Select a file" show-size accept=".csv" @change="checkTemplate"></v-file-input>
           </v-card>
         </v-flex>
         <v-btn
@@ -87,7 +98,10 @@ export default {
       typeOptions: ["Land Use", "Pesticide Report"],
       file: null,
       loading: false,
-      search: ""
+      search: "",
+      template: "",
+      templates: {},
+      templateOptions: [],
     };
   },
   watch: {
@@ -141,10 +155,49 @@ export default {
         .catch(err => {
           notify("Error fetching tags.", colors.red);
         });
+    },
+    getTemplates() {
+      api.fetchAllTemplates()
+        .then(response => {
+          for (let i = 0; i < response.data.length; i++) {
+            let template = response.data[i];
+            this.templateOptions.push(template.name);
+            this.templates[template.name] = template.headers;
+          }
+        })
+        .catch(err => {
+          notify("Error fetching templates", colors.red);
+        })
+    },
+    checkTemplate() {
+      if (!this.template || !this.file) return;
+
+      let reader = new FileReader();
+      let fileHeaders;
+      reader.readAsText(this.file);
+      reader.onload = e => {
+        let text = e.target.result;
+        fileHeaders = text.split("\n")[0].split(",");
+        if (fileHeaders.length !== this.templates[this.template].length) {
+          notify("Your file headers don't match the chosen template", colors.red);
+        } else {
+          for (let i = 0; i < fileHeaders.length; i++) {
+            if (fileHeaders[i].trim() !== this.templates[this.template][i].name) {
+              notify("Your file headers don't match the chosen template", colors.red);
+              console.log(fileHeaders[i]);
+              console.log(this.templates[this.template][i].name);
+              console.log(fileHeaders[i] !== this.templates[this.template][i].name);
+              break;
+            }
+          }
+        }
+      }
+      
     }
   },
   created() {
     this.getTags(this.datasetType);
+    this.getTemplates();
   }
 };
 </script>

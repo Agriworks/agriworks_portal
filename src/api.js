@@ -27,6 +27,9 @@ const api = {
   fetchSubsequentDatasetObjects(cacheId) {
     return get(`/dataset/objects/subsequent/${cacheId}`);
   },
+  fetchAllTemplates() {
+    return get("/templates/");
+  },
   evictDatasetFromCache(cacheId) {
     return get(`/dataset/objects/evict/${cacheId}`)
   },
@@ -40,10 +43,6 @@ const api = {
     return post("/upload/", newDataset, true);
   },
   uploadTemplate(templateName, headers) {
-    // let newTemplate = new FormData();
-    // newTemplate.append("name", templateName);
-    // newTemplate.append("author", author);
-    // newTemplate.append("headers", headers);
     let newTemplate = {
       "name": templateName,
       "headers": JSON.stringify(headers)
