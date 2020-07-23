@@ -295,10 +295,13 @@ const api = {
       notify(error.response.data.message, colors.red);
     });
   },
-  oauth() {
-    get(`/auth/authorize`)
+  oauth(authCode) {
+    post(`/auth/authorize` , {
+      code: authCode, 
+      redirect_uri: 'postmessage'
+    })
     .then(res => {
-      window.location.href  = res.data.authorization_url
+      console.log(res.data)
     })
     .catch(err => {
       console.log(err)

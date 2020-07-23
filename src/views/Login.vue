@@ -87,8 +87,9 @@ export default {
         api.login(this.email, this.password, this.$route.query.redirect);
         setTimeout(() => (this.loading = false), 1500);
     },
-    loginWithGoogle() {
-        api.oauth()
+    async loginWithGoogle() {
+        const authCode = await this.$gAuth.getAuthCode()
+        api.oauth(authCode)
     },
     forgot() {
       this.$router.push("/forgot-password");

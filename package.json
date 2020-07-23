@@ -30,6 +30,7 @@
     "vee-validate": "^3.2.5",
     "vue": "^2.6.10",
     "vue-burger-menu": "^2.0.3",
+    "vue-google-oauth2": "^1.5.4",
     "vue-multiselect": "^2.1.6",
     "vue-router": "^3.0.3",
     "vue-sidebar-menu": "^4.4.3",
