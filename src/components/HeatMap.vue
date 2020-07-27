@@ -8,11 +8,33 @@ import { loadModules } from 'esri-loader';
 
 export default {
   name: 'heat-map',
-  props: ['data','latCol','lonCol','idCol'],
+  props: ['data','latCol','lonCol'],
   watch: {
     data: {
       handler() {
-        // this gets tri
+        this.makeMap()
+      }
+    },
+    latCol: {
+      handler() {
+        this.makeMap()
+      }
+    },
+    lonCol: {
+      handler() {
+        this.makeMap()
+      }
+    }
+  },
+  beforeDestroy() {
+    if (this.view) {
+      // destroy the map view
+      this.view.container = null;
+    }
+  },
+  methods: {
+    makeMap() {
+      // this gets tri
         loadModules(['esri/Map', 'esri/views/MapView', 'esri/Graphic', 'esri/layers/FeatureLayer'], { css: true })
         .then(([Map, MapView, Graphic, FeatureLayer]) => {
 
@@ -25,15 +47,11 @@ export default {
 
           var lat = this.latCol
           var lon = this.lonCol
-          var id = this.idCol
-          
+        
           for (var key in this.data) {
             var item = this.data[key]
             var pointGraphic = new Graphic({
-              attributes: {
-                ObjectId: item[id],
-                name: item[id]
-              },
+            
               geometry: {
                 type: "point",                     // autocasts as new Point()
                 longitude: item[lon],
@@ -91,13 +109,6 @@ export default {
             zoom: 4
           });
         });
-      }
-    }
-  },
-  beforeDestroy() {
-    if (this.view) {
-      // destroy the map view
-      this.view.container = null;
     }
   }
 };
