@@ -1,7 +1,7 @@
 <template>
   <nav>
     <v-navigation-drawer app :color="color" dark :expand-on-hover="!isExpanded" permanent>
-      <v-list-item>
+      <!-- <v-list-item> -->
         <v-img
           v-if="isExpanded"
           src="../assets/logo_transparent_2_white_text.png"
@@ -9,8 +9,10 @@
           max-height="50"
           aspect-ratio="1"
         />  
-        <v-img v-else src="../assets/mini_logo.png" contain max-height="50" max-width="50" />
-      </v-list-item>
+        <div id="icon" v-else>
+          <v-img src="../assets/mini_logo.png" contain max-height="50" max-width="50" aspect-ratio="1" />
+        </div>
+      <!-- </v-list-item> -->
 
       <v-divider></v-divider>
       <v-list dense style="display:flex;flex-direction:column;justify-content:space-between">
@@ -119,5 +121,9 @@ h4 {
 .card-actions {
   position: absolute;
   bottom: 0;
+}
+#icon{
+  padding-left: 5px;
+  padding-right: 5px;
 }
 </style>
