@@ -34,16 +34,6 @@
                <v-btn color="#96D34A" :outlined="true" @click="submit()" :disabled="!valid">Send reset link</v-btn>
             </v-col>
           </v-row>
-          <v-row align="start" justify="start" v-if="!emailSent" no-gutters>
-            <v-col>
-               <p class="text route button padding"  @click="login()">Go to login</p>
-            </v-col>
-          </v-row>
-          <v-row align="start" justify="start" v-if="!emailSent" no-gutters>
-            <v-col>
-               <p class="text route button padding btm" @click="registration()">Go to registration</p>
-            </v-col>
-          </v-row>
           <v-row align="start" justify="start" v-if="emailSent" no-gutters>
             <v-col>
               <p class="text">{{emailMessage}}</p>
@@ -52,6 +42,16 @@
           <v-row align="start" justify="start" v-if="emailSent" no-gutters>
             <v-col>
                <p class="text route button padding"  @click="resetForm()">Didn't receive the email?</p>
+            </v-col>
+          </v-row>
+          <v-row align="start" justify="start" no-gutters>
+            <v-col>
+               <p class="text route button padding"  @click="login()">Go to login</p>
+            </v-col>
+          </v-row>
+          <v-row align="start" justify="start" v-if="!emailSent" no-gutters>
+            <v-col>
+               <p class="text route button padding btm" @click="registration()">Go to registration</p>
             </v-col>
           </v-row>
         </v-col>
