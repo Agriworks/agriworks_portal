@@ -14,7 +14,6 @@ workflows:
                 - master
                 - circleci-project-setup
 
-
 jobs:
   deploy:
     working_directory: /home/circleci/agriworks_portal
