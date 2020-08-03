@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-navigation-drawer app :color="color" dark :expand-on-hover="!isExpanded" permanent>
+    <v-navigation-drawer app :color="color" dark :expand-on-hover="!isExpanded" permanent mini-variant-width="80">
       <v-list-item>
         <v-img
           v-if="isExpanded"
