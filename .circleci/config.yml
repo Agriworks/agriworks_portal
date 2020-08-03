@@ -1,0 +1,35 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@0.2.1
+
+workflows:
+  version: 2.1
+  build:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
+                - circleci-project-setup
+
+
+jobs:
+  deploy:
+    working_directory: /home/circleci/agriworks_portal
+    docker:
+      - image: circleci/python:3-node
+    steps:
+      - checkout
+
+      - run:
+          name: Deploying
+          working_directory: /
+          command: |
+            cd /home/circleci/
+            git clone https://github.com/Hack4Impact-Boston-University/agriworks_platform
+            cd agriworks_platform
+            pip3 install --upgrade --user awsebcli
+            cd ../agriworks_portal && yarn install && cd ../agriworks_platform
+            ./deploy.sh
