@@ -104,7 +104,6 @@ const router = new Router({
       path: "/create-template",
       name: "create-template",
       component: () => import("./views/CreateTemplate.vue"),
-      // beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     }
   ]
 });

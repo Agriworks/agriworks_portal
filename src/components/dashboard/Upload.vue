@@ -43,10 +43,10 @@
               <h3>Data selection</h3>
             </v-card-title>
             <v-card-text>Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV</v-card-text>
-            <v-file-input v-model="file" label="Select a file" show-size accept=".csv"></v-file-input>
+            <v-file-input v-model="file" label="Select a file" show-size accept=".csv" @change="getKeys"></v-file-input>
           </v-card>
         </v-flex>
-        <v-btn
+        <!-- <v-btn
           @click="processForm"
           class="submitButton"
           x-large
@@ -55,14 +55,84 @@
           :loading="this.loading"
         >
           <v-icon>mdi-folder-plus-outline</v-icon>Create
-        </v-btn>
-        <!--
+        </v-btn> -->
+<!--         
         <b-card title="Preparation" style="max-width: 50%;">
           <b-card-text>
             The following video will give you an explanation of how to prepare your data. Please note that all uploaded files will have either the .csv or .txt extension.
           </b-card-text>
-        </b-card>
-        !-->
+        </b-card> -->
+        
+        <div class="dialog">
+          
+          <v-dialog v-model="dialog"
+            max-width="600px">
+            <template v-slot:activator="{on, attrs}">
+              <v-btn v-on="on"
+                v-bind="attrs"
+                class="submitButton"
+                x-large
+                color="success"
+                dark
+              >
+                <v-icon>mdi-folder-plus-outline</v-icon>Create
+              </v-btn>
+            </template>
+
+            <v-card>
+              <v-card-title>
+                Heatmap Configuration
+              </v-card-title>
+              
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6">
+                      <v-select
+                        v-model="heatmapData.longitude"
+                        :items="this.keys"
+                        label="Longitude"
+                        required
+                      ></v-select>
+                    </v-col>
+                    <v-col cols="12" sm="6">
+                      <v-select
+                        v-model="heatmapData.latitude"
+                        :items="this.keys"
+                        label="Latitude"
+                        required
+                      ></v-select>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-select
+                        v-model="heatmapData.area"
+                        :items="this.keys"
+                        label="Area"
+                      ></v-select>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-autocomplete
+                        v-model="heatmapData.value"
+                        :items="this.keys"
+                        label="Value"
+                        multiple
+                      ></v-autocomplete>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+
+              <v-divider></v-divider>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+                <v-btn color="blue darken-1" text @click="printHeatmapData">Save</v-btn>
+              </v-card-actions>
+
+            </v-card>
+          </v-dialog>
+        </div>
       </b-card-group>
     </div>
   </div>
@@ -87,7 +157,16 @@ export default {
       typeOptions: ["Land Use", "Pesticide Report"],
       file: null,
       loading: false,
-      search: ""
+      search: "",
+      dialog: false,
+      keys: ["N/A"],
+      heatmapData: {
+        longitude: null,
+        latitude: null,
+        area: null,
+        value: null
+      }
+
     };
   },
   watch: {
@@ -141,6 +220,22 @@ export default {
         .catch(err => {
           notify("Error fetching tags.", colors.red);
         });
+    },
+    getKeys(){
+      // if (this.file) { return }
+      let reader = new FileReader();
+
+      reader.readAsText(this.file);
+    
+      reader.onload = e => {
+      let text = e.target.result;
+      this.keys = this.keys.concat(text.split("\n")[0].split(","));
+      }
+
+    },
+    printHeatmapData() {
+      this.dialog = false;
+      console.log(this.heatmapData)
     }
   },
   created() {
