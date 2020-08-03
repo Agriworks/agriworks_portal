@@ -100,6 +100,12 @@ const router = new Router({
       component: () => import("./views/ConfirmUser.vue"),
       beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
+    {
+      path: "/create-template",
+      name: "create-template",
+      component: () => import("./views/CreateTemplate.vue"),
+      // beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
+    }
   ]
 });
 
