@@ -9,7 +9,7 @@
           max-height="50"
           aspect-ratio="1"
         />  
-        <v-img v-else src="../assets/mini_logo.png" contain max-height="50" max-width="50" />
+        <v-img v-else src="../assets/mini_logo.png" contain max-height="50" aspect-ratio="1"/>
       </v-list-item>
 
       <v-divider></v-divider>
