@@ -19,6 +19,10 @@
 
 
       <v-list flat>
+
+
+
+
         <v-list-group
           v-for="item in items.filter(n => {if(this.$store.getters.isLoggedIn == true){return n.displayOnLoggedIn && n.subItems}else{return !n.displayOnLoggedIn && n.subItems}})"
           :key="item.title"
@@ -27,10 +31,13 @@
         >
           <template v-slot:activator>
             <v-list-item
-            :to="item.link">
-            <v-list-item-content>
-              <v-list-item-title v-text="item.title"></v-list-item-title>
-            </v-list-item-content>
+            class="activatorSlot"
+              :to="item.link"
+              link
+            >
+              <v-list-item-content>
+                <v-list-item-title v-text="item.title"></v-list-item-title>
+              </v-list-item-content>
             </v-list-item>
           </template>
   
@@ -40,6 +47,7 @@
             :key="subItem.title"
             :prepend-icon="subItem.icon"
             :to="subItem.link"
+            link
           >
           
             <v-list-item-content>
@@ -49,12 +57,15 @@
               <v-icon v-text="subItem.icon"></v-icon>
             </v-list-item-icon>
           </v-list-item>
-        </v-list-group>
 
+          </v-list-group> 
+
+
+       
         <v-list-item
             v-for="item in items.filter(n => {if(this.$store.getters.isLoggedIn == true){return n.displayOnLoggedIn && !n.subItems}else{return !n.displayOnLoggedIn}})"
             :key="item.title"
-            :to="item.link" 
+            :to="item.link"
           >
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -63,6 +74,9 @@
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+
+
+          
 
         <v-list-item @click="mockSignOut()" v-if="this.$store.getters.isLoggedIn == true">
             <v-list-item-icon>
@@ -179,6 +193,10 @@ h4 {
 }
 .v-navigation-drawer--fixed.v-navigation-drawer--open {
   padding-top: 15px;
+}
+
+.activatorSlot {
+  padding: 0;
 }
 
 .pa-2 {
