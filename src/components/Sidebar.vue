@@ -18,7 +18,9 @@
       <v-divider></v-divider>
 
 
-      <v-list flat>
+      <v-list flat
+          active-class="active"
+      >
 
 
 
@@ -28,12 +30,14 @@
           :key="item.title"
           :prepend-icon="item.icon"
           no-action
+          dark
         >
           <template v-slot:activator>
             <v-list-item
             class="activatorSlot"
               :to="item.link"
               link
+              dark
             >
               <v-list-item-content>
                 <v-list-item-title v-text="item.title"></v-list-item-title>
@@ -42,7 +46,7 @@
           </template>
   
           <v-list-item
-          
+            dark
             v-for="subItem in item.subItems"
             :key="subItem.title"
             :prepend-icon="subItem.icon"
@@ -66,6 +70,7 @@
             v-for="item in items.filter(n => {if(this.$store.getters.isLoggedIn == true){return n.displayOnLoggedIn && !n.subItems}else{return !n.displayOnLoggedIn}})"
             :key="item.title"
             :to="item.link"
+            dark
           >
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -103,13 +108,13 @@ export default {
   data() {
     return {
       drawer: false,
-      items: [
+      items: [ /*
         {
           title: "Home",
           icon: "mdi-home",
           link: "/browse",
           displayOnLoggedIn: true
-        },
+        }, */
         {
           title: "Login",
           icon: "mdi-login-variant",
@@ -121,13 +126,13 @@ export default {
           icon: "mdi-account-plus",
           link: "/registration",
           displayOnLoggedIn: false
-        },
+        }, /*
         {
           title: "Dashboard",
           icon: "mdi-view-dashboard",
           link: "/dashboard",
           displayOnLoggedIn: true
-        },
+        }, */
         {
           title: "Account",
           icon: "mdi-account",
@@ -212,4 +217,7 @@ h4 {
   position: absolute;
   bottom: 0;
 }
+
+
+
 </style>
