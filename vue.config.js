@@ -9,7 +9,7 @@ module.exports = {
     config.resolve.alias.set("api-client", path.resolve(__dirname, `src/api/${apiClient}`))
   },
   devServer: {
-    proxy: "http://localhost:4000"
+    proxy: "http://platform:4000"
   },
   assetsDir: "assets",
   outputDir: "../agriworks_platform/dist/"

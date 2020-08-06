@@ -1,24 +1,27 @@
 version: '3'
 
 services:
-  backend:
-    image: flask
-    container_name: agriworks_platform_
-    restart: always
+  platform:
     build: ../agriworks_platform
-    command: sh ./start.sh
+    command: flask run
+    environment:
+      FLASK_ENV: development
+      FLASK_APP: application.py
+      FLASK_RUN_HOST: 0.0.0.0
+      FLASK_RUN_PORT: 4000
     ports:
       - '4000:4000'
+    volumes:
+      - ../agriworks_platform:/platform
     networks:
       - agri
-  frontend:
-    image: vue
-    container_name: agriworks_portal_
-    restart: always
+  portal:
     build: .
-    command: yarn run serve
+    command: yarn serve
     ports:
       - '8080:8080'
+    volumes:
+      - .:/portal
     networks:
       - agri
 
