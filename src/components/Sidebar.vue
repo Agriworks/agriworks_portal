@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-navigation-drawer app :color="color" dark :expand-on-hover="!isExpanded" permanent>
+    <v-navigation-drawer app :color="color" dark :expand-on-hover="!isExpanded" permanent mini-variant-width="80">
       <v-list-item>
         <v-img
           v-if="isExpanded"
@@ -9,7 +9,7 @@
           max-height="50"
           aspect-ratio="1"
         />  
-        <v-img v-else src="../assets/mini_logo.png" contain max-height="50" max-width="50" />
+        <v-img v-else src="../assets/mini_logo.png" contain max-height="50" aspect-ratio="1"/>
       </v-list-item>
 
       <v-divider></v-divider>
