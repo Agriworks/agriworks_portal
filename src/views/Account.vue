@@ -244,9 +244,6 @@
 <script>
 
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import {
-  getCookie
-} from "../js/authentication";
 import api from "../api.js";
 
 

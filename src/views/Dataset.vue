@@ -45,11 +45,86 @@
               >
                 <v-icon small>mdi-arrow-down-circle-outline</v-icon>Download
               </v-btn>
-              <!--
-          <v-btn small dark color="purple">
+              
+          <!-- Second option for heatmap icon
+            <v-btn small dark color="purple">
             <v-icon small>mdi-graph-outline</v-icon> Visualize
+          </v-btn> -->
+          <v-btn small dark color="red" 
+          @click.stop="userSelectDialog = true">
+            <v-icon small>mdi-graph</v-icon>Heat Map            
           </v-btn>
-              !-->
+
+          <v-dialog 
+          v-model="userSelectDialog"
+          scrollable
+          eager
+          max-width="80%"
+          >
+            <v-card>
+              <v-card-title>
+                Heatmap Configuration
+              </v-card-title>
+              
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6">
+                      <v-select
+                        v-model="lonCol"
+                        :items="dataset.headers"
+                        label="Longitude"
+                        required
+                      ></v-select>
+                    </v-col>
+                    <v-col cols="12" sm="6">
+                      <v-select
+                        v-model="latCol"
+                        :items="dataset.headers"
+                        label="Latitude"
+                        required
+                      ></v-select>
+                    </v-col>               
+                  </v-row>
+                </v-container>
+                <div v-if="haveError" style="color: red">*Error: Latitude/Longitude data is invalid.*</div>
+              </v-card-text>
+
+              <v-divider></v-divider>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="userSelectDialog = false">Close</v-btn>
+                <v-btn color="blue darken-1" text 
+                  @click.stop="openHeatmapDialog">
+                  Show</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+          <v-dialog
+            v-model="heatMapDialog"
+            scrollable
+            eager
+            max-width="80%">
+            <v-card>
+              <v-toolbar>
+                <v-toolbar-title>Heat Map</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                  <v-btn icon @click="heatMapDialog = false">
+                  <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </v-toolbar-items>
+              </v-toolbar>
+                    <heat-map
+                      :data="data"
+                      :latCol="latCol"
+                      :lonCol="lonCol"
+                    ></heat-map>
+            </v-card>
+          </v-dialog>
+              
             </div>
           </div>
         </div>
@@ -103,6 +178,7 @@
 
 
 <script>
+import HeatMap from '../components/HeatMap.vue';
 import DataTable from "../components/DataTable";
 import LoadingIndicator from "../components/LoadingIndicator";
 import api from "../api";
@@ -114,7 +190,8 @@ export default {
   name: "Dataset",
   components: {
     DataTable,
-    LoadingIndicator
+    LoadingIndicator,
+    HeatMap
   },
   data() {
     return {
@@ -122,8 +199,14 @@ export default {
       dataset: null,
       data: [],
       cacheId: null,
+      dataLoaded: false,
       tableIsLoading: true,
-      additionalDataObjectsLoading: false
+      additionalDataObjectsLoading: false,
+      haveError: false,
+      heatMapDialog: false,
+      userSelectDialog: false,
+      latCol:"",
+      lonCol:""
     };
   },
   created() {
@@ -133,7 +216,9 @@ export default {
         api.fetchPrimaryDatasetObjects(this.$route.params.id)
         .then((response) => {
           this.data = response.data.datasetObjects;
+          this.isHeatMappable();
           this.tableIsLoading = false;
+          this.dataLoaded = true;
           if (response.data.cacheId) {
             this.cacheId = response.data.cacheId;
           }
@@ -203,7 +288,21 @@ export default {
             colors.red
           );
         });
-    }
+    },
+    openHeatmapDialog() {
+      this.haveError = false
+      for (var key in this.data){
+        let lat = this.data[key][this.latCol];
+        let lon = this.data[key][this.lonCol];
+        if (!((-90 <= lat && lat <= 90) && (-180 <= lon && lon <= 180))){
+          this.haveError = true;
+          return;
+        }
+      }
+      this.heatMapDialog = true;
+      this.userSelectDialog = false;
+      console.log(this.haveError)
+    },
   }
 };
 </script>
