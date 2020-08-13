@@ -4,7 +4,7 @@
       <v-list-item three-line>
         <v-list-item-content>
           <div primary class="overline mb-4 datasetType">{{ dataset.type }}</div>
-          <v-list-item-title>{{ dataset.name }}</v-list-item-title>
+          <v-list-item-title> {{ dataset.name }}</v-list-item-title>
           <v-list-item-subtitle>By {{ dataset.author }}</v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-avatar size="80" tile>

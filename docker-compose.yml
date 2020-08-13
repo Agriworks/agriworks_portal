@@ -15,6 +15,7 @@ services:
     build: .
     environment:
       AGRIWORKS_API_HOST: "platform"
+      CHOKIDAR_USEPOLLING: "true"
     ports:
       - '8080:8080'
     volumes:
