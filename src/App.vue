@@ -22,9 +22,14 @@
           </v-list>
         </v-card>
       </v-dialog>
+
+      <div class="container" v-if="this.showSidebar">
+        <TopNavbar v-bind:tool="tool"/>
+      </div>
+
       <div class="container" v-if="this.showSidebar">
         <div v-on:mouseover="setExpandedTrue">
-          <Sidebar @openDialog="openDialog()" v-bind:isExpanded="isExpanded || sidebarAlways"/>
+          <Sidebar @openDialog="openDialog()" v-bind:isExpanded="isExpanded || sidebarAlways" v-bind:tool="tool"/>
         </div>
         <div v-on:mouseover="setExpandedFalse">
           <router-view />
@@ -41,11 +46,12 @@
 
 <script>
 import Sidebar from "./components/Sidebar";
+import TopNavbar from "./components/TopNavbar";
 import { mapState } from "vuex";
 
 export default {
   name: "app",
-  components: { Sidebar },
+  components: { Sidebar, TopNavbar },
   data() {
     return {
       colors: { success: "#4CAF50", error: "#F44336", info: "#00ACC1" },
@@ -53,6 +59,7 @@ export default {
       showSidebar: false, //by default we are on the homepage
       dialog: false,
       isExpanded: false,
+      tool: "agribase",
     }
   },
   methods: {
