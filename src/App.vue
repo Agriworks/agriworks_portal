@@ -24,7 +24,7 @@
       </v-dialog>
 
       <div class="container" v-if="this.showSidebar">
-        <TopNavbar v-bind:tool="tool"/>
+        <TopNavbar @updateTool="updateTool" v-bind:tool="tool"/>
       </div>
 
       <div class="container" v-if="this.showSidebar">
@@ -65,6 +65,11 @@ export default {
   methods: {
     openDialog() {
       this.dialog = true;
+    },
+    updateTool(newTool){
+      console.log("This is called, in parent class")
+      console.log(newTool)
+      this.tool = newTool;
     },
     setExpandedTrue() {
       this.isExpanded = true;
