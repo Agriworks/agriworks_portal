@@ -21,7 +21,7 @@
     "bootstrap-vue": "^2.1.0",
     "core-js": "^2.6.11",
     "d3": "^5.14.2",
-    "esri-loader": "^2.14.0",
+    "esri-loader": "^2.15.0",
     "jquery": "^3.5.1",
     "material": "^0.4.3",
     "material-design-icons-iconfont": "^5.0.1",

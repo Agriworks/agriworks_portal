@@ -3728,7 +3728,7 @@ esrecurse@^4.1.0:
   dependencies:
     estraverse "^4.1.0"
 
-esri-loader@^2.14.0:
+esri-loader@^2.15.0:
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/esri-loader/-/esri-loader-2.15.0.tgz#c1b47082075c172b2f564ac933448834c2e8703a"
   integrity sha512-n5LtVQaLURxhQMK0dc/GSfpnC//h3OhV9YkPAqHc3mO3aYkmJ+t8pVkboI2dDTWGKuCbp8MYmR400cZVkuyHmw==
@@ -8830,6 +8830,11 @@ vue-functional-data-merge@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/vue-functional-data-merge/-/vue-functional-data-merge-3.1.0.tgz#08a7797583b7f35680587f8a1d51d729aa1dc657"
   integrity sha512-leT4kdJVQyeZNY1kmnS1xiUlQ9z1B/kdBFCILIjYYQDqZgLqCLa0UhjSSeRX6c3mUe6U5qYeM8LrEqkHJ1B4LA==
+
+vue-google-oauth2@^1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/vue-google-oauth2/-/vue-google-oauth2-1.5.5.tgz#5d26a57c07679142f9299a0f9177aa9f9cc95879"
+  integrity sha512-5+sH+bcaxbH1rWJeMOC7SljFNLvthdssF5nXmt7S+WeDOAsnZgsh/0BLf4YmkiVIiaFnBKc70nhwir83zF4vEg==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
