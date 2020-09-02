@@ -301,7 +301,6 @@ export default {
       }
       this.heatMapDialog = true;
       this.userSelectDialog = false;
-      console.log(this.haveError)
     },
   }
 };
