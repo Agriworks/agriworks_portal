@@ -22,6 +22,11 @@ const store = new Vuex.Store({
     user: "", //the email address of the user,
     userDatasets: [],
     sidebarAlwaysExpanded: false, 
+    registeringUser: {
+      firstName: null,
+      lastName: null,
+      email: null,
+    }
   },
   mutations: {
     setIsAdmin(state) {
@@ -32,6 +37,11 @@ const store = new Vuex.Store({
     },
     setLoggedInTrue(state) {
       state.loggedIn = true;
+    },
+    setRegisteringUser(state, user) {
+      state.registeringUser.email = user.email
+      state.registeringUser.firstName = user.given_name
+      state.registeringUser.lastName = user.family_name
     },
     setSidebarAlwaysExpanded(state, val) {
       state.sidebarAlwaysExpanded = val; 

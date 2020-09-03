@@ -240,12 +240,20 @@ const api = {
       userType: data.selectedType
     })
       .then(res => {
-        router.push("resend-confirmation-email/"+data.email);
-        store.commit("setSnackbar", {
-          message: res.data.message,
-          show: true,
-          color: "#4CAF50"
-        });
+        if (res.data.message === "Google authorized successful!") {
+          store.commit("setUser", res.data.user);
+          store.commit("setLoggedInTrue");
+          router.push("/browse");
+          notify(res.data.message, colors.green);
+        }
+        else {
+          router.push("resend-confirmation-email/" + data.email);
+          store.commit("setSnackbar", {
+            message: res.data.message,
+            show: true,
+            color: "#4CAF50"
+          });
+        }
       })
       .catch(err => {
         store.commit("setSnackbar", {
@@ -307,16 +315,30 @@ const api = {
       notify(error.response.data.message, colors.red);
     });
   },
-  oauth(authCode) {
+  oauth(authCode, redirect) {
     post(`/auth/authorize` , {
       code: authCode, 
       redirect_uri: 'postmessage'
     })
     .then(res => {
-      console.log(res.data)
+      if (res.data.message === "Redirect to complete sign up") {
+        store.commit("setRegisteringUser", res.data.user);
+        router.push(`/google-registration`)
+      }
+      else {
+        store.commit("setUser", res.data.email);
+        store.commit("setLoggedInTrue");
+        if (redirect) {
+          router.push(redirect);
+        } else {
+          router.push("/browse");
+        }
+        notify("Successfully logged in", colors.green);
+
+      }
     })
     .catch(err => {
-      console.log(err)
+      notify(err.response.data.message, colors.red);
     })
   }
 };

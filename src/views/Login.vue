@@ -44,14 +44,17 @@
                <p class="text button padding" @click="registration()">Need an account?</p>
             </v-col>
           </v-row>
-          <v-row align="start" justify="start" no-gutters>
+          <v-row align="start" justify="start">
             <v-col>
-               <v-btn color="#96D34A" :outlined="true" @click="login()" id="submitButton" :loading="loading">Sign In</v-btn>
+                <v-btn color="#96D34A" :outlined="true" @click="login()" id="submitButton" :loading="loading" block>Sign In</v-btn>
             </v-col>
-          </v-row>
-          <v-row align="start" justify="start" no-gutters>
             <v-col>
-               <v-btn color="#96D34A" :outlined="true" @click="loginWithGoogle()" id="submitButton">Sign in with Google</v-btn>
+                <v-btn v-if="$vuetify.theme.dark" color="#4285F4"  @click="loginWithGoogle()" id="submitButton" block>
+                 <v-icon left large>$vuetify.icons.google</v-icon> Sign in with Google
+               </v-btn>
+               <v-btn v-else color="#FFFFFF"  @click="loginWithGoogle()" id="submitButton" block>
+                 <v-icon left large>$vuetify.icons.google</v-icon> <div id="google">Sign in with Google</div>
+               </v-btn>
             </v-col>
           </v-row>
         </v-col>
@@ -66,11 +69,13 @@
 import api from "../api";
 import Footer from "./Footer"
 import LeftView from "./LeftView"
+// import GoogleIcon from "../components/GoogleIcon.vue"
+
 
 export default {
   components: {
     Footer,
-    LeftView
+    LeftView,
   },
   data() {
     return {
@@ -89,7 +94,7 @@ export default {
     },
     async loginWithGoogle() {
         const authCode = await this.$gAuth.getAuthCode()
-        api.oauth(authCode)
+        api.oauth(authCode,this.$route.query.redirect)
     },
     forgot() {
       this.$router.push("/forgot-password");
@@ -114,17 +119,24 @@ export default {
 </script>
 
 <style scoped>
-#submitButton {
-  margin-top: 1rem;
-}
-.text {
-  font-size: 15px;
-  color:#96D34A;
-}
+  #submitButton {
+    margin-top: 1rem;
+  }
+  .text {
+    font-size: 15px;
+    color:#96D34A;
+  }
 
-p.button:hover { cursor: pointer; }
-p.padding  { padding:0; margin:0;}
-p {
-  display: inline-block;
-}
+  p.button:hover { cursor: pointer; }
+  p.padding  { padding:0; margin:0;}
+  p {
+    display: inline-block;
+  }
+
+  #google {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #000000;
+    opacity: 0.54
+  }
 </style>

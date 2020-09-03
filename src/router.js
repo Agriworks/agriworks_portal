@@ -72,6 +72,12 @@ const router = new Router({
       beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
     },
     {
+      path: "/google-registration",
+      name: "google-registration",
+      component: () => import("./views/GoogleRegistration.vue"),
+      beforeEnter: (to, from, next) => redirectFromPublicRouteIfSignedIn(next)
+    },
+    {
       path: "/resend-confirmation-email/:email",
       name: "resend-confirmation-email",
       component: () => import("./views/ResendConfirmationEmail.vue"),
