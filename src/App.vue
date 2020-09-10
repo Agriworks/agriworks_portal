@@ -96,12 +96,14 @@ export default {
                     && this.$router.currentRoute.name != "resend-confirmation-email"
                     && this.$router.currentRoute.name != "forgot-password"
                     && this.$router.currentRoute.name != "reset-password"
+                    && this.$router.currentRoute.name != "google-registration"
                     && this.$router.currentRoute.name != "confirm-user"; //we are performing a check on every update
   }
 };
 </script>
 
 <style lang="scss" >
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 .form-control:focus {
   border-color: #4caf50;
   box-shadow: 0px 0px 8px #4caf50;

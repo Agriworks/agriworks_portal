@@ -1,10 +1,18 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
+import GoogleIcon from "../components/GoogleIcon.vue"
 
 
 Vue.use(Vuetify);
 
 export default new Vuetify({
+  icons: {
+    values: {
+      google: {
+        component: GoogleIcon
+      }
+    }
+  },
   theme:{
       themes: {
         light: {
