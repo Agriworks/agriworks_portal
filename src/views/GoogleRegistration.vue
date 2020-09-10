@@ -8,6 +8,11 @@
           <v-form v-model="valid" @submit.prevent="signup" class="form-signin">
             <v-row align="start" justify="start" no-gutters>
               <v-col>
+                <p>Complete your registration</p>
+              </v-col>
+            </v-row>
+            <v-row align="start" justify="start" no-gutters>
+              <v-col>
                 <v-text-field
                       v-model="firstName"
                       name="firstName"
