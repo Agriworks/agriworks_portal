@@ -2,6 +2,7 @@
     <v-app-bar
         app
         dark
+        flat
     >
 
     <v-toolbar-items>

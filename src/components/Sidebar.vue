@@ -39,6 +39,7 @@
             <v-list-item-content>
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item-content>
+            <v-divider v-if="item.divider"></v-divider>
           </v-list-item>
 
 
@@ -93,6 +94,7 @@ export default {
           icon: "mdi-view-dashboard",
           link: "/dashboard",
           displayOnLoggedIn: true,
+          divider: true
         },
         {
           title: "Account",
