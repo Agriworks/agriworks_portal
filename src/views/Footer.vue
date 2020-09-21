@@ -1,7 +1,7 @@
 <template>
     <v-footer
-        absolute
         :color="darkTheme ? '#121212' : '#ffffff'"
+        :absolute="$vuetify.breakpoint.mobile ? false : true"
     >
         <v-col
             class="text-center"
