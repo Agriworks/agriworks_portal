@@ -60,6 +60,14 @@ const router = new Router({
       }
     },
     {
+      path: "/merge",
+      name: "Merge",
+      component: () => import("./views/Merge.vue"),
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: "/login",
       name: "login",
       component: () => import("./views/Login.vue"),
