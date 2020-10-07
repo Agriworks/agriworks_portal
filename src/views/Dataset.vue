@@ -51,9 +51,12 @@
             <v-icon small>mdi-graph-outline</v-icon> Visualize
           </v-btn> -->
           <v-btn small dark color="red" 
-          @click.stop="userSelectDialog = true">
+          @click.stop="heatMapDialog = true">
             <v-icon small>mdi-graph</v-icon>Heat Map            
           </v-btn>
+
+           <Map
+                    ></Map>
 
           <v-dialog 
           v-model="userSelectDialog"
@@ -117,11 +120,7 @@
                   </v-btn>
                 </v-toolbar-items>
               </v-toolbar>
-                    <heat-map
-                      :data="data"
-                      :latCol="latCol"
-                      :lonCol="lonCol"
-                    ></heat-map>
+                   
             </v-card>
           </v-dialog>
               
@@ -181,6 +180,7 @@
 import HeatMap from '../components/HeatMap.vue';
 import DataTable from "../components/DataTable";
 import LoadingIndicator from "../components/LoadingIndicator";
+import Map from '../components/Map'
 import api from "../api";
 import notify from "../utilities/notify";
 import { colors } from "../utilities/branding";
@@ -191,7 +191,8 @@ export default {
   components: {
     DataTable,
     LoadingIndicator,
-    HeatMap
+    HeatMap,
+    Map
   },
   data() {
     return {
