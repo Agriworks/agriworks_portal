@@ -55,8 +55,6 @@
             <v-icon small>mdi-graph</v-icon>Heat Map            
           </v-btn>
 
-           <Map
-                    ></Map>
 
           <v-dialog 
           v-model="userSelectDialog"
@@ -120,7 +118,7 @@
                   </v-btn>
                 </v-toolbar-items>
               </v-toolbar>
-                   
+                   <Map> </Map>
             </v-card>
           </v-dialog>
               
