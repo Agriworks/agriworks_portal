@@ -46,84 +46,137 @@
                 <v-icon small>mdi-arrow-down-circle-outline</v-icon>Download
               </v-btn>
               
-          <!-- Second option for heatmap icon
-            <v-btn small dark color="purple">
-            <v-icon small>mdi-graph-outline</v-icon> Visualize
-          </v-btn> -->
-          <v-btn small dark color="red" 
-          @click.stop="userSelectDialog = true">
-            <v-icon small>mdi-graph</v-icon>Heat Map            
-          </v-btn>
+            <v-btn small dark color="purple" style="margin-right:0.5rem;" @click.stop="visualizeDialog = true">
+              <v-icon small>mdi-graph</v-icon> Visualize
+            </v-btn>
 
-          <v-dialog 
-          v-model="userSelectDialog"
-          scrollable
-          eager
-          max-width="80%"
-          >
-            <v-card>
-              <v-card-title>
-                Heatmap Configuration
-              </v-card-title>
-              
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6">
-                      <v-select
-                        v-model="lonCol"
-                        :items="dataset.headers"
-                        label="Longitude"
-                        required
-                      ></v-select>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-select
-                        v-model="latCol"
-                        :items="dataset.headers"
-                        label="Latitude"
-                        required
-                      ></v-select>
-                    </v-col>               
-                  </v-row>
-                </v-container>
-                <div v-if="haveError" style="color: red">*Error: Latitude/Longitude data is invalid.*</div>
-              </v-card-text>
+            <v-dialog
+              v-model="visualizeDialog"
+              scrollable
+              eager
+              max-width="80%">
+              <v-card>
+                <v-card-title>
+                  Visualize Configuration
+                </v-card-title>
+                
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12" sm="4">
+                        <v-select
+                          v-model="xAxis"
+                          :items="dataset.headers"
+                          label="X Axis"
+                          required
+                        ></v-select>
+                      </v-col>
+                      <v-col cols="12" sm="4">
+                        <v-select
+                          v-model="yAxis"
+                          :items="dataset.headers"
+                          label="Y Axis"
+                          required
+                        ></v-select>
+                      </v-col> 
+                      <v-col cols="12" sm="4">
+                        <v-select
+                          v-model="chosenGraph"
+                          :items="graphType"
+                          label="Graph type"
+                          required
+                        ></v-select>
+                      </v-col>                
+                    </v-row>
+                  </v-container>
+                </v-card-text>
 
-              <v-divider></v-divider>
+                <v-divider></v-divider>
 
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="userSelectDialog = false">Close</v-btn>
-                <v-btn color="blue darken-1" text 
-                  @click.stop="openHeatmapDialog">
-                  Show</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="visualizeDialog = false">Close</v-btn>
+                  <v-btn color="blue darken-1" text @click="getFormattedData">Show</v-btn>
+                </v-card-actions>
+              </v-card>
 
-          <v-dialog
-            v-model="heatMapDialog"
-            scrollable
-            eager
-            max-width="80%">
-            <v-card>
-              <v-toolbar>
-                <v-toolbar-title>Heat Map</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-toolbar-items>
-                  <v-btn icon @click="heatMapDialog = false">
-                  <v-icon>mdi-close</v-icon>
-                  </v-btn>
-                </v-toolbar-items>
-              </v-toolbar>
-                    <heat-map
-                      :data="data"
-                      :latCol="latCol"
-                      :lonCol="lonCol"
-                    ></heat-map>
-            </v-card>
-          </v-dialog>
+            </v-dialog>
+
+
+            <v-btn small dark color="red" 
+            @click.stop="userSelectDialog = true">
+              <v-icon small>mdi-map</v-icon>Heat Map            
+            </v-btn>
+
+            <v-dialog 
+              v-model="userSelectDialog"
+              scrollable
+              eager
+              max-width="80%"
+            >
+              <v-card>
+                <v-card-title>
+                  Heatmap Configuration
+                </v-card-title>
+                
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12" sm="6">
+                        <v-select
+                          v-model="lonCol"
+                          :items="dataset.headers"
+                          label="Longitude"
+                          required
+                        ></v-select>
+                      </v-col>
+                      <v-col cols="12" sm="6">
+                        <v-select
+                          v-model="latCol"
+                          :items="dataset.headers"
+                          label="Latitude"
+                          required
+                        ></v-select>
+                      </v-col>               
+                    </v-row>
+                  </v-container>
+                  <div v-if="haveError" style="color: red">*Error: Latitude/Longitude data is invalid.*</div>
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue darken-1" text @click="userSelectDialog = false">Close</v-btn>
+                  <v-btn color="blue darken-1" text 
+                    @click.stop="openHeatmapDialog">
+                    Show</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+            <v-dialog
+              v-model="heatMapDialog"
+              scrollable
+              eager
+              max-width="80%">
+              <v-card>
+                <v-toolbar>
+                  <v-toolbar-title>Heat Map</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                  <v-toolbar-items>
+                    <v-btn icon @click="heatMapDialog = false">
+                    <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </v-toolbar-items>
+                </v-toolbar>
+                      <heat-map
+                        :data="data"
+                        :latCol="latCol"
+                        :lonCol="lonCol"
+                      ></heat-map>
+              </v-card>
+            </v-dialog>
               
             </div>
           </div>
@@ -152,6 +205,10 @@
           </v-container>
         </div>
       </div>
+      <v-row>
+          <LoadingIndicator v-if="loadingChartData"/>
+          <Chart v-if="loadedChart" :chosenGraph="chosenGraph" :datacollection="chartData"/>
+      </v-row>
       <div class="row">
         <DataTable
           :headers="dataset.headers"
@@ -181,6 +238,7 @@
 import HeatMap from '../components/HeatMap.vue';
 import DataTable from "../components/DataTable";
 import LoadingIndicator from "../components/LoadingIndicator";
+import Chart from "../components/Chart";
 import api from "../api";
 import notify from "../utilities/notify";
 import { colors } from "../utilities/branding";
@@ -190,6 +248,7 @@ export default {
   name: "Dataset",
   components: {
     DataTable,
+    Chart,
     LoadingIndicator,
     HeatMap
   },
@@ -198,27 +257,34 @@ export default {
       hideTags: true,
       dataset: null,
       data: [],
+      loadedChart: false,
+      loadingChartData: false,
+      chartData: null,
+      graphType: ["Bar", "Line", "Pie"],
+      chosenGraph: "",
+      xAxis: "",
+      yAxis: "",
       cacheId: null,
-      dataLoaded: false,
-      tableIsLoading: true,
+      tableIsLoading: false,
       additionalDataObjectsLoading: false,
       haveError: false,
       heatMapDialog: false,
       userSelectDialog: false,
+      visualizeDialog: false,
       latCol:"",
       lonCol:""
     };
   },
   created() {
+    this.tableIsLoading = true
     api.fetchDatasetInfo(this.$route.params.id)
       .then(response => {
         this.dataset = response.data;
         api.fetchPrimaryDatasetObjects(this.$route.params.id)
         .then((response) => {
           this.data = response.data.datasetObjects;
-          this.isHeatMappable();
+          // this.isHeatMappable();
           this.tableIsLoading = false;
-          this.dataLoaded = true;
           if (response.data.cacheId) {
             this.cacheId = response.data.cacheId;
           }
@@ -302,6 +368,22 @@ export default {
       this.heatMapDialog = true;
       this.userSelectDialog = false;
     },
+    getFormattedData() {
+      this.visualizeDialog = false
+      this.loadedChart = false
+      this.loadingChartData = true
+      api
+        .getFormattedData(this.data, this.xAxis, this.yAxis)
+        .then(response => {
+          this.loadedChart = true
+          this.loadingChartData = false
+          this.chartData = response.data.datacollection
+        })
+        .catch(error => {
+          this.loadingChartData = false
+          notify(error.response.data.message, colors.red);
+        })
+    }
   }
 };
 </script>

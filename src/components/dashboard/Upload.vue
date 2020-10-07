@@ -127,7 +127,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                <v-btn color="blue darken-1" text @click="printHeatmapData">Save</v-btn>
+                <v-btn color="blue darken-1" text @click="processForm">Save</v-btn>
               </v-card-actions>
 
             </v-card>
@@ -217,7 +217,7 @@ export default {
         .then(response => {
           this.tagsOfChosenType = response.data;
         })
-        .catch(err => {
+        .catch(() => {
           notify("Error fetching tags.", colors.red);
         });
     },

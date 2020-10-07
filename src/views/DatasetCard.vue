@@ -36,7 +36,6 @@
   </v-card>
 </template>
 <script>
-import api from "../api";
 
 export default {
   name: "DatasetCard",
