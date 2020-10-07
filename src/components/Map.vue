@@ -218,6 +218,11 @@ export default {
     } ],
 };
 
+    var vectorLayer = new VectorLayer({
+    source: new VectorSource({
+        url: 'https://raw.githubusercontent.com/Subhash9325/GeoJson-Data-of-Indian-States/master/Indian_States',
+        format: new GeoJSON(),
+    })});
 
       var source = new VectorSource({
         features: new GeoJSON().readFeatures(geojsonObject),
@@ -241,7 +246,7 @@ export default {
           }),
         ]),
         target: "map",
-        layers: [raster, vector],
+        layers: [raster, vectorLayer],
         view: new View({
           projection: "EPSG:4326",
           center: [0, 0],
