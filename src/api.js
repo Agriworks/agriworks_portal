@@ -6,6 +6,12 @@ import notify from "./utilities/notify";
 import { colors } from "./utilities/branding";
 
 const api = {
+  getMap(){  
+    return get('/visualize/getMap')
+  },
+  getFormattedData(data, x, y) {
+    return post("/visualize/getFormattedData", {dataset: JSON.stringify(data), xAxis: x, yAxis:y})
+  },  
   fetchDatasets(pageNumber = 0) {
     return get(`/dataset/list/${pageNumber}`)
       .then(response => {
