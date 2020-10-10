@@ -113,12 +113,12 @@
                 <v-toolbar-title>Heat Map</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
-                  <v-btn icon @click="heatMapDialog = false">
+                  <v-btn icon @click=""heatMapDialog" = false">
                   <v-icon>mdi-close</v-icon>
                   </v-btn>
                 </v-toolbar-items>
               </v-toolbar>
-                   <Map> </Map>
+                   <Map :dataset="mapData" :hasMapData="hasMapData"> </Map>
             </v-card>
           </v-dialog>
               
@@ -205,7 +205,9 @@ export default {
       heatMapDialog: false,
       userSelectDialog: false,
       latCol:"",
-      lonCol:""
+      lonCol:"",
+      mapData: null,
+      hasMapData: false
     };
   },
   created() {
@@ -215,6 +217,8 @@ export default {
         api.fetchPrimaryDatasetObjects(this.$route.params.id)
         .then((response) => {
           this.data = response.data.datasetObjects;
+          console.log("We are here")
+          this.getMapData()
           this.tableIsLoading = false;
           this.dataLoaded = true;
           if (response.data.cacheId) {
@@ -265,6 +269,16 @@ export default {
   methods: {
     changeTagStatus() {
       this.hideTags = !this.hideTags;
+    },
+    getMapData(){
+      console.log("get map data method called")
+      api.getMap(this.data).then(
+        response => {
+            this.mapData = response.data.data
+            this.hasMapData = true
+        }
+      )
+      
     },
     downloadDataset() {
       api

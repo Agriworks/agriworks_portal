@@ -21,8 +21,20 @@ import Feature from 'ol/Feature';
 import GeoJSON from 'ol/format/GeoJSON';
 import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style';
 export default {
-  async mounted() {
-    await this.initiateMap();
+  props: ['dataset', 'hasMapData'],
+  watch: {
+    hasMapData: {
+      immediate: true,
+      handler(val, oldVal){
+        console.log("The Prop Changed")
+        console.log(val)
+        console.log(oldVal)
+        if(val == true){
+          console.log("Intialzing map")
+          this.initiateMap()
+        }
+      }
+    }
   },
   methods: {
     initiateMap() {
@@ -30,11 +42,11 @@ export default {
       console.log("creating map")
   
         var geojsonObject;  
-        api.getMap()
+        
+        console.log("Dataset")
+        console.log(this.dataset)
 
-        api.getMap().then(
-          response => {
-            geojsonObject = response.data.data
+            geojsonObject = this.dataset
 
              var vectorSource = new VectorSource({
               features: new GeoJSON().readFeatures(geojsonObject),
@@ -42,12 +54,12 @@ export default {
 
             function getColor(d) {
               return d > 1000 ? '#800026' :
-                    d > 500  ? '#BD0026' :
-                    d > 200  ? '#E31A1C' :
-                    d > 100  ? '#FC4E2A' :
-                    d > 50   ? '#FD8D3C' :
-                    d > 20   ? '#FEB24C' :
-                    d > 10   ? '#FED976' :
+                    d > 900  ? '#BD0026' :
+                    d > 700  ? '#E31A1C' :
+                    d > 500  ? '#FC4E2A' :
+                    d > 300   ? '#FD8D3C' :
+                    d > 200   ? '#FEB24C' :
+                    d > 100   ? '#FED976' :
                                 '#FFEDA0';
             }
 
@@ -61,7 +73,7 @@ export default {
             }
 
             var getStyle = function (feature, resolution) {
-                if (feature.get('density') < 10) {
+                if (feature.get('data') < 10) {
                     return new Style({
                         fill: new Fill({
                             color: [255, 0, 0, 0.2] // semi-transparent red
@@ -76,7 +88,7 @@ export default {
                           width: 1
                         }),
                         fill: new Fill({
-                            color: [hexToRgb(getColor(feature.get('density'))).r, hexToRgb(getColor(feature.get('density'))).g, hexToRgb(getColor(feature.get('density'))).b, 0.2]
+                            color: [hexToRgb(getColor(feature.get('data'))).r, hexToRgb(getColor(feature.get('data'))).g, hexToRgb(getColor(feature.get('data'))).b, 0.2]
                         })
                     }); 
                 }
@@ -107,28 +119,6 @@ export default {
                 zoom: 2,
               }),
             });
-
-
-          }).catch(
-            console.log("Something went wrong")
-          )
-        
-
-       
-
-    // var vectorLayer = new VectorLayer({
-    // source: new VectorSource({
-    //   url: 'https://leafletjs.com/examples/choropleth/us-states.js',
-    //     format: new GeoJSON(),
-    // })});
-
-    //   var source = new VectorSource({
-    //     features: new GeoJSON().readFeatures(geojsonObject),
-    //     });
-
-
-        
-        // create title layer
         
      },
   },

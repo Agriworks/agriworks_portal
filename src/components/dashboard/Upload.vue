@@ -46,7 +46,7 @@
             <v-file-input v-model="file" label="Select a file" show-size accept=".csv" @change="getKeys"></v-file-input>
           </v-card>
         </v-flex>
-        <!-- <v-btn
+         <v-btn
           @click="processForm"
           class="submitButton"
           x-large
@@ -55,7 +55,7 @@
           :loading="this.loading"
         >
           <v-icon>mdi-folder-plus-outline</v-icon>Create
-        </v-btn> -->
+        </v-btn> 
 <!--         
         <b-card title="Preparation" style="max-width: 50%;">
           <b-card-text>
