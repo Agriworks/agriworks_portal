@@ -119,16 +119,14 @@ export default {
 
 
 
-            var select = null
-
+            var featureClicked = null
             //select on single click
             var selectSingleClick = new Select();
 
             map.addInteraction(selectSingleClick);
             selectSingleClick.on('select', function (e){
-              console.log("Something was selected")
-              console.log(e.selected[0].get("NAME"))
               var feature = e.selected[0]
+              featureClicked = feature
               feature.setStyle(getStyle(feature, view.getResolution, true))
               var polygon = feature.getGeometry()
               view.fit(polygon, {padding: [30, 30, 30, 30]})
@@ -138,6 +136,23 @@ export default {
 
             var selectPointerMove = new Select({
               condition: pointerMove
+            });
+
+            map.addInteraction(selectPointerMove);
+            selectPointerMove.on('select', function(e){
+              var feature = e.selected[0]
+              if(feature){ 
+                if(featureClicked && featureClicked != feature){ //resets the style of the clicked feature if hovering over a new feature
+                    featureClicked.setStyle(getStyle(featureClicked, view.getResolution, false)) 
+                    featureClicked = null
+                    selectSingleClick.getFeatures().clear()
+                }
+                feature.setStyle(getStyle(feature, view.getResolution, true))
+              }else{
+                if(featureClicked){
+                    featureClicked.setStyle(getStyle(featureClicked, view.getResolution, true)) //if not hovering to new feature, keep clicked highlighted
+                }
+              }
             });
 
      },
