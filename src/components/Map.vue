@@ -53,6 +53,60 @@ export default {
               features: new GeoJSON().readFeatures(geojsonObject),
             });
 
+            function rgbToHex(c) {
+              return "#" + ((1 << 24) + (c[0] << 16) + (c[1] << 8) + c[2]).toString(16).slice(1);
+            }
+
+            
+            //legend Control
+
+            var element = document.createElement('div');
+            element.className = 'legend ol-unselectable ol-control';
+
+            console.log(colors)
+            
+            for(var i = 0; i < colors.length; i++) {
+              element.innerHTML +=
+            '<i style="background:' + rgbToHex(colors[i]) + '"></i> ' +
+            bucketGrades[i] + (bucketGrades[i + 1] ? '&ndash;' + bucketGrades[i + 1] + '<br>' : '+');
+            }
+
+
+            var legend = new Control({
+              element: element
+            }); 
+
+             //Info Control Panel
+
+            var infoPanel = document.createElement('div')
+            infoPanel.className = 'infoPanel ol-unselectable ol-control';
+
+            function updateInfoPanel(featureName, data) {
+              console.log("Updating Panel")
+              if(featureName == null){
+                infoPanel.innerHTML = '<h4>US Population Density</h4>Hover over a state'
+              }else{
+                infoPanel.innerHTML = '<h4>US Population Density' + '<br /><b>' + featureName + '</b><br />' + data
+              }
+            }
+
+            updateInfoPanel(null, null);
+
+            var info = new Control({
+              element: infoPanel
+            })
+
+            // class infoPanel extends Control{
+            //     constructor(map_name){
+            //         this.map_name = map_name
+            //         this.panel = document.createElement('div')
+            //         this.panel.innerHTML = '<h4>US Population Density</h4> Hover over a state'
+            //         this.element = this.panel
+            //     }
+            // }
+
+
+
             var getStyle = function (feature, resolution, highlighted) {
                 var color = feature.get('color')
                 var width = 1
@@ -106,7 +160,7 @@ export default {
               controls: defaultControls().extend([
                 new ScaleLine({
                   units: "degrees",
-                }),
+                }), legend, info
               ]),
               target: "map",
               layers: [raster, vector],
@@ -143,42 +197,15 @@ export default {
                     selectSingleClick.getFeatures().clear()
                 }
                 feature.setStyle(getStyle(feature, view.getResolution, true))
+                //update infoPanel
+                updateInfoPanel(feature.get('NAME'), feature.get('data'))
               }else{
                 if(featureClicked){
                     featureClicked.setStyle(getStyle(featureClicked, view.getResolution, true)) //if not hovering to new feature, keep clicked highlighted
                 }
+                updateInfoPanel(null, null)
               }
             });
-
-
-            
-            function rgbToHex(c) {
-              return "#" + ((1 << 24) + (c[0] << 16) + (c[1] << 8) + c[2]).toString(16).slice(1);
-            }
-
-            
-            //have the colors array, passed from backend
-            //have the labels array, passed from backend
-
-
-            var element = document.createElement('div');
-            element.className = 'legend ol-unselectable ol-control';
-
-            console.log(colors)
-            
-            for(var i = 0; i < colors.length; i++) {
-              element.innerHTML +=
-            '<i style="background:' + rgbToHex(colors[i]) + '"></i> ' +
-            bucketGrades[i] + (bucketGrades[i + 1] ? '&ndash;' + bucketGrades[i + 1] + '<br>' : '+');
-            }
-
-
-            var legend = new Control({
-              element: element
-            });
-
-            map.addControl(legend)
-
      },
   },
 };
@@ -197,7 +224,7 @@ export default {
     bottom: 2em;
     right: .5em;
     opacity: 1;
-    background-color: rgba(255, 255, 255, 0.575);
+    background-color: rgba(255, 255, 255, 0.8);
 }
 .legend i {
     width: 18px;
@@ -205,6 +232,21 @@ export default {
     float: left;
     margin-right: 8px;
     opacity: 0.7;
+}
+
+.infoPanel {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    right: .5em;
+    top: .5em;
+}
+.infoPanel h4 {
+    margin: 0 0 5px;
+    color: #777;
 }
 
 </style>
