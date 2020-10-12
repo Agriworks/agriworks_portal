@@ -118,7 +118,7 @@
                   </v-btn>
                 </v-toolbar-items>
               </v-toolbar>
-                   <Map :dataset="mapData" :hasMapData="hasMapData"> </Map>
+                   <Map :mapData="mapData" :hasMapData="hasMapData"> </Map>
             </v-card>
           </v-dialog>
               
@@ -207,7 +207,9 @@ export default {
       latCol:"",
       lonCol:"",
       mapData: null,
-      hasMapData: false
+      hasMapData: false,
+      colors: [],
+      bucketGrades: []
     };
   },
   created() {
@@ -274,7 +276,7 @@ export default {
       console.log("get map data method called")
       api.getMap(this.data).then(
         response => {
-            this.mapData = response.data.data
+            this.mapData = response.data
             this.hasMapData = true
         }
       )

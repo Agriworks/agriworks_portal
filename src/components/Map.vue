@@ -13,7 +13,7 @@ import "ol/ol.css";
 // This is library of openlayer for handle map
 import Map from "ol/Map";
 import View from "ol/View";
-import { defaults as defaultControls, ScaleLine } from "ol/control";
+import {Control, defaults as defaultControls, ScaleLine} from 'ol/control';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
 import {OSM, Vector as VectorSource} from 'ol/source';
 
@@ -21,19 +21,15 @@ import Feature from 'ol/Feature';
 import GeoJSON from 'ol/format/GeoJSON';
 import {Circle as CircleStyle, Fill, Stroke, Style, Text} from 'ol/style';
 import Select from 'ol/interaction/Select';
-import {altKeyOnly, click, pointerMove} from 'ol/events/condition';
+import {click, pointerMove} from 'ol/events/condition';
 
 export default {
-  props: ['dataset', 'hasMapData'],
+  props: ['mapData', 'hasMapData'],
   watch: {
     hasMapData: {
       immediate: true,
       handler(val, oldVal){
-        console.log("The Prop Changed")
-        console.log(val)
-        console.log(oldVal)
         if(val == true){
-          console.log("Intialzing map")
           this.initiateMap()
         }
       }
@@ -46,10 +42,12 @@ export default {
   
         var geojsonObject;  
         
-        console.log("Dataset")
-        console.log(this.dataset)
+        console.log("Map Data")
+        console.log(this.mapData)
 
-            geojsonObject = this.dataset
+            geojsonObject = this.mapData.data
+            var colors = this.mapData.colors
+            var bucketGrades = this.mapData.bucketGrades
 
              var vectorSource = new VectorSource({
               features: new GeoJSON().readFeatures(geojsonObject),
@@ -114,10 +112,7 @@ export default {
               layers: [raster, vector],
               view: view
             });
-
             //selection
-
-
 
             var featureClicked = null
             //select on single click
@@ -155,6 +150,35 @@ export default {
               }
             });
 
+
+            
+            function rgbToHex(c) {
+              return "#" + ((1 << 24) + (c[0] << 16) + (c[1] << 8) + c[2]).toString(16).slice(1);
+            }
+
+            
+            //have the colors array, passed from backend
+            //have the labels array, passed from backend
+
+
+            var element = document.createElement('div');
+            element.className = 'legend ol-unselectable ol-control';
+
+            console.log(colors)
+            
+            for(var i = 0; i < colors.length; i++) {
+              element.innerHTML +=
+            '<i style="background:' + rgbToHex(colors[i]) + '"></i> ' +
+            bucketGrades[i] + (bucketGrades[i + 1] ? '&ndash;' + bucketGrades[i + 1] + '<br>' : '+');
+            }
+
+
+            var legend = new Control({
+              element: element
+            });
+
+            map.addControl(legend)
+
      },
   },
 };
@@ -165,6 +189,22 @@ export default {
   padding: 0;
   height: 500px;
   width: 99%;
+}
+
+.legend {
+    line-height: 18px;
+    color: #555;
+    bottom: 2em;
+    right: .5em;
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.575);
+}
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
 }
 
 </style>
