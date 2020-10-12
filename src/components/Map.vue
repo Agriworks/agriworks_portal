@@ -96,17 +96,6 @@ export default {
               element: infoPanel
             })
 
-            // class infoPanel extends Control{
-            //     constructor(map_name){
-            //         this.map_name = map_name
-            //         this.panel = document.createElement('div')
-            //         this.panel.innerHTML = '<h4>US Population Density</h4> Hover over a state'
-            //         this.element = this.panel
-            //     }
-            // }
-
-
-
             var getStyle = function (feature, resolution, highlighted) {
                 var color = feature.get('color')
                 var width = 1
