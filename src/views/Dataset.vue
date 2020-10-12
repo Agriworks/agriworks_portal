@@ -274,7 +274,7 @@ export default {
     },
     getMapData(){
       console.log("get map data method called")
-      api.getMap(this.data).then(
+      api.getMap(this.data, 'States', 'Density').then(
         response => {
             this.mapData = response.data
             this.hasMapData = true
