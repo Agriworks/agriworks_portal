@@ -216,7 +216,6 @@ export default {
         api.fetchPrimaryDatasetObjects(this.$route.params.id)
         .then((response) => {
           this.data = response.data.datasetObjects;
-          this.isHeatMappable();
           this.tableIsLoading = false;
           this.dataLoaded = true;
           if (response.data.cacheId) {

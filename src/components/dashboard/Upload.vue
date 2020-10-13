@@ -1,6 +1,28 @@
 <template>
   <div>
     <h1>Create New Dataset</h1>
+
+    <b-card-group deck class="firstRow">
+      <v-flex xs12 sm6>
+        <v-card max-width="95%" style="padding: 1rem;">
+          <v-card-title>
+            <h3>Data selection</h3>
+          </v-card-title>
+          <v-card-text>Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV</v-card-text>
+          <v-file-input v-model="file" label="Select a file" show-size accept=".csv" @change="getKeys"></v-file-input>
+        </v-card>
+      </v-flex>
+      
+<!--         
+      <b-card title="Preparation" style="max-width: 50%;">
+        <b-card-text>
+          The following video will give you an explanation of how to prepare your data. Please note that all uploaded files will have either the .csv or .txt extension.
+        </b-card-text>
+      </b-card> -->
+      
+      
+    </b-card-group>
+
     <div class="table">
       <v-form ref="form">
         <v-text-field v-model="datasetName" required label="Dataset name"></v-text-field>
@@ -36,104 +58,56 @@
           </template>
         </v-combobox>
       </v-form>
-      <b-card-group deck class="lastRow">
-        <v-flex xs12 sm6>
-          <v-card max-width="95%" style="padding: 1rem;">
-            <v-card-title>
-              <h3>Data selection</h3>
-            </v-card-title>
-            <v-card-text>Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV</v-card-text>
-            <v-file-input v-model="file" label="Select a file" show-size accept=".csv" @change="getKeys"></v-file-input>
-          </v-card>
-        </v-flex>
-        <!-- <v-btn
-          @click="processForm"
-          class="submitButton"
-          x-large
-          color="success"
-          dark
-          :loading="this.loading"
-        >
-          <v-icon>mdi-folder-plus-outline</v-icon>Create
-        </v-btn> -->
-<!--         
-        <b-card title="Preparation" style="max-width: 50%;">
-          <b-card-text>
-            The following video will give you an explanation of how to prepare your data. Please note that all uploaded files will have either the .csv or .txt extension.
-          </b-card-text>
-        </b-card> -->
-        
-        <div class="dialog">
-          
-          <v-dialog v-model="dialog"
-            max-width="600px">
-            <template v-slot:activator="{on, attrs}">
-              <v-btn v-on="on"
-                v-bind="attrs"
-                class="submitButton"
-                x-large
-                color="success"
-                dark
-              >
-                <v-icon>mdi-folder-plus-outline</v-icon>Create
-              </v-btn>
-            </template>
 
-            <v-card>
-              <v-card-title>
-                Heatmap Configuration
-              </v-card-title>
-              
-              <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12" sm="6">
-                      <v-select
-                        v-model="heatmapData.longitude"
-                        :items="this.keys"
-                        label="Longitude"
-                        required
-                      ></v-select>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                      <v-select
-                        v-model="heatmapData.latitude"
-                        :items="this.keys"
-                        label="Latitude"
-                        required
-                      ></v-select>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-select
-                        v-model="heatmapData.area"
-                        :items="this.keys"
-                        label="Area"
-                      ></v-select>
-                    </v-col>
-                    <v-col cols="12">
-                      <v-autocomplete
-                        v-model="heatmapData.value"
-                        :items="this.keys"
-                        label="Value"
-                        multiple
-                      ></v-autocomplete>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card-text>
+      <h2>Heatmap Configuration</h2>
+      <v-container>
+        <v-row>
+          <v-col cols="12" sm="6">
+            <v-select
+              v-model="heatmapData.longitude"
+              :items="this.keys"
+              label="Longitude"
+              required
+            ></v-select>
+          </v-col>
+          <v-col cols="12" sm="6">
+            <v-select
+              v-model="heatmapData.latitude"
+              :items="this.keys"
+              label="Latitude"
+              required
+            ></v-select>
+          </v-col>
+          <v-col cols="12">
+            <v-select
+              v-model="heatmapData.area"
+              :items="this.keys"
+              label="Area"
+            ></v-select>
+          </v-col>
+          <v-col cols="12">
+            <v-autocomplete
+              v-model="heatmapData.value"
+              :items="this.keys"
+              label="Value"
+              multiple
+            ></v-autocomplete>
+          </v-col>
+        </v-row>
+      </v-container>
 
-              <v-divider></v-divider>
+      <v-btn
+        @click="processForm"
+        class="submitButton"
+        x-large
+        color="success"
+        dark
+        :style="{left: '50%', transform:'translateX(-50%)'}"
+        :loading="this.loading"
+      >
+        <v-icon>mdi-folder-plus-outline</v-icon>Create
+      </v-btn>
 
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                <v-btn color="blue darken-1" text @click="printHeatmapData">Save</v-btn>
-              </v-card-actions>
-
-            </v-card>
-          </v-dialog>
-        </div>
-      </b-card-group>
     </div>
   </div>
 </template>
@@ -252,7 +226,7 @@ export default {
   justify-content: center;
 }
 
-.lastRow {
+.firstRow {
   padding-top: 15px;
   flex: auto;
   align-items: center;
