@@ -64,7 +64,7 @@
         <v-row>
           <v-col cols="12" sm="6">
             <v-select
-              v-model="heatmapData.longitude"
+              v-model="columnData.longitude"
               :items="this.keys"
               label="Longitude"
               required
@@ -72,7 +72,7 @@
           </v-col>
           <v-col cols="12" sm="6">
             <v-select
-              v-model="heatmapData.latitude"
+              v-model="columnData.latitude"
               :items="this.keys"
               label="Latitude"
               required
@@ -80,18 +80,17 @@
           </v-col>
           <v-col cols="12">
             <v-select
-              v-model="heatmapData.area"
+              v-model="columnData.locationLabel"
               :items="this.keys"
-              label="Area"
+              label="Location Label"
             ></v-select>
           </v-col>
           <v-col cols="12">
-            <v-autocomplete
-              v-model="heatmapData.value"
+            <v-select
+              v-model="columnData.value"
               :items="this.keys"
               label="Value"
-              multiple
-            ></v-autocomplete>
+            ></v-select>
           </v-col>
         </v-row>
       </v-container>
@@ -134,10 +133,10 @@ export default {
       search: "",
       dialog: false,
       keys: ["N/A"],
-      heatmapData: {
+      columnData: {
         longitude: null,
         latitude: null,
-        area: null,
+        locationLabel: null,
         value: null
       }
 
@@ -162,13 +161,15 @@ export default {
       }, 7515);
 
       this.datasetTags = [...new Set(this.datasetTags)];
+      console.log(JSON.stringify(this.columnData))
       api
         .uploadDataset(
           this.file,
           this.datasetName,
           this.datasetTags,
           this.datasetPermissions,
-          this.datasetType
+          this.datasetType,
+          JSON.stringify(this.columnData)
         )
         .then(response => {
           this.loading = false;
@@ -209,7 +210,7 @@ export default {
     },
     printHeatmapData() {
       this.dialog = false;
-      console.log(this.heatmapData)
+      console.log(this.columnData)
     }
   },
   created() {
