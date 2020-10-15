@@ -57,6 +57,9 @@ export default {
               return "#" + ((1 << 24) + (c[0] << 16) + (c[1] << 8) + c[2]).toString(16).slice(1);
             }
 
+            var parsedobj = JSON.parse(JSON.stringify(this.mapData))
+            console.log(parsedobj)
+
             
             //legend Control
 

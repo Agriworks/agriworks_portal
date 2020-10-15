@@ -113,7 +113,7 @@
                 <v-toolbar-title>Heat Map</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
-                  <v-btn icon @click=""heatMapDialog" = false">
+                  <v-btn icon @click="heatMapDialog = false">
                   <v-icon>mdi-close</v-icon>
                   </v-btn>
                 </v-toolbar-items>
@@ -274,7 +274,8 @@ export default {
     },
     getMapData(){
       console.log("get map data method called")
-      api.getMap(this.data, 'location', 'data').then(
+
+      api.getMap(this.data, 'States', 'Density').then(
         response => {
             this.mapData = response.data
             this.hasMapData = true
