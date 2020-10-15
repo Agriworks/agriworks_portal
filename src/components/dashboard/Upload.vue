@@ -66,7 +66,7 @@
         <div class="dialog">
           
           <v-dialog v-model="dialog"
-            max-width="600px">
+            max-width="800px">
             <template v-slot:activator="{on, attrs}">
               <v-btn v-on="on"
                 v-bind="attrs"
@@ -81,12 +81,12 @@
 
             <v-card>
               <v-card-title>
-                Heatmap Configuration
+                Dataset Configuration
               </v-card-title>
               
               <v-card-text>
                 <v-container>
-                  <v-row>
+                  <!-- <v-row>
                     <v-col cols="12" sm="6">
                       <v-select
                         v-model="heatmapData.longitude"
@@ -118,17 +118,126 @@
                         multiple
                       ></v-autocomplete>
                     </v-col>
-                  </v-row>
+                  </v-row> -->
+                  <v-stepper v-model="stepIndex">
+                    <v-stepper-header>
+                      <v-stepper-step
+                        :complete="stepIndex > 1"
+                        step="1"
+                        color="success"
+                      >
+                        Time/Location Data Checking
+                      </v-stepper-step>
+                
+                      <v-divider></v-divider>
+                
+                      <v-stepper-step
+                        :complete="stepIndex > 2"
+                        step="2"
+                        color="success"
+                      >
+                        Select Data Column
+                      </v-stepper-step>
+                
+                      <v-divider></v-divider>
+                
+                      <v-stepper-step 
+                        step="3"
+                        color="success"  
+                      >
+                        Select Granularity
+                      </v-stepper-step>
+                    </v-stepper-header>
+                
+                    <v-stepper-items>
+                      <v-stepper-content step="1">
+                        
+                          <v-checkbox
+                            v-model="hasTime"
+                            label="My Dataset Contains Time Data"
+                          ></v-checkbox>
+                          <v-checkbox
+                            v-model="hasLocation"
+                            label="My Dataset Contains Location Data"
+                          ></v-checkbox>
+                        
+                        <v-divider></v-divider>
+              
+                        <v-btn
+                          color="success"
+                          @click="changeStep"
+                        >
+                          Continue
+                        </v-btn>
+                
+                        <v-btn text @click="closeDialog">
+                          Cancel
+                        </v-btn>
+                      </v-stepper-content>
+                
+                      <v-stepper-content step="2">
+                        <v-select
+                          v-model="timeData"
+                          :items="this.hasTime ? this.keys : 'N/A'"
+                          label="Time"
+                        ></v-select>
+                        <v-select
+                          v-model="locationData"
+                          :items="this.hasLocation ? this.keys : 'N/A'"
+                          label="Location"
+                        ></v-select>
+
+                        <v-divider></v-divider>
+
+                        <v-btn
+                          color="success"
+                          @click="stepIndex = 3"
+                        >
+                          Continue
+                        </v-btn>
+                
+                        <v-btn text @click="closeDialog">
+                          Cancel
+                        </v-btn>
+                      </v-stepper-content>
+                
+                      <v-stepper-content step="3">
+                        <v-select
+                          v-model="timeGranularity"
+                          :items="this.hasTime ? this.timeGranularityOptions : 'N/A'"
+                          label="Time"
+                        ></v-select>
+                        <v-select
+                          v-model="locationGranularity"
+                          :items="this.hasLocation ? this.locationGranularityOptions : 'N/A'"
+                          label="Location"
+                        ></v-select>
+
+                        <v-divider></v-divider>
+                
+                        <v-btn
+                          color="success"
+                          @click="processForm"
+                        >
+                          Save and Upload
+                        </v-btn>
+                
+                        <v-btn text @click="closeDialog">
+                          Cancel
+                        </v-btn>
+                      </v-stepper-content>
+                    </v-stepper-items>
+                  </v-stepper>
                 </v-container>
               </v-card-text>
 
-              <v-divider></v-divider>
+              <!-- <v-divider></v-divider> -->
 
-              <v-card-actions>
+              <!-- <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                <v-btn color="blue darken-1" text @click="printHeatmapData">Save</v-btn>
-              </v-card-actions>
+                <v-btn color="blue darken-1" text @click="processForm">Save</v-btn>
+              </v-card-actions> -->
 
             </v-card>
           </v-dialog>
@@ -155,18 +264,26 @@ export default {
       datasetType: "Land Use",
       permissionOptions: ["Public", "Private"],
       typeOptions: ["Land Use", "Pesticide Report"],
+      timeGranularityOptions: ["day", "month", "year"],
+      locationGranularityOptions: ["state", "district", "village"],
       file: null,
       loading: false,
       search: "",
       dialog: false,
-      keys: ["N/A"],
+      keys: [],
       heatmapData: {
         longitude: null,
         latitude: null,
         area: null,
         value: null
-      }
-
+      },
+      stepIndex: 1,
+      hasTime: false,
+      hasLocation: false,
+      timeData: null,
+      locationData: null,
+      timeGranularity: null,
+      locationGranulariyu: null
     };
   },
   watch: {
@@ -229,6 +346,7 @@ export default {
     
       reader.onload = e => {
       let text = e.target.result;
+      console.log(text);
       this.keys = this.keys.concat(text.split("\n")[0].split(","));
       }
 
@@ -236,7 +354,16 @@ export default {
     printHeatmapData() {
       this.dialog = false;
       console.log(this.heatmapData)
-    }
+    },
+    closeDialog() {
+      this.dialog = false;
+      this.hasTime = false;
+      this.hasLocation = false;
+      this.stepIndex = 1;
+    },
+    changeStep() {
+      (this.hasTime || this.hasLocation) ? this.stepIndex = 2 : this.closeDialog()
+    },
   },
   created() {
     this.getTags(this.datasetType);
