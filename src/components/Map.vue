@@ -22,6 +22,7 @@ import GeoJSON from 'ol/format/GeoJSON';
 import {Circle as CircleStyle, Fill, Stroke, Style, Text} from 'ol/style';
 import Select from 'ol/interaction/Select';
 import {click, pointerMove} from 'ol/events/condition';
+import XYZ from 'ol/source/XYZ';
 
 export default {
   props: ['mapData', 'hasMapData'],
@@ -41,6 +42,8 @@ export default {
       console.log("creating map")
   
         var geojsonObject;  
+
+        var NAME = "NAME_1"
         
         console.log("Map Data")
         console.log(this.mapData)
@@ -57,8 +60,6 @@ export default {
               return "#" + ((1 << 24) + (c[0] << 16) + (c[1] << 8) + c[2]).toString(16).slice(1);
             }
 
-            var parsedobj = JSON.parse(JSON.stringify(this.mapData))
-            console.log(parsedobj)
 
             
             //legend Control
@@ -87,9 +88,9 @@ export default {
             function updateInfoPanel(featureName, data) {
               console.log("Updating Panel")
               if(featureName == null){
-                infoPanel.innerHTML = '<h4>US Population Density</h4>Hover over a state'
+                infoPanel.innerHTML = '<h4>Value</h4>Hover over a state'
               }else{
-                infoPanel.innerHTML = '<h4>US Population Density' + '<br /><b>' + featureName + '</b><br />' + data
+                infoPanel.innerHTML = '<h4>Value' + '<br /><b>' + featureName + '</b><br />' + data
               }
             }
 
@@ -117,7 +118,7 @@ export default {
                             color: [color[0], color[1], color[2],  0.4]
                         }),
                         text: new Text({
-                          text: feature.get("NAME"),
+                          text: feature.get(NAME),
                           font: '12px Calibri,sans-serif',
                           fill: new Fill({
                             color: '#000',
@@ -147,6 +148,25 @@ export default {
             var raster = new TileLayer({
               source: new OSM(),
             });
+
+            var baseUrl;
+            
+            if(!this.$vuetify.theme.dark){
+              baseUrl = "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png" //had to remove the {r} at the end to make it work, so there there is a chance it does not work with retina displays
+            }else{
+              baseUrl = "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}.png" //also removed the {r}
+            }
+
+            var baseLayer = new TileLayer({
+              source: new XYZ({
+                url: baseUrl,
+                maxZoom: 20,
+                attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+              }),
+            })
+
+            
+
             // create map with 2 layer
             var map = new Map({
               controls: defaultControls().extend([
@@ -155,7 +175,7 @@ export default {
                 }), legend, info
               ]),
               target: "map",
-              layers: [raster, vector],
+              layers: [baseLayer, vector],
               view: view
             });
             //selection
@@ -190,7 +210,7 @@ export default {
                 }
                 feature.setStyle(getStyle(feature, view.getResolution, true))
                 //update infoPanel
-                updateInfoPanel(feature.get('NAME'), feature.get('data'))
+                updateInfoPanel(feature.get(NAME), feature.get('data'))
               }else{
                 if(featureClicked){
                     featureClicked.setStyle(getStyle(featureClicked, view.getResolution, true)) //if not hovering to new feature, keep clicked highlighted
