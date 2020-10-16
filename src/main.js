@@ -50,18 +50,20 @@ new Vue({
   render: h => h(App)
 }).$mount("#app");
 
-Sentry.init({
-  dsn: "https://f36b27290bdb45d8bda47e2f050de76a@o462392.ingest.sentry.io/5465731",
-  integrations: [
-    new VueIntegration({
-      Vue,
-      tracing: true,
-      logErrors: true
-    }),
-    new Integrations.BrowserTracing(),
-  ],
-
-  // We recommend adjusting this value in production, or using tracesSampler
-  // for finer control
-  tracesSampleRate: 1.0,
-});
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({
+    dsn: "https://f36b27290bdb45d8bda47e2f050de76a@o462392.ingest.sentry.io/5465731",
+    integrations: [
+      new VueIntegration({
+        Vue,
+        tracing: true,
+        logErrors: true
+      }),
+      new Integrations.BrowserTracing(),
+    ],
+  
+    // We recommend adjusting this value in production, or using tracesSampler
+    // for finer control
+    tracesSampleRate: 1.0,
+  });
+}
