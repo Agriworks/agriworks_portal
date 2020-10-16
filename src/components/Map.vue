@@ -21,7 +21,7 @@ import Feature from 'ol/Feature';
 import GeoJSON from 'ol/format/GeoJSON';
 import {Circle as CircleStyle, Fill, Stroke, Style, Text} from 'ol/style';
 import Select from 'ol/interaction/Select';
-import {click, pointerMove} from 'ol/events/condition';
+import {pointerMove} from 'ol/events/condition';
 import XYZ from 'ol/source/XYZ';
 
 export default {
@@ -29,7 +29,7 @@ export default {
   watch: {
     hasMapData: {
       immediate: true,
-      handler(val, oldVal){
+      handler(val){
         if(val == true){
           this.initiateMap()
         }
@@ -67,7 +67,6 @@ export default {
             var element = document.createElement('div');
             element.className = 'legend ol-unselectable ol-control';
 
-            console.log(colors)
             
             for(var i = 0; i < colors.length; i++) {
               element.innerHTML +=
@@ -134,8 +133,8 @@ export default {
 
             var view = new View({
                 projection: "EPSG:4326",
-                center: [0, 0],
-                zoom: 2,
+                center: [78, 20],
+                zoom: 4,
             });
 
             var vector = new VectorLayer({
@@ -145,9 +144,10 @@ export default {
                 }
             });
 
-            var raster = new TileLayer({
-              source: new OSM(),
-            });
+            //Replaced by basaeLayer but there is a chance we need to revert 
+            // var raster = new TileLayer({
+            //   source: new OSM(),
+            // });
 
             var baseUrl;
             

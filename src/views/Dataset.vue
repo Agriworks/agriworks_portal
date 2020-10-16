@@ -118,6 +118,9 @@
                   </v-btn>
                 </v-toolbar-items>
               </v-toolbar>
+                <div v-if="!this.hasMapData" style="display: table; height: 80%">
+                  <LoadingIndicator style="display:table-cell;text-align: center;vertical-align: middle"/>
+                </div>
                    <Map :mapData="mapData" :hasMapData="hasMapData"> </Map>
             </v-card>
           </v-dialog>
