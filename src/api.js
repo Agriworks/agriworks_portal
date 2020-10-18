@@ -21,6 +21,9 @@ const api = {
   fetchDatasetInfo(id) {
     return get(`/dataset/metadata/${id}`);
   },
+  fetchDatasetColumnData(id) {
+    return get(`/dataset/columndata/${id}`);
+  },
   fetchPrimaryDatasetObjects(id) {
     return get(`/dataset/objects/primary/${id}`);
   },

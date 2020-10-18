@@ -205,14 +205,23 @@ export default {
       haveError: false,
       heatMapDialog: false,
       userSelectDialog: false,
-      latCol:"",
-      lonCol:""
+      columnData: null
     };
   },
   created() {
     api.fetchDatasetInfo(this.$route.params.id)
       .then(response => {
         this.dataset = response.data;
+        console.log("test1")
+        api.fetchDatasetColumnData(this.$route.params.id)
+          .then(response => {
+            this.columnData = response.data
+          })
+          .catch((error) => {
+            notify(error.response.data.message, colors.red);
+          });
+        console.log(this.columnData)
+        console.log("test2")
         api.fetchPrimaryDatasetObjects(this.$route.params.id)
         .then((response) => {
           this.data = response.data.datasetObjects;
