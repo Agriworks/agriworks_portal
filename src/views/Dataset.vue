@@ -278,12 +278,16 @@ export default {
     getMapData(){
       console.log("get map data method called")
 
-      api.getMap(this.data, 'States', 'Density').then(
+      api.getMap(this.$route.params.id)
+      .then(
         response => {
             this.mapData = response.data
             this.hasMapData = true
         }
       )
+      .catch(() => {
+        notify("error generating map", colors.red);
+      })
       
     },
     downloadDataset() {

@@ -6,8 +6,6 @@
 </template>
 <script>
 
-import api from "../api";
-
 // import openlayer css for style
 import "ol/ol.css";
 // This is library of openlayer for handle map
@@ -33,6 +31,11 @@ export default {
         if(val == true){
           this.initiateMap()
         }
+      }
+    },
+    mapData: {
+      handler() {
+        this.initiateMap()
       }
     }
   },
