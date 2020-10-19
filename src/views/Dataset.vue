@@ -232,7 +232,9 @@ export default {
         });
     },
     visualize(columnData) {
-      
+      if (columnData == null) {
+        return
+      }
       this.latCol = columnData["latitude"];
       this.lonCol = columnData["longitude"];
       for (var key in this.data){
