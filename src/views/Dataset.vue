@@ -181,6 +181,7 @@
             </div>
           </div>
         </div>
+
         <div
           class="col-sm-6"
           v-if="Object.keys(this.dataset.legend).length > 0"
@@ -209,6 +210,23 @@
           <LoadingIndicator v-if="loadingChartData"/>
           <Chart v-if="loadedChart" :chosenGraph="chosenGraph" :datacollection="chartData"/>
       </v-row>
+
+      <div class="row" >
+        <div class="column">
+          <div v-if="showHeatmap" id="visualizationContainer" >
+            <v-card 
+            style="height: 500px; width: 500px;"
+            >
+              <heat-map
+                :data="data"
+                :latCol="latCol"
+                :lonCol="lonCol"
+              />
+            </v-card>
+          </div>
+        </div>
+      </div>
+
       <div class="row">
         <DataTable
           :headers="dataset.headers"
@@ -267,12 +285,10 @@ export default {
       cacheId: null,
       tableIsLoading: false,
       additionalDataObjectsLoading: false,
-      haveError: false,
-      heatMapDialog: false,
-      userSelectDialog: false,
       visualizeDialog: false,
-      latCol:"",
-      lonCol:""
+      showHeatmap: false,
+      latCol: "",
+      lonCol: ""
     };
   },
   created() {
@@ -283,11 +299,17 @@ export default {
         api.fetchPrimaryDatasetObjects(this.$route.params.id)
         .then((response) => {
           this.data = response.data.datasetObjects;
-          // this.isHeatMappable();
           this.tableIsLoading = false;
           if (response.data.cacheId) {
             this.cacheId = response.data.cacheId;
           }
+          api.fetchDatasetColumnData(this.$route.params.id)
+          .then(response => {
+            this.visualize(response.data)
+          })
+          .catch((error) => {
+            notify(error.response.data.message, colors.red);
+          });
         })
         .catch((error) => {
           notify(error.response.data.message, colors.red);
@@ -355,18 +377,21 @@ export default {
           );
         });
     },
-    openHeatmapDialog() {
-      this.haveError = false
+    visualize(columnData) {
+      if (columnData == null) {
+        return
+      }
+      this.latCol = columnData["latitude"];
+      this.lonCol = columnData["longitude"];
       for (var key in this.data){
         let lat = this.data[key][this.latCol];
         let lon = this.data[key][this.lonCol];
         if (!((-90 <= lat && lat <= 90) && (-180 <= lon && lon <= 180))){
-          this.haveError = true;
+          concole.log("error with heatmap data")
           return;
         }
       }
-      this.heatMapDialog = true;
-      this.userSelectDialog = false;
+      this.showHeatmap = true;
     },
     getFormattedData() {
       this.visualizeDialog = false
@@ -401,6 +426,15 @@ export default {
 
 #metadataCard {
   border: 1px solid #a2e510;
+}
+
+#visualizationContainer {
+  width: 100%;
+  height: 50%;
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 50px;
+  padding-left: 30px;
 }
 
 #SubsequentDataObjectLoadingIndicator {

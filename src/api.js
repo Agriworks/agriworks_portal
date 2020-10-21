@@ -21,6 +21,9 @@ const api = {
   fetchDatasetInfo(id) {
     return get(`/dataset/metadata/${id}`);
   },
+  fetchDatasetColumnData(id) {
+    return get(`/dataset/columndata/${id}`);
+  },
   fetchPrimaryDatasetObjects(id) {
     return get(`/dataset/objects/primary/${id}`);
   },
@@ -30,13 +33,16 @@ const api = {
   evictDatasetFromCache(cacheId) {
     return get(`/dataset/objects/evict/${cacheId}`)
   },
-  uploadDataset(file, name, tags, permissions, type) {
+uploadDataset(file, name, tags, permissions, type, columnData, timeGranularity, locationGranularity) {
     let newDataset = new FormData();
     newDataset.append("file", file);
     newDataset.append("name", name);
     newDataset.append("tags", tags);
     newDataset.append("permissions", permissions);
     newDataset.append("type", type);
+    newDataset.append("columnData",columnData);
+    newDataset.append("timeGranularity", timeGranularity);
+    newDataset.append("locationGranularity", locationGranularity);
     return post("/upload/", newDataset, true);
   },
   uploadTemplate(templateName, headers) {
