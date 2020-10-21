@@ -75,7 +75,7 @@
                 color="success"
                 dark
               >
-                <v-icon>mdi-folder-plus-outline</v-icon>Create
+                <v-icon>mdi-folder-plus-outline</v-icon>Configure Dataset
               </v-btn>
             </template>
 
