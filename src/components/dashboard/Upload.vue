@@ -58,54 +58,187 @@
           </template>
         </v-combobox>
       </v-form>
+      
+      <b-card-group deck class="lastRow">
+        <v-flex xs12 sm6>
+          <v-card max-width="95%" style="padding: 1rem;">
+            <v-card-title>
+              <h3>Data selection</h3>
+            </v-card-title>
+            <v-card-text>Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV</v-card-text>
+            <v-file-input v-model="file" label="Select a file" show-size accept=".csv" @change="getKeys"></v-file-input>
+          </v-card>
+        </v-flex>
+        <!-- <v-btn
+          @click="processForm"
+          class="submitButton"
+          x-large
+          color="success"
+          dark
+          :loading="this.loading"
+        >
+          <v-icon>mdi-folder-plus-outline</v-icon>Create
+        </v-btn> -->
+<!--         
+        <b-card title="Preparation" style="max-width: 50%;">
+          <b-card-text>
+            The following video will give you an explanation of how to prepare your data. Please note that all uploaded files will have either the .csv or .txt extension.
+          </b-card-text>
+        </b-card> -->
+        
+        <div class="dialog">
+          
+          <v-dialog v-model="dialog"
+            max-width="800px">
+            <template v-slot:activator="{on, attrs}">
+              <v-btn v-on="on"
+                v-bind="attrs"
+                class="submitButton"
+                x-large
+                color="success"
+                dark
+              >
+                <v-icon>mdi-folder-plus-outline</v-icon>Configure Dataset
+              </v-btn>
+            </template>
 
-      <h2>Heatmap Configuration</h2>
-      <v-container>
-        <v-row>
-          <v-col cols="12" sm="6">
-            <v-select
-              v-model="columnData.longitude"
-              :items="this.keys"
-              label="Longitude"
-              required
-            ></v-select>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-select
-              v-model="columnData.latitude"
-              :items="this.keys"
-              label="Latitude"
-              required
-            ></v-select>
-          </v-col>
-          <v-col cols="12">
-            <v-select
-              v-model="columnData.locationLabel"
-              :items="this.keys"
-              label="Location Label"
-            ></v-select>
-          </v-col>
-          <v-col cols="12">
-            <v-select
-              v-model="columnData.value"
-              :items="this.keys"
-              label="Value"
-            ></v-select>
-          </v-col>
-        </v-row>
-      </v-container>
+            <v-card>
+              <v-card-title>
+                Dataset Configuration
+              </v-card-title>
+              
+              <v-card-text>
+                <v-container>
+                  <v-stepper v-model="stepIndex">
+                    <v-stepper-header>
+                      <v-stepper-step
+                        :complete="stepIndex > 1"
+                        step="1"
+                        color="success"
+                      >
+                        Time/Location Data Checking
+                      </v-stepper-step>
+                
+                      <v-divider></v-divider>
+                
+                      <v-stepper-step
+                        :complete="stepIndex > 2"
+                        step="2"
+                        color="success"
+                      >
+                        Select Data Column
+                      </v-stepper-step>
+                
+                      <v-divider></v-divider>
+                
+                      <v-stepper-step 
+                        step="3"
+                        color="success"  
+                      >
+                        Select Granularity
+                      </v-stepper-step>
+                    </v-stepper-header>
+                
+                    <v-stepper-items>
+                      <v-stepper-content step="1">
+                        
+                          <v-checkbox
+                            v-model="hasTime"
+                            label="My Dataset Contains Time Data"
+                          ></v-checkbox>
+                          <v-checkbox
+                            v-model="hasLocation"
+                            label="My Dataset Contains Location Data"
+                          ></v-checkbox>
+                        
+                        <v-divider></v-divider>
+              
+                        <v-btn
+                          color="success"
+                          @click="changeStep"
+                        >
+                          Continue
+                        </v-btn>
+                
+                        <v-btn text @click="closeDialog">
+                          Cancel
+                        </v-btn>
+                      </v-stepper-content>
+                
+                      <v-stepper-content step="2">
+                        <v-select
+                          v-model="columnData.time"
+                          :items="this.hasTime ? this.keys : 'N/A'"
+                          label="Time"
+                        ></v-select>
+                        <v-select
+                          v-model="columnData.location"
+                          :items="this.hasLocation ? this.keys : 'N/A'"
+                          label="Location"
+                        ></v-select>
+                        <v-select
+                          v-model="columnData.latitude"
+                          :items="this.hasLocation ? this.keys : 'N/A'"
+                          label="Latitude"
+                        ></v-select>
+                        <v-select
+                          v-model="columnData.longitude"
+                          :items="this.hasLocation ? this.keys : 'N/A'"
+                          label="Longitude"
+                        ></v-select>
+                        <v-select
+                          v-model="columnData.value"
+                          :items="this.hasLocation ? this.keys : 'N/A'"
+                          label="Value"
+                        ></v-select>
 
-      <v-btn
-        @click="processForm"
-        class="submitButton"
-        x-large
-        color="success"
-        dark
-        :style="{left: '50%', transform:'translateX(-50%)'}"
-        :loading="this.loading"
-      >
-        <v-icon>mdi-folder-plus-outline</v-icon>Create
-      </v-btn>
+                        <v-divider></v-divider>
+
+                        <v-btn
+                          color="success"
+                          @click="stepIndex = 3"
+                        >
+                          Continue
+                        </v-btn>
+                
+                        <v-btn text @click="closeDialog">
+                          Cancel
+                        </v-btn>
+                      </v-stepper-content>
+                
+                      <v-stepper-content step="3">
+                        <v-select
+                          v-model="timeGranularity"
+                          :items="this.hasTime ? this.timeGranularityOptions : 'N/A'"
+                          label="Time"
+                        ></v-select>
+                        <v-select
+                          v-model="locationGranularity"
+                          :items="this.hasLocation ? this.locationGranularityOptions : 'N/A'"
+                          label="Location"
+                        ></v-select>
+
+                        <v-divider></v-divider>
+                
+                        <v-btn
+                          color="success"
+                          @click="processForm"
+                        >
+                          Save and Upload
+                        </v-btn>
+                
+                        <v-btn text @click="closeDialog">
+                          Cancel
+                        </v-btn>
+                      </v-stepper-content>
+                    </v-stepper-items>
+                  </v-stepper>
+                </v-container>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+        </div>
+      </b-card-group>
 
     </div>
   </div>
@@ -128,18 +261,26 @@ export default {
       datasetType: "Land Use",
       permissionOptions: ["Public", "Private"],
       typeOptions: ["Land Use", "Pesticide Report"],
+      timeGranularityOptions: ["day", "month", "year"],
+      locationGranularityOptions: ["state", "district", "village","coordinates"],
       file: null,
       loading: false,
       search: "",
       dialog: false,
-      keys: ["N/A"],
+      keys: [],
+      stepIndex: 1,
+      hasTime: false,
+      hasLocation: false,
+      timeGranularity: null,
+      locationGranularity: null,
       columnData: {
+        value: null,
         longitude: null,
         latitude: null,
         locationLabel: null,
-        value: null
+        time: null,
+        location: null
       }
-
     };
   },
   watch: {
@@ -169,7 +310,9 @@ export default {
           this.datasetTags,
           this.datasetPermissions,
           this.datasetType,
-          JSON.stringify(this.columnData)
+          JSON.stringify(this.columnData),
+          this.timeGranularity,
+          this.locationGranularity
         )
         .then(response => {
           this.loading = false;
@@ -204,14 +347,24 @@ export default {
     
       reader.onload = e => {
       let text = e.target.result;
+      console.log(text);
       this.keys = this.keys.concat(text.split("\n")[0].split(","));
       }
 
     },
     printHeatmapData() {
       this.dialog = false;
-      console.log(this.columnData)
-    }
+      console.log(this.heatmapData)
+    },
+    closeDialog() {
+      this.dialog = false;
+      this.hasTime = false;
+      this.hasLocation = false;
+      this.stepIndex = 1;
+    },
+    changeStep() {
+      (this.hasTime || this.hasLocation) ? this.stepIndex = 2 : this.closeDialog()
+    },
   },
   created() {
     this.getTags(this.datasetType);

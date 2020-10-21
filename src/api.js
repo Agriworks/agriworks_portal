@@ -33,15 +33,16 @@ const api = {
   evictDatasetFromCache(cacheId) {
     return get(`/dataset/objects/evict/${cacheId}`)
   },
-  uploadDataset(file, name, tags, permissions, type, columnData) {
+uploadDataset(file, name, tags, permissions, type, columnData) {
     let newDataset = new FormData();
     newDataset.append("file", file);
     newDataset.append("name", name);
     newDataset.append("tags", tags);
     newDataset.append("permissions", permissions);
     newDataset.append("type", type);
-    newDataset.append("columnData", columnData);
-    console.log(newDataset)
+    newDataset.append("columnData",columnData);
+    newDataset.append("timeGranularity", timeGranularity);
+    newDataset.append("locationGranularity", locationGranularity);
     return post("/upload/", newDataset, true);
   },
   uploadTemplate(templateName, headers) {
