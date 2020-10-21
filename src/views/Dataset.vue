@@ -103,11 +103,6 @@
             </v-dialog>
 
 
-            <v-btn small dark color="red" 
-            @click.stop="userSelectDialog = true">
-              <v-icon small>mdi-map</v-icon>Heat Map            
-            </v-btn>
-
             <v-dialog 
               v-model="userSelectDialog"
               scrollable
