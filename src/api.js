@@ -33,7 +33,7 @@ const api = {
   evictDatasetFromCache(cacheId) {
     return get(`/dataset/objects/evict/${cacheId}`)
   },
-uploadDataset(file, name, tags, permissions, type, columnData) {
+uploadDataset(file, name, tags, permissions, type, columnData, timeGranularity, locationGranularity) {
     let newDataset = new FormData();
     newDataset.append("file", file);
     newDataset.append("name", name);
