@@ -1,6 +1,28 @@
 <template>
   <div>
     <h1>Create New Dataset</h1>
+
+    <b-card-group deck class="firstRow">
+      <v-flex xs12 sm6>
+        <v-card max-width="95%" style="padding: 1rem;">
+          <v-card-title>
+            <h3>Data selection</h3>
+          </v-card-title>
+          <v-card-text>Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV</v-card-text>
+          <v-file-input v-model="file" label="Select a file" show-size accept=".csv" @change="getKeys"></v-file-input>
+        </v-card>
+      </v-flex>
+      
+<!--         
+      <b-card title="Preparation" style="max-width: 50%;">
+        <b-card-text>
+          The following video will give you an explanation of how to prepare your data. Please note that all uploaded files will have either the .csv or .txt extension.
+        </b-card-text>
+      </b-card> -->
+      
+      
+    </b-card-group>
+
     <div class="table">
       <v-form ref="form">
         <v-text-field v-model="datasetName" required label="Dataset name"></v-text-field>
@@ -36,6 +58,7 @@
           </template>
         </v-combobox>
       </v-form>
+      
       <b-card-group deck class="lastRow">
         <v-flex xs12 sm6>
           <v-card max-width="95%" style="padding: 1rem;">
@@ -216,6 +239,7 @@
           </v-dialog>
         </div>
       </b-card-group>
+
     </div>
   </div>
 </template>
@@ -278,6 +302,7 @@ export default {
       }, 7515);
 
       this.datasetTags = [...new Set(this.datasetTags)];
+      console.log(JSON.stringify(this.columnData))
       api
         .uploadDataset(
           this.file,
@@ -355,7 +380,7 @@ export default {
   justify-content: center;
 }
 
-.lastRow {
+.firstRow {
   padding-top: 15px;
   flex: auto;
   align-items: center;
