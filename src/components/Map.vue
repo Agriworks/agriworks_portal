@@ -13,11 +13,10 @@ import Map from "ol/Map";
 import View from "ol/View";
 import {Control, defaults as defaultControls, ScaleLine} from 'ol/control';
 import {Tile as TileLayer, Vector as VectorLayer} from 'ol/layer';
-import {OSM, Vector as VectorSource} from 'ol/source';
+import {Vector as VectorSource} from 'ol/source';
 
-import Feature from 'ol/Feature';
 import GeoJSON from 'ol/format/GeoJSON';
-import {Circle as CircleStyle, Fill, Stroke, Style, Text} from 'ol/style';
+import {Circle as Fill, Stroke, Style, Text} from 'ol/style';
 import Select from 'ol/interaction/Select';
 import {pointerMove} from 'ol/events/condition';
 import XYZ from 'ol/source/XYZ';
