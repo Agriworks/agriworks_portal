@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 500px; width: 500px;">
   </div>
 </template>
 
@@ -9,22 +9,8 @@ import { loadModules } from 'esri-loader';
 export default {
   name: 'heat-map',
   props: ['data','latCol','lonCol'],
-  watch: {
-    data: {
-      handler() {
-        this.makeMap()
-      }
-    },
-    latCol: {
-      handler() {
-        this.makeMap()
-      }
-    },
-    lonCol: {
-      handler() {
-        this.makeMap()
-      }
-    }
+  created() {
+    this.makeMap();
   },
   beforeDestroy() {
     if (this.view) {
