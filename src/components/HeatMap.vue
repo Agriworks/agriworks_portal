@@ -1,29 +1,20 @@
 <template>
+<<<<<<< HEAD
   <div id="map">
+=======
+  <div style="height: 500px; width: 500px;">
+>>>>>>> origin/master
   </div>
 </template>
 
 <script>
 import { loadModules } from 'esri-loader';
+
 export default {
   name: 'heat-map',
   props: ['data','latCol','lonCol'],
-  watch: {
-    data: {
-      handler() {
-        this.makeMap()
-      }
-    },
-    latCol: {
-      handler() {
-        this.makeMap()
-      }
-    },
-    lonCol: {
-      handler() {
-        this.makeMap()
-      }
-    }
+  created() {
+    this.makeMap();
   },
   beforeDestroy() {
     if (this.view) {
@@ -36,11 +27,14 @@ export default {
       // this gets tri
         loadModules(['esri/Map', 'esri/views/MapView', 'esri/Graphic', 'esri/layers/FeatureLayer'], { css: true })
         .then(([Map, MapView, Graphic, FeatureLayer]) => {
+
           // The heatmap renderer assigns each pixel in the view with
           // an intensity value. The ratio of that intensity value
           // to the maxPixel intensity is used to assign a color
           // from the continuous color ramp in the colorStops property
+
           var graphics = [];
+
           var lat = this.latCol
           var lon = this.lonCol
         
@@ -64,6 +58,7 @@ export default {
             });
             graphics.push(pointGraphic);
           }
+
           const renderer = {
             type: "heatmap",
             colorStops: [
@@ -84,15 +79,18 @@ export default {
             maxPixelIntensity: 25,
             minPixelIntensity: 0
           };
+
           const layer = new FeatureLayer({
             source: graphics,
             renderer: renderer,
             objectIdField: "ObjectID"
           });
+
           const map = new Map({
             basemap: "topo-vector",
             layers: [layer]
           });
+
           this.view = new MapView({
             container: this.$el,
             map: map,
@@ -104,6 +102,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style scoped>
