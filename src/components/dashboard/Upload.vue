@@ -153,6 +153,21 @@
                           :items="this.hasLocation ? this.keys : 'N/A'"
                           label="Location"
                         ></v-select>
+                        <v-select
+                          v-model="columnData.latitude"
+                          :items="this.hasLocation ? this.keys : 'N/A'"
+                          label="Latitude"
+                        ></v-select>
+                        <v-select
+                          v-model="columnData.longitude"
+                          :items="this.hasLocation ? this.keys : 'N/A'"
+                          label="Longitude"
+                        ></v-select>
+                        <v-select
+                          v-model="columnData.value"
+                          :items="this.hasLocation ? this.keys : 'N/A'"
+                          label="Value"
+                        ></v-select>
 
                         <v-divider></v-divider>
 
