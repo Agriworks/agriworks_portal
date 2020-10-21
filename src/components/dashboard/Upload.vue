@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Create New Dataset</h1>
+
     <div class="table">
       <v-form ref="form">
         <v-text-field v-model="datasetName" required label="Dataset name"></v-text-field>
@@ -36,6 +37,7 @@
           </template>
         </v-combobox>
       </v-form>
+      
       <b-card-group deck class="lastRow">
         <v-flex xs12 sm6>
           <v-card max-width="95%" style="padding: 1rem;">
@@ -216,6 +218,7 @@
           </v-dialog>
         </div>
       </b-card-group>
+
     </div>
   </div>
 </template>
@@ -278,6 +281,7 @@ export default {
       }, 7515);
 
       this.datasetTags = [...new Set(this.datasetTags)];
+      console.log(JSON.stringify(this.columnData))
       api
         .uploadDataset(
           this.file,
@@ -355,7 +359,7 @@ export default {
   justify-content: center;
 }
 
-.lastRow {
+.firstRow {
   padding-top: 15px;
   flex: auto;
   align-items: center;
