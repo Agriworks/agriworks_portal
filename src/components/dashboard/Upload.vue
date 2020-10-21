@@ -144,12 +144,12 @@
                 
                       <v-stepper-content step="2">
                         <v-select
-                          v-model="timeData"
+                          v-model="columnData.time"
                           :items="this.hasTime ? this.keys : 'N/A'"
                           label="Time"
                         ></v-select>
                         <v-select
-                          v-model="locationData"
+                          v-model="columnData.location"
                           :items="this.hasLocation ? this.keys : 'N/A'"
                           label="Location"
                         ></v-select>
@@ -223,7 +223,7 @@ export default {
       permissionOptions: ["Public", "Private"],
       typeOptions: ["Land Use", "Pesticide Report"],
       timeGranularityOptions: ["day", "month", "year"],
-      locationGranularityOptions: ["state", "district", "village"],
+      locationGranularityOptions: ["state", "district", "village","coordinates"],
       file: null,
       loading: false,
       search: "",
@@ -232,10 +232,16 @@ export default {
       stepIndex: 1,
       hasTime: false,
       hasLocation: false,
-      timeData: null,
-      locationData: null,
       timeGranularity: null,
-      locationGranulariyu: null
+      locationGranularity: null,
+      columnData: {
+        value: null,
+        longitude: null,
+        latitude: null,
+        locationLabel: null,
+        time: null,
+        location: null
+      }
     };
   },
   watch: {
@@ -263,7 +269,10 @@ export default {
           this.datasetName,
           this.datasetTags,
           this.datasetPermissions,
-          this.datasetType
+          this.datasetType,
+          JSON.stringify(this.columnData),
+          this.timeGranularity,
+          this.locationGranularity
         )
         .then(response => {
           this.loading = false;
