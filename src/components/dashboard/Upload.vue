@@ -197,6 +197,7 @@
                           label="Location"
                         ></v-select>
 
+
                         <v-divider></v-divider>
                 
                         <v-btn
@@ -314,7 +315,7 @@ export default {
         .then(response => {
           this.tagsOfChosenType = response.data;
         })
-        .catch(err => {
+        .catch(() => {
           notify("Error fetching tags.", colors.red);
         });
     },

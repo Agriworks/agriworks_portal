@@ -346,6 +346,9 @@ uploadDataset(file, name, tags, permissions, type, columnData, timeGranularity, 
     .catch(err => {
       notify(err.response.data.message, colors.red);
     })
+  },
+  getFormattedData(data, x, y) {
+    return post("/visualize/getFormattedData", {dataset: JSON.stringify(data), xAxis: x, yAxis:y})
   }
 };
 

@@ -2,7 +2,7 @@
 <v-row>
   <LeftView />
   <v-col lg="6" sm="12">
-    <v-container fluid fill-height class="pl-10">
+    <v-container fluid fill-height>
       <v-row align="center" justify="start">
         <v-col lg="6" sm="12">
           <v-form v-model="valid" @submit.prevent="signup" class="form-signin">

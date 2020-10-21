@@ -11,7 +11,6 @@
 </template>
 <script>
 
-import Vue from "vue";
 export default {
     name: "DataTable",
     props: ["headers", "data", "isLoading"],
