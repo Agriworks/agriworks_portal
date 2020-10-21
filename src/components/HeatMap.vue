@@ -1,9 +1,5 @@
 <template>
-<<<<<<< HEAD
-  <div id="map">
-=======
   <div style="height: 500px; width: 500px;">
->>>>>>> origin/master
   </div>
 </template>
 

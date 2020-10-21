@@ -303,10 +303,25 @@ export default {
     getMapData(){
       console.log("get map data method called")
 
-      api.getMap(this.data, 'States', 'Density').then(
-        response => {
-            this.mapData = response.data
-            this.hasMapData = true
+      api.fetchDatasetColumnData(this.$route.params.id).then(
+        response1 => {
+          console.log("Column Data")
+          console.log(response1.data)
+          var location
+          if(response1.data.latitude == null){
+            location = response1.data.locationLabel
+          }else{
+            location = [response1.data.latitude, response1.data.longitude]
+          }
+
+
+          var adminLevel = 1
+          api.getMap(this.data, location, response1.data.value, adminLevel).then(
+            response => {
+                this.mapData = response.data
+                this.hasMapData = true
+            }
+        )
         }
       )
       
