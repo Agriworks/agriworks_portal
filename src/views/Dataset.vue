@@ -50,10 +50,10 @@
             <v-btn small dark color="purple">
             <v-icon small>mdi-graph-outline</v-icon> Visualize
           </v-btn> -->
-          <v-btn small dark color="red" 
+          <!-- <v-btn small dark color="red" 
           @click.stop="heatMapDialog = true">
             <v-icon small>mdi-graph</v-icon>Heat Map            
-          </v-btn>
+          </v-btn> -->
 
 
           <v-dialog 
@@ -110,7 +110,7 @@
             max-width="80%">
             <v-card>
               <v-toolbar>
-                <v-toolbar-title>Heat Map</v-toolbar-title>
+                <v-toolbar-title>Choropleth Map</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
                   <v-btn icon @click="heatMapDialog = false">
@@ -165,6 +165,15 @@
                 :latCol="latCol"
                 :lonCol="lonCol"
               />
+            </v-card>
+          </div>
+        </div>
+        <div class="column">
+          <div v-if="hasMapData">
+            <v-card
+            style="height: 500px; width: 700px"
+            >
+            <Map :mapData="mapData" :hasMapData="hasMapData"> </Map>
             </v-card>
           </div>
         </div>
