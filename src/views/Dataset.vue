@@ -50,10 +50,7 @@
             <v-btn small dark color="purple">
             <v-icon small>mdi-graph-outline</v-icon> Visualize
           </v-btn> -->
-          <!-- <v-btn small dark color="red" 
-          @click.stop="heatMapDialog = true">
-            <v-icon small>mdi-graph</v-icon>Heat Map            
-          </v-btn> -->
+          <!--     -->
 
 
           <v-dialog 
@@ -246,11 +243,15 @@ export default {
     api.fetchDatasetInfo(this.$route.params.id)
       .then(response => {
         this.dataset = response.data;
+        console.log("Up here")
+        console.log(this.dataset.name)
         api.fetchPrimaryDatasetObjects(this.$route.params.id)
         .then((response) => {
           this.data = response.data.datasetObjects;
           console.log("We are here")
-          this.getMapData()
+          console.log(response.data)
+          console.log(this.dataset) 
+          this.getMapData() 
           this.tableIsLoading = false;
           this.dataLoaded = true;
           if (response.data.cacheId) {
@@ -316,21 +317,26 @@ export default {
         response1 => {
           console.log("Column Data")
           console.log(response1.data)
-          var location
-          if(response1.data.latitude == null){
-            location = response1.data.locationLabel
-          }else{
-            location = [response1.data.latitude, response1.data.longitude]
+          console.log("Name")
+          console.log(this.dataset.name)
+          console.log()
+          if(this.dataset.hasOwnProperty('locationGranularity')){ //check if the dataset can be mapped
+              var location
+              if(response1.data.latitude == null){
+                location = response1.data.locationLabel 
+              }else{
+                location = [response1.data.latitude, response1.data.longitude]
+              }
+
+              var adminLevel = this.dataset.locationGranularity
+              api.getMap(this.data, location, response1.data.value, adminLevel).then(
+                response => {
+                    this.mapData = response.data
+                    this.hasMapData = true
+                }
+            )
           }
-
-
-          var adminLevel = 1
-          api.getMap(this.data, location, response1.data.value, adminLevel).then(
-            response => {
-                this.mapData = response.data
-                this.hasMapData = true
-            }
-        )
+          
         }
       )
       
