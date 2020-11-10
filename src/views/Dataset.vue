@@ -118,7 +118,7 @@
                 <div v-if="!this.hasMapData" style="display: table; height: 80%">
                   <LoadingIndicator style="display:table-cell;text-align: center;vertical-align: middle"/>
                 </div>
-                   <Map :mapData="mapData" :hasMapData="hasMapData"> </Map>
+                   <Map :mapData="mapData" :hasMapData="hasMapData"  @customizeMap="customizeMap"> </Map>
             </v-card>
           </v-dialog>
               
@@ -172,6 +172,7 @@
             >
             <Map :mapData="mapData" :hasMapData="hasMapData"> </Map>
             </v-card>
+            <v-btn>Customize</v-btn>
           </div>
         </div>
       </div>
@@ -243,14 +244,15 @@ export default {
     api.fetchDatasetInfo(this.$route.params.id)
       .then(response => {
         this.dataset = response.data;
-        console.log("Up here")
-        console.log(this.dataset.name)
+        // console.log("Up here")
+        // console.log(response.data)
+        // console.log(response.data.columnLabels)
         api.fetchPrimaryDatasetObjects(this.$route.params.id)
         .then((response) => {
           this.data = response.data.datasetObjects;
-          console.log("We are here")
-          console.log(response.data)
-          console.log(this.dataset) 
+          // console.log("We are here")
+          // console.log(response.data)
+          // console.log(this.dataset.columnLabels) 
           this.getMapData() 
           this.tableIsLoading = false;
           this.dataLoaded = true;
@@ -312,34 +314,24 @@ export default {
     },
     getMapData(){
       console.log("get map data method called")
+      console.log(this.dataset.columnLabels)
 
-      api.fetchDatasetColumnData(this.$route.params.id).then(
-        response1 => {
-          console.log("Column Data")
-          console.log(response1.data)
-          console.log("Name")
-          console.log(this.dataset.name)
-          console.log()
-          if(this.dataset.hasOwnProperty('locationGranularity')){ //check if the dataset can be mapped
-              var location
-              if(response1.data.latitude == null){
-                location = response1.data.locationLabel 
-              }else{
-                location = [response1.data.latitude, response1.data.longitude]
-              }
-
-              var adminLevel = this.dataset.locationGranularity
-              api.getMap(this.data, location, response1.data.value, adminLevel).then(
-                response => {
-                    this.mapData = response.data
-                    this.hasMapData = true
-                }
-            )
-          }
-          
-        }
-      )
+      if(this.dataset.hasOwnProperty('columnLabels')){
+        console.log("Getting map")
+        api.getMap(this.data, this.dataset.columnLabels).then(
+            response => {
+                this.mapData = response.data
+                this.hasMapData = true
+            }
+        ).catch(() => {
+          //could not create map
+          this.hasMapData = false
+        })
+      }
       
+    },
+    customizeMap(){
+      console.log("Customizing the map ")
     },
     downloadDataset() {
       api

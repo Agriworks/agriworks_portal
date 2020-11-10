@@ -6,8 +6,8 @@ import notify from "./utilities/notify";
 import { colors } from "./utilities/branding";
 
 const api = {
-  getMap(data, locationCol, dataCol, adminLevel){  
-    return post('/map_data/getMap', {dataset: JSON.stringify(data), locationCol: locationCol, dataCol: dataCol, adminLevel: adminLevel})
+  getMap(data, columnLabels, locationCol = -1, dataCol1 = -1, dataCol2 = -1){  
+    return post('/map_data/getMap', {dataset: JSON.stringify(data), columnLabels: JSON.stringify(columnLabels), locationCol: locationCol, dataCol1: dataCol1, dataCol2: dataCol2})
   },
   getFormattedData(data, x, y) {
     return post("/visualize/getFormattedData", {dataset: JSON.stringify(data), xAxis: x, yAxis:y})

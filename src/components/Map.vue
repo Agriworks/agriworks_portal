@@ -43,7 +43,7 @@ export default {
   
         var geojsonObject;  
 
-        var NAME = "name"
+        var NAME = "name  "
         
         console.log("Map Data")
         console.log(this.mapData)
@@ -60,6 +60,23 @@ export default {
               return "#" + ((1 << 24) + (c[0] << 16) + (c[1] << 8) + c[2]).toString(16).slice(1);
             }
 
+            //customize button Control
+
+            var elementButtonDiv = document.createElement('div');
+            elementButtonDiv.className = 'customize ol-unselectable ol-control'
+
+            var button = document.createElement('button');
+            button.className = 'customizeButton'
+            button.innerHTML = 'Customize';
+            button.addEventListener('click', this.customizeMap, false);
+
+
+            elementButtonDiv.append(button)
+            
+
+            var customize = new Control({
+              element: elementButtonDiv
+            })
 
             
             //legend Control
@@ -172,7 +189,7 @@ export default {
               controls: defaultControls().extend([
                 new ScaleLine({
                   units: "degrees",
-                }), legend, info
+                }), legend, info, customize
               ]),
               target: "map",
               layers: [baseLayer, vector],
@@ -219,6 +236,9 @@ export default {
               }
             });
      },
+     customizeMap() {
+       this.$emit('customizeMap')
+     }
   },
 };
 </script>
@@ -259,6 +279,15 @@ export default {
 .infoPanel h4 {
     margin: 0 0 5px;
     color: #777;
+}
+
+.customize {
+  bottom: 2.5em;
+  left: .5em;
+}
+.customizeButton {
+  width: fit-content !important;
+  padding: .5em !important;
 }
 
 </style>
