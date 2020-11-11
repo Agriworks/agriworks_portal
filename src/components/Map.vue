@@ -25,16 +25,29 @@ import {pointerMove} from 'ol/events/condition';
 import XYZ from 'ol/source/XYZ';
 
 export default {
-  props: ['mapData', 'hasMapData'],
+  props: ['mapData', 'hasMapData', 'newMapData'],
   watch: {
-    hasMapData: {
+    hasMapData:{
       immediate: true,
-      handler(val){
+      handler: function(val){
+      console.log("THE WATCH WAS TRIGGERED")
         if(val == true){
           this.initiateMap()
         }
       }
-    }
+    },
+    newMapData:{
+      immediate: true,
+      handler: function(val){
+        console.log("New mapData FUnc triggered");
+        if(val == true){
+          console.log("Intializing the new map")
+          document.querySelector("#map").innerHTML= "";
+          this.initiateMap();
+
+        }
+      }
+    } 
   },
   methods: {
     initiateMap() {

@@ -171,12 +171,12 @@
             <v-card
             style="height: 500px; width: 700px"
             >
-            <Map :mapData="mapData" :hasMapData="hasMapData"> </Map>
+            <Map :mapData="mapData" :hasMapData="hasMapData" :newMapData="newMapData"> </Map>
             </v-card>
           </div>
         </div>
       </div>
-      <CustomizeDialog :columnLabels="columnLabels" :dialog="dialog"> </CustomizeDialog>
+      <CustomizeDialog :columnLabels="columnLabels" :dialog="dialog" @updateMap='updateMap'> </CustomizeDialog>
 
       <div class="row">
         <DataTable
@@ -239,10 +239,11 @@ export default {
       lonCol:"",
       mapData: null,
       hasMapData: false,
+      newMapData: false,
       colors: [],
       bucketGrades: [],
       columnLabels: [],
-      dialog: false
+      dialog: false,
     };
   },
   created() {
@@ -340,6 +341,23 @@ export default {
       console.log("Customizing the map ")
       this.dialog = true
     },
+    updateMap(locationCol, dataCol1, dataCol2){
+      console.log("Updating map");
+      console.log(locationCol)
+      console.log(dataCol1)
+      console.log(dataCol2)
+      this.dialog = false;
+
+      api.getMap(this.data, this.dataset.columnLabels, locationCol, dataCol1, dataCol2).then(
+        response => {
+          console.log("Updated Map")
+          this.mapData = response.data
+          this.newMapData = true
+        }
+      ).catch(() => {
+        console.log("Error updating the map")
+      })
+    },
     downloadDataset() {
       api
         .downloadDataset(this.$route.params.id)
@@ -371,7 +389,7 @@ export default {
         let lat = this.data[key][this.latCol];
         let lon = this.data[key][this.lonCol];
         if (!((-90 <= lat && lat <= 90) && (-180 <= lon && lon <= 180))){
-          concole.log("error with heatmap data")
+          
           return;
         }
       }

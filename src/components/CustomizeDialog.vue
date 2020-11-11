@@ -148,6 +148,8 @@ export default {
       custimizeMap(){
         console.log("Called custimize Map")
         this.dialog = false;
+        this.$emit('updateMap', this.locationCol, this.dataCol1, this.dataCol2);
+        this.stepIndex = 1;
       }
     }
 }
