@@ -121,6 +121,7 @@
                    <Map :mapData="mapData" :hasMapData="hasMapData"  @customizeMap="customizeMap"> </Map>
             </v-card>
           </v-dialog>
+          
               
             </div>
           </div>
@@ -172,10 +173,10 @@
             >
             <Map :mapData="mapData" :hasMapData="hasMapData"> </Map>
             </v-card>
-            <v-btn>Customize</v-btn>
           </div>
         </div>
       </div>
+      <CustomizeDialog :columnLabels="columnLabels" :dialog="dialog"> </CustomizeDialog>
 
       <div class="row">
         <DataTable
@@ -207,6 +208,7 @@ import HeatMap from '../components/HeatMap.vue';
 import DataTable from "../components/DataTable";
 import LoadingIndicator from "../components/LoadingIndicator";
 import Map from '../components/Map'
+import CustomizeDialog from '../components/CustomizeDialog';
 import api from "../api";
 import notify from "../utilities/notify";
 import { colors } from "../utilities/branding";
@@ -218,7 +220,8 @@ export default {
     DataTable,
     LoadingIndicator,
     HeatMap,
-    Map
+    Map,
+    CustomizeDialog
   },
   data() {
     return {
@@ -237,7 +240,9 @@ export default {
       mapData: null,
       hasMapData: false,
       colors: [],
-      bucketGrades: []
+      bucketGrades: [],
+      columnLabels: [],
+      dialog: false
     };
   },
   created() {
@@ -317,6 +322,7 @@ export default {
       console.log(this.dataset.columnLabels)
 
       if(this.dataset.hasOwnProperty('columnLabels')){
+        this.columnLabels = this.dataset.columnLabels
         console.log("Getting map")
         api.getMap(this.data, this.dataset.columnLabels).then(
             response => {
@@ -332,6 +338,7 @@ export default {
     },
     customizeMap(){
       console.log("Customizing the map ")
+      this.dialog = true
     },
     downloadDataset() {
       api

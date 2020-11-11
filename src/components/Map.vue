@@ -43,7 +43,7 @@ export default {
   
         var geojsonObject;  
 
-        var NAME = "name  "
+        var NAME = "name"
         
         console.log("Map Data")
         console.log(this.mapData)
