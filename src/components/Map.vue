@@ -64,6 +64,7 @@ export default {
             geojsonObject = this.mapData.data
             var colors = this.mapData.colors
             var bucketGrades = this.mapData.bucketGrades
+            var panelLabel = this.mapData.panelLabel
 
              var vectorSource = new VectorSource({
               features: new GeoJSON().readFeatures(geojsonObject),
@@ -117,9 +118,9 @@ export default {
             function updateInfoPanel(featureName, data) {
               console.log("Updating Panel")
               if(featureName == null){
-                infoPanel.innerHTML = '<h4>Value</h4>Hover over a state'
+                infoPanel.innerHTML = '<h4>' + panelLabel + '</h4>Hover over a state'
               }else{
-                infoPanel.innerHTML = '<h4>Value' + '<br /><b>' + featureName + '</b><br />' + data
+                infoPanel.innerHTML = '<h4>' + panelLabel + '<br /><b>' + featureName + '</b><br />' + data
               }
             }
 
