@@ -249,8 +249,10 @@ export default {
                 updateInfoPanel(null, null)
               }
             });
+            this.$emit('madeMap')
      },
      customizeMap() {
+       console.log("Supposed to customizeMap")
        this.$emit('customizeMap')
      }
   },

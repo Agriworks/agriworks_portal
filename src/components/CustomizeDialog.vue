@@ -113,7 +113,7 @@
 <script>
 export default {
     name: 'CustomizeDialog',  
-    props: ['columnLabels', 'dialog'],
+    props: ['columnLabels'],
 
     data () {
       return{
@@ -121,7 +121,16 @@ export default {
         dataCol1: -1,
         dataCol2: -1,
         stepIndex: 1,
+        dialog: true
       }
+    },
+    watch: {
+      // whenever dialog closes, this function will run to tell dataset that it is closed
+      dialog: function (newValue, oldValue) {
+        if(newValue == false){
+          this.$emit('closedDialog')
+        }
+      },
     },
     
     computed: {

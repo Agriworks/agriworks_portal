@@ -171,12 +171,12 @@
             <v-card
             style="height: 500px; width: 700px"
             >
-            <Map :mapData="mapData" :hasMapData="hasMapData" :newMapData="newMapData"> </Map>
+            <Map :mapData="mapData" :hasMapData="hasMapData" :newMapData="newMapData" @customizeMap='customizeMap' @madeMap='newMapData=false'> </Map>
             </v-card>
           </div>
         </div>
       </div>
-      <CustomizeDialog :columnLabels="columnLabels" :dialog="dialog" @updateMap='updateMap'> </CustomizeDialog>
+      <CustomizeDialog v-if="dialog"  :columnLabels="columnLabels" @updateMap='updateMap' @closedDialog='dialog=false'> </CustomizeDialog>
 
       <div class="row">
         <DataTable
