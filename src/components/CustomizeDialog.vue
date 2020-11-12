@@ -47,7 +47,8 @@
 
 
                         <v-divider></v-divider>
-
+                        
+                        
                         <v-btn
                           color="success"
                           @click="stepIndex = 2"
@@ -55,7 +56,7 @@
                           Continue
                         </v-btn>
                 
-                        <v-btn text @click="closeDialog">
+                        <v-btn text style="float:right" @click="closeDialog">
                           Cancel
                         </v-btn>
                       </v-stepper-content>
@@ -76,13 +77,19 @@
                         ></v-select>
                         <v-select
                           v-model="dataCol2"
-                          :items="this.dataLabels"
+                          :items="this.dataLabels.concat(['N/A'])"
                           label="Data Col 2"
                         ></v-select>
 
 
                         <v-divider></v-divider>
-                
+
+                        <v-btn
+                          text
+                          @click="stepIndex -= 1"
+                        >
+                          Back 
+                        </v-btn>
                         <v-btn
                           color="success"
                           @click="custimizeMap"
@@ -90,7 +97,7 @@
                           Customize Map
                         </v-btn>
                 
-                        <v-btn text @click="closeDialog">
+                        <v-btn text style="float:right" @click="closeDialog">
                           Cancel
                         </v-btn>
                       </v-stepper-content>
@@ -148,6 +155,9 @@ export default {
       custimizeMap(){
         console.log("Called custimize Map")
         this.dialog = false;
+        if(this.dataCol2 == 'N/A'){
+          this.dataCol2 = -1;
+        }
         this.$emit('updateMap', this.locationCol, this.dataCol1, this.dataCol2);
         this.stepIndex = 1;
       }
