@@ -1,34 +1,86 @@
 <template>
   <div>
     <div class="row">
-      <div v-for="view in views" v-bind:key="view.id">
+      <div v-for="view in agriWatchViews" v-bind:key="view.id">
         <ViewCard :id="view.id" />
       </div>
       <v-card primary tile class="createViewCard" hover>
-        <v-button v-on:click="increment">Create New View</v-button>
+        <v-button v-on:click="showCreatedDialog">Create New View</v-button>
       </v-card>
     </div>
+
+    <v-dialog
+      v-model="createViewDialog"
+      scrollable
+      eager
+      max-width="80%">
+      <v-card>
+        <v-card-title>
+          Create a new view
+        </v-card-title>
+
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-select
+                v-model="dataset"
+                :items="datasets"
+                label="Dataset"
+                required
+              ></v-select>
+            </v-row>
+            <v-row>
+              <v-select
+                v-model="visualType"
+                :items="visualTypes"
+                label="Visual Type"
+                required
+              ></v-select>
+            </v-row>
+          </v-container>
+        </v-card-text>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </div>
 </template>
 
 <script>
-import ViewCard from "../components/ViewCard.vue";
+import AgriWatchViewCard from "../components/AgriWatchViewCard.vue";
+import LoadingIndicator from "../LoadingIndicator";
+
 export default {
     name: "AgriWatch",
     components: {
-      ViewCard
+      AgriWatchViewCard
     },
     data() {
       return {
-        views: [],
-        count: 0
+        createDialog: false
+      }
+    },
+    computed: {
+      agriWatchViews() {
+        return this.$store.state.datasets;
+      },
+      datasets() {
+        return this.$store.state.datasets;
       }
     },
     methods: {
-      increment() {
-        this.views.push({id: this.count});
-        this.count++;
+      showCreatedDialog() {
+        this.createDialog = true
       }
+    },
+    mounted() {
+      this.$store.dispatch("fetchAgriWatchViews");
+      this.$store.dispatch("fetchDatasets");
     }
 }
 </script>

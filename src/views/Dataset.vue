@@ -248,6 +248,7 @@
 
 
 <script>
+import AgriWatchViewCard from "../components/AgriWatchViewCard.vue";
 import HeatMap from '../components/HeatMap.vue';
 import DataTable from "../components/DataTable";
 import LoadingIndicator from "../components/LoadingIndicator";
@@ -260,6 +261,7 @@ import $ from "jquery";
 export default {
   name: "Dataset",
   components: {
+    AgriWatchViewCard,
     DataTable,
     Chart,
     LoadingIndicator,

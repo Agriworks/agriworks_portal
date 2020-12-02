@@ -6,6 +6,7 @@ import { sessionExists } from "./utilities/cookies";
 import { deleteCookie } from "./js/authentication";
 import notify from "./utilities/notify";
 import { colors } from "./utilities/branding";
+import { BIconViewStacked } from "bootstrap-vue";
 
 Vue.use(Router);
 
@@ -110,6 +111,14 @@ const router = new Router({
       path: "/create-template",
       name: "create-template",
       component: () => import("./views/CreateTemplate.vue"),
+    },
+    {
+      path: "/agri-watch-view/:id",
+      name: "agri-watch-view",
+      component: () => importScripts("./views/AgriWatchView.vue"),
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 });

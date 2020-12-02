@@ -349,6 +349,13 @@ uploadDataset(file, name, tags, permissions, type, columnData, timeGranularity, 
   },
   getFormattedData(data, x, y) {
     return post("/visualize/getFormattedData", {dataset: JSON.stringify(data), xAxis: x, yAxis:y})
+  },
+  fetchAgriWatchViews() {
+    get("/view/fetch")
+      .then(response => store.commit("setUserAgriWatchViews", response.data))
+      .catch(() => {
+        notify("Error fetching AgriWatch views.", colors.red);
+      });
   }
 };
 
