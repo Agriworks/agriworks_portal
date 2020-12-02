@@ -46,7 +46,7 @@ const router = new Router({
     {
       path: "/dashboard",
       name: "Dashboard",
-      component: () => import("./views/Dashboard.vue"),
+      component: () => import("./views/AgriWatch.vue"),
       meta: {
         requiresAuth: true
       }
