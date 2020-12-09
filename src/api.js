@@ -363,7 +363,7 @@ uploadDataset(file, name, tags, permissions, type, columnData, timeGranularity, 
     newView.append("visualType", visualType);
     newView.append("xData", xData);
     newView.append("yData", yData);
-    return post("/view/create", newView);
+    return post("/view/create", newView, true);
   }
 };
 

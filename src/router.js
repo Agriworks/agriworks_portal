@@ -115,7 +115,7 @@ const router = new Router({
     {
       path: "/agri-watch-view/:id",
       name: "agri-watch-view",
-      component: () => importScripts("./views/AgriWatchView.vue"),
+      component: () => import("./views/AgriWatchView.vue"),
       meta: {
         requiresAuth: true
       }

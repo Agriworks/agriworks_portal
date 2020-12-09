@@ -1,7 +1,15 @@
 <template>
   <v-card primary tile class="agriWatchViewCard" hover>
     <v-card :to="viewLink" flat class="popoutButton">
-      <div primary class="overline mb-4 datasetType">{{ id }}</div>
+      <v-list-item-content>
+          <div primary class="overline mb-4 viewType">{{ agriWatchView.visualType }}</div>
+          <v-list-item-title> {{ agriWatchView.dataset }}</v-list-item-title>
+        </v-list-item-content>
+        <v-list-item-avatar size="80" tile>
+          <v-img v-if="!$vuetify.theme.dark" src="../assets/chartNormal.png" />
+          <v-img v-if="$vuetify.theme.dark" src="../assets/chartDarkMode.png" />
+        </v-list-item-avatar>
+      </v-list-item>
     </v-card>
     <v-card-actions>
       <template>
@@ -29,7 +37,7 @@
 <script>
 export default {
   name: "AgriWatchViewCard",
-  props: ["agriWatchView", "manage","id"],
+  props: ["agriWatchView", "manage"],
   computed: {
     viewLink: function() {
         return "/agri-watch-view/" + this.agriWatchView.id;

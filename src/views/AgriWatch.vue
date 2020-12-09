@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div v-for="view in agriWatchViews" v-bind:key="view.id">
-        <AgriWatchViewCard :id="view.id" />
+        <AgriWatchViewCard :agriWatchView="view" />
       </div>
       <v-card primary tile class="createViewCard" hover @click.stop="createDialog = true">
         <v-card-title primary-title class="justify-center">
@@ -93,6 +93,7 @@ export default {
     },
     methods: {
       createView() {
+        console.log(this.createVisualType)
         api.createAgriWatchView(
           this.createFromDataset,
           this.createVisualType,
