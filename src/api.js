@@ -356,6 +356,14 @@ uploadDataset(file, name, tags, permissions, type, columnData, timeGranularity, 
       .catch(() => {
         notify("Error fetching AgriWatch views.", colors.red);
       });
+  },
+  createAgriWatchView(dataset, visualType, xData, yData) {
+    let newView = new FormData();
+    newView.append("dataset", dataset);
+    newView.append("visualType", visualType);
+    newView.append("xData", xData);
+    newView.append("yData", yData);
+    return post("/view/create", newView);
   }
 };
 
