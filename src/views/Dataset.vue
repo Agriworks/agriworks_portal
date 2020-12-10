@@ -46,136 +46,46 @@
                 <v-icon small>mdi-arrow-down-circle-outline</v-icon>Download
               </v-btn>
               
-            <v-btn small dark color="purple" style="margin-right:0.5rem;" @click.stop="visualizeDialog = true">
-              <v-icon small>mdi-graph</v-icon> Visualize
+            <v-btn small dark color="purple" style="margin-right:0.5rem;" @click.stop="createDialog = true">
+              <v-icon small>mdi-graph</v-icon> Create new AgriWatch view
             </v-btn>
-
-            <v-dialog
-              v-model="visualizeDialog"
-              scrollable
-              eager
-              max-width="80%">
-              <v-card>
-                <v-card-title>
-                  Visualize Configuration
-                </v-card-title>
-                
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="4">
-                        <v-select
-                          v-model="xAxis"
-                          :items="dataset.headers"
-                          label="X Axis"
-                          required
-                        ></v-select>
-                      </v-col>
-                      <v-col cols="12" sm="4">
-                        <v-select
-                          v-model="yAxis"
-                          :items="dataset.headers"
-                          label="Y Axis"
-                          required
-                        ></v-select>
-                      </v-col> 
-                      <v-col cols="12" sm="4">
-                        <v-select
-                          v-model="chosenGraph"
-                          :items="graphType"
-                          label="Graph type"
-                          required
-                        ></v-select>
-                      </v-col>                
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-
-                <v-divider></v-divider>
-
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="visualizeDialog = false">Close</v-btn>
-                  <v-btn color="blue darken-1" text @click="getFormattedData">Show</v-btn>
-                </v-card-actions>
-              </v-card>
-
-            </v-dialog>
-
-
-            <v-dialog 
-              v-model="userSelectDialog"
-              scrollable
-              eager
-              max-width="80%"
-            >
-              <v-card>
-                <v-card-title>
-                  Heatmap Configuration
-                </v-card-title>
-                
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="6">
-                        <v-select
-                          v-model="lonCol"
-                          :items="dataset.headers"
-                          label="Longitude"
-                          required
-                        ></v-select>
-                      </v-col>
-                      <v-col cols="12" sm="6">
-                        <v-select
-                          v-model="latCol"
-                          :items="dataset.headers"
-                          label="Latitude"
-                          required
-                        ></v-select>
-                      </v-col>               
-                    </v-row>
-                  </v-container>
-                  <div v-if="haveError" style="color: red">*Error: Latitude/Longitude data is invalid.*</div>
-                </v-card-text>
-
-                <v-divider></v-divider>
-
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="userSelectDialog = false">Close</v-btn>
-                  <v-btn color="blue darken-1" text 
-                    @click.stop="openHeatmapDialog">
-                    Show</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-
-            <v-dialog
-              v-model="heatMapDialog"
-              scrollable
-              eager
-              max-width="80%">
-              <v-card>
-                <v-toolbar>
-                  <v-toolbar-title>Heat Map</v-toolbar-title>
-                  <v-spacer></v-spacer>
-                  <v-toolbar-items>
-                    <v-btn icon @click="heatMapDialog = false">
-                    <v-icon>mdi-close</v-icon>
-                    </v-btn>
-                  </v-toolbar-items>
-                </v-toolbar>
-                      <heat-map
-                        :data="data"
-                        :latCol="latCol"
-                        :lonCol="lonCol"
-                      ></heat-map>
-              </v-card>
-            </v-dialog>
               
             </div>
           </div>
         </div>
+
+        <v-dialog
+          v-model="createDialog"
+          scrollable
+          eager
+          max-width="80%">
+          <v-card>
+            <v-card-title>
+              Create a new view
+            </v-card-title>
+
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-select
+                    v-model="createVisualType"
+                    :items="visualTypes"
+                    label="Visual Type"
+                    required
+                  ></v-select>
+                </v-row>
+              </v-container>
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+                <v-btn color="red darken-1" text @click="createDialog = false">Cancel</v-btn>
+                <v-btn color="blue darken-1" text @click="createView">Create View</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
         <div
           class="col-sm-6"
@@ -206,21 +116,12 @@
           <Chart v-if="loadedChart" :chosenGraph="chosenGraph" :datacollection="chartData"/>
       </v-row>
 
-      <div class="row" >
-        <div class="column">
-          <div v-if="showHeatmap" id="visualizationContainer" >
-            <v-card 
-            style="height: 500px; width: 500px;"
-            >
-              <heat-map
-                :data="data"
-                :latCol="latCol"
-                :lonCol="lonCol"
-              />
-            </v-card>
-          </div>
+      <div class="row">
+        <div v-for="view in agriWatchViews" v-bind:key="view.id">
+          <AgriWatchViewCard :agriWatchView="view" />
         </div>
       </div>
+
 
       <div class="row">
         <DataTable
@@ -249,10 +150,8 @@
 
 <script>
 import AgriWatchViewCard from "../components/AgriWatchViewCard.vue";
-import HeatMap from '../components/HeatMap.vue';
 import DataTable from "../components/DataTable";
 import LoadingIndicator from "../components/LoadingIndicator";
-import Chart from "../components/Chart";
 import api from "../api";
 import notify from "../utilities/notify";
 import { colors } from "../utilities/branding";
@@ -263,30 +162,27 @@ export default {
   components: {
     AgriWatchViewCard,
     DataTable,
-    Chart,
-    LoadingIndicator,
-    HeatMap
+    LoadingIndicator
   },
   data() {
     return {
       hideTags: true,
       dataset: null,
       data: [],
-      loadedChart: false,
-      loadingChartData: false,
-      chartData: null,
-      graphType: ["Bar", "Line", "Pie"],
-      chosenGraph: "",
-      xAxis: "",
-      yAxis: "",
       cacheId: null,
       tableIsLoading: false,
       additionalDataObjectsLoading: false,
-      visualizeDialog: false,
-      showHeatmap: false,
-      latCol: "",
-      lonCol: ""
+      createDialog: false,
+      createVisualType: "",
+      createXData: "",
+      createYData: "",
+      visualTypes: ["Heatmap"]
     };
+  },
+  computed: {
+    agriWatchViews() {
+      return this.$store.state.userAgriWatchViews;
+    }
   },
   created() {
     this.tableIsLoading = true
@@ -300,13 +196,6 @@ export default {
           if (response.data.cacheId) {
             this.cacheId = response.data.cacheId;
           }
-          api.fetchDatasetColumnData(this.$route.params.id)
-          .then(response => {
-            this.visualize(response.data)
-          })
-          .catch((error) => {
-            notify(error.response.data.message, colors.red);
-          });
         })
         .catch((error) => {
           notify(error.response.data.message, colors.red);
@@ -374,22 +263,6 @@ export default {
           );
         });
     },
-    visualize(columnData) {
-      if (columnData == null) {
-        return
-      }
-      this.latCol = columnData["latitude"];
-      this.lonCol = columnData["longitude"];
-      for (var key in this.data){
-        let lat = this.data[key][this.latCol];
-        let lon = this.data[key][this.lonCol];
-        if (!((-90 <= lat && lat <= 90) && (-180 <= lon && lon <= 180))){
-          concole.log("error with heatmap data")
-          return;
-        }
-      }
-      this.showHeatmap = true;
-    },
     getFormattedData() {
       this.visualizeDialog = false
       this.loadedChart = false
@@ -405,7 +278,26 @@ export default {
           this.loadingChartData = false
           notify(error.response.data.message, colors.red);
         })
+    },
+    createView() {
+      console.log(this.createVisualType)
+      api.createAgriWatchView(
+        this.dataset.name,
+        this.createVisualType,
+        this.createXData,
+        this.createYData
+      )
+      .then(response => {
+        this.$router.push(`/agri-watch-view/${response.data.message}`);
+        notify("AgriWatch view created", colors.green);
+      })
+      .catch(error => {
+        notify(error.response.data.message);
+      })
     }
+  },
+  mounted() {
+    this.$store.dispatch("fetchAgriWatchViews");
   }
 };
 </script>

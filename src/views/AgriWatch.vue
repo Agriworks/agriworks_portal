@@ -62,56 +62,57 @@ import api from "../api";
 import router from "../router";
 import notify from "../utilities/notify";
 import AgriWatchViewCard from "../components/AgriWatchViewCard.vue";
+import { colors } from "../utilities/branding";
 
 export default {
-    name: "AgriWatch",
-    components: {
-      AgriWatchViewCard
-    },
-    data() {
-      return {
-        createDialog: false,
-        createFromDataset: "",
-        createVisualType: "",
-        createXData: "",
-        createYData: "",
-        visualTypes: ["Heatmap"]
-      }
-    },
-    computed: {
-      agriWatchViews() {
-        return this.$store.state.userAgriWatchViews;
-      },
-      datasets() {
-        var retList = [];
-        var datasets = this.$store.state.datasets;
-        for (var i = 0; i < datasets.length; i++) {
-          retList.push(datasets[i].name)
-        }
-        return retList
-      }
-    },
-    methods: {
-      createView() {
-        console.log(this.createVisualType)
-        api.createAgriWatchView(
-          this.createFromDataset,
-          this.createVisualType,
-          this.createXData,
-          this.createYData
-        )
-        .then(response => {
-          this.$router.push(`/agri-watch-view/${response.data.message}`);
-        })
-        .catch(error => {
-          notify(error.response.data.message);
-        })
-      }
-    },
-    mounted() {
-      this.$store.dispatch("fetchAgriWatchViews");
-      this.$store.dispatch("fetchDatasets");
+  name: "AgriWatch",
+  components: {
+    AgriWatchViewCard
+  },
+  data() {
+    return {
+      createDialog: false,
+      createFromDataset: "",
+      createVisualType: "",
+      createXData: "",
+      createYData: "",
+      visualTypes: ["Heatmap"]
     }
+  },
+  computed: {
+    agriWatchViews() {
+      return this.$store.state.userAgriWatchViews;
+    },
+    datasets() {
+      var retList = [];
+      var datasets = this.$store.state.datasets;
+      for (var i = 0; i < datasets.length; i++) {
+        retList.push(datasets[i].name)
+      }
+      return retList
+    }
+  },
+  methods: {
+    createView() {
+      api.createAgriWatchView(
+        this.createFromDataset,
+        this.createVisualType,
+        this.createXData,
+        this.createYData
+      )
+      .then(response => {
+        this.$router.push(`/agri-watch-view/${response.data.message}`);
+        notify("AgriWatch view created", colors.green);
+      })
+      .catch(error => {
+        notify(error.response.data.message);
+      })
+    }
+  },
+  mounted() {
+    this.$store.dispatch("fetchAgriWatchViews");
+    this.$store.dispatch("fetchDatasets");
+  }
 }
 </script>
 

@@ -9,7 +9,6 @@
           <v-img v-if="!$vuetify.theme.dark" src="../assets/chartNormal.png" />
           <v-img v-if="$vuetify.theme.dark" src="../assets/chartDarkMode.png" />
         </v-list-item-avatar>
-      </v-list-item>
     </v-card>
     <v-card-actions>
       <template>
