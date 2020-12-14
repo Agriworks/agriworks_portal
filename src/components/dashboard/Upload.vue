@@ -121,22 +121,22 @@
                     <v-stepper-items>
                       <v-stepper-content step="1">
                         
-                          <v-checkbox
-                            v-model="hasTime"
-                            label="My Dataset Contains Time Data"
-                          ></v-checkbox>
-                          <v-checkbox
-                            v-model="hasLocation"
-                            label="My Dataset Contains Location Data"
-                          ></v-checkbox>
-                        
+                        <div v-for="key in this.keys" :key="key.name">
+                          <v-select 
+                            :items="columnLabelOptions"
+                            :label="key.name"
+                            v-model="key.label"
+                            ></v-select>
+                        </div>
+
+
                         <v-divider></v-divider>
               
                         <v-btn
                           color="success"
-                          @click="changeStep"
+                          @click="processForm"
                         >
-                          Continue
+                          Save and Upload
                         </v-btn>
                 
                         <v-btn text @click="closeDialog">
@@ -248,6 +248,7 @@ export default {
       search: "",
       dialog: false,
       keys: [],
+      keyNames: [],
       stepIndex: 1,
       hasTime: false,
       hasLocation: false,
@@ -260,7 +261,11 @@ export default {
         locationLabel: null,
         time: null,
         location: null
-      }
+      },
+      columnLabelOptions: ["Time (Daily)", "Time (Monthly)", "Time (Yearly)", "Location (State)", 
+                    "Location (District)", "Location (Village)", "Latitude", "Longitude", 
+                    "Data (Number)", "Data (String)", "N/A"],
+      columnLabels: {}
     };
   },
   watch: {
@@ -277,6 +282,9 @@ export default {
     processForm() {
       this.loading = true;
 
+
+      this.modifyColumnLabels();
+
       var timer = setTimeout(function() {
         router.push({ name: "WaitForUpload" });
       }, 7515);
@@ -290,9 +298,7 @@ export default {
           this.datasetTags,
           this.datasetPermissions,
           this.datasetType,
-          JSON.stringify(this.columnData),
-          this.timeGranularity,
-          this.locationGranularity
+          JSON.stringify(this.columnLabels),
         )
         .then(response => {
           this.loading = false;
@@ -319,6 +325,31 @@ export default {
           notify("Error fetching tags.", colors.red);
         });
     },
+    modifyColumnLabels(){
+      //change the the column labels from the terms the user sees to the labels the backend expects
+
+      console.log("These are the keys")
+      console.log(this.keys)
+
+      for(var key in this.keys){
+        console.log("This is a key")
+        console.log(key)
+        this.keys[key].label = this.mapKeyLables( this.keys[key].label);
+        this.columnLabels[this.keys[key].name] = this.keys[key].label;
+      }
+    },
+    mapKeyLables(label){
+      //definitly a better way of doing this but I didn't want to write out all the columnLableOptions again for risk of typo, plus if we wanted to add more
+        var options = ["time_day", "time_month", "time_year", "loc_state", "loc_district", "loc_village",
+                  "loc_lat", "loc_lon", "data_num", "data_string"]
+
+        for (var i = 0; i < this.columnLabelOptions.length; i++){
+          if (this.columnLabelOptions[i] == label)
+            return options[i]
+        }
+
+        return "null"
+    },
     getKeys(){
       // if (this.file) { return }
       let reader = new FileReader();
@@ -326,9 +357,18 @@ export default {
       reader.readAsText(this.file);
     
       reader.onload = e => {
-      let text = e.target.result;
-      console.log(text);
-      this.keys = this.keys.concat(text.split("\n")[0].split(","));
+        let text = e.target.result;
+        console.log(text);
+
+        //get the key names
+        this.keyNames = this.keyNames.concat(text.split("\n")[0].split(","));
+
+        //create a array of objects for every column that has the name and label of the column
+
+        //definitly a better way to do this for loop
+        for(var keyName in this.keyNames){
+          this.keys.push({name: this.keyNames[keyName], label: null});
+        }
       }
 
     },
