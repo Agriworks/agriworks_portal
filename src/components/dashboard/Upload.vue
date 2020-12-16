@@ -301,8 +301,16 @@ export default {
         })
         .catch(error => {
           this.loading = false;
-          notify(error.response.data.message, colors.red);
-          clearTimeout(timer);
+
+          // if the error is with the sending the email, upload the dataset, just let them know
+          if(error.response.status == 503){
+            notify(error.response.data.message, colors.yellow);
+            this.$router.push(`/dataset/${error.response.data.dataset}`);
+            clearTimeout(timer);
+          }else{
+            notify(error.response.data.message, colors.red);
+            clearTimeout(timer);
+          }
         });
     },
     remove(item) {
