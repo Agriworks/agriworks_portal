@@ -90,127 +90,83 @@
                 <v-container>
                   <v-stepper v-model="stepIndex">
                     <v-stepper-header>
-                      <v-stepper-step
-                        :complete="stepIndex > 1"
-                        step="1"
-                        color="success"
-                      >
-                        Time/Location Data Checking
-                      </v-stepper-step>
-                
-                      <v-divider></v-divider>
-                
-                      <v-stepper-step
-                        :complete="stepIndex > 2"
-                        step="2"
-                        color="success"
-                      >
-                        Select Data Column
-                      </v-stepper-step>
-                
-                      <v-divider></v-divider>
-                
+                      <div v-for="(key, index) in this.keys" :key="key.name">  
                       <v-stepper-step 
-                        step="3"
-                        color="success"  
+                      :complete="stepIndex > index + 1"
+                        :step="index + 1"
+                        color="success" 
+                        editable
                       >
-                        Select Granularity
+                        {{key.name}}
                       </v-stepper-step>
+                      </div>
+                
+                      <v-divider></v-divider>
+                
+                
                     </v-stepper-header>
                 
                     <v-stepper-items>
-                      <v-stepper-content step="1">
-                        
-                        <div v-for="key in this.keys" :key="key.name">
+
+                      <div v-for="(key, index) in this.keys" :key="key.name">  
+                        <v-stepper-content :step="index + 1">
+                          <v-row>
+                            <v-col>
                           <v-select 
                             :items="columnLabelOptions"
                             :label="key.name"
                             v-model="key.label"
                             ></v-select>
-                        </div>
+                            </v-col>
+
+                            <v-col>
+                            <v-data-table
+                              :headers="[{text: key.name, value:'value'}]"
+                              :items="columnPreviews[key.name]"
+                               calculate-widths
+                              hide-default-footer
+                            ></v-data-table>
+                            </v-col>
+                          </v-row>
+                          <v-divider></v-divider>
+
+                          <v-btn
+                            v-if="stepIndex != 1"
+                            color="error"
+                            @click="stepIndex -= 1"
+                          >
+                            Back
+                          </v-btn>
 
 
-                        <v-divider></v-divider>
-              
-                        <v-btn
-                          color="success"
-                          @click="processForm"
-                        >
-                          Save and Upload
-                        </v-btn>
-                
-                        <v-btn text @click="closeDialog">
-                          Cancel
-                        </v-btn>
-                      </v-stepper-content>
-                
-                      <v-stepper-content step="2">
-                        <v-select
-                          v-model="columnData.time"
-                          :items="this.hasTime ? this.keys : 'N/A'"
-                          label="Time"
-                        ></v-select>
-                        <v-select
-                          v-model="columnData.location"
-                          :items="this.hasLocation ? this.keys : 'N/A'"
-                          label="Location"
-                        ></v-select>
-                        <v-select
-                          v-model="columnData.latitude"
-                          :items="this.hasLocation ? this.keys : 'N/A'"
-                          label="Latitude"
-                        ></v-select>
-                        <v-select
-                          v-model="columnData.longitude"
-                          :items="this.hasLocation ? this.keys : 'N/A'"
-                          label="Longitude"
-                        ></v-select>
-                        <v-select
-                          v-model="columnData.value"
-                          :items="this.hasLocation ? this.keys : 'N/A'"
-                          label="Value"
-                        ></v-select>
+                          <v-btn
+                            v-if="stepIndex != keys.length"
+                            color="success"
+                            @click="stepIndex += 1"
+                            style="float: right"
+                          >
+                            Continue
+                          </v-btn>
 
-                        <v-divider></v-divider>
-
-                        <v-btn
-                          color="success"
-                          @click="stepIndex = 3"
-                        >
-                          Continue
-                        </v-btn>
-                
-                        <v-btn text @click="closeDialog">
-                          Cancel
-                        </v-btn>
-                      </v-stepper-content>
-                
-                      <v-stepper-content step="3">
-                        <v-select
-                          v-model="timeGranularity"
-                          :items="this.hasTime ? this.timeGranularityOptions : 'N/A'"
-                          label="Time"
-                        ></v-select>
-                        <v-select
-                          v-model="locationGranularity"
-                          :items="this.hasLocation ? this.locationGranularityOptions : 'N/A'"
-                          label="Location"
-                        ></v-select>
+                          <v-btn
+                            v-if="stepIndex == keys.length"
+                            color="success"
+                            @click="processForm"
+                            style="float: right"
+                          >
+                            Upload
+                          </v-btn>
 
 
-                        <v-divider></v-divider>
+                        </v-stepper-content>
+
+                        
+
+                      </div>
+
+
+                     
                 
-                        <v-btn
-                          color="success"
-                          @click="processForm"
-                        >
-                          Save and Upload
-                        </v-btn>
-                
-                        <v-btn text @click="closeDialog">
-                          Cancel
-                        </v-btn>
-                      </v-stepper-content>
                     </v-stepper-items>
                   </v-stepper>
                 </v-container>
@@ -241,27 +197,18 @@ export default {
       datasetType: "Land Use",
       permissionOptions: ["Public", "Private"],
       typeOptions: ["Land Use", "Pesticide Report"],
-      timeGranularityOptions: ["day", "month", "year"],
-      locationGranularityOptions: ["state", "district", "village","coordinates"],
       file: null,
       loading: false,
       search: "",
       dialog: false,
       keys: [],
       keyNames: [],
+      columnPreviews: {},
       stepIndex: 1,
       hasTime: false,
       hasLocation: false,
       timeGranularity: null,
       locationGranularity: null,
-      columnData: {
-        value: null,
-        longitude: null,
-        latitude: null,
-        locationLabel: null,
-        time: null,
-        location: null
-      },
       columnLabelOptions: ["Time (Daily)", "Time (Monthly)", "Time (Yearly)", "Location (State)", 
                     "Location (District)", "Location (Village)", "Latitude", "Longitude", 
                     "Data (Number)", "Data (String)", "N/A"],
@@ -290,7 +237,6 @@ export default {
       }, 7515);
 
       this.datasetTags = [...new Set(this.datasetTags)];
-      console.log(JSON.stringify(this.columnData))
       api
         .uploadDataset(
           this.file,
@@ -352,6 +298,11 @@ export default {
     },
     getKeys(){
       // if (this.file) { return }
+
+      //clear the keys first
+
+      this.keys = []
+
       let reader = new FileReader();
 
       reader.readAsText(this.file);
@@ -359,15 +310,39 @@ export default {
       reader.onload = e => {
         let text = e.target.result;
         console.log(text);
+        console.log("This is text[0]")
+        console.log(text[1][0])
+        console.log("Done")
+
+        var rows = text.split("\n")
 
         //get the key names
-        this.keyNames = this.keyNames.concat(text.split("\n")[0].split(","));
+        this.keyNames = this.keyNames.concat(rows[0].split(","));
+
+        var splitRows = []
+
+        for (var i = 0; i < 5; i++){
+          splitRows.push(rows[i + 1].trim().split(","));
+        }
 
         //create a array of objects for every column that has the name and label of the column
+
+        var cnt = 0;
 
         //definitly a better way to do this for loop
         for(var keyName in this.keyNames){
           this.keys.push({name: this.keyNames[keyName], label: null});
+
+          console.log(keyName)
+          var previews = [];
+          for (var j = 0; j < 5; j++){
+            console.log(text)
+            previews.push({value: splitRows[j][cnt]})
+          }
+          
+          this.columnPreviews[this.keyNames[keyName]] = previews
+          cnt += 1
+
         }
       }
 
@@ -381,9 +356,6 @@ export default {
       this.hasTime = false;
       this.hasLocation = false;
       this.stepIndex = 1;
-    },
-    changeStep() {
-      (this.hasTime || this.hasLocation) ? this.stepIndex = 2 : this.closeDialog()
     },
   },
   created() {
