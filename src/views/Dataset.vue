@@ -118,7 +118,9 @@
 
       <div class="row">
         <div v-for="view in agriWatchViews" v-bind:key="view.id">
-          <AgriWatchViewCard :agriWatchView="view" />
+          <div v-if="dataset.name === view.dataset">
+            <AgriWatchViewCard :agriWatchView="view" />
+          </div>
         </div>
       </div>
 
