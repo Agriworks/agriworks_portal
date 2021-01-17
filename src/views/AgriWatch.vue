@@ -1,60 +1,161 @@
 <template>
-  <div>
-    <div class="row">
+  <v-container fluid>
+    <v-row style="margin-left:0; width:97%">
+      <v-col
+      flex-column       
+      cols="11"
+      >
+        <v-btn
+          dark
+          depressed
+          color="success"
+          class="dashboardButton"
+          @click="dialog=true"
+          large
+        >
+          <v-icon>mdi-plus</v-icon>Create New View
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
       <div v-for="view in agriWatchViews" v-bind:key="view.id">
         <AgriWatchViewCard :agriWatchView="view" />
       </div>
-      <v-card primary tile class="createViewCard" hover @click.stop="createDialog = true">
-        <v-card-title primary-title class="justify-center">
-          <div>
-            <h1 class="headline">+</h1>
-          </div>
-        </v-card-title>
-      </v-card>
-    </div>
+    </v-row>
 
     <v-dialog
-      v-model="createDialog"
+      v-model="dialog"
+      depressed
       scrollable
       eager
       max-width="80%">
-      <v-card>
-        <v-card-title>
-          Create a new view
-        </v-card-title>
+      <v-card class="dialog">
 
         <v-card-text>
           <v-container>
-            <v-row>
-              <v-select
-                v-model="createFromDataset"
-                :items="datasets"
-                label="Create From Dataset"
-                required
-              ></v-select>
-            </v-row>
-            <v-row>
-              <v-select
-                v-model="createVisualType"
-                :items="visualTypes"
-                label="Visual Type"
-                required
-              ></v-select>
-            </v-row>
+            <v-stepper v-model="stepIndex" class="elevation-0">
+              <v-stepper-header>
+                <v-stepper-step
+                  :complete="stepIndex > 1"
+                  step="1"
+                  color="primary"
+                >
+                  Select Dataset
+                </v-stepper-step>
+          
+                <v-divider></v-divider>
+          
+                <v-stepper-step
+                  :complete="stepIndex > 2"
+                  step="2"
+                  color="primary"
+                >
+                  Pick a visualization tool
+                </v-stepper-step>
+          
+                <v-divider></v-divider>
+          
+                <v-stepper-step 
+                  step="3"
+                  color="primary"  
+                >
+                  Preview and Confirm
+                </v-stepper-step>
+              </v-stepper-header>
+
+              <v-stepper-items>
+                <v-stepper-content step="1">
+                  <v-container>
+                  <v-select
+                    class="rounded-lg"
+                    v-model="createFromDataset"
+                    :items="datasets"
+                    label="Create From Dataset"
+                    required
+                    outlined
+                  ></v-select>
+                  <v-row>
+                    <v-spacer></v-spacer>
+                    <v-btn 
+                      class="dialogButton" 
+                      depressed 
+                      @click="decrementStep"
+                    >
+                    Cancel
+                    </v-btn>
+                    <v-btn 
+                      color="primary" 
+                      class="dialogButton" 
+                      depressed 
+                      @click="incrementStep"
+                    >
+                    Continue
+                    </v-btn>
+                  </v-row>
+                  </v-container>
+                </v-stepper-content>
+
+                <v-stepper-content step="2">
+                  <v-container>
+                  <v-select
+                    class="rounded-lg"
+                    v-model="createVisualType"
+                    :items="visualTypes"
+                    label="Select view type"
+                    required
+                    outlined
+                  ></v-select>
+                  <v-row>
+                    <v-spacer></v-spacer>
+                    <v-btn 
+                      class="dialogButton" 
+                      depressed 
+                      @click="decrementStep"
+                    >
+                    Back
+                    </v-btn>
+                    <v-btn 
+                      color="primary" 
+                      class="dialogButton" 
+                      depressed 
+                      @click="incrementStep"
+                    >
+                    Continue
+                    </v-btn>
+                  </v-row>
+                  </v-container>
+                </v-stepper-content>
+
+                <v-stepper-content step="3">
+                  <v-container>
+                  <v-row>
+                    <v-spacer></v-spacer>
+                    <v-btn 
+                      class="dialogButton" 
+                      depressed 
+                      @click="decrementStep"
+                    >
+                    Back
+                    </v-btn>
+                    <v-btn 
+                      color="primary" 
+                      class="dialogButton" 
+                      depressed 
+                      @click="incrementStep"
+                    >
+                    Create View
+                    </v-btn>
+                  </v-row>
+                  </v-container>
+                </v-stepper-content>
+              </v-stepper-items>
+            </v-stepper>
           </v-container>
         </v-card-text>
-
-        <v-divider></v-divider>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-            <v-btn color="red darken-1" text @click="createDialog = false">Cancel</v-btn>
-            <v-btn color="blue darken-1" text @click="createView">Create View</v-btn>
-        </v-card-actions>
       </v-card>
     </v-dialog>
 
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -71,7 +172,8 @@ export default {
   },
   data() {
     return {
-      createDialog: false,
+      dialog: false,
+      stepIndex: 1,
       createFromDataset: "",
       createVisualType: "",
       createXData: "",
@@ -107,6 +209,24 @@ export default {
       .catch(error => {
         notify(error.response.data.message);
       })
+    },
+    closeDialog() {
+      this.dialog = false;
+      this.stepIndex = 1;
+    },
+    incrementStep() {
+      if (this.stepIndex < 3) {
+        this.stepIndex += 1;
+      } else {
+        this.createView();
+      }
+    },
+    decrementStep() {
+      if (this.stepIndex > 1) {
+        this.stepIndex -= 1;
+      } else {
+        this.dialog = false;
+      }
     }
   },
   mounted() {
@@ -117,13 +237,22 @@ export default {
 </script>
 
 <style scoped>
+.dashboardButton {
+  margin-right: 1rem;
+  border-radius: 8px;
+}
+
+.dialogButton {
+  margin: 1rem;
+  border-radius: 8px;
+}
+
 .createViewCard {
   width: 300px;
-  height: 200px;
   margin: 1rem;
-  border: 2px solid var(--v-secondary-base);
+  border: 3px solid var(--v-secondary-base);
   border-style: dashed;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 .viewType {
@@ -131,9 +260,11 @@ export default {
   color: var(--v-primary-base);
 }
 
-/*Makes the button not underline when you hover over it, not sure that it actually make it looks nice
-If you do make it have an underline, make sure that the delete button also has an underline */
-.popoutButton {
-  text-decoration: none;
+.dialog {
+  border-radius: 12px;
 }
+
+.v-stepper__header {
+  box-shadow: none;
+} 
 </style>

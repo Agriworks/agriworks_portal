@@ -1,7 +1,8 @@
 <template>
-  <v-card primary tile class="agriWatchViewCard" hover>
+  <v-card primary elevation="0" class="agriWatchViewCard" hover>
     <v-card :to="viewLink" flat class="popoutButton">
-      <v-list-item-content>
+      <v-list-item three-line>
+        <v-list-item-content>
           <div primary class="overline mb-4 viewType">{{ agriWatchView.visualType }}</div>
           <v-list-item-title> {{ agriWatchView.dataset }}</v-list-item-title>
         </v-list-item-content>
@@ -9,6 +10,7 @@
           <v-img v-if="!$vuetify.theme.dark" src="../assets/chartNormal.png" />
           <v-img v-if="$vuetify.theme.dark" src="../assets/chartDarkMode.png" />
         </v-list-item-avatar>
+      </v-list-item>
     </v-card>
     <v-card-actions>
       <template>
@@ -58,10 +60,9 @@ export default {
 <style scoped>
 .agriWatchViewCard {
   width: 300px;
-  height: 200px;
   margin: 1rem;
-  border: 2px solid var(--v-secondary-base);
-  border-radius: 10px;
+  border: 3px solid var(--v-secondary-base);
+  border-radius: 15px;
 }
 
 .viewType {

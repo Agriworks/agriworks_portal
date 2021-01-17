@@ -15,7 +15,7 @@
         </v-list-item-avatar>
       </v-list-item>
 
-      <v-divider></v-divider>
+      
 
 
       <v-list flat
@@ -91,7 +91,7 @@
               <v-list-item-title>Logout</v-list-item-title>
             </v-list-item-content>
           </v-list-item> 
-        <v-divider></v-divider>
+        
           <div class="text-center" v-if="isExpanded">
               <v-btn color="#4caf50" dark @click.stop="openDialog()">Settings</v-btn>
           </div>
@@ -134,12 +134,6 @@ export default {
           displayOnLoggedIn: true
         }, */
         {
-          title: "Account",
-          icon: "mdi-account",
-          link: "/account",
-          displayOnLoggedIn: true
-        }, 
-        {
           title: "Agribase",
           icon: "mdi-database",
           link: "/browse", 
@@ -162,19 +156,14 @@ export default {
           icon: "mdi-chart-box",
           link: "/dashboard",
           displayOnLoggedIn: true,
-          subItems: [
-            {
-              title: "Create",
-              link: "/browse/upload", //not sure if it is the same create page as agribase create page
-              icon: "mdi-plus"
-            },
-            {
-              title: "Merge",
-              link: "/merge", //I do not think that this exists
-              icon: "mdi-merge"
-            }
-          ]
-        } 
+          
+        },
+        {
+          title: "Account",
+          icon: "mdi-account",
+          link: "/account",
+          displayOnLoggedIn: true
+        }, 
       ],
       color: "#212121"
     };

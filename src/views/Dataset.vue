@@ -36,56 +36,19 @@
           <div class="row">
             <div class="col-md-6">
               <v-btn
-                small
                 dark
+                elevation="0"
+                class="rounded-lg"
                 color="#4caf50"
-                id="downloadButton"
                 style="margin-right:0.5rem;"
                 @click="downloadDataset()"
               >
                 <v-icon small>mdi-arrow-down-circle-outline</v-icon>Download
               </v-btn>
               
-            <v-btn small dark color="purple" style="margin-right:0.5rem;" @click.stop="createDialog = true">
-              <v-icon small>mdi-graph</v-icon> Create new AgriWatch view
-            </v-btn>
-              
             </div>
           </div>
         </div>
-
-        <v-dialog
-          v-model="createDialog"
-          scrollable
-          eager
-          max-width="80%">
-          <v-card>
-            <v-card-title>
-              Create a new view
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-select
-                    v-model="createVisualType"
-                    :items="visualTypes"
-                    label="Visual Type"
-                    required
-                  ></v-select>
-                </v-row>
-              </v-container>
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-                <v-btn color="red darken-1" text @click="createDialog = false">Cancel</v-btn>
-                <v-btn color="blue darken-1" text @click="createView">Create View</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
 
         <div
           class="col-sm-6"
@@ -112,8 +75,8 @@
         </div>
       </div>
       <v-row>
-          <LoadingIndicator v-if="loadingChartData"/>
-          <Chart v-if="loadedChart" :chosenGraph="chosenGraph" :datacollection="chartData"/>
+        <LoadingIndicator v-if="loadingChartData"/>
+        <Chart v-if="loadedChart" :chosenGraph="chosenGraph" :datacollection="chartData"/>
       </v-row>
 
       <div class="row">

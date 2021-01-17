@@ -1,5 +1,5 @@
 <template>
-  <v-card primary tile class="datasetCard" hover>
+  <v-card primary elevation="0" class="datasetCard" hover>
     <v-card :to="datasetLink" flat class="linkButton">
       <v-list-item three-line>
         <v-list-item-content>
@@ -63,8 +63,8 @@ export default {
 .datasetCard {
   width: 300px;
   margin: 1rem;
-  border: 2px solid var(--v-secondary-base);
-  border-radius: 10px;
+  border: 3px solid var(--v-secondary-base);
+  border-radius: 12px;
 }
 
 .datasetType {

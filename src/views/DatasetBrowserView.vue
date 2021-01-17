@@ -11,8 +11,8 @@
           >
             <v-btn
               dark
+              elevation="0"
               color="success"
-              small
               class="dashboardButton"
               @click="switchComponent('browse')"
               large
@@ -21,8 +21,8 @@
         </v-btn> 
         <v-btn
           dark
+          elevation="0"
           color="success"
-          small
           class="dashboardButton"
           @click="switchComponent('upload')"
           large
@@ -31,8 +31,8 @@
         </v-btn>
           <v-btn
           dark
+          elevation="0"
           color="success"
-          small
           class="dashboardButton"
           large
           @click="switchComponent('manage')"
@@ -43,6 +43,7 @@
         <v-spacer />
         <template v-if="this.component == 'browse' || this.component == 'manage'">
         <v-text-field
+            class="rounded-lg"
             color="red"
             clearable
             @click:clear="clear"
@@ -134,7 +135,8 @@ export default {
 </script>
 <style scoped>
 .dashboardButton {
-  margin-right: 0.5rem;
+  margin-right: 1rem;
+  border-radius:8px;
 }
 
 .v-input__icon--append .v-icon { 

@@ -1,6 +1,6 @@
 <template>
 <!-- to stick the data table header to top, pass in height attribute e.g height=95vh !-->
-  <v-data-table 
+  <v-data-table
   :headers="headers"
   :items="data"
   :disable-pagination="true"
@@ -17,5 +17,4 @@ export default {
 }
 </script>
 <style scoped>
-
 </style>
