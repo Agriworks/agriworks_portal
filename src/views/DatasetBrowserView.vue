@@ -44,13 +44,11 @@
         <template v-if="this.component == 'browse' || this.component == 'manage'">
         <v-text-field
             class="rounded-lg"
-            color="red"
             clearable
             @click:clear="clear"
-            solo
+            outlined
             dense
-            v-model="searchQuery"
-            full-width
+            v-model="searchQuery" 
             v-on:keyup="searchSubmit"
             label="Search Datasets">
             <v-icon slot="append" color = "success" @click="searchSubmit">mdi-magnify</v-icon>

@@ -93,7 +93,7 @@
           </v-list-item> 
         
           <div class="text-center" v-if="isExpanded">
-              <v-btn color="#4caf50" dark @click.stop="openDialog()">Settings</v-btn>
+              <v-btn class="rounded-lg" color="#4caf50" dark @click.stop="openDialog()">Settings</v-btn>
           </div>
 
       </v-list>

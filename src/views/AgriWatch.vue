@@ -59,7 +59,7 @@
                   step="3"
                   color="primary"  
                 >
-                  Preview and Confirm
+                  Select Data Range/Generate
                 </v-stepper-step>
               </v-stepper-header>
 
