@@ -1,182 +1,162 @@
 <template>
   <div>
-    <h1>Create New Dataset</h1>
-
-    <div class="table">
-      <v-form ref="form">
-        <v-text-field v-model="datasetName" required label="Dataset name"></v-text-field>
-        <v-select
-          v-model="datasetPermissions"
-          required
-          :items="permissionOptions"
-          label="Permissions"
-        ></v-select>
-        <v-select v-model="datasetType" required :items="typeOptions" label="Dataset type"></v-select>
-        <v-combobox
-          v-model="datasetTags"
-          :items="tagsOfChosenType"
-          :search-input.sync="search"
-          hide-selected
-          label="Tags"
-          multiple
-          small-chips
-        >
-          <template v-slot:selection="{item}">
-            <v-chip close @click:close="remove(item)" color="#96D34A">{{ item.toLowerCase() }}</v-chip>
-          </template>
-          <template v-slot:no-data>
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title>
-                  No tags matching "
-                  <strong>{{ search }}</strong>". Press
-                  <kbd>enter</kbd> to create a new one
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </template>
-        </v-combobox>
-      </v-form>
-      
-      <b-card-group deck class="lastRow">
-        <v-flex xs12 sm6>
-          <v-card max-width="95%" style="padding: 1rem;">
-            <v-card-title>
-              <h3>Data selection</h3>
-            </v-card-title>
-            <v-card-text>Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV</v-card-text>
-            <v-file-input v-model="file" label="Select a file" show-size accept=".csv" @change="getKeys"></v-file-input>
-          </v-card>
-        </v-flex>
-        <!-- <v-btn
-          @click="processForm"
-          class="submitButton"
-          x-large
+    <v-stepper v-model="stepIndex" class="elevation-0">
+      <v-stepper-header>
+        <v-stepper-step
+          :complete="stepIndex > 1"
+          step="1"
           color="success"
-          dark
-          :loading="this.loading"
         >
-          <v-icon>mdi-folder-plus-outline</v-icon>Create
-        </v-btn> -->
-<!--         
-        <b-card title="Preparation" style="max-width: 50%;">
-          <b-card-text>
-            The following video will give you an explanation of how to prepare your data. Please note that all uploaded files will have either the .csv or .txt extension.
-          </b-card-text>
-        </b-card> -->
-        
-        <div class="dialog">
-          
-          <v-dialog v-model="dialog"
-            max-width="800px">
-            <template v-slot:activator="{on, attrs}">
-              <v-btn v-on="on"
-                v-bind="attrs"
-                class="submitButton"
-                x-large
-                color="success"
-                dark
+          Upload dataset
+        </v-stepper-step>
+  
+        <v-divider></v-divider>
+  
+        <v-stepper-step
+          :complete="stepIndex > 2"
+          step="2"
+          color="success"
+        >
+          Dataset Info
+        </v-stepper-step>
+
+        <v-divider></v-divider>
+  
+        <v-stepper-step
+          :complete="stepIndex > 3"
+          step="3"
+          color="success"
+        >
+          Configure dataset
+        </v-stepper-step>
+      </v-stepper-header>
+
+      <v-stepper-items>
+        <v-stepper-content step="1">
+          <h4> Upload Dataset </h4>
+          <p>Choose a file with relevant data from your local computer to upload. Acceptable file formats incude: CSV</p>
+          <v-file-input v-model="file" label="Select a file" show-size accept=".csv" @change="getKeys"></v-file-input>
+          <v-row>
+            <v-spacer></v-spacer>
+            <v-btn 
+              color="success" 
+              class="dialogButton" 
+              depressed 
+              @click="incrementStep"
+            >
+            Continue
+            </v-btn>
+          </v-row>
+        </v-stepper-content>
+
+        <v-stepper-content step="2">
+          <h4> Dataset Info </h4>
+          <div class="table">
+            <v-form ref="form">
+              <v-text-field v-model="datasetName" required label="Dataset name"></v-text-field>
+              <v-select
+                v-model="datasetPermissions"
+                required
+                :items="permissionOptions"
+                label="Permissions"
+              ></v-select>
+              <v-select v-model="datasetType" required :items="typeOptions" label="Dataset type"></v-select>
+              <v-combobox
+                v-model="datasetTags"
+                :items="tagsOfChosenType"
+                :search-input.sync="search"
+                hide-selected
+                label="Tags"
+                multiple
+                small-chips
               >
-                <v-icon>mdi-folder-plus-outline</v-icon>Configure Dataset
-              </v-btn>
-            </template>
+                <template v-slot:selection="{item}">
+                  <v-chip close @click:close="remove(item)" color="#96D34A">{{ item.toLowerCase() }}</v-chip>
+                </template>
+                <template v-slot:no-data>
+                  <v-list-item>
+                    <v-list-item-content>
+                      <v-list-item-title>
+                        No tags matching "
+                        <strong>{{ search }}</strong>". Press
+                        <kbd>enter</kbd> to create a new one
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </template>
+              </v-combobox>
+            </v-form>
+            
+          </div>
+          <v-row>
+            <v-spacer></v-spacer>
+            <v-btn 
+              class="dialogButton" 
+              depressed 
+              @click="decrementStep"
+            >
+            Back
+            </v-btn>
+            <v-btn 
+              color="success" 
+              class="dialogButton" 
+              depressed 
+              @click="incrementStep"
+            >
+            Continue
+            </v-btn>
+          </v-row>
+        </v-stepper-content>
 
-            <v-card>
-              <v-card-title>
-                Dataset Configuration
-              </v-card-title>
-              
-              <v-card-text>
-                <v-container>
-                  <v-stepper v-model="stepIndex">
-                    <v-stepper-header>
-                      <div v-for="(key, index) in this.keys" :key="key.name">  
-                      <v-stepper-step 
-                      :complete="stepIndex > index + 1"
-                        :step="index + 1"
-                        color="success" 
-                        editable
-                      >
-                        {{key.name}}
-                      </v-stepper-step>
-                      </div>
-                
-                      <v-divider></v-divider>
-                
-                
-                    </v-stepper-header>
-                
-                    <v-stepper-items>
+        <v-stepper-content step="3">
+          <h4> Dataset Configuration </h4>
+          <p> Assign a label to each column in your dataset. </p>
 
-                      <div v-for="(key, index) in this.keys" :key="key.name">  
-                        <v-stepper-content :step="index + 1">
-                          <v-row>
-                            <v-col>
-                          <v-select 
-                            :items="columnLabelOptions"
-                            :label="key.name"
-                            v-model="key.label"
-                            ></v-select>
-                            </v-col>
+          <v-row>
+            <v-col>
+              <h5> Dataset columns </h5>
+              <div v-for="key in this.keys" :key="key.name">  
+                <v-select 
+                :items="columnLabelOptions"
+                :label="key.name"
+                @click="changeCurrentKey(key.name)"
+                v-model="key.label"
+                ></v-select>
+              </div>
+            </v-col>
 
-                            <v-col>
-                            <v-data-table
-                              :headers="[{text: key.name, value:'value'}]"
-                              :items="columnPreviews[key.name]"
-                               calculate-widths
-                              hide-default-footer
-                            ></v-data-table>
-                            </v-col>
-                          </v-row>
-                          <v-divider></v-divider>
+             <v-col>
+              <h5> Column preview </h5>
+              <v-data-table
+                :headers="[{text: currentKey, value:'value'}]"
+                :items="columnPreviews[currentKey]"
+                calculate-widths
+                hide-default-footer
+              ></v-data-table>
+            </v-col>
+          </v-row>
 
-                          <v-btn
-                            v-if="stepIndex != 1"
-                            color="error"
-                            @click="stepIndex -= 1"
-                          >
-                            Back
-                          </v-btn>
-
-
-                          <v-btn
-                            v-if="stepIndex != keys.length"
-                            color="success"
-                            @click="stepIndex += 1"
-                            style="float: right"
-                          >
-                            Continue
-                          </v-btn>
-
-                          <v-btn
-                            v-if="stepIndex == keys.length"
-                            color="success"
-                            @click="processForm"
-                            style="float: right"
-                          >
-                            Upload
-                          </v-btn>
-
-
-                        </v-stepper-content>
-
-                        
-
-                      </div>
-
-
-                     
-                
-                    </v-stepper-items>
-                  </v-stepper>
-                </v-container>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
-        </div>
-      </b-card-group>
-
-    </div>
+          <v-row>
+            <v-spacer></v-spacer>
+            <v-btn 
+              class="dialogButton" 
+              depressed 
+              @click="decrementStep"
+            >
+            Back
+            </v-btn>
+            <v-btn 
+              color="success" 
+              class="dialogButton" 
+              depressed 
+              @click="incrementStep"
+            >
+            Create Dataset
+            </v-btn>
+          </v-row>
+        </v-stepper-content>
+      </v-stepper-items>
+    </v-stepper>
   </div>
 </template>
 
@@ -205,14 +185,11 @@ export default {
       keyNames: [],
       columnPreviews: {},
       stepIndex: 1,
-      hasTime: false,
-      hasLocation: false,
-      timeGranularity: null,
-      locationGranularity: null,
       columnLabelOptions: ["Time (Daily)", "Time (Monthly)", "Time (Yearly)", "Location (State)", 
                     "Location (District)", "Location (Village)", "Latitude", "Longitude", 
                     "Data (Number)", "Data (String)", "N/A"],
-      columnLabels: {}
+      columnLabels: {},
+      currentKey: ""
     };
   },
   watch: {
@@ -286,21 +263,18 @@ export default {
     },
     mapKeyLables(label){
       //definitly a better way of doing this but I didn't want to write out all the columnLableOptions again for risk of typo, plus if we wanted to add more
-        var options = ["time_day", "time_month", "time_year", "loc_state", "loc_district", "loc_village",
-                  "loc_lat", "loc_lon", "data_num", "data_string"]
+      var options = ["time_day", "time_month", "time_year", "loc_state", "loc_district", "loc_village",
+                "loc_lat", "loc_lon", "data_num", "data_string"]
 
-        for (var i = 0; i < this.columnLabelOptions.length; i++){
-          if (this.columnLabelOptions[i] == label)
-            return options[i]
-        }
+      for (var i = 0; i < this.columnLabelOptions.length; i++){
+        if (this.columnLabelOptions[i] == label)
+          return options[i]
+      }
 
-        return "null"
+      return "null"
     },
     getKeys(){
-      // if (this.file) { return }
-
       //clear the keys first
-
       this.keys = []
 
       let reader = new FileReader();
@@ -309,34 +283,27 @@ export default {
     
       reader.onload = e => {
         let text = e.target.result;
-        console.log(text);
-        console.log("This is text[0]")
-        console.log(text[1][0])
-        console.log("Done")
-
-        var rows = text.split("\n")
+        let rows = text.split("\n");
 
         //get the key names
         this.keyNames = this.keyNames.concat(rows[0].split(","));
+        this.currentKey = this.keyNames[0]
 
         var splitRows = []
 
-        for (var i = 0; i < 5; i++){
-          splitRows.push(rows[i + 1].trim().split(","));
+        for (var i = 1; i < Math.min(rows.length, 6); i++){
+          splitRows.push(rows[i].trim().split(","));
         }
 
         //create a array of objects for every column that has the name and label of the column
-
         var cnt = 0;
-
         //definitly a better way to do this for loop
         for(var keyName in this.keyNames){
           this.keys.push({name: this.keyNames[keyName], label: null});
 
-          console.log(keyName)
+          //console.log(keyName)
           var previews = [];
-          for (var j = 0; j < 5; j++){
-            console.log(text)
+          for (var j = 0; j < Math.min(splitRows.length, 5); j++){
             previews.push({value: splitRows[j][cnt]})
           }
           
@@ -347,16 +314,23 @@ export default {
       }
 
     },
-    printHeatmapData() {
-      this.dialog = false;
-      console.log(this.heatmapData)
+    incrementStep() {
+      if (this.stepIndex < 3) {
+        this.stepIndex += 1;
+      } else {
+        this.processForm();
+      }
     },
-    closeDialog() {
-      this.dialog = false;
-      this.hasTime = false;
-      this.hasLocation = false;
-      this.stepIndex = 1;
+    decrementStep() {
+      if (this.stepIndex > 1) {
+        this.stepIndex -= 1;
+      } else {
+        this.dialog = false;
+      }
     },
+    changeCurrentKey(keyName) {
+      this.currentKey = keyName;
+    }
   },
   created() {
     this.getTags(this.datasetType);
@@ -381,7 +355,20 @@ export default {
 .submitButton {
   flex: auto;
 }
+
+.dialogButton {
+  margin: 1rem;
+  border-radius: 8px;
+}
 .v-file-input {
   max-width: 95%;
+}
+.v-stepper__header {
+  box-shadow: none;
+} 
+
+.v-data-table {
+  border: 2px solid #267a35de;
+  border-radius: 10px;
 }
 </style>
