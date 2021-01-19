@@ -289,9 +289,10 @@ export default {
       //change the the column labels from the terms the user sees to the labels the backend expects
 
       for (var i = 0; i < this.keys.length; i++) {
-        this.columnLabels[this.keys[i].name] = this.keys[i].label;
         var kv = {}
-        //this.columnLabels.push({ this.keys[i].name : this.keys[i].label});
+        kv[this.keys[i].name] = this.keys[i].label;
+
+        this.columnLabels.push(kv);
       }
     },
     getKeys(){
@@ -304,16 +305,16 @@ export default {
     
       reader.onload = e => {
         let text = e.target.result;
-        let rows = text.split("\n");
+        let rows = text.split(/\r\n|\n/);
 
         //get the key names
-        this.keyNames = this.keyNames.concat(rows[0].split(",")).replace(/(\r\n|\n|\r)/gm, "");
+        this.keyNames = this.keyNames.concat(rows[0].split(","));
         this.currentKey = this.keyNames[0]
 
         var splitRows = []
 
         for (var i = 1; i < Math.min(rows.length, 6); i++){
-          splitRows.push(rows[i].trim().split(",").replace(/(\r\n|\n|\r)/gm, ""));
+          splitRows.push(rows[i].trim().split(","));
         }
 
         //create a array of objects for every column that has the name and label of the column
