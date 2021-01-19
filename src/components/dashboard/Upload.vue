@@ -38,8 +38,19 @@
           <v-file-input v-model="file" label="Select a file" show-size accept=".csv" @change="getKeys"></v-file-input>
           <v-row>
             <v-spacer></v-spacer>
-            <v-btn 
-              color="success" 
+            <v-btn
+              v-if="file !== null"
+              color="success"
+              class="dialogButton" 
+              depressed 
+              @click="incrementStep"
+            >
+            Continue
+            </v-btn>
+            <v-btn
+              v-else
+              disabled
+              color="success"
               class="dialogButton" 
               depressed 
               @click="incrementStep"
@@ -97,7 +108,7 @@
             >
             Back
             </v-btn>
-            <v-btn 
+            <v-btn
               color="success" 
               class="dialogButton" 
               depressed 
@@ -118,8 +129,10 @@
               <div v-for="key in this.keys" :key="key.name">  
                 <v-select 
                 :items="columnLabelOptions"
+                item-text="name"
                 :label="key.name"
                 @click="changeCurrentKey(key.name)"
+                @change="checkIfKeyLabelsFilled"
                 v-model="key.label"
                 ></v-select>
               </div>
@@ -145,7 +158,18 @@
             >
             Back
             </v-btn>
-            <v-btn 
+            <v-btn
+              v-if="keyLabelsFilled"
+              color="success" 
+              class="dialogButton" 
+              depressed 
+              @click="incrementStep"
+            >
+            Create Dataset
+            </v-btn>
+            <v-btn
+              v-else
+              disabled
               color="success" 
               class="dialogButton" 
               depressed 
@@ -185,11 +209,21 @@ export default {
       keyNames: [],
       columnPreviews: {},
       stepIndex: 1,
-      columnLabelOptions: ["Time (Daily)", "Time (Monthly)", "Time (Yearly)", "Location (State)", 
-                    "Location (District)", "Location (Village)", "Latitude", "Longitude", 
-                    "Data (Number)", "Data (String)", "N/A"],
-      columnLabels: {},
-      currentKey: ""
+      columnLabelOptions: [
+        { name : "Time (Daily)", value : "time_day" }, 
+        { name : "Time (Monthly)", value : "time_month" }, 
+        { name : "Time (Yearly)", value : "time_year" }, 
+        { name : "Location (State)", value : "loc_state" }, 
+        { name : "Location (District)", value : "loc_district" }, 
+        { name : "Location (Village)", value : "loc_village" }, 
+        { name : "Latitude", value : "loc_lat" }, 
+        { name : "Longitude", value : "loc_lng" }, 
+        { name : "Data (Number)", value : "data_num" }, 
+        { name : "Data (String)", value : "data_string" }
+      ],
+      columnLabels: [],
+      currentKey: "",
+      keyLabelsFilled: false
     };
   },
   watch: {
@@ -206,8 +240,8 @@ export default {
     processForm() {
       this.loading = true;
 
-
       this.modifyColumnLabels();
+      console.log(JSON.stringify(this.columnLabels));
 
       var timer = setTimeout(function() {
         router.push({ name: "WaitForUpload" });
@@ -242,7 +276,10 @@ export default {
       api
         .fetchTags(datasetType)
         .then(response => {
-          this.tagsOfChosenType = response.data;
+          //response.data.forEach(tag  => this.tagsOfChosenType.push(tag));
+          if (response.data.message !== "Unable to get tags") {
+            this.tagsOfChosenType = response.data;
+          }
         })
         .catch(() => {
           notify("Error fetching tags.", colors.red);
@@ -251,27 +288,11 @@ export default {
     modifyColumnLabels(){
       //change the the column labels from the terms the user sees to the labels the backend expects
 
-      console.log("These are the keys")
-      console.log(this.keys)
-
-      for(var key in this.keys){
-        console.log("This is a key")
-        console.log(key)
-        this.keys[key].label = this.mapKeyLables( this.keys[key].label);
-        this.columnLabels[this.keys[key].name] = this.keys[key].label;
+      for (var i = 0; i < this.keys.length; i++) {
+        this.columnLabels[this.keys[i].name] = this.keys[i].label;
+        var kv = {}
+        //this.columnLabels.push({ this.keys[i].name : this.keys[i].label});
       }
-    },
-    mapKeyLables(label){
-      //definitly a better way of doing this but I didn't want to write out all the columnLableOptions again for risk of typo, plus if we wanted to add more
-      var options = ["time_day", "time_month", "time_year", "loc_state", "loc_district", "loc_village",
-                "loc_lat", "loc_lon", "data_num", "data_string"]
-
-      for (var i = 0; i < this.columnLabelOptions.length; i++){
-        if (this.columnLabelOptions[i] == label)
-          return options[i]
-      }
-
-      return "null"
     },
     getKeys(){
       //clear the keys first
@@ -286,13 +307,13 @@ export default {
         let rows = text.split("\n");
 
         //get the key names
-        this.keyNames = this.keyNames.concat(rows[0].split(","));
+        this.keyNames = this.keyNames.concat(rows[0].split(",")).replace(/(\r\n|\n|\r)/gm, "");
         this.currentKey = this.keyNames[0]
 
         var splitRows = []
 
         for (var i = 1; i < Math.min(rows.length, 6); i++){
-          splitRows.push(rows[i].trim().split(","));
+          splitRows.push(rows[i].trim().split(",").replace(/(\r\n|\n|\r)/gm, ""));
         }
 
         //create a array of objects for every column that has the name and label of the column
@@ -301,7 +322,6 @@ export default {
         for(var keyName in this.keyNames){
           this.keys.push({name: this.keyNames[keyName], label: null});
 
-          //console.log(keyName)
           var previews = [];
           for (var j = 0; j < Math.min(splitRows.length, 5); j++){
             previews.push({value: splitRows[j][cnt]})
@@ -330,6 +350,15 @@ export default {
     },
     changeCurrentKey(keyName) {
       this.currentKey = keyName;
+    },
+    checkIfKeyLabelsFilled() {
+      for (var i = 0; i < this.keys.length; i++) {
+        if (this.keys[i].label == null) {
+          this.keyLabelsFilled = false;
+          return;
+        }
+      }
+      this.keyLabelsFilled = true;
     }
   },
   created() {

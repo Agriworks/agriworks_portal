@@ -5,7 +5,7 @@
       {{ snackbar.message }}
       <v-btn dark text @click="snackbar.show = false">Close</v-btn>
     </v-snackbar>
-    <v-content>
+    <v-main>
       <v-dialog v-model="dialog" width="500">
         <v-card>
           <v-list dense style="display:flex;flex-direction:column;">
@@ -35,7 +35,7 @@
         <router-view />
         <!-- Landing page !-->
       </div>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
