@@ -228,9 +228,11 @@ export default {
   },
   watch: {
     datasetTags: function() {
-      this.datasetTags[this.datasetTags.length - 1] = this.datasetTags[
-        this.datasetTags.length - 1
-      ].toLowerCase();
+      if (this.datasetTags.length > 0) {
+        this.datasetTags[this.datasetTags.length - 1] = this.datasetTags[
+          this.datasetTags.length - 1
+        ].toLowerCase();
+      }
     },
     datasetType: function() {
       this.getTags(this.datasetType);
@@ -241,7 +243,6 @@ export default {
       this.loading = true;
 
       this.modifyColumnLabels();
-      console.log(JSON.stringify(this.columnLabels));
 
       var timer = setTimeout(function() {
         router.push({ name: "WaitForUpload" });
@@ -288,16 +289,19 @@ export default {
     modifyColumnLabels(){
       //change the the column labels from the terms the user sees to the labels the backend expects
 
-      for (var i = 0; i < this.keys.length; i++) {
-        var kv = {}
-        kv[this.keys[i].name] = this.keys[i].label;
+      this.columnLabels = [];
 
-        this.columnLabels.push(kv);
+      for (var i = 0; i < this.keys.length; i++) {
+        this.columnLabels.push(this.keys[i].label);
       }
     },
     getKeys(){
-      //clear the keys first
+      //clear everything
       this.keys = []
+      this.keyNames = []
+      this.columnPreviews = {}
+      this.columnLabels = []
+      this.datasetTags = []
 
       let reader = new FileReader();
 
@@ -305,17 +309,11 @@ export default {
     
       reader.onload = e => {
         let text = e.target.result;
-        let rows = text.split(/\r\n|\n/);
+        let arrData = this.csvStringToArray(text);
 
         //get the key names
-        this.keyNames = this.keyNames.concat(rows[0].split(","));
+        this.keyNames = this.keyNames.concat(arrData[0]);
         this.currentKey = this.keyNames[0]
-
-        var splitRows = []
-
-        for (var i = 1; i < Math.min(rows.length, 6); i++){
-          splitRows.push(rows[i].trim().split(","));
-        }
 
         //create a array of objects for every column that has the name and label of the column
         var cnt = 0;
@@ -324,8 +322,8 @@ export default {
           this.keys.push({name: this.keyNames[keyName], label: null});
 
           var previews = [];
-          for (var j = 0; j < Math.min(splitRows.length, 5); j++){
-            previews.push({value: splitRows[j][cnt]})
+          for (var j = 1; j < Math.min(arrData.length, 6); j++){
+            previews.push({value: arrData[j][cnt]})
           }
           
           this.columnPreviews[this.keyNames[keyName]] = previews
@@ -360,6 +358,17 @@ export default {
         }
       }
       this.keyLabelsFilled = true;
+    },
+    csvStringToArray(strData) {
+      const objPattern = new RegExp(("(\\,|\\r?\\n|\\r|^)(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|([^\\,\\r\\n]*))"),"gi");
+      let arrMatches = null, arrData = [[]];
+      while ((arrMatches = objPattern.exec(strData))){
+        if (arrMatches[1].length && arrMatches[1] !== ",")arrData.push([]);
+        arrData[arrData.length - 1].push(arrMatches[2] ? 
+          arrMatches[2].replace(new RegExp( "\"\"", "g" ), "\"") :
+          arrMatches[3]);
+      }
+      return arrData;
     }
   },
   created() {
