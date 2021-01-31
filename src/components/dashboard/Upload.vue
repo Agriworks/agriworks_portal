@@ -124,22 +124,36 @@
           <p> Assign a label to each column in your dataset. </p>
 
           <v-row>
+            <!-- <v-col md="auto">
+              <h5> Column Names </h5>
+              <div v-for="key in this.keys" :key="key.name">  
+                <v-subheader>{{key.name}}</v-subheader>
+              </div>
+            </v-col> -->
             <v-col>
               <h5> Dataset columns </h5>
-              <div v-for="key in this.keys" :key="key.name">  
-                <v-select 
-                :items="columnLabelOptions"
-                item-text="name"
-                :label="key.name"
-                @click="changeCurrentKey(key.name)"
-                @change="checkIfKeyLabelsFilled"
-                v-model="key.label"
-                ></v-select>
+              <div v-for="key in this.keys" :key="key.name"> 
+                <v-row align="center"
+      justify="center"> 
+                  <v-col align="center"   justify="center" :cols="2">
+                    <v-subheader>{{key.name}}</v-subheader>
+                  </v-col>
+                  <v-col>
+                    <v-select 
+                    :items="columnLabelOptions"
+                    item-text="name"
+                    :label="key.name"
+                    @click="changeCurrentKey(key.name)"
+                    @change="checkIfKeyLabelsFilled"
+                    v-model="key.label"
+                    ></v-select>
+                  </v-col>
+                </v-row>
               </div>
             </v-col>
 
              <v-col>
-              <h5> Column preview </h5>
+              <h5>{{currentKey}} Column Preview </h5>
               <v-data-table
                 :headers="[{text: currentKey, value:'value'}]"
                 :items="columnPreviews[currentKey]"
