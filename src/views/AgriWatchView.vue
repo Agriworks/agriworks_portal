@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import HeatMap from '../components/HeatMap.vue';
+//import HeatMap from '../components/HeatMap.vue';
 import LoadingIndicator from '../components/LoadingIndicator.vue';
 
 export default {
   name: "AgriWatchView",
   components: {
-    HeatMap,
+    //HeatMap,
     LoadingIndicator,
   },
   data() {

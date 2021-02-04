@@ -74,10 +74,6 @@
           </v-container>
         </div>
       </div>
-      <v-row>
-        <LoadingIndicator v-if="loadingChartData"/>
-        <Chart v-if="loadedChart" :chosenGraph="chosenGraph" :datacollection="chartData"/>
-      </v-row>
 
       <div class="row">
         <div v-for="view in agriWatchViews" v-bind:key="view.id">
@@ -137,11 +133,6 @@ export default {
       cacheId: null,
       tableIsLoading: false,
       additionalDataObjectsLoading: false,
-      createDialog: false,
-      createVisualType: "",
-      createXData: "",
-      createYData: "",
-      visualTypes: ["Heatmap"]
     };
   },
   computed: {
@@ -227,38 +218,6 @@ export default {
             colors.red
           );
         });
-    },
-    getFormattedData() {
-      this.visualizeDialog = false
-      this.loadedChart = false
-      this.loadingChartData = true
-      api
-        .getFormattedData(this.data, this.xAxis, this.yAxis)
-        .then(response => {
-          this.loadedChart = true
-          this.loadingChartData = false
-          this.chartData = response.data.datacollection
-        })
-        .catch(error => {
-          this.loadingChartData = false
-          notify(error.response.data.message, colors.red);
-        })
-    },
-    createView() {
-      console.log(this.createVisualType)
-      api.createAgriWatchView(
-        this.dataset.name,
-        this.createVisualType,
-        this.createXData,
-        this.createYData
-      )
-      .then(response => {
-        this.$router.push(`/agri-watch-view/${response.data.message}`);
-        notify("AgriWatch view created", colors.green);
-      })
-      .catch(error => {
-        notify(error.response.data.message);
-      })
     }
   },
   mounted() {
@@ -280,15 +239,6 @@ export default {
 
 #metadataCard {
   border: 1px solid #a2e510;
-}
-
-#visualizationContainer {
-  width: 100%;
-  height: 50%;
-  padding-top: 50px;
-  padding-right: 30px;
-  padding-bottom: 50px;
-  padding-left: 30px;
 }
 
 #SubsequentDataObjectLoadingIndicator {
