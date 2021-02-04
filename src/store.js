@@ -26,7 +26,8 @@ const store = new Vuex.Store({
       firstName: null,
       lastName: null,
       email: null,
-    }
+    },
+    userAgriWatchViews: [] // AgriWatch views that belong to user
   },
   mutations: {
     setIsAdmin(state) {
@@ -77,6 +78,9 @@ const store = new Vuex.Store({
     setUserDatasets(state, datasets) {
       state.userDatasets = datasets;
     },
+    setUserAgriWatchViews(state, agriWatchViews) {
+      state.userAgriWatchViews = agriWatchViews;
+    }
   },
   getters: {
     isAdmin: (state) => {
@@ -129,6 +133,9 @@ const store = new Vuex.Store({
     logout(state) {
       api.logout();
     },
+    fetchAgriWatchViews(state) {
+      api.fetchAgriWatchViews();
+    }
   },
 });
 

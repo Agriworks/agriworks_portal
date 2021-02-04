@@ -11,8 +11,8 @@
           >
             <v-btn
               dark
+              elevation="0"
               color="success"
-              small
               class="dashboardButton"
               @click="switchComponent('browse')"
               large
@@ -21,8 +21,8 @@
         </v-btn> 
         <v-btn
           dark
+          elevation="0"
           color="success"
-          small
           class="dashboardButton"
           @click="switchComponent('upload')"
           large
@@ -31,8 +31,8 @@
         </v-btn>
           <v-btn
           dark
+          elevation="0"
           color="success"
-          small
           class="dashboardButton"
           large
           @click="switchComponent('manage')"
@@ -43,13 +43,12 @@
         <v-spacer />
         <template v-if="this.component == 'browse' || this.component == 'manage'">
         <v-text-field
-            color="red"
+            class="rounded-lg"
             clearable
             @click:clear="clear"
-            solo
+            outlined
             dense
-            v-model="searchQuery"
-            full-width
+            v-model="searchQuery" 
             v-on:keyup="searchSubmit"
             label="Search Datasets">
             <v-icon slot="append" color = "success" @click="searchSubmit">mdi-magnify</v-icon>
@@ -134,7 +133,8 @@ export default {
 </script>
 <style scoped>
 .dashboardButton {
-  margin-right: 0.5rem;
+  margin-right: 1rem;
+  border-radius:8px;
 }
 
 .v-input__icon--append .v-icon { 

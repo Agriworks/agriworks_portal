@@ -347,6 +347,21 @@ uploadDataset(file, name, tags, permissions, type, columnLabels) {
   },
   getFormattedData(data, x, y) {
     return post("/visualize/getFormattedData", {dataset: JSON.stringify(data), xAxis: x, yAxis:y})
+  },
+  fetchAgriWatchViews() {
+    get("/view/fetch")
+      .then(response => store.commit("setUserAgriWatchViews", response.data))
+      .catch(() => {
+        notify("Error fetching AgriWatch views.", colors.red);
+      });
+  },
+  createAgriWatchView(dataset, visualType, xData, yData) {
+    let newView = new FormData();
+    newView.append("dataset", dataset);
+    newView.append("visualType", visualType);
+    newView.append("xData", xData);
+    newView.append("yData", yData);
+    return post("/view/create", newView, true);
   }
 };
 
