@@ -121,7 +121,9 @@
 
         <v-stepper-content step="3">
           <h4> Dataset Configuration </h4>
-          <p> Assign a label to each column in your dataset. </p>
+          <p> If your dataset contains columns with location or time data, choose the appropriate label for each of those columns. 
+              For all other columns, leave the default data label unchanged. 
+          </p>
 
           <v-row>
             <!-- <v-col md="auto">
@@ -135,7 +137,7 @@
               <div v-for="key in this.keys" :key="key.name"> 
                 <v-row align="center"
       justify="center"> 
-                  <v-col align="center"   justify="center" :cols="2">
+                  <v-col align="center"   justify="center" :cols="4">
                     <v-subheader>{{key.name}}</v-subheader>
                   </v-col>
                   <v-col>
@@ -144,7 +146,6 @@
                     item-text="name"
                     :label="key.name"
                     @click="changeCurrentKey(key.name)"
-                    @change="checkIfKeyLabelsFilled"
                     v-model="key.label"
                     ></v-select>
                   </v-col>
@@ -173,17 +174,6 @@
             Back
             </v-btn>
             <v-btn
-              v-if="keyLabelsFilled"
-              color="success" 
-              class="dialogButton" 
-              depressed 
-              @click="incrementStep"
-            >
-            Create Dataset
-            </v-btn>
-            <v-btn
-              v-else
-              disabled
               color="success" 
               class="dialogButton" 
               depressed 
@@ -232,12 +222,10 @@ export default {
         { name : "Location (Village)", value : "loc_village" }, 
         { name : "Latitude", value : "loc_lat" }, 
         { name : "Longitude", value : "loc_lng" }, 
-        { name : "Data (Number)", value : "data_num" }, 
-        { name : "Data (String)", value : "data_string" }
+        { name : "Data", value : "data" }
       ],
       columnLabels: [],
-      currentKey: "",
-      keyLabelsFilled: false
+      currentKey: ""
     };
   },
   watch: {
@@ -333,7 +321,7 @@ export default {
         var cnt = 0;
         //definitly a better way to do this for loop
         for(var keyName in this.keyNames){
-          this.keys.push({name: this.keyNames[keyName], label: null});
+          this.keys.push({name: this.keyNames[keyName], label: "data"});
 
           var previews = [];
           for (var j = 1; j < Math.min(arrData.length, 6); j++){
@@ -363,15 +351,6 @@ export default {
     },
     changeCurrentKey(keyName) {
       this.currentKey = keyName;
-    },
-    checkIfKeyLabelsFilled() {
-      for (var i = 0; i < this.keys.length; i++) {
-        if (this.keys[i].label == null) {
-          this.keyLabelsFilled = false;
-          return;
-        }
-      }
-      this.keyLabelsFilled = true;
     },
     csvStringToArray(strData) {
       const objPattern = new RegExp(("(\\,|\\r?\\n|\\r|^)(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|([^\\,\\r\\n]*))"),"gi");
