@@ -189,7 +189,7 @@ export default {
       var retList = [];
       var datasets = this.$store.state.datasets;
       for (var i = 0; i < datasets.length; i++) {
-        retList.push(datasets[i].name)
+        retList.push({text: datasets[i].name + " - " + datasets[i].author, value : datasets[i].id})
       }
       return retList
     },
