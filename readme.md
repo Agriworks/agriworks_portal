@@ -4,7 +4,7 @@
 0. Install Docker https://www.docker.com/products/docker-desktop
 1. Clone this repo and the platform (backend) repo   https://github.com/Hack4Impact-Boston-University/agriworks_platform within a parent directory.
 2. Request the credentials file from a fellow developer and place it in the platform root directory.
-3. Run the command `docker-compose up` in either repo. 
+3. Run the command `docker-compose up` in either repo.
 
 ## Build & Deploy
 
