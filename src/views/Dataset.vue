@@ -34,7 +34,7 @@
           </div>
           <p>By {{ dataset.author }}</p>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
               <v-btn
                 dark
                 elevation="0"
@@ -44,8 +44,71 @@
                 @click="downloadDataset()"
               >
                 <v-icon small>mdi-arrow-down-circle-outline</v-icon>Download
+              </v-btn>              
+            </div>
+            <div class="col-md-3">
+              <v-btn
+                dark
+                elevation="0"
+                class="rounded-lg"
+                color="#4caf50"
+                style="margin-right:0.5rem;"
+                @click.stop="changeLabelDialog = true"
+              >
+                <v-icon small>mdi-arrow-down-circle-outline</v-icon>Change labels
               </v-btn>
-              
+              <v-dialog
+                v-model="changeLabelDialog"
+                max-width="500"
+              >
+                <v-card>
+                  <v-card-title class="headline">
+                    Change label
+                  </v-card-title>
+
+                  <v-card-text>
+                    Choose label from dataset to change
+                  </v-card-text>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <v-select
+                        :items="dataset.headers"
+                        label="Choose column"
+                        v-model="chosenColumn"
+                        outlined
+                      ></v-select>
+                    </div>
+                    <div class="col-md-4">
+                      <v-text-field
+                        label="Current Label"
+                        v-model="columnLabel"
+                        outlined
+                        disabled
+                      ></v-text-field>
+                    </div>
+                    <div class="col-md-4">
+                      <v-select 
+                        :items="columnLabelOptions"
+                        item-text="New label"
+                        v-model="newLabel"
+                        outlined
+                      ></v-select>
+                    </div>
+                  </div>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="green darken-1"
+                      text
+                      @click="changeLabel()"
+                    >
+                      Change
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+
             </div>
           </div>
         </div>
@@ -133,6 +196,12 @@ export default {
       cacheId: null,
       tableIsLoading: false,
       additionalDataObjectsLoading: false,
+      changeLabelDialog: false,
+      chosenColumn: "",
+      columnLabel: "",
+      newLabel: "",
+      changedLabelIndex: -1,
+      columnLabelOptions: ["time_day","time_month","time_year","loc_state","loc_district","loc_village","loc_lat","loc_lng","data"],
     };
   },
   computed: {
@@ -218,11 +287,27 @@ export default {
             colors.red
           );
         });
+    },
+    changeLabel() {
+      this.changeLabelDialog = false
+      this.dataset.columnLabels[this.changedLabelIndex] = this.newLabel
+      api
+        .changeDatasetLabel(this.$route.params.id, JSON.stringify(this.dataset.columnLabels))
+        .then(() => {notify("Label changed!",colors.green)})
+        .catch(() => {notify("Error changing label",colors.red)})
     }
   },
   mounted() {
     this.$store.dispatch("fetchAgriWatchViews");
-  }
+  },
+    watch: {
+    chosenColumn: function() {
+      let index = this.dataset.headers.findIndex(x => x.text === this.chosenColumn)
+      this.changedLabelIndex = index
+      this.columnLabel = this.dataset.columnLabels[index]
+    }
+  },
+
 };
 </script>
 
