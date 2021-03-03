@@ -48,6 +48,7 @@
             </div>
             <div class="col-md-3">
               <v-btn
+                v-if="this.dataset.allowToEdit"
                 dark
                 elevation="0"
                 class="rounded-lg"
@@ -55,11 +56,11 @@
                 style="margin-right:0.5rem;"
                 @click.stop="changeLabelDialog = true"
               >
-                <v-icon small>mdi-arrow-down-circle-outline</v-icon>Change labels
+                <v-icon small>mdi-label-multiple-outline</v-icon>Change labels
               </v-btn>
               <v-dialog
                 v-model="changeLabelDialog"
-                max-width="500"
+                max-width="600"
               >
                 <v-card>
                   <v-card-title class="headline">
@@ -69,32 +70,34 @@
                   <v-card-text>
                     Choose label from dataset to change
                   </v-card-text>
-                  <div class="row">
-                    <div class="col-md-4">
-                      <v-select
-                        :items="dataset.headers"
-                        label="Choose column"
-                        v-model="chosenColumn"
-                        outlined
-                      ></v-select>
+                  <v-card-text>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <v-select
+                          :items="dataset.headers"
+                          label="Choose column"
+                          v-model="chosenColumn"
+                          outlined
+                        ></v-select>
+                      </div>
+                      <div class="col-md-4">
+                        <v-text-field
+                          label="Current Label"
+                          v-model="columnLabel"
+                          outlined
+                          disabled
+                        ></v-text-field>
+                      </div>
+                      <div class="col-md-4">
+                        <v-select 
+                          :items="columnLabelOptions"
+                          label="New Label"
+                          v-model="newLabel"
+                          outlined
+                        ></v-select>
+                      </div>
                     </div>
-                    <div class="col-md-4">
-                      <v-text-field
-                        label="Current Label"
-                        v-model="columnLabel"
-                        outlined
-                        disabled
-                      ></v-text-field>
-                    </div>
-                    <div class="col-md-4">
-                      <v-select 
-                        :items="columnLabelOptions"
-                        item-text="New label"
-                        v-model="newLabel"
-                        outlined
-                      ></v-select>
-                    </div>
-                  </div>
+                  </v-card-text>
 
                   <v-card-actions>
                     <v-spacer></v-spacer>
@@ -292,9 +295,9 @@ export default {
       this.changeLabelDialog = false
       this.dataset.columnLabels[this.changedLabelIndex] = this.newLabel
       api
-        .changeDatasetLabel(this.$route.params.id, JSON.stringify(this.dataset.columnLabels))
-        .then(() => {notify("Label changed!",colors.green)})
-        .catch(() => {notify("Error changing label",colors.red)})
+        .changeDatasetLabel(this.$route.params.id, JSON.stringify(this.dataset.columnLabels), this.$store.state.user)
+        .then(res => {notify(res.data.message, colors.green)})
+        .catch(err=> {notify(err.data.message, colors.red)})
     }
   },
   mounted() {

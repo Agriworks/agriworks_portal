@@ -364,8 +364,8 @@ uploadDataset(file, name, tags, permissions, type, columnLabels) {
     newView.append("yData", yData);
     return post("/view/create", newView, true);
   },
-  changeDatasetLabel(datasetId, labels) {
-    return post('/dataset/changeLabel/', {"datasetID":datasetId,"labels":labels})
+  changeDatasetLabel(datasetId, labels, user) {
+    return post('/dataset/changeLabel/', {"datasetID":datasetId,"labels":labels, "user":user})
 
   }
 };
