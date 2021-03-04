@@ -66,14 +66,14 @@
               <v-stepper-items>
                 <v-stepper-content step="1">
                   <v-container>
-                  <v-select
-                    class="rounded-lg"
+                  <v-autocomplete
                     v-model="createFromDataset"
                     :items="datasets"
                     label="Create From Dataset"
+                    :menu-props="autocompleteMenuProps"
                     required
                     outlined
-                  ></v-select>
+                  ></v-autocomplete>
                   <v-row>
                     <v-spacer></v-spacer>
                     <v-btn 
@@ -189,9 +189,20 @@ export default {
       var retList = [];
       var datasets = this.$store.state.datasets;
       for (var i = 0; i < datasets.length; i++) {
-        retList.push(datasets[i].name)
+        retList.push({text: datasets[i].name + " - " + datasets[i].author, value : datasets[i].id})
       }
       return retList
+    },
+    autocompleteMenuProps() {
+      // default properties copied from the vuetify-autocomplete docs
+      let defaultProps = {
+        closeOnClick: false,
+        closeOnContentClick: false,
+        disableKeys: true,
+        openOnClick: false,
+        maxHeight: 200
+      };
+       return defaultProps;
     }
   },
   methods: {
@@ -204,7 +215,7 @@ export default {
       )
       .then(response => {
         this.$router.push(`/agri-watch-view/${response.data.message}`);
-        notify("AgriWatch view created", colors.green);
+        notify("Agriwatch view created", colors.green);
       })
       .catch(error => {
         notify(error.response.data.message);
