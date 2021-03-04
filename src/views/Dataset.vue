@@ -46,6 +46,8 @@
                 <v-icon small>mdi-arrow-down-circle-outline</v-icon>Download
               </v-btn>              
             </div>
+          </div>
+          <div class="row">
             <div class="col-md-3">
               <v-btn
                 v-if="this.dataset.allowToEdit"
@@ -62,7 +64,7 @@
                 v-model="changeLabelDialog"
                 max-width="600"
               >
-                <v-card>
+                <v-card class="dialog">
                   <v-card-title class="headline">
                     Change label
                   </v-card-title>
@@ -77,6 +79,7 @@
                           :items="dataset.headers"
                           label="Choose column"
                           v-model="chosenColumn"
+                          class="rounded-lg"
                           outlined
                         ></v-select>
                       </div>
@@ -85,6 +88,7 @@
                           label="Current Label"
                           v-model="columnLabel"
                           outlined
+                          class="rounded-lg"
                           disabled
                         ></v-text-field>
                       </div>
@@ -93,6 +97,7 @@
                           :items="columnLabelOptions"
                           label="New Label"
                           v-model="newLabel"
+                          class="rounded-lg"
                           outlined
                         ></v-select>
                       </div>
@@ -102,8 +107,9 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
-                      color="green darken-1"
-                      text
+                      color="primary" 
+                      class="dialogButton" 
+                      depressed
                       @click="changeLabel()"
                     >
                       Change
@@ -296,7 +302,11 @@ export default {
       this.dataset.columnLabels[this.changedLabelIndex] = this.newLabel
       api
         .changeDatasetLabel(this.$route.params.id, JSON.stringify(this.dataset.columnLabels), this.$store.state.user)
-        .then(res => {notify(res.data.message, colors.green)})
+        .then(res => {
+          this.chosenColumn = "";
+          this.columnLabel = "";
+          notify(res.data.message, colors.green);
+          })
         .catch(err=> {notify(err.data.message, colors.red)})
     }
   },
@@ -334,5 +344,14 @@ export default {
   flex-direction: column;
   text-align: center;
   margin-top: 1rem;
+}
+
+.dialog {
+  border-radius: 12px;
+}
+
+.dialogButton {
+  margin: 1rem;
+  border-radius: 8px;
 }
 </style>
