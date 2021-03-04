@@ -215,7 +215,7 @@ export default {
       )
       .then(response => {
         this.$router.push(`/agri-watch-view/${response.data.message}`);
-        notify("AgriWatch view created", colors.green);
+        notify("Agriwatch view created", colors.green);
       })
       .catch(error => {
         notify(error.response.data.message);
