@@ -141,11 +141,12 @@ uploadDataset(file, name, tags, permissions, type, columnLabels) {
   },
   verifyLogin() {
     return post("/auth/verifySession", { sessionId: getCookie("SID") })
-      .then(() => {
+      .then(res => {
+        store.commit("setUser", res.data.message)
         return {isValidSession: true, error: null};
       })
-      .catch((error) => {
-        return {isValidSession: false, error: error.response.data.message};
+      .catch(err => {
+        return {isValidSession: false, error: err};
       })
   },
   fetchTags(datasetType) {
@@ -362,6 +363,10 @@ uploadDataset(file, name, tags, permissions, type, columnLabels) {
     newView.append("xData", xData);
     newView.append("yData", yData);
     return post("/view/create", newView, true);
+  },
+  changeDatasetLabel(datasetId, labels, user) {
+    return post('/dataset/changeLabel/', {"datasetID":datasetId,"labels":labels, "user":user})
+
   }
 };
 
