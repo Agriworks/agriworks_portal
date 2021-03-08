@@ -1,8 +1,13 @@
 branch-defaults:
   master:
     environment: test
+  PROD:
+    environment: prod
 environment-defaults:
   test:
+    branch: null
+    repository: null
+  prod:
     branch: null
     repository: null
 global:
