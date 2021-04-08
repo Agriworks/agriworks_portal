@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-row v-if="selected.length > 0" style="margin-left:25%; width:50%">
+    <v-row v-if="selected.length > 0" style="margin-left:20%; width:60%">
          <v-toolbar
       dense
       floating
@@ -10,6 +10,11 @@
         hide-details
         prepend-icon="mdi-magnify"
         single-line
+        color = "success"
+        clearable
+        @click:clear="clear"
+        v-model="searchQuery" 
+        v-on:keyup="searchSubmit"
       ></v-text-field>
       </v-col>
 
@@ -17,7 +22,7 @@
       
       {{selected.length}} Selected
       </v-col>
-      <v-col md="auto">
+      <v-col class=".col-md-4 .ml-auto">
       <v-btn
       depressed
       >
