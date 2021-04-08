@@ -4,6 +4,7 @@
          <v-toolbar
       dense
       floating
+      width="100%"
     >
       <v-col md="auto">
       <v-text-field
@@ -17,6 +18,8 @@
         v-on:keyup="searchSubmit"
       ></v-text-field>
       </v-col>
+
+      <v-spacer />
 
       <v-col md="auto">
       
@@ -375,4 +378,9 @@ export default {
 .v-stepper__header {
   box-shadow: none;
 } 
+
+/deep/ .v-toolbar__content {
+  width:100%;
+}
+
 </style>
