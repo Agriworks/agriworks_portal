@@ -14,6 +14,10 @@
       <v-divider style="margin-top: 0rem;margin-bottom: 0rem;"></v-divider>
     </v-card>
     <v-card-actions>
+      <v-btn @click="toogleSelection" icon color="black">
+        <v-icon large v-if="!selected">mdi-checkbox-blank-outline</v-icon>
+        <v-icon  large v-if="selected">mdi-checkbox-marked</v-icon>
+      </v-btn>
         <v-spacer></v-spacer>
       <v-btn @click="toogleBookmark" icon color="black">  
       <v-icon v-if="!bookmarked" large>mdi-bookmark-outline</v-icon>
@@ -56,6 +60,7 @@ export default {
     return {
       dialog: false,
       bookmarked: false,
+      selected: false,
     };
   },
   methods: {
@@ -64,6 +69,11 @@ export default {
     },
     toogleBookmark(){
       this.bookmarked = !this.bookmarked;
+    },
+    toogleSelection(){
+      this.selected = !this.selected;
+      console.log(this.agriWatchView.id)
+      this.$emit('selected', this.selected)
     }
   }
 }

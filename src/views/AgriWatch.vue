@@ -1,6 +1,34 @@
 <template>
   <v-container fluid>
-    <v-row style="margin-left:0; width:97%">
+    <v-row v-if="selected.length > 0" style="margin-left:25%; width:50%">
+         <v-toolbar
+      dense
+      floating
+    >
+      <v-col md="auto">
+      <v-text-field
+        hide-details
+        prepend-icon="mdi-magnify"
+        single-line
+      ></v-text-field>
+      </v-col>
+
+      <v-col md="auto">
+      
+      {{selected.length}} Selected
+      </v-col>
+      <v-col md="auto">
+      <v-btn
+      depressed
+      >
+      Deslect All Views
+      </v-btn>
+      </v-col>
+    </v-toolbar>
+    </v-row>
+
+
+    <v-row v-if="selected.length == 0" style="margin-left:0; width:97%">
       <v-col
       flex-column       
       cols="11"
@@ -47,7 +75,9 @@
     </v-row>
     <v-row>
       <div v-for="view in agriWatchViews" v-bind:key="view.id">
-        <AgriWatchViewCard :agriWatchView="view" />
+        <!-- Does not appear that the view has an id that is saved in the front end -->
+        <!-- This is also causing problems in the AgriWatchViewCard because the link depends on the id -->
+        <AgriWatchViewCard @selected="handleSelection($event, view.dataset)" :agriWatchView="view" />
       </div>
     </v-row>
 
@@ -208,7 +238,8 @@ export default {
       createYData: "",
       visualTypes: ["Heatmap"],
       set: "bookmarked", //which set of datasets, i.e. bookmarked, recently viewed, own
-      possibleSets: ["bookmarked", "personal", "recent", "popular", "browse"]
+      possibleSets: ["bookmarked", "personal", "recent", "popular", "browse"],
+      selected: [],
     }
   },
   computed: {
@@ -271,6 +302,13 @@ export default {
     },
     changeSet(newSet){
       this.set = newSet
+    },
+    handleSelection(value, id){   
+      if(value){
+        this.selected.push(id)
+      }else{
+        this.selected = this.selected.filter(e => e !== id)
+      }
     }
   },
   mounted() {
