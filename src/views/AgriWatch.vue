@@ -15,7 +15,35 @@
         >
           <v-icon>mdi-plus</v-icon>Create New View
         </v-btn>
+        <v-menu>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="primary"
+          dark
+          depressed
+          v-bind="attrs"
+          class="dashboardButton"
+          v-on="on"
+          large
+        >
+          {{set}}
+          <v-icon>
+            mdi-menu-down
+          </v-icon>
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item
+          v-for="(possibleSets, index) in possibleSets"
+          :key="index"
+          @click="changeSet(possibleSets)"
+        >
+          <v-list-item-title>{{ possibleSets }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
       </v-col>
+     
     </v-row>
     <v-row>
       <div v-for="view in agriWatchViews" v-bind:key="view.id">
@@ -178,7 +206,9 @@ export default {
       createVisualType: "",
       createXData: "",
       createYData: "",
-      visualTypes: ["Heatmap"]
+      visualTypes: ["Heatmap"],
+      set: "bookmarked", //which set of datasets, i.e. bookmarked, recently viewed, own
+      possibleSets: ["bookmarked", "personal", "recent", "popular", "browse"]
     }
   },
   computed: {
@@ -238,6 +268,9 @@ export default {
       } else {
         this.dialog = false;
       }
+    },
+    changeSet(newSet){
+      this.set = newSet
     }
   },
   mounted() {

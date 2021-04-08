@@ -11,7 +11,15 @@
           <v-img v-if="$vuetify.theme.dark" src="../assets/chartDarkMode.png" />
         </v-list-item-avatar>
       </v-list-item>
+      <v-divider style="margin-top: 0rem;margin-bottom: 0rem;"></v-divider>
     </v-card>
+    <v-card-actions>
+        <v-spacer></v-spacer>
+      <v-btn @click="toogleBookmark" icon color="black">  
+      <v-icon v-if="!bookmarked" large>mdi-bookmark-outline</v-icon>
+      <v-icon v-if="bookmarked" large>mdi-bookmark</v-icon>
+      </v-btn>  
+    </v-card-actions>
     <v-card-actions>
       <template>
         <v-row justify="center">
@@ -46,12 +54,16 @@ export default {
   },
   data() {
     return {
-      dialog: false
+      dialog: false,
+      bookmarked: false,
     };
   },
   methods: {
     deleteAgriWatchView() {
       // do something
+    },
+    toogleBookmark(){
+      this.bookmarked = !this.bookmarked;
     }
   }
 }
@@ -68,6 +80,11 @@ export default {
 .viewType {
   font-weight: bold;
   color: var(--v-primary-base);
+}
+
+.v-card__actions{
+  padding: 5px;
+  padding-bottom: 1.5px;
 }
 
 /*Makes the button not underline when you hover over it, not sure that it actually make it looks nice
