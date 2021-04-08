@@ -30,8 +30,8 @@
 
     <v-row v-if="selected.length == 0" style="margin-left:0; width:97%">
       <v-col
-      flex-column       
-      cols="11"
+      flex-column  
+      md="auto"
       >
         <v-btn
           dark
@@ -71,7 +71,21 @@
       </v-list>
     </v-menu>
       </v-col>
-     
+      <v-spacer></v-spacer>
+    <v-col
+    class=".col-md-4 .ml-auto">
+      <v-text-field
+            class="rounded-lg"
+            clearable
+            @click:clear="clear"
+            outlined
+            dense
+            v-model="searchQuery" 
+            v-on:keyup="searchSubmit"
+            label="Search Datasets">
+            <v-icon slot="append" color = "success" @click="searchSubmit">mdi-magnify</v-icon>
+        </v-text-field>
+    </v-col>
     </v-row>
     <v-row>
       <div v-for="view in agriWatchViews" v-bind:key="view.id">
@@ -240,6 +254,7 @@ export default {
       set: "bookmarked", //which set of datasets, i.e. bookmarked, recently viewed, own
       possibleSets: ["bookmarked", "personal", "recent", "popular", "browse"],
       selected: [],
+      searchQuery: "",
     }
   },
   computed: {
@@ -309,6 +324,12 @@ export default {
       }else{
         this.selected = this.selected.filter(e => e !== id)
       }
+    },
+    searchSubmit(){
+      console.log("Searching")
+    },
+    clear(){
+      this.searchQuery = ""
     }
   },
   mounted() {
