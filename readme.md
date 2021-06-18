@@ -8,7 +8,7 @@
 
 ## Build & Deploy
 
-0. Push to the master branch in either repository. 
+0. Push to the master branch in either repository.
 
 ### Run your tests
 ```
