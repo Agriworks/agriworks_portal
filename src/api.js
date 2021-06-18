@@ -14,8 +14,8 @@ const api = {
           store.commit("setDatasets", { datasets: response.data, append: true })
         }
       })
-      .catch(() => {
-        notify("Error fetching datasets", colors.red);
+      .catch((error) => {
+        notify(error.response.data.message, colors.red);
       });
   },
   fetchDatasetInfo(id) {
@@ -67,7 +67,7 @@ uploadDataset(file, name, tags, permissions, type, columnLabels) {
             store.commit("setDatasets", { datasets: response.data.datasets, append: false })
           }
         })
-        .catch(() => notify("Error filtering datasets", colors.red));
+        .catch((error) => notify(error.response.data.message, colors.red));
     }
   },
   logout() {
@@ -78,8 +78,8 @@ uploadDataset(file, name, tags, permissions, type, columnLabels) {
         router.push("/");
         notify("User logged out", colors.green);
       })
-      .catch(() => {
-        notify("Unable to logout. Please try again later. ", colors.red);
+      .catch((error) => {
+        notify(error.response.data.message, colors.red);
       });
   },
   login(username, password, redirect) {
@@ -104,36 +104,36 @@ uploadDataset(file, name, tags, permissions, type, columnLabels) {
   fetchUserDatasets() {
     get("/dataset/user/")
       .then(response => store.commit("setUserDatasets", response.data))
-      .catch(() => {
-        notify("Error fetching your datasets", colors.red);
+      .catch((error) => {
+        notify(error.response.data.message, colors.red);
       });
   },
   fetchPopularDatasets() {
     get("/dataset/popular/")
       .then(response => store.commit("setPopularDatasets", response.data))
-      .catch(() => {
-        notify("Error fetching datasets", colors.red);
+      .catch((error) => {
+        notify(error.response.data.message, colors.red);
       });
   },
   fetchRecentDatasets() {
     get("/dataset/recent/")
       .then(response => store.commit("setRecentDatasets", response.data))
-      .catch(() => {
-        notify("Error fetching recent datasets", colors.red);
+      .catch((error) => {
+        notify(error.response.data.message, colors.red);
       });
   },
   fetchNewDatasets() {
     return get("/dataset/new/")
       .then(response => store.commit("setNewDatasets", response.data))
-      .catch(() => {
-        notify("Error fetching new datasets", colors.red);
+      .catch((error) => {
+        notify(error.response.data.message, colors.red);
       });
   },
   deleteDataset(id) {
     return _delete(`/dataset/${id}`)
       .then(() => this.fetchUserDatasets())
-      .catch(() => {
-        notify("Error deleting dataset", colors.red);
+      .catch((error) => {
+        notify(error.response.data.message, colors.red);
       });
   },
   downloadDataset(id) {
