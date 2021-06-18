@@ -14,8 +14,8 @@ const api = {
           store.commit("setDatasets", { datasets: response.data, append: true })
         }
       })
-      .catch(() => {
-        notify("No datasets matching the query were found", colors.red);
+      .catch((error) => {
+        notify(error.response.data.message, colors.red);
       });
   },
   fetchDatasetInfo(id) {
